@@ -7,6 +7,7 @@
 //
 
 #import "AppDelegate.h"
+#import <Realm/Realm.h>
 
 @interface AppDelegate ()
 
@@ -16,8 +17,68 @@
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(NotificationReceived:) name:@"userDidLogout" object:nil];
+    // reset REALM.IO Database
+    [[NSFileManager defaultManager] removeItemAtPath:[RLMRealm defaultRealmPath] error:nil];
+    
+    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent animated:NO];
+    self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     // Override point for customization after application launch.
+    self.window.backgroundColor = [UIColor whiteColor];
+    [self.window makeKeyAndVisible];
+    
+    LoginViewController *loginViewController = [[LoginViewController alloc] init];
+    UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:loginViewController];
+    [[UINavigationBar appearance] setTintColor:[UIColor whiteColor]];
+    [[UINavigationBar appearance] setBarTintColor:CleanBasketMint];
+    
+    // Color navigation bar title white
+    // Deprecated in iOS 7
+    //[[UINavigationBar appearance] setTitleTextAttributes:@{UITextAttributeTextColor:[UIColor whiteColor]}];
+    // after iOS 7
+    [[UINavigationBar appearance] setTitleTextAttributes:@{NSForegroundColorAttributeName:[UIColor whiteColor]}];
+    
+    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent animated:NO];
+    [[UITabBar appearance] setTintColor:CleanBasketMint];
+    
+    [self.window setRootViewController:navController];
+    
+    self.tabBarController = [[MyUITabBarController alloc] init];
+    self.tabNavController = [[UINavigationController alloc] initWithRootViewController:self.tabBarController];
+    
+    self.orderViewController = [[OrderViewController alloc] init];
+    UINavigationController *orderViewNavBar = [[UINavigationController alloc] initWithRootViewController:self.orderViewController];
+    self.orderStatusViewController = [[OrderStatusViewController alloc] init];
+    self.priceViewController = [[PriceViewController alloc] init];
+    self.accountViewController = [[AccountViewController alloc] init];
+    self.couponShareViewController = [[CouponShareViewController alloc] init];
+    self.serviceInfoViewController = [[ServiceInfoViewController alloc] init];
+    
+    NSArray *myBizViewControllers = [[NSArray alloc] initWithObjects:self.orderViewController, self.orderStatusViewController, self.priceViewController, self.couponShareViewController, self.accountViewController,  self.serviceInfoViewController, nil];
+    
+    [self.tabBarController setViewControllers:myBizViewControllers];
+    
+    /* 서버에서 배달하는 사람 사진 가져오기
+     NSString *filePath = [NSString stringWithFormat:@"http://cleanbasket.co.kr/images/deliverer/18.jpg"];
+     UIImage *image18 = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:filePath]]];
+     UIImageView *imageView = [[UIImageView alloc] initWithImage:image18];
+     [imageView setFrame:CGRectMake(0, 0, 320, 320)];
+     [self.view addSubview:imageView];
+     */
+
+//    [self.window addSubview:self.tabBarController.view];
+//    [self.window setRootViewController:tabNavController];
     return YES;
+}
+
+
+- (void) NotificationReceived:(NSNotification*)noti {
+    if ([[noti name] isEqualToString:@"userDidLogout"]) {
+        NSLog(@"UserDidLogout");
+        [self.tabBarController.navigationController setNavigationBarHidden:NO];
+        [self.tabBarController setSelectedIndex:0];
+        [self.tabBarController dismissViewControllerAnimated:YES completion:nil];
+    }
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application {
