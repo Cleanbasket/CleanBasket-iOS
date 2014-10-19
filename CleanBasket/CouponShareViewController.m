@@ -17,8 +17,9 @@
 - (instancetype)init {
     self = [super init];
     if (self) {
-        UIImage *tabBarImage = [UIImage imageNamed:@"tab_coupon.png"];
-        self.tabBarItem = [self.tabBarItem initWithTitle:@"쿠폰추천" image:tabBarImage selectedImage:tabBarImage];
+        UIImage *tabBarImage = [UIImage imageNamed:@"ic_menu_coupon_01.png"];
+        UIImage *selectedTabBarImage = [UIImage imageNamed:@"ic_menu_coupon_02.png"];
+        self.tabBarItem = [self.tabBarItem initWithTitle:@"쿠폰추천" image:tabBarImage selectedImage:selectedTabBarImage];
     }
     
     return self;

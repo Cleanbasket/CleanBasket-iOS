@@ -40,7 +40,7 @@
 
 - (void) createUser:(NSDictionary*)responseDict {
     realm = [RLMRealm defaultRealm];
-    currentUid = [[responseDict valueForKey:@"uid"] intValue];
+    self.currentUid = [[responseDict valueForKey:@"uid"] intValue];
     if (![User objectForPrimaryKey:[responseDict valueForKey:@"uid"]]) {
         [realm beginWriteTransaction];
         currentUser = [User createInDefaultRealmWithObject:responseDict];
@@ -52,6 +52,16 @@
     [[NSNotificationCenter defaultCenter] postNotificationName:@"didCreateUser" object:self userInfo:[NSDictionary dictionaryWithObject:[responseDict valueForKey:@"uid"] forKey:@"uid"]];
     
     NSLog(@"\r[CURRENT USER]\r%@", currentUser);
+}
+
+- (void) createItemCode:(NSArray*)itemArray {
+    realm = [RLMRealm defaultRealm];
+    [realm beginWriteTransaction];
+    for (NSDictionary* each in itemArray) {
+        [realm addObject:[Item createInDefaultRealmWithObject:each]];
+    }
+    [realm commitWriteTransaction];
+    NSLog(@"%@", [Item allObjects]);
 }
 
 @end

@@ -7,11 +7,16 @@
 //
 
 #import "OrderViewController.h"
-#define FieldHeight 35
-#define FieldWidth 300
-#define CenterX (DEVICE_WIDTH - FieldWidth)/2
-#define FirstElementY 70
-#define Interval 38
+#define X_FIRST 10
+#define X_SECOND 80
+#define X_CENTER_DEVICE (DEVICE_WIDTH - WIDTH_REGULAR)/2
+#define Y_FIRST 89
+#define WIDTH_REGULAR 300
+#define WIDTH_SMALL 60
+#define WIDTH_LARGE 230
+#define WIDTH_FULL 300
+#define HEIGHT_REGULAR 35
+#define MARGIN_REGULAR 60
 
 @interface CBPickerView : UIPickerView {
     
@@ -41,6 +46,9 @@
     UIButton *cancelButton;
     NSTimer *changeDateInfoLabelBgColorTimer;
     DTOManager *dtoManager;
+    RLMRealm *realm;
+    Order *currentOrder;
+    NSString *pickupDateString;
 }
 
 @end
@@ -56,13 +64,14 @@
 }
 
 - (void)viewDidLoad {
+    realm = [RLMRealm defaultRealm];
     [self.navigationItem setTitle:@"수거일"];
     [self.view setBackgroundColor:[UIColor whiteColor]];
     
     dateInfoLabel = [[UILabel alloc] initWithFrame:CGRectMake(20, 84, 280, 120)];
     [dateInfoLabel setTextAlignment:NSTextAlignmentCenter];
     [dateInfoLabel setLineBreakMode:NSLineBreakByCharWrapping];
-    [dateInfoLabel setText:@"현재 시간으로부터 1시간 후,\n30분 단위로 선택이 가능합니다.\n(최대 2주일)"];
+    [dateInfoLabel setText:@"현재 시간으로부터 1시간 후,\n30분 단위로 선택이 가능합니다.\n(최장 2주)"];
     [dateInfoLabel setTextColor:[UIColor grayColor]];
     [dateInfoLabel setNumberOfLines:0];
     [dateInfoLabel.layer setBorderColor:CleanBasketMint.CGColor];
@@ -72,12 +81,12 @@
     datePicker = [[UIDatePicker alloc] initWithFrame:CGRectMake(0, 200, DEVICE_WIDTH, 200)];
     [datePicker addTarget:self action:@selector(datePickerChanged) forControlEvents:UIControlEventValueChanged];
     
-    confirmButton = [[UIButton alloc] initWithFrame:CGRectMake(60, 420, 200, 30)];
+    confirmButton = [[UIButton alloc] initWithFrame:CGRectMake(60, 420, 200, 35)];
     [confirmButton setBackgroundColor:CleanBasketMint];
     [confirmButton.layer setCornerRadius:15.0f];
     [confirmButton setTitle:@"확인" forState:UIControlStateNormal];
     [confirmButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    [confirmButton setTitleColor:[UIColor yellowColor] forState:UIControlStateHighlighted];
+    [confirmButton setTitleColor:[UIColor blackColor] forState:UIControlStateHighlighted];
     [confirmButton addTarget:self action:@selector(didTouchConfirmButton) forControlEvents: UIControlEventTouchUpInside];
     
     cancelButton = [[UIButton alloc] initWithFrame:CGRectMake(170, 430, 130, 30)];
@@ -95,7 +104,27 @@
 }
 
 - (void) didTouchConfirmButton {
+    if ([Order objectForPrimaryKey:[NSNumber numberWithInt:NEW_INDEX]])
+    {
+        NSLog(@"NEW ORDER HAVING NEW_INDEX FOUND!");
+        [realm beginWriteTransaction];
+        currentOrder = [Order objectForPrimaryKey:[NSNumber numberWithInt:NEW_INDEX]];
+        [currentOrder setPickup_date:pickupDateString];
+        [realm commitWriteTransaction];
+    }
     
+    else
+    {
+        NSLog(@"ORDER DOESN'T EXISTS!");
+        [realm beginWriteTransaction];
+        currentOrder = [[Order alloc] init];
+        [currentOrder setOid:NEW_INDEX];
+        [currentOrder setPickup_date:pickupDateString];
+        [realm commitWriteTransaction];
+    }
+    
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"setPickupDate" object:nil];
+    [self.navigationController popToRootViewControllerAnimated:YES];
 }
 
 - (void) refreshMinMaxDate {
@@ -154,8 +183,7 @@
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
     [dateFormatter setDateFormat:@"yyyy-MM-dd HH:mm:00"];
     
-    NSString *formattedDateString = [dateFormatter stringFromDate:[datePicker date]];
-    //    NSLog(@"formattedDateString: %@", formattedDateString);
+    pickupDateString = [dateFormatter stringFromDate:[datePicker date]];
 }
 
 - (void) blinkDateInfoLabel {
@@ -181,6 +209,11 @@
     UIDatePicker *datePicker;
     UILabel *dateInfoLabel;
     NSTimer *changeDateInfoLabelBgColorTimer;
+    DTOManager *dtoManager;
+    RLMRealm *realm;
+    Order *currentOrder;
+    NSString *deliverDateString;
+    UIButton *confirmButton;
 }
 
 @end
@@ -198,24 +231,58 @@
 - (void)viewDidLoad {
     [self.view setBackgroundColor:[UIColor whiteColor]];
     [self.navigationItem setTitle:@"배달일"];
+    realm = [RLMRealm defaultRealm];
     
     dateInfoLabel = [[UILabel alloc] initWithFrame:CGRectMake(20, 84, 280, 120)];
     [dateInfoLabel setTextAlignment:NSTextAlignmentCenter];
     [dateInfoLabel setLineBreakMode:NSLineBreakByCharWrapping];
-    [dateInfoLabel setText:@"현재 시간으로부터 2일 후,\n30분 단위로 선택이 가능합니다."];
+    [dateInfoLabel setText:@"주문 시간으로부터 3일 후,\n30분 단위로 선택이 가능합니다."];
     [dateInfoLabel setTextColor:[UIColor grayColor]];
     [dateInfoLabel setNumberOfLines:0];
     [dateInfoLabel.layer setBorderColor:CleanBasketMint.CGColor];
     [dateInfoLabel.layer setBorderWidth:1.0f];
     
-    datePicker = [[UIDatePicker alloc] initWithFrame:CGRectMake(0, 220, DEVICE_WIDTH, 200)];
+    datePicker = [[UIDatePicker alloc] initWithFrame:CGRectMake(0, 200, DEVICE_WIDTH, 200)];
     [datePicker addTarget:self action:@selector(datePickerChanged) forControlEvents:UIControlEventValueChanged];
     
     [self refreshMinMaxDate];
     [datePicker setMinuteInterval:30];
     
+    confirmButton = [[UIButton alloc] initWithFrame:CGRectMake(60, 420, 200, 35)];
+    [confirmButton setBackgroundColor:CleanBasketMint];
+    [confirmButton.layer setCornerRadius:15.0f];
+    [confirmButton setTitle:@"확인" forState:UIControlStateNormal];
+    [confirmButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [confirmButton setTitleColor:[UIColor blackColor] forState:UIControlStateHighlighted];
+    [confirmButton addTarget:self action:@selector(didTouchConfirmButton) forControlEvents: UIControlEventTouchUpInside];
+    
     [self.view addSubview:dateInfoLabel];
     [self.view addSubview:datePicker];
+    [self.view addSubview:confirmButton];
+}
+
+- (void) didTouchConfirmButton {
+    if ([Order objectForPrimaryKey:[NSNumber numberWithInt:NEW_INDEX]])
+    {
+        NSLog(@"NEW ORDER HAVING NEW_INDEX FOUND!");
+        [realm beginWriteTransaction];
+        currentOrder = [Order objectForPrimaryKey:[NSNumber numberWithInt:NEW_INDEX]];
+        [currentOrder setDropoff_date:deliverDateString];
+        [realm commitWriteTransaction];
+    }
+    
+    else
+    {
+        NSLog(@"ORDER DOESN'T EXISTS!");
+        [realm beginWriteTransaction];
+        currentOrder = [[Order alloc] init];
+        [currentOrder setOid:NEW_INDEX];
+        [currentOrder setDropoff_date:deliverDateString];
+        [realm commitWriteTransaction];
+    }
+    
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"setDeliveryDate" object:nil];
+    [self.navigationController popToRootViewControllerAnimated:YES];
 }
 
 - (void) refreshMinMaxDate {
@@ -224,11 +291,11 @@
     NSDateComponents *currentDateComponents = [[NSCalendar currentCalendar] components:NSYearCalendarUnit|NSMonthCalendarUnit|NSDayCalendarUnit|NSHourCalendarUnit|NSMinuteCalendarUnit fromDate:[NSDate date]];
     
     NSDateComponents *comps = [[NSDateComponents alloc] init];
-    [comps setDay:9];
+    [comps setDay:10];
     [comps setHour:24 - [currentDateComponents hour]];
     NSDate *maxDate = [calendar dateByAddingComponents:comps toDate:currentDate options:0];
     
-    [comps setDay:2];
+    [comps setDay:3];
     [comps setHour:1];
     if ( [currentDateComponents minute] > 31 ) {
         [comps setMinute:60 - [currentDateComponents minute]];
@@ -274,8 +341,8 @@
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
     [dateFormatter setDateFormat:@"yyyy-MM-dd HH:mm:00"];
     
-    NSString *formattedDateString = [dateFormatter stringFromDate:[datePicker date]];
-    //    NSLog(@"formattedDateString: %@", formattedDateString);
+    deliverDateString = [dateFormatter stringFromDate:[datePicker date]];
+    
 }
 
 - (void) blinkDateInfoLabel {
@@ -310,26 +377,16 @@
 - (instancetype)init {
     self = [super init];
     if (self) {
-        UIImage *tabBarImage = [UIImage imageNamed:@"tab_order.png"];
-        self.tabBarItem = [self.tabBarItem initWithTitle:@"주문하기" image:tabBarImage selectedImage:tabBarImage];
+        UIImage *tabBarImage = [UIImage imageNamed:@"ic_menu_order_02.png"];
+        UIImage *selectedTabBarImage = [UIImage imageNamed:@"ic_menu_order_01.png"];
+        self.tabBarItem = [self.tabBarItem initWithTitle:@"주문하기" image:tabBarImage selectedImage:selectedTabBarImage];
         [[NSNotificationCenter defaultCenter] addObserver:self
                                                  selector:@selector(didReceiveNotification:)
-                                                     name:@"didCreateUser"
+                                                     name:nil
                                                    object:nil];
     }
     
     return self;
-}
-
-- (void) didReceiveNotification:(NSNotification*)noti {
-    if ([[noti name] isEqualToString:@"didCreateUser"]) {
-        realm = [RLMRealm defaultRealm];
-        User *currentUser = [User objectForPrimaryKey:[[noti userInfo] valueForKey:@"uid"]];
-        NSLog(@"CurrentUser@OrderViewController: %@", currentUser);
-        RLMArray<Address> *address = [currentUser valueForKey:@"address"];
-        [contactTextField setText:[currentUser valueForKey:@"phone"]];
-        [inputAddressLabel setText:[[address objectAtIndex:0] fullAddress]];
-    }
 }
 
 - (void)viewDidLoad {
@@ -344,93 +401,238 @@
     
     CBLabel *pickupLabel = [[CBLabel alloc] init];
     [pickupLabel setTag:0];
-    [pickupLabel setFrame:[self makeRect:pickupLabel]];
+    [pickupLabel setFrame:CGRectMake(X_FIRST, Y_FIRST + MARGIN_REGULAR * [pickupLabel tag], WIDTH_SMALL, HEIGHT_REGULAR)];
     [pickupLabel setText:@"수거일"];
-    [pickupLabel setTextColor:CleanBasketMint];
+    [pickupLabel setTextColor:[UIColor whiteColor]];
+    [pickupLabel setBackgroundColor:CleanBasketMint];
+    [pickupLabel setTextAlignment:NSTextAlignmentCenter];
+    [pickupLabel setAdjustsFontSizeToFitWidth:YES];
+    [pickupLabel.layer setCornerRadius:5.0f];
+    [pickupLabel setClipsToBounds:YES];
     
     UITapGestureRecognizer *pickupTapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(pickupTap)];
-    CBLabel *pickupDateLabel = [[CBLabel alloc] init];
-    [pickupDateLabel setTag:1];
-    [pickupDateLabel setFrame:[self makeRect:pickupDateLabel]];
-    [pickupDateLabel setText:@"원하는 날짜를 선택해주세요"];
+    
+    pickupDateLabel = [[CBLabel alloc] init];
+    [pickupDateLabel setTag:0];
+    [pickupDateLabel setFrame:CGRectMake(X_SECOND, Y_FIRST + MARGIN_REGULAR * [pickupDateLabel tag], WIDTH_LARGE, HEIGHT_REGULAR)];
+    [pickupDateLabel setText:@"원하시는 날짜를 선택해주세요"];
     [pickupDateLabel addGestureRecognizer:pickupTapGesture];
     [pickupDateLabel setUserInteractionEnabled:YES];
     [pickupDateLabel setBackgroundColor:UltraLightGray];
-    [pickupDateLabel.layer setCornerRadius:15.0f];
+    [pickupDateLabel.layer setCornerRadius:5.0f];
+    [pickupDateLabel setClipsToBounds:YES];
     [pickupDateLabel setTextColor:[UIColor grayColor]];
+    [pickupDateLabel setTextAlignment:NSTextAlignmentCenter];
     
     CBLabel *deliverLabel = [[CBLabel alloc] init];
-    [deliverLabel setTag:2];
-    [deliverLabel setFrame:[self makeRect:deliverLabel]];
+    [deliverLabel setTag:1];
+    [deliverLabel setFrame:CGRectMake(X_FIRST, Y_FIRST + MARGIN_REGULAR * [deliverLabel tag], WIDTH_SMALL, HEIGHT_REGULAR)];
     [deliverLabel setText:@"배달일"];
-    [deliverLabel setTextColor:CleanBasketMint];
+    [deliverLabel setTextColor:[UIColor whiteColor]];
+    [deliverLabel setBackgroundColor:CleanBasketMint];
+    [deliverLabel.layer setCornerRadius:5.0f];
+    [deliverLabel setClipsToBounds:YES];
+    [deliverLabel setTextAlignment:NSTextAlignmentCenter];
+    [deliverLabel setAdjustsFontSizeToFitWidth:YES];
     
     UITapGestureRecognizer *deliverTapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(deliverTap)];
-    CBLabel *deliverDateLabel = [[CBLabel alloc] init];
-    [deliverDateLabel setTag:3];
-    [deliverDateLabel setFrame:[self makeRect:deliverDateLabel]];
-    [deliverDateLabel setText:@"원하는 날짜를 선택해주세요"];
+    deliverDateLabel = [[CBLabel alloc] init];
+    [deliverDateLabel setTag:1];
+    [deliverDateLabel setFrame:CGRectMake(X_SECOND, Y_FIRST + MARGIN_REGULAR * [deliverDateLabel tag], WIDTH_LARGE, HEIGHT_REGULAR)];
+    [deliverDateLabel setText:@"원하시는 날짜를 선택해주세요"];
     [deliverDateLabel addGestureRecognizer:deliverTapGesture];
     [deliverDateLabel setUserInteractionEnabled:YES];
     [deliverDateLabel setBackgroundColor:UltraLightGray];
-    [deliverDateLabel.layer setCornerRadius:15.0f];
+    [deliverDateLabel setClipsToBounds:YES];
+    [deliverDateLabel.layer setCornerRadius:5.0f];
     [deliverDateLabel setTextColor:[UIColor grayColor]];
+    [deliverDateLabel setTextAlignment:NSTextAlignmentCenter];
     
     CBLabel *addressLabel = [[CBLabel alloc] init];
-    [addressLabel setTag:4];
-    [addressLabel setFrame:[self makeRect:addressLabel]];
+    [addressLabel setTag:2];
+    [addressLabel setFrame:CGRectMake(X_FIRST, Y_FIRST + MARGIN_REGULAR * [addressLabel tag], WIDTH_SMALL, HEIGHT_REGULAR)];
     [addressLabel setText:@"주소"];
-    [addressLabel setTextColor:CleanBasketMint];
-    CGRect addressLabelFrame = CGRectMake(addressLabel.frame.origin.x, addressLabel.frame.origin.y, addressLabel.frame.size.width, addressLabel.frame.size.height);
-    UIButton *firstAddrButton = [[UIButton alloc] initWithFrame:addressLabelFrame];
-    [firstAddrButton setTag:0];
+    [addressLabel setTextColor:[UIColor whiteColor]];
+    [addressLabel setBackgroundColor:CleanBasketMint];
+    [addressLabel.layer setCornerRadius:5.0f];
+    [addressLabel setClipsToBounds:YES];
+    [addressLabel setTextAlignment:NSTextAlignmentCenter];
+    
+    UITapGestureRecognizer *addressTapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(addressLabelDidTap)];
     
     inputAddressLabel = [[CBLabel alloc] init];
-    [inputAddressLabel setTag:5];
-    [inputAddressLabel setFrame:[self makeRect:inputAddressLabel]];
+    [inputAddressLabel setTag:2];
+    [inputAddressLabel setFrame:CGRectMake(X_FIRST, Y_FIRST + MARGIN_REGULAR * [inputAddressLabel tag] + HEIGHT_REGULAR + 10, WIDTH_FULL, HEIGHT_REGULAR)];
     [inputAddressLabel setTextColor:[UIColor grayColor]];
     [inputAddressLabel setBackgroundColor:UltraLightGray];
     [inputAddressLabel setText:@"새로운 주소 입력하기"];
-    [inputAddressLabel.layer setCornerRadius:15.0f];
+    [inputAddressLabel.layer setCornerRadius:5.0f];
+    [inputAddressLabel setClipsToBounds:YES];
     [inputAddressLabel setAdjustsFontSizeToFitWidth:YES];
+    [inputAddressLabel setTextAlignment:NSTextAlignmentCenter];
+    [inputAddressLabel addGestureRecognizer:addressTapGesture];
+    [inputAddressLabel setUserInteractionEnabled:YES];
     
     CBLabel *contactLabel = [[CBLabel alloc] init];
-    [contactLabel setTag:6];
-    [contactLabel setFrame:[self makeRect:contactLabel]];
-    [contactLabel setTextColor:CleanBasketMint];
+    [contactLabel setTag:4];
+    [contactLabel setFrame:CGRectMake(X_FIRST, inputAddressLabel.frame.origin.y + MARGIN_REGULAR, WIDTH_SMALL, HEIGHT_REGULAR)];
+    [contactLabel setTextColor:[UIColor whiteColor]];
     [contactLabel setText:@"연락처"];
+    [contactLabel setBackgroundColor:CleanBasketMint];
+    [contactLabel setClipsToBounds:YES];
+    [contactLabel setAdjustsFontSizeToFitWidth:YES];
+    [contactLabel.layer setCornerRadius:5.0f];
     
     contactTextField = [[UITextField alloc] init];
     [contactTextField setTag:7];
-    [contactTextField setFrame:[self makeRect:contactTextField]];
-    [contactTextField.layer setCornerRadius:15.0f];
+    [contactTextField setFrame:CGRectMake(X_SECOND, inputAddressLabel.frame.origin.y + MARGIN_REGULAR, WIDTH_LARGE, HEIGHT_REGULAR)];
+    [contactTextField.layer setCornerRadius:5.0f];
     [contactTextField setBackgroundColor:UltraLightGray];
     [contactTextField setTextColor:[UIColor grayColor]];
     UIView *contactTextFieldPaddingView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 10, 20)];
     [contactTextField setLeftView:contactTextFieldPaddingView];
     [contactTextField setLeftViewMode:UITextFieldViewModeAlways];
+    [contactTextField addTarget:self action:@selector(contactTextFieldEditingDidBegin) forControlEvents:UIControlEventEditingDidBegin];
+    [contactTextField addTarget:self action:@selector(contactTextFieldEditingDidEnd) forControlEvents:UIControlEventEditingDidEnd];
     
-    UIButton* orderButton = [[UIButton alloc] initWithFrame:CGRectMake((DEVICE_WIDTH - 160)/2, DEVICE_HEIGHT - 97, 160, FieldHeight)];
-    [orderButton setTitle:@"주문하기!" forState:UIControlStateNormal];
-    [orderButton setTitleColor:CleanBasketRed forState:UIControlStateHighlighted];
+    UIButton* orderButton = [[UIButton alloc] initWithFrame:CGRectMake((DEVICE_WIDTH - 160)/2, DEVICE_HEIGHT - 107, 160, HEIGHT_REGULAR)];
+    [orderButton setTitle:@"품목선택하기" forState:UIControlStateNormal];
+    [orderButton setTitleColor:[UIColor blackColor] forState:UIControlStateHighlighted];
     [orderButton.layer setCornerRadius:15.0f];
     [orderButton setBackgroundColor:CleanBasketMint];
     [orderButton addTarget:self action:@selector(orderButtonDidTouched) forControlEvents:UIControlEventTouchUpInside];
     
-    [self.view addSubview:pickupLabel];
-    [self.view addSubview:pickupDateLabel];
-    [self.view addSubview:deliverLabel];
-    [self.view addSubview:deliverDateLabel];
-    [self.view addSubview:addressLabel];
-    [self.view addSubview:contactLabel];
-    [self.view addSubview:inputAddressLabel];
-    [self.view addSubview:contactTextField];
-    [self.view addSubview:orderButton];
+    NSArray *addressName = [NSArray arrayWithObjects:@"집", @"회사", @"1", @"2", @"3", nil];
+    addressControl = [[UISegmentedControl alloc] initWithItems:addressName];
+    [addressControl setFrame:CGRectMake(addressLabel.frame.origin.x + WIDTH_SMALL + 10, Y_FIRST + MARGIN_REGULAR * [addressLabel tag], WIDTH_LARGE, HEIGHT_REGULAR)];
+    [addressControl setTintColor:CleanBasketMint];
+    [addressControl setSelectedSegmentIndex:0];
+    [addressControl addTarget:self action:@selector(userDidChangeAddress:) forControlEvents:UIControlEventValueChanged];
+    
+    UITapGestureRecognizer *scrollViewTapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(scrollViewDidTap)];
+    
+    scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, DEVICE_WIDTH, DEVICE_HEIGHT)];
+    [scrollView setContentSize:CGSizeMake(DEVICE_WIDTH, DEVICE_HEIGHT * 1.5)];
+    [scrollView setScrollEnabled:NO];
+    [scrollView addGestureRecognizer:scrollViewTapGesture];
+    
+    [self.view addSubview:scrollView];
+//    [self.view addSubview:pickupLabel];
+//    [self.view addSubview:pickupDateLabel];
+//    [self.view addSubview:deliverLabel];
+//    [self.view addSubview:deliverDateLabel];
+//    [self.view addSubview:addressLabel];
+//    [self.view addSubview:contactLabel];
+//    [self.view addSubview:inputAddressLabel];
+//    [self.view addSubview:contactTextField];
+//    [self.view addSubview:orderButton];
+//    [self.view addSubview:addressControl];
+    [scrollView addSubview:pickupLabel];
+    [scrollView addSubview:pickupDateLabel];
+    [scrollView addSubview:deliverLabel];
+    [scrollView addSubview:deliverDateLabel];
+    [scrollView addSubview:addressLabel];
+    [scrollView addSubview:contactLabel];
+    [scrollView addSubview:inputAddressLabel];
+    [scrollView addSubview:contactTextField];
+    [scrollView addSubview:orderButton];
+    [scrollView addSubview:addressControl];
+}
+
+
+
+- (void) contactTextFieldEditingDidBegin {
+    [scrollView scrollRectToVisible:CGRectMake(0, 180, DEVICE_WIDTH, DEVICE_HEIGHT) animated:YES];
+}
+
+- (void) contactTextFieldEditingDidEnd {
+    [scrollView scrollRectToVisible:CGRectMake(0, 0, DEVICE_WIDTH, DEVICE_HEIGHT) animated:YES];
+}
+
+- (void) scrollViewDidTap {
+    [self.view endEditing:YES];
 }
 
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event{
     [self.view endEditing:YES];
     [super touchesBegan:touches withEvent:event];
+}
+
+-(void)viewWillAppear:(BOOL)animated {
+    
+}
+
+- (void) didReceiveNotification:(NSNotification*)noti {
+    // 사용자가 로그인 후, 서버로부터 유저 정보를 받은 후 로컬 디비에 유저 정보 생성 시,
+    if ([[noti name] isEqualToString:@"didCreateUser"]) {
+        realm = [RLMRealm defaultRealm];
+        
+        User *currentUser = [User objectForPrimaryKey:[[noti userInfo] valueForKey:@"uid"]];
+        
+        RLMArray<Address> *address = [currentUser valueForKey:@"address"];
+        [contactTextField setText:[currentUser valueForKey:@"phone"]];
+        currentAddress = [address objectAtIndex:[addressControl selectedSegmentIndex]];
+        [inputAddressLabel setText:[currentAddress fullAddress]];
+        
+        currentOrder = [[Order alloc] init];
+        [currentOrder setOid:NEW_INDEX];
+        [realm beginWriteTransaction];
+        [realm addObject:currentOrder];
+        [realm commitWriteTransaction];
+    }
+    
+    // 사용자가 픽업 날짜를 선택하고 확인을 누른 경우, NEW_INDEX==9999의 Order 객체 이용
+    if ([[noti name] isEqualToString:@"setPickupDate"]) {
+        if ([Order objectForPrimaryKey:[NSNumber numberWithInt:NEW_INDEX]])
+        {
+            currentOrder = [Order objectForPrimaryKey:[NSNumber numberWithInt:NEW_INDEX]];
+            [pickupDateLabel setText:[currentOrder pickup_date]];
+        }
+    }
+    
+    // 사용자가 배달 날짜를 선택하고 확인을 누른 경우, NEW_INDEX==9999의 Order 객체 이용
+    if ([[noti name] isEqualToString:@"setDeliveryDate"]) {
+        if ([Order objectForPrimaryKey:[NSNumber numberWithInt:NEW_INDEX]])
+        {
+            currentOrder = [Order objectForPrimaryKey:[NSNumber numberWithInt:NEW_INDEX]];
+            [deliverDateLabel setText:[currentOrder dropoff_date]];
+            NSLog(@"%@", currentOrder);
+        }
+    }
+    
+    // 사용자가 자신의 주소 변경 시 서버 및 로컬 디비 업뎃 후,
+    // 현재 뷰의 currentAddress 또한 변경
+    if ( [[noti name] isEqualToString:@"userUpdateCurrentAddress"]) {
+        currentAddress = [[noti userInfo] objectForKey:@"currentAddress"];
+        [inputAddressLabel setText:[currentAddress fullAddress]];
+        NSLog(@"Updaing Current Address Complete");
+    }
+}
+
+- (void) setInputAddressLabel {
+    
+}
+
+
+- (void) userDidChangeAddress:(id)sender {
+    UISegmentedControl *control = (UISegmentedControl*)sender;
+    NSLog(@"%d", [control selectedSegmentIndex]);
+    realm = [RLMRealm defaultRealm];
+    dtoManager = [DTOManager defaultManager];
+    NSLog(@"%d", [dtoManager currentUid]);
+    
+    User *currentUser = [User objectForPrimaryKey:[NSNumber numberWithInt:[dtoManager currentUid]]];
+    RLMArray<Address> *address = [currentUser address];
+    NSLog(@"%@", address);
+    currentAddress = [address objectAtIndex:[control selectedSegmentIndex]];
+    [inputAddressLabel setText:[currentAddress fullAddress]];
+}
+
+- (void) addressLabelDidTap {
+    AddressInputViewController *addressInputViewController = [[AddressInputViewController alloc] init];
+    [addressInputViewController setCurrentAddress:currentAddress];
+    [addressInputViewController setUpdateAddress:YES];
+    [self.navigationController pushViewController:addressInputViewController animated:YES];
 }
 
 - (void) pickupTap {
@@ -447,15 +649,69 @@
 }
 
 - (CGRect) makeRect: (UIView*)view {
-    return CGRectMake(CenterX, FirstElementY + Interval * [view tag], FieldWidth, FieldHeight);
+    return CGRectMake(X_CENTER_DEVICE, Y_FIRST + MARGIN_REGULAR * [view tag], WIDTH_REGULAR, HEIGHT_REGULAR);
 }
 
 - (void) orderButtonDidTouched {
+    //    if ([[pickupDateLabel text] isEqualToString:@"원하시는 날짜를 선택해주세요"] ||
+    //        [[deliverDateLabel text] isEqualToString:@"원하시는 날짜를 선택해주세요"]) {
+    //        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:nil
+    //                                                            message:@"수거 및 배달일을 설정해주세요."
+    //                                                           delegate:self
+    //                                                  cancelButtonTitle:@"닫기"
+    //                                                  otherButtonTitles:nil, nil];
+    //        [alertView show];
+    //        return;
+    //    }
+    //
+    //    if ([[inputAddressLabel text] isEqualToString:@"주소가 없습니다"] ||
+    //        [[inputAddressLabel text] isEqualToString:@"새로운 주소 입력하기"]) {
+    //        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:nil
+    //                                                            message:@"유효한 주소를 입력해주세요."
+    //                                                           delegate:self
+    //                                                  cancelButtonTitle:@"닫기"
+    //                                                  otherButtonTitles:nil, nil];
+    //        [alertView show];
+    //        return;
+    //    }
+    //
+    //    if ([[contactTextField text] length] < 10) {
+    //        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:nil
+    //                                                            message:@"유효한 연락처를 입력해주세요."
+    //                                                           delegate:self
+    //                                                  cancelButtonTitle:@"닫기"
+    //                                                  otherButtonTitles:nil, nil];
+    //        [alertView show];
+    //        return;
+    //    }
+    
+    if (currentOrder) {
+        
+        realm = [RLMRealm defaultRealm];
+        [realm beginWriteTransaction];
+        [currentOrder setPhone:[contactTextField text]];
+        [currentOrder setAddress:[currentAddress address]];
+        [currentOrder setAddr_number:[currentAddress addr_number]];
+        [currentOrder setAddr_building:[currentAddress addr_building]];
+        [currentOrder setAddr_remainder:[currentAddress addr_remainder]];
+        [realm commitWriteTransaction];
+    }
+    else {
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:nil
+                                                            message:@"주문이 제대로 생성되지 않았습니다.\n다시 로그인해주세요."
+                                                           delegate:self
+                                                  cancelButtonTitle:@"닫기"
+                                                  otherButtonTitles:nil, nil];
+        [alertView show];
+    }
+    
     ChooseLaundryViewController *chooseLaundry = [[ChooseLaundryViewController alloc] init];
+    [chooseLaundry setCurrentOrder:currentOrder];
     UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:chooseLaundry];
     [self.navigationController presentViewController:navController animated:YES completion:^{
-        
     }];
+    
+    NSLog(@"[CURRENT ORDER]\r%@", currentOrder);
 }
 
 @end

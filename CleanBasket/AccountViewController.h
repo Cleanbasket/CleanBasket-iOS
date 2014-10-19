@@ -10,6 +10,7 @@
 #import <Realm/Realm.h>
 #import "AFNetworking.h"
 #import "User.h"
+#import "Order.h"
 
 @interface AccountViewController : UIViewController {
     AFHTTPRequestOperationManager *manager;

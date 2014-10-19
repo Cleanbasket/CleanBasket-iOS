@@ -205,6 +205,19 @@
                     [self loginFailed];
                     return;
                 }];
+                
+                // 세션 기반으로 아이템 코드를 가져온다.
+                [manager POST:@"http://cleanbasket.co.kr/item/code" parameters:@{} success:^(AFHTTPRequestOperation *operation, id responseObject) {
+                    NSLog(@"[ITEM CODE]\r%@", [responseObject valueForKey:@"data"]);
+                    
+                    NSArray *jsonArray = [NSJSONSerialization JSONObjectWithData:[responseObject[@"data"] dataUsingEncoding:NSUTF8StringEncoding] options:NSJSONReadingMutableContainers error:nil];
+                    
+                    [dtoManager createItemCode:jsonArray];
+                    
+                } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                    NSLog(@"%@", error);
+                }];
+                
                 break;
             }
                 // 이메일 주소 없음

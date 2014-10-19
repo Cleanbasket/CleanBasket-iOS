@@ -16,6 +16,7 @@
 #import "ServiceInfoViewController.h"
 #import "MyUITabBarController.h"
 #import "CBConstants.h"
+#import "AFNetworking.h"
 
 @interface AppDelegate : UIResponder <UIApplicationDelegate>
 

@@ -33,9 +33,9 @@
 //    return @[];
 //}
 
-//+ (NSString *)primaryKey {
-//    return @"adrid";
-//}
++ (NSString *)primaryKey {
+    return @"adrid";
+}
 
 - (NSString *)fullAddress {
     NSString *fullAddress = [[NSString alloc] init];
@@ -48,7 +48,11 @@
     fullAddress = [fullAddress stringByAppendingString:@" "];
     fullAddress = [fullAddress stringByAppendingString:self.addr_remainder];
     
-    return fullAddress;
+    NSLog(@"%d", [fullAddress length]);
+    if ( [fullAddress length] == 3)
+        return @"주소가 없습니다";
+    else
+        return fullAddress;
 }
 
 @end

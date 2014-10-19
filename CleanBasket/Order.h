@@ -7,6 +7,7 @@
 //
 
 #import <Realm/Realm.h>
+#import "CBConstants.h"
 
 @interface Order : RLMObject
 @property int oid;

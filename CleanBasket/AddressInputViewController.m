@@ -25,8 +25,6 @@
     [self.navigationItem setTitle:@"주소입력"];
     [self.view setBackgroundColor:[UIColor whiteColor]];
     
-    fullAddress = [[NSString alloc] init];
-    
     addrPickerView = [[UIPickerView alloc] initWithFrame:CGRectMake(0, 162, DEVICE_WIDTH, 0)];
     [addrPickerView setDelegate:self];
     [addrPickerView setDataSource:self];
@@ -174,16 +172,12 @@
     pickerCityKeys = [pickerAddressData allKeys];
     pickerBoroughKeys = [NSMutableArray arrayWithArray:[[pickerAddressData valueForKey:[pickerCityKeys objectAtIndex:0]] allKeys]];
     pickerBoroughKeys = [NSMutableArray arrayWithArray:[pickerBoroughKeys sortedArrayUsingComparator:^NSComparisonResult(id obj1, id obj2) {
-        /*
-        NSString *first = [NSString stringWithCString:[obj2 UTF8String] encoding:NSUTF8StringEncoding];
-        NSString *second = [NSString stringWithCString:[obj2 UTF8String] encoding:NSUTF8StringEncoding];
-        NSLog(@"%@ %@ %ld", first, second, [first localizedCaseInsensitiveCompare:second]);
-         */
-        NSLog(@"%ld", [obj1 localizedCaseInsensitiveCompare:obj2]);
         return [obj1 localizedCaseInsensitiveCompare:obj2];
     }]];
+    pickerDongKeys = [[pickerAddressData valueForKey:[pickerCityKeys objectAtIndex:0]] valueForKey:[pickerBoroughKeys objectAtIndex:0]];
     
     [addrPickerView reloadAllComponents];
+    [self makeFullAddress];
     
     UIButton* confirmButton = [[UIButton alloc] initWithFrame:CGRectMake((DEVICE_WIDTH - 160)/2, DEVICE_HEIGHT - 80, 160, FieldHeight)];
     [confirmButton setTitle:@"확인" forState:UIControlStateNormal];
@@ -194,22 +188,96 @@
     
     [self.view addSubview:confirmButton];
     
+    NSLog(@"%@", self.currentAddress);
+    if (self.currentAddress) {
+        NSLog(@"CURRENT ADDRESS EXISTS!");
+        [streetNumber setText:[self.currentAddress addr_number]];
+        [buildingName setText:[self.currentAddress addr_building]];
+        [remainder setText:[self.currentAddress addr_remainder]];
+    }
     
 }
 
 - (void) confirmButtonDidTouched {
-    Address *newAddress = [[Address alloc] init];
-    [newAddress setValue:fullAddress forKey:@"address"];
-    [newAddress setValue:[streetNumber text] forKey:@"addr_number"];
-    [newAddress setValue:[buildingName text] forKey:@"addr_building"];
-    [newAddress setValue:[remainder text] forKey:@"addr_remainder"];
-//    NSLog(@"%@ %@",newAddress ,[newAddress fullAddress]);
+    if (self.updateAddress) {
+        
+        NSDictionary *data = @{@"type":[NSNumber numberWithInt:[self.currentAddress type]],
+                               @"address":fullAddress,
+                               @"addr_number":[streetNumber text],
+                               @"addr_building":[buildingName text],
+                               @"addr_remainder":[remainder text]
+                               };
+        
+        AFHTTPRequestOperationManager *afManager = [AFHTTPRequestOperationManager manager];
+        afManager.requestSerializer = [AFJSONRequestSerializer serializer];
+        [afManager POST:@"http://cleanbasket.co.kr/member/address/update" parameters:data success:^(AFHTTPRequestOperation *operation, id responseObject) {
+            int constant = [[responseObject valueForKey:@"constant"] intValue];
+            switch (constant) {
+                    // 주소 업데이트 성공
+                case CBServerConstantSuccess: {
+                    realm = [RLMRealm defaultRealm];
+                    [realm beginWriteTransaction];
+                    [self.currentAddress setAddress:fullAddress];
+                    [self.currentAddress setAddr_number:[streetNumber text]];
+                    [self.currentAddress setAddr_building:[buildingName text]];
+                    [self.currentAddress setAddr_remainder:[remainder text]];
+                    [realm commitWriteTransaction];
+                    NSLog(@"[CURRENT ADDRESS] %@", self.currentAddress);
+                    [[NSNotificationCenter defaultCenter] postNotificationName:@"userUpdateCurrentAddress" object:self userInfo:[NSDictionary dictionaryWithObject:self.currentAddress forKey:@"currentAddress"]];
+                    [self.navigationController popViewControllerAnimated:YES];
+                }
+                    
+                    break;
+                    
+                    // 오류 발생
+                case CBServerConstantError: {
+                    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:nil
+                                                                        message:@"서버 오류가 발생했습니다.\n다시 시도해주세요."
+                                                                       delegate:self
+                                                              cancelButtonTitle:@"닫기"
+                                                              otherButtonTitles:nil, nil];
+                    [alertView show];
+                }
+                    break;
+                    
+                    // 세션 만료 시, 로그인 화면으로 돌아감
+                case CBServerConstantSessionExpired: {
+                    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:nil
+                                                                        message:@"세션이 만료되어 로그인 화면으로 돌아갑니다."
+                                                                       delegate:self
+                                                              cancelButtonTitle:@"닫기"
+                                                              otherButtonTitles:nil, nil];
+                    [alertView show];
+                    [self dismissViewControllerAnimated:YES completion:nil];
+                }
+                    break;
+                default:
+                    break;
+            }
+            
+            
+        } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+            NSLog(@"%@", error);
+        }];
+    }
     
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"addressCreated" object:self userInfo:[NSDictionary dictionaryWithObject:newAddress forKey:@"data"]];
-    [streetNumber setText:@""];
-    [buildingName setText:@""];
-    [remainder setText:@""];
-    [self.navigationController popViewControllerAnimated:YES];
+    else {
+        Address *newAddress = [[Address alloc] init];
+        [newAddress setAddress:fullAddress];
+        [newAddress setAddr_number:[streetNumber text]];
+        [newAddress setAddr_building:[buildingName text]];
+        [newAddress setAddr_remainder:[remainder text]];
+        
+        // EmailSignUpViewController로 사용자가 작성한 Address를 전송한다.
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"addressCreated" object:self userInfo:[NSDictionary dictionaryWithObject:newAddress forKey:@"data"]];
+        
+        [streetNumber setText:@""];
+        [buildingName setText:@""];
+        [remainder setText:@""];
+        
+        [self.navigationController popViewControllerAnimated:YES];
+    }
+    
 }
 
 - (void)didReceiveMemoryWarning {
@@ -275,7 +343,7 @@
 }
 
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event{
-//    NSLog(@"touchesBegan:withEvent:");
+    //    NSLog(@"touchesBegan:withEvent:");
     [self.view endEditing:YES];
     [super touchesBegan:touches withEvent:event];
 }
@@ -314,7 +382,7 @@
         fullAddress = [fullAddress stringByAppendingString:[pickerBoroughKeys objectAtIndex:[addrPickerView selectedRowInComponent:1]]];
         fullAddress = [fullAddress stringByAppendingString:@" "];
         fullAddress = [fullAddress stringByAppendingString:[pickerDongKeys objectAtIndex:[addrPickerView selectedRowInComponent:2]]];
-//        NSLog(@"%@", fullAddress);
+        //        NSLog(@"%@", fullAddress);
     } else {
         return;
     }

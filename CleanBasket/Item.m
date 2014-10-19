@@ -12,10 +12,10 @@
 
 // Specify default values for properties
 
-//+ (NSDictionary *)defaultPropertyValues
-//{
-//    return @{};
-//}
++ (NSDictionary *)defaultPropertyValues
+{
+    return @{@"count":@0};
+}
 
 // Specify properties to ignore (Realm won't persist these)
 
@@ -24,8 +24,8 @@
 //    return @[];
 //}
 
-+ (NSString *)primaryKey {
-    return @"itid";
-}
+//+ (NSString *)primaryKey {
+//    return @"itid";
+//}
 
 @end

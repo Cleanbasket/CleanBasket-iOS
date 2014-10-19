@@ -47,6 +47,8 @@
      setTitleTextAttributes:@{ UITextAttributeTextColor : CleanBasketMint,
                                UITextAttributeFont:[UIFont systemFontOfSize:14.0f]}
      forState:UIControlStateSelected];
+    
+    [self.tabBar setTintColor:CleanBasketMint];
 }
 
 - (void)didReceiveMemoryWarning {

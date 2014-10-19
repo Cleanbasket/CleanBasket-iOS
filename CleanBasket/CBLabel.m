@@ -11,7 +11,7 @@
 @implementation CBLabel
 
 - (void)drawRect:(CGRect)rect {
-    UIEdgeInsets insets = {0, 10, 0, 5};
+    UIEdgeInsets insets = {0, 10, 0, 10};
     return [super drawTextInRect:UIEdgeInsetsInsetRect(rect, insets)];
 }
 

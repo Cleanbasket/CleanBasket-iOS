@@ -52,6 +52,14 @@
 		F193DA2719ED7C8C0051C32A /* tab_progress.png in Resources */ = {isa = PBXBuildFile; fileRef = F193DA2619ED7C8C0051C32A /* tab_progress.png */; };
 		F193DA2919ED7CB30051C32A /* tab_price.png in Resources */ = {isa = PBXBuildFile; fileRef = F193DA2819ED7CB30051C32A /* tab_price.png */; };
 		F193DA2B19ED7CC20051C32A /* tab_service.png in Resources */ = {isa = PBXBuildFile; fileRef = F193DA2A19ED7CC20051C32A /* tab_service.png */; };
+		F19AB5AD19F0F201006F3B5B /* ic_menu_coupon_01@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F19AB5A119F0F201006F3B5B /* ic_menu_coupon_01@2x.png */; };
+		F19AB5AE19F0F201006F3B5B /* ic_menu_coupon_02@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F19AB5A219F0F201006F3B5B /* ic_menu_coupon_02@2x.png */; };
+		F19AB5B019F0F201006F3B5B /* ic_menu_order_01@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F19AB5A419F0F201006F3B5B /* ic_menu_order_01@2x.png */; };
+		F19AB5B119F0F201006F3B5B /* ic_menu_order_02@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F19AB5A519F0F201006F3B5B /* ic_menu_order_02@2x.png */; };
+		F19AB5B319F0F201006F3B5B /* ic_menu_pricelist_01@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F19AB5A719F0F201006F3B5B /* ic_menu_pricelist_01@2x.png */; };
+		F19AB5B419F0F201006F3B5B /* ic_menu_pricelist_02@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F19AB5A819F0F201006F3B5B /* ic_menu_pricelist_02@2x.png */; };
+		F19AB5B619F0F201006F3B5B /* ic_menu_progress_01@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F19AB5AA19F0F201006F3B5B /* ic_menu_progress_01@2x.png */; };
+		F19AB5B719F0F201006F3B5B /* ic_menu_progress_02@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F19AB5AB19F0F201006F3B5B /* ic_menu_progress_02@2x.png */; };
 		F19DE12419EEE0CF004B60E7 /* Realm.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F19DE12319EEE0CF004B60E7 /* Realm.framework */; };
 		F19DE12619EEE111004B60E7 /* libc++.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = F19DE12519EEE111004B60E7 /* libc++.dylib */; };
 		F19DE12919EEF386004B60E7 /* Order.m in Sources */ = {isa = PBXBuildFile; fileRef = F19DE12819EEF386004B60E7 /* Order.m */; };
@@ -76,7 +84,6 @@
 		F19DE15B19EF8473004B60E7 /* stepperPlusSymbol@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F19DE15219EF8473004B60E7 /* stepperPlusSymbol@2x.png */; };
 		F19DE15C19EF8473004B60E7 /* stepperTopButton.png in Resources */ = {isa = PBXBuildFile; fileRef = F19DE15319EF8473004B60E7 /* stepperTopButton.png */; };
 		F19DE15D19EF8473004B60E7 /* stepperTopButton@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F19DE15419EF8473004B60E7 /* stepperTopButton@2x.png */; };
-		F19DE16019EF92C3004B60E7 /* CBServerConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = F19DE15F19EF92C3004B60E7 /* CBServerConstants.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -170,6 +177,14 @@
 		F193DA2619ED7C8C0051C32A /* tab_progress.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tab_progress.png; sourceTree = "<group>"; };
 		F193DA2819ED7CB30051C32A /* tab_price.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tab_price.png; sourceTree = "<group>"; };
 		F193DA2A19ED7CC20051C32A /* tab_service.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tab_service.png; sourceTree = "<group>"; };
+		F19AB5A119F0F201006F3B5B /* ic_menu_coupon_01@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic_menu_coupon_01@2x.png"; sourceTree = "<group>"; };
+		F19AB5A219F0F201006F3B5B /* ic_menu_coupon_02@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic_menu_coupon_02@2x.png"; sourceTree = "<group>"; };
+		F19AB5A419F0F201006F3B5B /* ic_menu_order_01@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic_menu_order_01@2x.png"; sourceTree = "<group>"; };
+		F19AB5A519F0F201006F3B5B /* ic_menu_order_02@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic_menu_order_02@2x.png"; sourceTree = "<group>"; };
+		F19AB5A719F0F201006F3B5B /* ic_menu_pricelist_01@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic_menu_pricelist_01@2x.png"; sourceTree = "<group>"; };
+		F19AB5A819F0F201006F3B5B /* ic_menu_pricelist_02@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic_menu_pricelist_02@2x.png"; sourceTree = "<group>"; };
+		F19AB5AA19F0F201006F3B5B /* ic_menu_progress_01@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic_menu_progress_01@2x.png"; sourceTree = "<group>"; };
+		F19AB5AB19F0F201006F3B5B /* ic_menu_progress_02@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic_menu_progress_02@2x.png"; sourceTree = "<group>"; };
 		F19DE12319EEE0CF004B60E7 /* Realm.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Realm.framework; sourceTree = "<group>"; };
 		F19DE12519EEE111004B60E7 /* libc++.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libc++.dylib"; path = "usr/lib/libc++.dylib"; sourceTree = SDKROOT; };
 		F19DE12719EEF386004B60E7 /* Order.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Order.h; sourceTree = "<group>"; };
@@ -201,8 +216,6 @@
 		F19DE15219EF8473004B60E7 /* stepperPlusSymbol@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "stepperPlusSymbol@2x.png"; sourceTree = "<group>"; };
 		F19DE15319EF8473004B60E7 /* stepperTopButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = stepperTopButton.png; sourceTree = "<group>"; };
 		F19DE15419EF8473004B60E7 /* stepperTopButton@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "stepperTopButton@2x.png"; sourceTree = "<group>"; };
-		F19DE15E19EF92C3004B60E7 /* CBServerConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CBServerConstants.h; sourceTree = "<group>"; };
-		F19DE15F19EF92C3004B60E7 /* CBServerConstants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CBServerConstants.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -225,6 +238,17 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		F133210B19F3279C00C52D20 /* Order */ = {
+			isa = PBXGroup;
+			children = (
+				F19DE12B19EEF4EF004B60E7 /* ChooseLaundryViewController.h */,
+				F19DE12C19EEF4EF004B60E7 /* ChooseLaundryViewController.m */,
+				F14AC26019DE9AB8002BCC98 /* OrderViewController.h */,
+				F14AC26119DE9AB8002BCC98 /* OrderViewController.m */,
+			);
+			name = Order;
+			sourceTree = "<group>";
+		};
 		F14AC22819DE7E00002BCC98 = {
 			isa = PBXGroup;
 			children = (
@@ -341,8 +365,6 @@
 				F193DA0519EBF1750051C32A /* MBProgressHUD */,
 				F193D9E819EBCBA70051C32A /* AFNetworking */,
 				F14AC26719DEA2D8002BCC98 /* CBConstants.h */,
-				F19DE15E19EF92C3004B60E7 /* CBServerConstants.h */,
-				F19DE15F19EF92C3004B60E7 /* CBServerConstants.m */,
 			);
 			name = Util;
 			sourceTree = "<group>";
@@ -365,9 +387,7 @@
 		F14AC27319DED5BD002BCC98 /* TabBarControllers */ = {
 			isa = PBXGroup;
 			children = (
-				F19DE12A19EEF4CC004B60E7 /* ChooseLaundry */,
-				F14AC26019DE9AB8002BCC98 /* OrderViewController.h */,
-				F14AC26119DE9AB8002BCC98 /* OrderViewController.m */,
+				F133210B19F3279C00C52D20 /* Order */,
 				F14AC27419DEDEDC002BCC98 /* OrderStatusViewController.h */,
 				F14AC27519DEDEDC002BCC98 /* OrderStatusViewController.m */,
 				F14AC27719DEDEE6002BCC98 /* PriceViewController.h */,
@@ -431,6 +451,7 @@
 		F193DA1A19ED7AEA0051C32A /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				F19AB59F19F0F201006F3B5B /* ic_edit */,
 				F19DE12E19EEF521004B60E7 /* LaundryItems */,
 				F193DA1F19ED7C5E0051C32A /* TabBarIcon */,
 			);
@@ -456,13 +477,19 @@
 			name = TabBarIcon;
 			sourceTree = "<group>";
 		};
-		F19DE12A19EEF4CC004B60E7 /* ChooseLaundry */ = {
+		F19AB59F19F0F201006F3B5B /* ic_edit */ = {
 			isa = PBXGroup;
 			children = (
-				F19DE12B19EEF4EF004B60E7 /* ChooseLaundryViewController.h */,
-				F19DE12C19EEF4EF004B60E7 /* ChooseLaundryViewController.m */,
+				F19AB5A119F0F201006F3B5B /* ic_menu_coupon_01@2x.png */,
+				F19AB5A219F0F201006F3B5B /* ic_menu_coupon_02@2x.png */,
+				F19AB5A419F0F201006F3B5B /* ic_menu_order_01@2x.png */,
+				F19AB5A519F0F201006F3B5B /* ic_menu_order_02@2x.png */,
+				F19AB5A719F0F201006F3B5B /* ic_menu_pricelist_01@2x.png */,
+				F19AB5A819F0F201006F3B5B /* ic_menu_pricelist_02@2x.png */,
+				F19AB5AA19F0F201006F3B5B /* ic_menu_progress_01@2x.png */,
+				F19AB5AB19F0F201006F3B5B /* ic_menu_progress_02@2x.png */,
 			);
-			name = ChooseLaundry;
+			path = ic_edit;
 			sourceTree = "<group>";
 		};
 		F19DE12E19EEF521004B60E7 /* LaundryItems */ = {
@@ -591,8 +618,11 @@
 				F18F103219EE5226006EEDC3 /* tab_account@2x.png in Resources */,
 				F18F102F19ED8873006EEDC3 /* tab_price@2x.png in Resources */,
 				F18F102C19ED8845006EEDC3 /* tab_coupon@2x.png in Resources */,
+				F19AB5B119F0F201006F3B5B /* ic_menu_order_02@2x.png in Resources */,
 				F19DE15619EF8473004B60E7 /* stepperBottomButton.png in Resources */,
+				F19AB5AE19F0F201006F3B5B /* ic_menu_coupon_02@2x.png in Resources */,
 				F19DE15D19EF8473004B60E7 /* stepperTopButton@2x.png in Resources */,
+				F19AB5B419F0F201006F3B5B /* ic_menu_pricelist_02@2x.png in Resources */,
 				F193DA2719ED7C8C0051C32A /* tab_progress.png in Resources */,
 				F19DE13B19EEF565004B60E7 /* ic_calc_suit@2x.png in Resources */,
 				F19DE13719EEF565004B60E7 /* ic_calc_coat@2x.png in Resources */,
@@ -601,13 +631,18 @@
 				F18F103019ED8873006EEDC3 /* tab_progress@2x.png in Resources */,
 				F18F103419EE52C5006EEDC3 /* tab_service@2x.png in Resources */,
 				F193DA2919ED7CB30051C32A /* tab_price.png in Resources */,
+				F19AB5AD19F0F201006F3B5B /* ic_menu_coupon_01@2x.png in Resources */,
 				F14AC24519DE7E00002BCC98 /* Images.xcassets in Resources */,
 				F19DE13819EEF565004B60E7 /* ic_calc_etc@2x.png in Resources */,
 				F19DE13619EEF565004B60E7 /* ic_calc_blouse@2x.png in Resources */,
+				F19AB5B719F0F201006F3B5B /* ic_menu_progress_02@2x.png in Resources */,
+				F19AB5B619F0F201006F3B5B /* ic_menu_progress_01@2x.png in Resources */,
 				F18F102A19ED86E4006EEDC3 /* tab_order@2x.png in Resources */,
 				F19DE15C19EF8473004B60E7 /* stepperTopButton.png in Resources */,
+				F19AB5B319F0F201006F3B5B /* ic_menu_pricelist_01@2x.png in Resources */,
 				F19DE15719EF8473004B60E7 /* stepperBottomButton@2x.png in Resources */,
 				F19DE15919EF8473004B60E7 /* stepperMinusSymbol@2x.png in Resources */,
+				F19AB5B019F0F201006F3B5B /* ic_menu_order_01@2x.png in Resources */,
 				F193DA2519ED7C840051C32A /* tab_order.png in Resources */,
 				F19DE15A19EF8473004B60E7 /* stepperPlusSymbol.png in Resources */,
 				F19DE15B19EF8473004B60E7 /* stepperPlusSymbol@2x.png in Resources */,
@@ -636,7 +671,6 @@
 				F193DA0B19EBF9FE0051C32A /* UITextField+CleanBasket.m in Sources */,
 				F19DE15519EF8473004B60E7 /* RPVerticalStepper.m in Sources */,
 				F19DE12D19EEF4EF004B60E7 /* ChooseLaundryViewController.m in Sources */,
-				F19DE16019EF92C3004B60E7 /* CBServerConstants.m in Sources */,
 				F193DA0119EBCBA70051C32A /* AFURLConnectionOperation.m in Sources */,
 				F14AC23D19DE7E00002BCC98 /* CleanBasket.xcdatamodeld in Sources */,
 				F14AC26219DE9AB8002BCC98 /* OrderViewController.m in Sources */,
@@ -782,7 +816,7 @@
 				INFOPLIST_FILE = CleanBasket/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = CleanBasket;
 				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = 1;
 			};
@@ -802,7 +836,7 @@
 				INFOPLIST_FILE = CleanBasket/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = CleanBasket;
 				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = 1;
 			};
@@ -822,7 +856,7 @@
 				);
 				INFOPLIST_FILE = CleanBasketTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = CleanBasketTests;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/CleanBasket.app/CleanBasket";
 			};
 			name = Debug;
@@ -837,7 +871,7 @@
 				);
 				INFOPLIST_FILE = CleanBasketTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = CleanBasketTests;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/CleanBasket.app/CleanBasket";
 			};
 			name = Release;

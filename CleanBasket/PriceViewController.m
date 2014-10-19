@@ -22,8 +22,9 @@
 - (instancetype)init {
     self = [super init];
     if (self) {
-        UIImage *tabBarImage = [UIImage imageNamed:@"tab_price.png"];
-        self.tabBarItem = [self.tabBarItem initWithTitle:@"가격표" image:tabBarImage selectedImage:tabBarImage];
+        UIImage *tabBarImage = [UIImage imageNamed:@"ic_menu_pricelist_01.png"];
+        UIImage *selectedTabBarImage = [UIImage imageNamed:@"ic_menu_pricelist_02.png"];
+        self.tabBarItem = [self.tabBarItem initWithTitle:@"가격표" image:tabBarImage selectedImage:selectedTabBarImage];
     }
     
     return self;

@@ -16,19 +16,6 @@
 #import "MBProgressHUD.h"
 #import "DTOManager.h"
 
-typedef enum serverConstant : NSUInteger {
-    CBServerConstantSessionExpired,
-    CBServerConstantSuccess,
-    CBServerConstantError,
-    CBServerConstantEmailError,
-    CBServerConstantPasswordError,
-    CBServerConstantAccountValid,
-    CBServerConstantAccountInvalid,
-    CBServerConstantNONE,
-    CBServerConstantAccountEnabled,
-    CBServerConstantAccountDisabled
-} ServerContant ;
-
 @interface LoginViewController : UIViewController {
     UITextField *emailTextField;
     UITextField *passwordTextField;

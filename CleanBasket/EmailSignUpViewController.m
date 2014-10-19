@@ -115,6 +115,7 @@
 }
 
 - (void) notificationReceived:(NSNotification*)noti {
+    // AddressInputViewController에서 사용자가 주소 작성 후 확인 버튼을 누른 경우,
     if ([[noti name] isEqualToString:@"addressCreated"]) {
         newAddress = [[noti userInfo] valueForKey:@"data"];
         [addressButton setTitle:[newAddress fullAddress] forState:UIControlStateNormal];

@@ -39,7 +39,6 @@
     [[UINavigationBar appearance] setTitleTextAttributes:@{NSForegroundColorAttributeName:[UIColor whiteColor]}];
     
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent animated:NO];
-    [[UITabBar appearance] setTintColor:CleanBasketMint];
     
     [self.window setRootViewController:navController];
     
@@ -47,7 +46,6 @@
     self.tabNavController = [[UINavigationController alloc] initWithRootViewController:self.tabBarController];
     
     self.orderViewController = [[OrderViewController alloc] init];
-    UINavigationController *orderViewNavBar = [[UINavigationController alloc] initWithRootViewController:self.orderViewController];
     self.orderStatusViewController = [[OrderStatusViewController alloc] init];
     self.priceViewController = [[PriceViewController alloc] init];
     self.accountViewController = [[AccountViewController alloc] init];
@@ -65,9 +63,9 @@
      [imageView setFrame:CGRectMake(0, 0, 320, 320)];
      [self.view addSubview:imageView];
      */
-
-//    [self.window addSubview:self.tabBarController.view];
-//    [self.window setRootViewController:tabNavController];
+    
+    //    [self.window addSubview:self.tabBarController.view];
+    //    [self.window setRootViewController:tabNavController];
     return YES;
 }
 

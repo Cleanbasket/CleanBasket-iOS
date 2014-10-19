@@ -9,11 +9,16 @@
 #import "ChooseLaundryViewController.h"
 #define IMAGE_WIDTH 160
 #define IMAGE_HEIGHT 160
-#define FieldHeight 35
-#define FieldWidth 200
-#define CenterX (DEVICE_WIDTH - FieldWidth)/2
-#define FirstElementY 254
-#define Interval 53
+#define X_FIRST 10
+#define X_SECOND 80
+#define X_CENTER_DEVICE (DEVICE_WIDTH - WIDTH_REGULAR)/2
+#define Y_FIRST 89
+#define WIDTH_REGULAR 300
+#define WIDTH_SMALL 60
+#define WIDTH_LARGE 230
+#define WIDTH_FULL 300
+#define HEIGHT_REGULAR 35
+#define MARGIN_REGULAR 60
 
 @interface ChooseLaundryViewController () {
     UIImageView *laundryImageView;
@@ -21,6 +26,11 @@
     NSUInteger imageIdx;
     NSArray *laundryNames;
     UILabel *laundryLabel;
+    UILabel *quantityLabel;
+    RPVerticalStepper *stepper;
+    RLMArray *itemArray;
+    Item *currentItem;
+    RLMRealm *realm;
 }
 @end
 
@@ -28,10 +38,13 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    imageIdx = 0;
     [self.navigationItem setTitle:@"세탁품목선택"];
     [self.view setBackgroundColor:[UIColor whiteColor]];
     [self.navigationItem setRightBarButtonItem:[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(cancelButtonDidTouched)]];
+    realm = [RLMRealm defaultRealm];
+    itemArray = [Item allObjects];
+    imageIdx = 0;
+    currentItem = [itemArray objectAtIndex:imageIdx];
     
     laundryImages = [NSArray arrayWithObjects:
                      [UIImage imageNamed:@"ic_calc_yshirt.png"],
@@ -50,7 +63,7 @@
                     @"블라우스",
                     @"원피스",
                     @"코트",
-                    @"기타",
+                    @"기타(그림을 터치해주세요!)",
                     nil];
     
     NSMutableArray *imageViews = [NSMutableArray array];
@@ -61,7 +74,7 @@
         [imageViews addObject:imageView];
     }
     
-    laundryLabel = [[UILabel alloc] initWithFrame:CGRectMake((DEVICE_WIDTH - IMAGE_WIDTH)/2, 64, IMAGE_WIDTH, 30)];
+    laundryLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 64, DEVICE_WIDTH, 30)];
     [laundryLabel setTextAlignment:NSTextAlignmentCenter];
     [laundryLabel setTextColor:CleanBasketMint];
     [laundryLabel setFont:[UIFont boldSystemFontOfSize:18.0f]];
@@ -85,21 +98,38 @@
     [laundryImageView addGestureRecognizer:swipeLeft];
     [laundryImageView addGestureRecognizer:swipeRight];
     
-    RPVerticalStepper *stepper = [[RPVerticalStepper alloc] initWithFrame:CGRectMake(260, 265, 0, 0)];
-    [stepper addTarget:self action:@selector(stepperPressed:) forControlEvents:UIControlEventValueChanged];
-    
+    stepper = [[RPVerticalStepper alloc] initWithFrame:CGRectMake(275, 265, 0, 0)];
     [stepper setMinimumValue:0];
     [stepper setMaximumValue:99];
     [stepper setStepValue:1];
+    [stepper setValue:[currentItem count]];
+    [stepper addTarget:self action:@selector(stepperPressed) forControlEvents:UIControlEventValueChanged];
+    
+    quantityLabel = [[UILabel alloc] initWithFrame:CGRectMake(276-stepper.frame.size.width, 265, stepper.frame.size.width, stepper.frame.size.height)];
+    [quantityLabel setFont:[UIFont systemFontOfSize:20]];
+    [quantityLabel setAdjustsFontSizeToFitWidth:YES];
+    [quantityLabel setTextAlignment:NSTextAlignmentCenter];
+    [quantityLabel setText:[NSString stringWithFormat:@"%.0f", [stepper value]]];
+    [quantityLabel setTextColor:[UIColor whiteColor]];
+    [quantityLabel setBackgroundColor:CleanBasketMint];
+    [quantityLabel setClipsToBounds:YES];
+    [quantityLabel.layer setCornerRadius:5.0f];
     
     [self.view addSubview:stepper];
+    [self.view addSubview:quantityLabel];
     [self.view addSubview:laundryImageView];
     [self.view addSubview:laundryLabel];
 }
 
-- (void)stepperPressed:(id)sender {
-    UIStepper *stepper = (UIStepper*)sender;
-    NSLog(@"%f", [stepper value]);
+- (void)stepperPressed {
+    if (imageIdx == 6) {
+        return;
+    }
+    
+    [realm beginWriteTransaction];
+    [currentItem setCount:[stepper value]];
+    [quantityLabel setText:[NSString stringWithFormat:@"%d", [currentItem count]]];
+    [realm commitWriteTransaction];
 }
 
 - (void)handleSwipe:(UISwipeGestureRecognizer *)swipe {
@@ -110,6 +140,10 @@
             imageIdx = 0;
         }
         [laundryLabel setText:[laundryNames objectAtIndex:imageIdx]];
+        currentItem = [itemArray objectAtIndex:imageIdx];
+        [stepper setValue:[currentItem count]];
+        [quantityLabel setText:[NSString stringWithFormat:@"%d", [currentItem count]]];
+        
         
         [UIView transitionWithView:laundryLabel
                           duration:0.4
@@ -139,6 +173,9 @@
             imageIdx = 6;
         }
         [laundryLabel setText:[laundryNames objectAtIndex:imageIdx]];
+        currentItem = [itemArray objectAtIndex:imageIdx];
+        [stepper setValue:[currentItem count]];
+        [quantityLabel setText:[NSString stringWithFormat:@"%d", [currentItem count]]];
         
         [UIView transitionWithView:laundryLabel
                           duration:0.4
@@ -176,7 +213,7 @@
 }
 
 - (CGRect) makeRect: (UIView*)view {
-    return CGRectMake(CenterX, FirstElementY + Interval * [view tag], FieldWidth, FieldHeight);
+    return CGRectMake(X_CENTER_DEVICE, Y_FIRST + MARGIN_REGULAR * [view tag], WIDTH_REGULAR, HEIGHT_REGULAR);
 }
 
 @end

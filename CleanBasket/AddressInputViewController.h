@@ -8,10 +8,12 @@
 
 #import <UIKit/UIKit.h>
 #import <Realm/Realm.h>
+#import "AFNetworking.h"
 #import "CBConstants.h"
 #import "UITextField+CleanBasket.h"
 #import "Address.h"
 #import "User.h"
+#import "DTOManager.h"
 
 @interface AddressInputViewController : UIViewController {
     NSDictionary *viewProperty;
@@ -25,6 +27,10 @@
     NSString *fullAddress;
     RLMRealm *realm;
     UIPickerView *addrPickerView;
+    DTOManager *dtoManager;
 }
+
+@property Address *currentAddress;
+@property BOOL updateAddress;
 
 @end

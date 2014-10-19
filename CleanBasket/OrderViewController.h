@@ -7,21 +7,29 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <Realm/Realm.h>
 #import "CBConstants.h"
 #import "CBLabel.h"
 #import "AFNetworking.h"
 #import "DTOManager.h"
-#import <Realm/Realm.h>
 #import "User.h"
 #import "Address.h"
+#import "Order.h"
 #import "ChooseLaundryViewController.h"
+#import "AddressInputViewController.h"
 
 @interface OrderViewController : UITabBarController {
     AFHTTPRequestOperationManager *AFManager;
     RLMRealm *realm;
     UITextField *contactTextField;
     CBLabel *inputAddressLabel;
-    
+    DTOManager *dtoManager;
+    Order *currentOrder;
+    CBLabel *pickupDateLabel;
+    CBLabel *deliverDateLabel;
+    UIScrollView *scrollView;
+    UISegmentedControl *addressControl;
+    Address *currentAddress;
 }
 
 @end

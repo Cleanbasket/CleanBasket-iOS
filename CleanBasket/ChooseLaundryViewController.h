@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <Realm/Realm.h>
 #import "CBConstants.h"
 #import "ALScrollViewPaging.h"
 #import "ALScrollViewPaging.h"
@@ -17,5 +18,7 @@
 @interface ChooseLaundryViewController : UIViewController {
     
 }
+
+@property Order *currentOrder;
 
 @end

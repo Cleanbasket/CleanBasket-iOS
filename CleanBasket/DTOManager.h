@@ -10,12 +10,14 @@
 #import <Realm/Realm.h>
 #import "User.h"
 #import "Address.h"
+#import "Item.h"
 
-@interface DTOManager : NSObject {
-    int currentUid;
-}
+@interface DTOManager : NSObject
+
+@property int currentUid;
 
 + (id)defaultManager;
 - (void)createUser:(NSDictionary*)userInfo;
+- (void)createItemCode:(NSArray*)itemArray;
 
 @end

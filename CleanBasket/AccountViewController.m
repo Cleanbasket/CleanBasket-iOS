@@ -63,7 +63,6 @@
 - (void) userDidLogout {
     manager.requestSerializer = [AFJSONRequestSerializer serializer];
     [manager POST:@"http://cleanbasket.co.kr/logout" parameters:@{} success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        [[NSFileManager defaultManager] removeItemAtPath:[RLMRealm defaultRealmPath] error:nil];
         NSArray *cookies = [[NSHTTPCookieStorage sharedHTTPCookieStorage] cookiesForURL: [NSURL URLWithString:@"http://cleanbasket.co.kr/"]];
         for (NSHTTPCookie *cookie in cookies)
         {
@@ -71,9 +70,16 @@
         }
         [self.tabBarController.moreNavigationController popToRootViewControllerAnimated:NO];
         
+        realm = [RLMRealm defaultRealm];
+        [realm beginWriteTransaction];
+        [realm deleteObjects:[Order allObjects]];
+        [realm deleteObjects:[User allObjects]];
+        [realm commitWriteTransaction];
+        NSError *error;
+        [[NSFileManager defaultManager] removeItemAtPath:[RLMRealm defaultRealmPath] error:&error];
+        if (error) NSLog(@"%@", error);
         
-        
-        //MyUITabBarController에 사용자가 로그아웃했음을 알림.
+        //AppDelegate에 사용자가 로그아웃했음을 알림.
         [[NSNotificationCenter defaultCenter] postNotificationName:@"userDidLogout" object:self];
         
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {

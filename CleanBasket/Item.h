@@ -9,15 +9,13 @@
 #import <Realm/Realm.h>
 
 @interface Item : RLMObject
-@property int itid;
-@property int oid;
 @property int item_code;
 @property NSString *name;
 @property NSString *descr;
 @property int price;
-@property int count;
 @property NSString *img;
 @property NSString *rdate;
+@property int count;
 @end
 
 // This protocol enables typed collections. i.e.:
