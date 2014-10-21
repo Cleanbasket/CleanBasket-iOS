@@ -9,6 +9,8 @@
 #import <Realm/Realm.h>
 
 @interface Item : RLMObject
+@property int itid;
+@property int oid;
 @property int item_code;
 @property NSString *name;
 @property NSString *descr;

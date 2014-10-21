@@ -517,16 +517,6 @@
     [scrollView addGestureRecognizer:scrollViewTapGesture];
     
     [self.view addSubview:scrollView];
-//    [self.view addSubview:pickupLabel];
-//    [self.view addSubview:pickupDateLabel];
-//    [self.view addSubview:deliverLabel];
-//    [self.view addSubview:deliverDateLabel];
-//    [self.view addSubview:addressLabel];
-//    [self.view addSubview:contactLabel];
-//    [self.view addSubview:inputAddressLabel];
-//    [self.view addSubview:contactTextField];
-//    [self.view addSubview:orderButton];
-//    [self.view addSubview:addressControl];
     [scrollView addSubview:pickupLabel];
     [scrollView addSubview:pickupDateLabel];
     [scrollView addSubview:deliverLabel];
@@ -538,8 +528,6 @@
     [scrollView addSubview:orderButton];
     [scrollView addSubview:addressControl];
 }
-
-
 
 - (void) contactTextFieldEditingDidBegin {
     [scrollView scrollRectToVisible:CGRectMake(0, 180, DEVICE_WIDTH, DEVICE_HEIGHT) animated:YES];
@@ -559,7 +547,7 @@
 }
 
 -(void)viewWillAppear:(BOOL)animated {
-    
+    [inputAddressLabel setText:[currentAddress fullAddress]];
 }
 
 - (void) didReceiveNotification:(NSNotification*)noti {
@@ -598,14 +586,6 @@
             [deliverDateLabel setText:[currentOrder dropoff_date]];
             NSLog(@"%@", currentOrder);
         }
-    }
-    
-    // 사용자가 자신의 주소 변경 시 서버 및 로컬 디비 업뎃 후,
-    // 현재 뷰의 currentAddress 또한 변경
-    if ( [[noti name] isEqualToString:@"userUpdateCurrentAddress"]) {
-        currentAddress = [[noti userInfo] objectForKey:@"currentAddress"];
-        [inputAddressLabel setText:[currentAddress fullAddress]];
-        NSLog(@"Updaing Current Address Complete");
     }
 }
 
@@ -653,37 +633,22 @@
 }
 
 - (void) orderButtonDidTouched {
-    //    if ([[pickupDateLabel text] isEqualToString:@"원하시는 날짜를 선택해주세요"] ||
-    //        [[deliverDateLabel text] isEqualToString:@"원하시는 날짜를 선택해주세요"]) {
-    //        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:nil
-    //                                                            message:@"수거 및 배달일을 설정해주세요."
-    //                                                           delegate:self
-    //                                                  cancelButtonTitle:@"닫기"
-    //                                                  otherButtonTitles:nil, nil];
-    //        [alertView show];
-    //        return;
-    //    }
-    //
-    //    if ([[inputAddressLabel text] isEqualToString:@"주소가 없습니다"] ||
-    //        [[inputAddressLabel text] isEqualToString:@"새로운 주소 입력하기"]) {
-    //        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:nil
-    //                                                            message:@"유효한 주소를 입력해주세요."
-    //                                                           delegate:self
-    //                                                  cancelButtonTitle:@"닫기"
-    //                                                  otherButtonTitles:nil, nil];
-    //        [alertView show];
-    //        return;
-    //    }
-    //
-    //    if ([[contactTextField text] length] < 10) {
-    //        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:nil
-    //                                                            message:@"유효한 연락처를 입력해주세요."
-    //                                                           delegate:self
-    //                                                  cancelButtonTitle:@"닫기"
-    //                                                  otherButtonTitles:nil, nil];
-    //        [alertView show];
-    //        return;
-    //    }
+        if ([[pickupDateLabel text] isEqualToString:@"원하시는 날짜를 선택해주세요"] ||
+            [[deliverDateLabel text] isEqualToString:@"원하시는 날짜를 선택해주세요"]) {
+            [self showHudMessage:@"수거일 및 배달일을 설정해주세요."];
+            return;
+        }
+    
+        if ([[inputAddressLabel text] isEqualToString:@"주소가 없습니다"] ||
+            [[inputAddressLabel text] isEqualToString:@"새로운 주소 입력하기"]) {
+            [self showHudMessage:@"유효한 주소를 입력해주세요."];
+            return;
+        }
+    
+        if ([[contactTextField text] length] < 10) {
+            [self showHudMessage:@"유효한 주소를 입력해주세요."];
+            return;
+        }
     
     if (currentOrder) {
         
@@ -707,11 +672,26 @@
     
     ChooseLaundryViewController *chooseLaundry = [[ChooseLaundryViewController alloc] init];
     [chooseLaundry setCurrentOrder:currentOrder];
+    [chooseLaundry setCurrentAddress:currentAddress];
     UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:chooseLaundry];
     [self.navigationController presentViewController:navController animated:YES completion:^{
     }];
     
     NSLog(@"[CURRENT ORDER]\r%@", currentOrder);
+}
+
+- (void) showHudMessage:(NSString*)message {
+    MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES labelText:message    ];
+    
+    // Configure for text only and offset down
+    hud.mode = MBProgressHUDModeText;
+    [hud setLabelFont:[UIFont systemFontOfSize:14.0f]];
+    hud.margin = 10.f;
+    hud.yOffset = 150.f;
+    hud.removeFromSuperViewOnHide = YES;
+    
+    [hud hide:YES afterDelay:2];
+    return;
 }
 
 @end

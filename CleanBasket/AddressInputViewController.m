@@ -200,65 +200,65 @@
 
 - (void) confirmButtonDidTouched {
     if (self.updateAddress) {
-        
-        NSDictionary *data = @{@"type":[NSNumber numberWithInt:[self.currentAddress type]],
-                               @"address":fullAddress,
-                               @"addr_number":[streetNumber text],
-                               @"addr_building":[buildingName text],
-                               @"addr_remainder":[remainder text]
-                               };
-        
-        AFHTTPRequestOperationManager *afManager = [AFHTTPRequestOperationManager manager];
-        afManager.requestSerializer = [AFJSONRequestSerializer serializer];
-        [afManager POST:@"http://cleanbasket.co.kr/member/address/update" parameters:data success:^(AFHTTPRequestOperation *operation, id responseObject) {
-            int constant = [[responseObject valueForKey:@"constant"] intValue];
-            switch (constant) {
-                    // 주소 업데이트 성공
-                case CBServerConstantSuccess: {
-                    realm = [RLMRealm defaultRealm];
-                    [realm beginWriteTransaction];
-                    [self.currentAddress setAddress:fullAddress];
-                    [self.currentAddress setAddr_number:[streetNumber text]];
-                    [self.currentAddress setAddr_building:[buildingName text]];
-                    [self.currentAddress setAddr_remainder:[remainder text]];
-                    [realm commitWriteTransaction];
-                    NSLog(@"[CURRENT ADDRESS] %@", self.currentAddress);
-                    [[NSNotificationCenter defaultCenter] postNotificationName:@"userUpdateCurrentAddress" object:self userInfo:[NSDictionary dictionaryWithObject:self.currentAddress forKey:@"currentAddress"]];
-                    [self.navigationController popViewControllerAnimated:YES];
-                }
-                    
-                    break;
-                    
-                    // 오류 발생
-                case CBServerConstantError: {
-                    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:nil
-                                                                        message:@"서버 오류가 발생했습니다.\n다시 시도해주세요."
-                                                                       delegate:self
-                                                              cancelButtonTitle:@"닫기"
-                                                              otherButtonTitles:nil, nil];
-                    [alertView show];
-                }
-                    break;
-                    
-                    // 세션 만료 시, 로그인 화면으로 돌아감
-                case CBServerConstantSessionExpired: {
-                    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:nil
-                                                                        message:@"세션이 만료되어 로그인 화면으로 돌아갑니다."
-                                                                       delegate:self
-                                                              cancelButtonTitle:@"닫기"
-                                                              otherButtonTitles:nil, nil];
-                    [alertView show];
-                    [self dismissViewControllerAnimated:YES completion:nil];
-                }
-                    break;
-                default:
-                    break;
-            }
+//        [MBProgressHUD showHUDAddedTo:self.view animated:YES labelText:@"업데이트 중"];
+//        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_LOW, 0), ^{
+            NSDictionary *data = @{@"type":[NSNumber numberWithInt:[self.currentAddress type]],
+                                   @"address":fullAddress,
+                                   @"addr_number":[streetNumber text],
+                                   @"addr_building":[buildingName text],
+                                   @"addr_remainder":[remainder text]
+                                   };
             
+            AFHTTPRequestOperationManager *afManager = [AFHTTPRequestOperationManager manager];
+            afManager.requestSerializer = [AFJSONRequestSerializer serializer];
+            [afManager POST:@"http://cleanbasket.co.kr/member/address/update" parameters:data success:^(AFHTTPRequestOperation *operation, id responseObject) {
+                int constant = [[responseObject valueForKey:@"constant"] intValue];
+                switch (constant) {
+                        // 주소 업데이트 성공
+                    case CBServerConstantSuccess: {
+//                        dispatch_async(dispatch_get_main_queue(), ^{
+//                            [MBProgressHUD hideHUDForView:self.view animated:YES];
+//                        });
+                        _realm = [RLMRealm defaultRealm];
+                        [_realm beginWriteTransaction];
+                        [self.currentAddress setAddress:fullAddress];
+                        [self.currentAddress setAddr_number:[streetNumber text]];
+                        [self.currentAddress setAddr_building:[buildingName text]];
+                        [self.currentAddress setAddr_remainder:[remainder text]];
+                        [_realm commitWriteTransaction];
+                        [self showHudMessage:@"주소 업데이트 성공!" afterDelay:1];
+                        NSLog(@"[CURRENT ADDRESS] %@", self.currentAddress);
+                        [self performSelector:@selector(popViewController) withObject:self afterDelay:1];
+                    }
+                        
+                        break;
+                        
+                        // 오류 발생
+                    case CBServerConstantError: {
+                        dispatch_async(dispatch_get_main_queue(), ^{
+                            [MBProgressHUD hideHUDForView:self.view animated:YES];
+                        });
+                        [self showHudMessage:@"서버 오류가 발생했습니다.\n다시 시도해주세요." afterDelay:2];
+                    }
+                        break;
+                        
+                        // 세션 만료 시, 로그인 화면으로 돌아감
+                    case CBServerConstantSessionExpired: {
+                        dispatch_async(dispatch_get_main_queue(), ^{
+                            [MBProgressHUD hideHUDForView:self.view animated:YES];
+                        });
+                        [self showHudMessage:@"세션이 만료되어 로그인 화면으로 돌아갑니다." afterDelay:2];
+                        [self performSelector:@selector(dismissViewController) withObject:self afterDelay:2];
+                    }
+                        break;
+                    default:
+                        break;
+                }
+            } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                NSLog(@"%@", error);
+            }];
             
-        } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-            NSLog(@"%@", error);
-        }];
+//        });
     }
     
     else {
@@ -277,7 +277,6 @@
         
         [self.navigationController popViewControllerAnimated:YES];
     }
-    
 }
 
 - (void)didReceiveMemoryWarning {
@@ -386,7 +385,28 @@
     } else {
         return;
     }
+}
+
+- (void) showHudMessage:(NSString*)message afterDelay:(int)delay {
+    MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES labelText:message    ];
     
+    // Configure for text only and offset down
+    hud.mode = MBProgressHUDModeText;
+    [hud setLabelFont:[UIFont systemFontOfSize:14.0f]];
+    hud.margin = 10.f;
+    hud.yOffset = 150.f;
+    hud.removeFromSuperViewOnHide = YES;
+    
+    [hud hide:YES afterDelay:delay];
+    return;
+}
+
+- (void) popViewController {
+    [self.navigationController popViewControllerAnimated:YES];
+}
+
+- (void) dismissViewController {
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 @end

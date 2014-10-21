@@ -15,5 +15,15 @@
 @interface AccountViewController : UIViewController {
     AFHTTPRequestOperationManager *manager;
     RLMRealm *realm;
+    UILabel *personalLabel;
+    UILabel *emailLabel;
+    UILabel *emailValueLabel;
+    UILabel *contactLabel;
+    UILabel *contactValueLabel;
+    UILabel *passwordLabel;
+    UIButton *passwordChangeButton;
+    
+    UILabel *pushNotiLabel;
+    
 }
 @end

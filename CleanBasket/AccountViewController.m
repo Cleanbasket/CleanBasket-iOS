@@ -7,6 +7,16 @@
 //
 
 #import "AccountViewController.h"
+#define X_FIRST 10
+#define X_SECOND 80
+#define X_CENTER_DEVICE (DEVICE_WIDTH - WIDTH_REGULAR)/2
+#define Y_FIRST 89
+#define WIDTH_REGULAR 300
+#define WIDTH_SMALL 60
+#define WIDTH_LARGE 230
+#define WIDTH_FULL 300
+#define HEIGHT_REGULAR 35
+#define MARGIN_REGULAR 60
 
 @class AppDelegate;
 
@@ -31,17 +41,7 @@
     [super viewDidLoad];
     [self.view setBackgroundColor:[UIColor whiteColor]];
     
-    UILabel *myLabel = [[UILabel alloc] initWithFrame:CGRectMake(20, 20, 300, 100)];
-    [myLabel setCenter:self.view.center];
-    myLabel.text = @"개인설정";
-    myLabel.font = [UIFont boldSystemFontOfSize:24.0f];
-    [self.view addSubview:myLabel];
     
-    UIButton *logoutButton = [[UIButton alloc] initWithFrame:CGRectMake(100, 100, 48, 48)];
-    [logoutButton setTitle:@"Title" forState:UIControlStateNormal];
-    [self.view addSubview:logoutButton];
-    [logoutButton addTarget:self action:@selector(userDidLogout) forControlEvents:UIControlEventTouchUpInside];
-    [logoutButton setBackgroundColor:[UIColor blackColor]];
     
 }
 
@@ -49,16 +49,6 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
-
-/*
- #pragma mark - Navigation
- 
- // In a storyboard-based application, you will often want to do a little preparation before navigation
- - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
- // Get the new view controller using [segue destinationViewController].
- // Pass the selected object to the new view controller.
- }
- */
 
 - (void) userDidLogout {
     manager.requestSerializer = [AFJSONRequestSerializer serializer];

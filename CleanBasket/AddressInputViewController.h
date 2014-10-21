@@ -14,6 +14,7 @@
 #import "Address.h"
 #import "User.h"
 #import "DTOManager.h"
+#import "MBProgressHUD.h"
 
 @interface AddressInputViewController : UIViewController {
     NSDictionary *viewProperty;
@@ -25,12 +26,12 @@
     UITextField *buildingName;
     UITextField *remainder;
     NSString *fullAddress;
-    RLMRealm *realm;
     UIPickerView *addrPickerView;
     DTOManager *dtoManager;
 }
 
 @property Address *currentAddress;
 @property BOOL updateAddress;
+@property RLMRealm *realm;
 
 @end

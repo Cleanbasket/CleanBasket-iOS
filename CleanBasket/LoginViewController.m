@@ -169,99 +169,115 @@
     manager.requestSerializer = [AFHTTPRequestSerializer serializer];
     manager.responseSerializer = [AFJSONResponseSerializer serializerWithReadingOptions:NSJSONReadingMutableContainers];
     
-    // Email & Password 기반의 로그인 검증
-    [manager POST:@"http://cleanbasket.co.kr/auth" parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        NSNumber *value = responseObject[@"constant"];
-        switch ([value integerValue]) {
-                // 회원정보 일치: 로그인 성공
-            case CBServerConstantSuccess:
-            {
-                AppDelegate *appDelegate = [[UIApplication sharedApplication] delegate];
-                [self.navigationController presentViewController:appDelegate.tabNavController animated:YES completion:^{
-                    [emailTextField setText:@""];
-                    [passwordTextField setText:@""];
-                }];
-                // 로그인 성공 시, 세션 기반으로 회원 정보를 받아온다.
-                manager.requestSerializer = [AFJSONRequestSerializer serializer];
-                [manager POST:@"http://cleanbasket.co.kr/member" parameters:@{} success:^(AFHTTPRequestOperation *operation, id responseObject) {
-                    NSDictionary *jsonDict =
-                    [NSJSONSerialization JSONObjectWithData: [responseObject[@"data"] dataUsingEncoding:NSUTF8StringEncoding]
-                                                    options: NSJSONReadingMutableContainers
-                                                      error: nil];
-                    // 수신한 JSON 데이터를 기반으로, User 객체를 생성한다.
-                    [dtoManager createUser:jsonDict];
-                    
-                    // 세션 기반으로 회원의 주문 목록을 받아온다.
-                    [manager POST:@"http://cleanbasket.co.kr/member/order" parameters:@{} success:^(AFHTTPRequestOperation *operation, id responseObject) {
-                        NSDictionary *jsonDict =  [NSJSONSerialization JSONObjectWithData: [responseObject[@"data"] dataUsingEncoding:NSUTF8StringEncoding]
-                                                                                  options: NSJSONReadingMutableContainers
-                                                                                    error: nil];
-                        NSLog(@"[ORDER LIST]\r%@", jsonDict);
+    [MBProgressHUD showHUDAddedTo:self.view animated:YES labelText:@"로그인 중"];
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_LOW, 0), ^{
+        [manager POST:@"http://cleanbasket.co.kr/auth" parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+            NSNumber *value = responseObject[@"constant"];
+            switch ([value integerValue]) {
+                    // 회원정보 일치: 로그인 성공
+                case CBServerConstantSuccess:
+                {
+                    AppDelegate *appDelegate = [[UIApplication sharedApplication] delegate];
+                    [self.navigationController presentViewController:appDelegate.tabNavController animated:YES completion:^{
+                        [emailTextField setText:@""];
+                        [passwordTextField setText:@""];
+                    }];
+                    // 로그인 성공 시, 세션 기반으로 회원 정보를 받아온다.
+                    manager.requestSerializer = [AFJSONRequestSerializer serializer];
+                    [manager POST:@"http://cleanbasket.co.kr/member" parameters:@{} success:^(AFHTTPRequestOperation *operation, id responseObject) {
+                        NSDictionary *jsonDict =
+                        [NSJSONSerialization JSONObjectWithData: [responseObject[@"data"] dataUsingEncoding:NSUTF8StringEncoding]
+                                                        options: NSJSONReadingMutableContainers
+                                                          error: nil];
+                        // 수신한 JSON 데이터를 기반으로, User 객체를 생성한다.
+                        [dtoManager createUser:jsonDict];
+                        
                     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                        //                    NSLog(@"%@ %@", operation, error);
+                        [self loginFailed];
+                        return;
+                    }];
+                    
+                    // 세션 기반으로 아이템 코드를 가져온다.
+                    [manager POST:@"http://cleanbasket.co.kr/item/code" parameters:@{} success:^(AFHTTPRequestOperation *operation, id responseObject) {
+                        //                    NSLog(@"[ITEM CODE]\r%@", [responseObject valueForKey:@"data"]);
+                        
+                        NSArray *jsonArray = [NSJSONSerialization JSONObjectWithData:[responseObject[@"data"] dataUsingEncoding:NSUTF8StringEncoding] options:NSJSONReadingMutableContainers error:nil];
+                        
+                        [dtoManager createItemCode:jsonArray];
+                        
+                    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                        //                    NSLog(@"%@", error);
+                    }];
+                    
+                    // 세션 기반으로 쿠폰들을 가져온다.
+                    [manager POST:@"http://cleanbasket.co.kr/member/coupon" parameters:@{} success:^(AFHTTPRequestOperation *operation, id responseObject) {
+                        NSLog(@"[COUPON CODE]\r%@", [responseObject valueForKey:@"data"]);
+                        
+                        NSArray *jsonArray = [NSJSONSerialization JSONObjectWithData:[responseObject[@"data"] dataUsingEncoding:NSUTF8StringEncoding] options:NSJSONReadingMutableContainers error:nil];
+                        NSLog(@"%@", jsonArray);
+                        //                    [dtoManager createCoupon:jsonArray];
+                        
+                        dispatch_async(dispatch_get_main_queue(), ^{
+                            [MBProgressHUD hideHUDForView:self.view animated:YES];
+                        });
+                        
+                    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                        dispatch_async(dispatch_get_main_queue(), ^{
+                            [MBProgressHUD hideHUDForView:self.view animated:YES];
+                        });
                         NSLog(@"%@", error);
                     }];
-                } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                    NSLog(@"%@ %@", operation, error);
+                    
+                    
+                    
+                    break;
+                }
+                    // 이메일 주소 없음
+                case CBServerConstantEmailError:
+                {
+                    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:nil
+                                                                        message:@"이메일 주소를 다시 확인해주세요."
+                                                                       delegate:self
+                                                              cancelButtonTitle:@"닫기"
+                                                              otherButtonTitles:nil, nil];
+                    [alertView show];
+                    break;
+                }
+                    // 이메일 주소에 대한 비밀번호 다름
+                case CBServerConstantPasswordError:
+                {
+                    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:nil
+                                                                        message:@"비밀번호를 다시 확인해주세요."
+                                                                       delegate:self
+                                                              cancelButtonTitle:@"닫기"
+                                                              otherButtonTitles:nil, nil];
+                    [alertView show];
+                    break;
+                }
+                    // 정지 계정
+                case CBServerConstantAccountDisabled :
+                {
+                    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:nil
+                                                                        message:@"해당 계정은 사용하실 수 없습니다."
+                                                                       delegate:self
+                                                              cancelButtonTitle:@"닫기"
+                                                              otherButtonTitles:nil, nil];
+                    [alertView show];
+                    break;
+                }
+                default:
                     [self loginFailed];
-                    return;
-                }];
-                
-                // 세션 기반으로 아이템 코드를 가져온다.
-                [manager POST:@"http://cleanbasket.co.kr/item/code" parameters:@{} success:^(AFHTTPRequestOperation *operation, id responseObject) {
-                    NSLog(@"[ITEM CODE]\r%@", [responseObject valueForKey:@"data"]);
-                    
-                    NSArray *jsonArray = [NSJSONSerialization JSONObjectWithData:[responseObject[@"data"] dataUsingEncoding:NSUTF8StringEncoding] options:NSJSONReadingMutableContainers error:nil];
-                    
-                    [dtoManager createItemCode:jsonArray];
-                    
-                } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                    NSLog(@"%@", error);
-                }];
-                
-                break;
+                    break;
             }
-                // 이메일 주소 없음
-            case CBServerConstantEmailError:
-            {
-                UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:nil
-                                                                    message:@"이메일 주소를 다시 확인해주세요."
-                                                                   delegate:self
-                                                          cancelButtonTitle:@"닫기"
-                                                          otherButtonTitles:nil, nil];
-                [alertView show];
-                break;
-            }
-                // 이메일 주소에 대한 비밀번호 다름
-            case CBServerConstantPasswordError:
-            {
-                UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:nil
-                                                                    message:@"비밀번호를 다시 확인해주세요."
-                                                                   delegate:self
-                                                          cancelButtonTitle:@"닫기"
-                                                          otherButtonTitles:nil, nil];
-                [alertView show];
-                break;
-            }
-                // 정지 계정
-            case CBServerConstantAccountDisabled :
-            {
-                UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:nil
-                                                                    message:@"해당 계정은 사용하실 수 없습니다."
-                                                                   delegate:self
-                                                          cancelButtonTitle:@"닫기"
-                                                          otherButtonTitles:nil, nil];
-                [alertView show];
-                break;
-            }
-            default:
-                [self loginFailed];
-                break;
-        }
-        
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        NSLog(@"Error: %@", error);
-        [self loginFailed];
-    }];
+            
+        } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+            NSLog(@"Error: %@", error);
+            [self loginFailed];
+        }];
+    });
+    
+    // Email & Password 기반의 로그인 검증
 }
 
 - (void) loginFailed {

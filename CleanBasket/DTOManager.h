@@ -11,10 +11,12 @@
 #import "User.h"
 #import "Address.h"
 #import "Item.h"
+#import "Coupon.h"
 
 @interface DTOManager : NSObject
 
 @property int currentUid;
+@property NSArray *availableBorough;
 
 + (id)defaultManager;
 - (void)createUser:(NSDictionary*)userInfo;

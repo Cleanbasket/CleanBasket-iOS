@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "CBConstants.h"
+#import "OrderDetailViewController.h"
 
 @interface MyUITabBarController : UITabBarController
 

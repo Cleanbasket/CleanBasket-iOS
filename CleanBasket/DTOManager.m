@@ -38,6 +38,15 @@
     return sharedDTOManager;
 }
 
+- (instancetype)init {
+    self = [super init];
+    if (self) {
+        self.availableBorough = [NSArray arrayWithObjects:@"강남구", @"서초구", nil];
+    }
+    
+    return self;
+}
+
 - (void) createUser:(NSDictionary*)responseDict {
     realm = [RLMRealm defaultRealm];
     self.currentUid = [[responseDict valueForKey:@"uid"] intValue];
@@ -46,12 +55,14 @@
         currentUser = [User createInDefaultRealmWithObject:responseDict];
         [realm addObject:currentUser];
         [realm commitWriteTransaction];
+    } else {
+        NSLog(@"[Realm] 유저 데이터 중복");
     }
     
     // OrderViewController로 하여금 유저 정보를 View에 채운다.
     [[NSNotificationCenter defaultCenter] postNotificationName:@"didCreateUser" object:self userInfo:[NSDictionary dictionaryWithObject:[responseDict valueForKey:@"uid"] forKey:@"uid"]];
     
-    NSLog(@"\r[CURRENT USER]\r%@", currentUser);
+//    NSLog(@"\r[CURRENT USER]\r%@", currentUser);
 }
 
 - (void) createItemCode:(NSArray*)itemArray {
@@ -59,9 +70,21 @@
     [realm beginWriteTransaction];
     for (NSDictionary* each in itemArray) {
         [realm addObject:[Item createInDefaultRealmWithObject:each]];
+
     }
     [realm commitWriteTransaction];
-    NSLog(@"%@", [Item allObjects]);
+//    NSLog(@"%@", [Item allObjects]);
+}
+
+- (void) createCoupon:(NSArray*)couponArray {
+    realm = [RLMRealm defaultRealm];
+    [realm beginWriteTransaction];
+    for ( NSDictionary *each in couponArray) {
+        [realm addObject:[Coupon createInDefaultRealmWithObject:each]];
+    }
+    [realm commitWriteTransaction];
+    NSLog(@"%@", [Coupon allObjects]);
+         
 }
 
 @end

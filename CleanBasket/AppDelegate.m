@@ -17,7 +17,7 @@
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(NotificationReceived:) name:@"userDidLogout" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(NotificationReceived:) name:nil object:nil];
     // reset REALM.IO Database
     [[NSFileManager defaultManager] removeItemAtPath:[RLMRealm defaultRealmPath] error:nil];
     
@@ -31,11 +31,6 @@
     UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:loginViewController];
     [[UINavigationBar appearance] setTintColor:[UIColor whiteColor]];
     [[UINavigationBar appearance] setBarTintColor:CleanBasketMint];
-    
-    // Color navigation bar title white
-    // Deprecated in iOS 7
-    //[[UINavigationBar appearance] setTitleTextAttributes:@{UITextAttributeTextColor:[UIColor whiteColor]}];
-    // after iOS 7
     [[UINavigationBar appearance] setTitleTextAttributes:@{NSForegroundColorAttributeName:[UIColor whiteColor]}];
     
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent animated:NO];
@@ -43,6 +38,8 @@
     [self.window setRootViewController:navController];
     
     self.tabBarController = [[MyUITabBarController alloc] init];
+    [self.tabBarController.moreNavigationController setTitle:@"더 보기"];
+    [self.tabBarController.moreNavigationController.view setTintColor:CleanBasketMint];
     self.tabNavController = [[UINavigationController alloc] initWithRootViewController:self.tabBarController];
     
     self.orderViewController = [[OrderViewController alloc] init];
@@ -71,11 +68,15 @@
 
 
 - (void) NotificationReceived:(NSNotification*)noti {
-    if ([[noti name] isEqualToString:@"userDidLogout"]) {
-        NSLog(@"UserDidLogout");
+    if ([[noti name] isEqualToString:@"userDidLogout"] || [[noti name] isEqualToString:@"sessionExpired"]) {
+        NSLog(@"%@", [noti name]);
         [self.tabBarController.navigationController setNavigationBarHidden:NO];
         [self.tabBarController setSelectedIndex:0];
         [self.tabBarController dismissViewControllerAnimated:YES completion:nil];
+    }
+    
+    if ([[noti name] isEqualToString:@"orderComplete"]) {
+        [self.tabBarController setSelectedIndex:1];
     }
 }
 

@@ -29,6 +29,10 @@
     [self.navigationController setNavigationBarHidden:NO];
     [self.navigationItem setTitle:@"주문하기"];
     
+//    //로그아웃 버튼 생성
+//    UIBarButtonItem *rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"로그아웃" style:UIBarButtonItemStylePlain target:self action:@selector(logoutButtonDidTap)];
+//    [self.navigationItem setRightBarButtonItem:rightBarButtonItem];
+    
     //create a custom view for the tab bar
     CGRect frame = CGRectMake(0.0, 0.0, self.view.bounds.size.width, 49);
     UIView *v = [[UIView alloc] initWithFrame:frame];
@@ -64,9 +68,22 @@
         [self.navigationItem setTitle:item.title];
         [self.navigationController setNavigationBarHidden:NO];
     }
+    
+    if ( [item.title isEqualToString:@"진행상태" ]) {
+        UIBarButtonItem *leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"주문내역" style:UIBarButtonItemStylePlain target:self action:@selector(orderBarButtonDidTap)];
+        [self.navigationItem setLeftBarButtonItem:leftBarButtonItem];
+    } else {
+        [self.navigationItem setLeftBarButtonItem:nil];
+    }
 }
 
 - (void)dealloc {
     NSLog(@"tabbar dealloc");
 }
+
+- (void) orderBarButtonDidTap {
+    OrderDetailViewController *orderDetailViewController = [[OrderDetailViewController alloc] init];
+    [self.navigationController pushViewController:orderDetailViewController animated:YES];
+}
+
 @end

@@ -52,5 +52,8 @@ typedef enum serverConstant : NSUInteger {
 #define SCREEN_RECT [[UIScreen mainScreen] bounds]
 #define DEVICE_WIDTH SCREEN_RECT.size.width
 #define DEVICE_HEIGHT SCREEN_RECT.size.height
+#define TAPBAR_HEIGHT 49
+#define NAV_STATUS_HEIGHT 64
 #define UltraLightGray Rgb2UIColor(238, 238, 238)
 #define NEW_INDEX 9999
+#define isiPhone5 ([[UIScreen mainScreen] bounds].size.height == 568)?TRUE:FALSE

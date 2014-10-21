@@ -44,14 +44,17 @@
     [titleLabel setTextColor:CleanBasketMint];
     [titleLabel setBackgroundColor:UltraLightGray];
     
-    UITableView *priceTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 128, 320, 303) style:UITableViewStylePlain];
-    [priceTableView.layer setBorderColor:[UIColor redColor].CGColor];
-    [priceTableView.layer setBorderWidth:1.0f];
+    priceTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 128, 320, 303) style:UITableViewStylePlain];
     [priceTableView setDataSource:self];
     [priceTableView setDelegate:self];
     
     [self.view addSubview:priceTableView];
     [self.view addSubview:titleLabel];
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    [self.navigationController.navigationBar setTranslucent:YES];
+    [priceTableView setFrame:CGRectMake(0, 128, 320, 303)];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {

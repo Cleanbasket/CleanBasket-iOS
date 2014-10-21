@@ -14,7 +14,16 @@
 
 + (NSDictionary *)defaultPropertyValues
 {
-    return @{@"count":@0};
+    return @{
+             @"count":@0,
+             @"itid":@0,
+             @"oid":@0,
+             @"name":@"",
+             @"descr":@"",
+             @"price":@0,
+             @"img":@"",
+             @"rdate":@""
+             };
 }
 
 // Specify properties to ignore (Realm won't persist these)

@@ -14,6 +14,7 @@
 @interface PriceViewController : UIViewController {
     NSArray *itemArray;
     NSArray *priceArray;
+    UITableView *priceTableView;
 }
 
 @end
