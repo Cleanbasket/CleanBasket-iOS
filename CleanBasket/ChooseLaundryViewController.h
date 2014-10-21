@@ -19,6 +19,7 @@
 #import "MBProgressHUD.h"
 #import "DTOManager.h"
 #import "AFNetworking.h"
+#import "CouponListViewController.h"
 
 @interface ChooseLaundryViewController : UIViewController {
     UIImageView *laundryImageView;
@@ -30,7 +31,6 @@
     RPVerticalStepper *stepper;
     RLMArray *itemArray;
     Item *currentItem;
-    RLMRealm *realm;
     UILabel *priceLabel;
     UILabel *priceValueLabel;
     UILabel *sumLabel;
@@ -46,5 +46,6 @@
 
 @property Order *currentOrder;
 @property Address *currentAddress;
+@property Coupon *currentCoupon;
 
 @end

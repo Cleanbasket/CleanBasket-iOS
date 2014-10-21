@@ -56,6 +56,9 @@
 		F133217819F5DE9200C52D20 /* 18.jpg in Resources */ = {isa = PBXBuildFile; fileRef = F133217719F5DE9200C52D20 /* 18.jpg */; };
 		F133217A19F5EC7200C52D20 /* LaunchScreen_White.jpg in Resources */ = {isa = PBXBuildFile; fileRef = F133217919F5EC7200C52D20 /* LaunchScreen_White.jpg */; };
 		F133217C19F5FE7B00C52D20 /* ic_profile_no.png in Resources */ = {isa = PBXBuildFile; fileRef = F133217B19F5FE7B00C52D20 /* ic_profile_no.png */; };
+		F133217E19F64E7000C52D20 /* bg_coupon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F133217D19F64E7000C52D20 /* bg_coupon@2x.png */; };
+		F133218219F64E9100C52D20 /* CBCouponTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F133218119F64E9100C52D20 /* CBCouponTableViewCell.m */; };
+		F133218619F64F6700C52D20 /* CouponListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F133218519F64F6700C52D20 /* CouponListViewController.m */; };
 		F14AC23719DE7E00002BCC98 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = F14AC23619DE7E00002BCC98 /* main.m */; };
 		F14AC23A19DE7E00002BCC98 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = F14AC23919DE7E00002BCC98 /* AppDelegate.m */; };
 		F14AC23D19DE7E00002BCC98 /* CleanBasket.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = F14AC23B19DE7E00002BCC98 /* CleanBasket.xcdatamodeld */; };
@@ -175,6 +178,11 @@
 		F133217719F5DE9200C52D20 /* 18.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = 18.jpg; sourceTree = "<group>"; };
 		F133217919F5EC7200C52D20 /* LaunchScreen_White.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = LaunchScreen_White.jpg; sourceTree = "<group>"; };
 		F133217B19F5FE7B00C52D20 /* ic_profile_no.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ic_profile_no.png; sourceTree = "<group>"; };
+		F133217D19F64E7000C52D20 /* bg_coupon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bg_coupon@2x.png"; sourceTree = "<group>"; };
+		F133218019F64E9100C52D20 /* CBCouponTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CBCouponTableViewCell.h; sourceTree = "<group>"; };
+		F133218119F64E9100C52D20 /* CBCouponTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CBCouponTableViewCell.m; sourceTree = "<group>"; };
+		F133218419F64F6700C52D20 /* CouponListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CouponListViewController.h; sourceTree = "<group>"; };
+		F133218519F64F6700C52D20 /* CouponListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CouponListViewController.m; sourceTree = "<group>"; };
 		F14AC23119DE7E00002BCC98 /* CleanBasket.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CleanBasket.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F14AC23519DE7E00002BCC98 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F14AC23619DE7E00002BCC98 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -301,6 +309,7 @@
 		F133210D19F340AE00C52D20 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				F133217D19F64E7000C52D20 /* bg_coupon@2x.png */,
 				F133217919F5EC7200C52D20 /* LaunchScreen_White.jpg */,
 				F133217619F5DE1A00C52D20 /* Manager */,
 				F133215819F4604F00C52D20 /* orderStatusIcon */,
@@ -416,6 +425,26 @@
 			name = Manager;
 			sourceTree = "<group>";
 		};
+		F133217F19F64E7A00C52D20 /* CouponTableViewCell */ = {
+			isa = PBXGroup;
+			children = (
+				F133218019F64E9100C52D20 /* CBCouponTableViewCell.h */,
+				F133218119F64E9100C52D20 /* CBCouponTableViewCell.m */,
+			);
+			name = CouponTableViewCell;
+			sourceTree = "<group>";
+		};
+		F133218319F64F1400C52D20 /* CouponShare */ = {
+			isa = PBXGroup;
+			children = (
+				F14AC27D19DEDEF7002BCC98 /* CouponShareViewController.h */,
+				F14AC27E19DEDEF7002BCC98 /* CouponShareViewController.m */,
+				F133218419F64F6700C52D20 /* CouponListViewController.h */,
+				F133218519F64F6700C52D20 /* CouponListViewController.m */,
+			);
+			name = CouponShare;
+			sourceTree = "<group>";
+		};
 		F14AC22819DE7E00002BCC98 = {
 			isa = PBXGroup;
 			children = (
@@ -504,6 +533,7 @@
 		F14AC25E19DE7F2C002BCC98 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				F133217F19F64E7A00C52D20 /* CouponTableViewCell */,
 				F133217019F5AB9900C52D20 /* OrderStatus */,
 				F133214819F344CB00C52D20 /* Order_ChooseLaundry */,
 				F19DE14919EF8473004B60E7 /* RPVerticalStepper */,
@@ -563,8 +593,7 @@
 				F14AC27819DEDEE6002BCC98 /* PriceViewController.m */,
 				F14AC27A19DEDEEC002BCC98 /* AccountViewController.h */,
 				F14AC27B19DEDEEC002BCC98 /* AccountViewController.m */,
-				F14AC27D19DEDEF7002BCC98 /* CouponShareViewController.h */,
-				F14AC27E19DEDEF7002BCC98 /* CouponShareViewController.m */,
+				F133218319F64F1400C52D20 /* CouponShare */,
 				F14AC28019DEDEFE002BCC98 /* ServiceInfoViewController.h */,
 				F14AC28119DEDEFE002BCC98 /* ServiceInfoViewController.m */,
 				F14AC27219DED5B9002BCC98 /* MainControllers */,
@@ -763,6 +792,7 @@
 				F19DE15919EF8473004B60E7 /* stepperMinusSymbol@2x.png in Resources */,
 				F133216619F4607B00C52D20 /* process_5.png in Resources */,
 				F133214019F340AE00C52D20 /* tab_price@2x.png in Resources */,
+				F133217E19F64E7000C52D20 /* bg_coupon@2x.png in Resources */,
 				F19DE15A19EF8473004B60E7 /* stepperPlusSymbol.png in Resources */,
 				F133213519F340AE00C52D20 /* ic_menu_pricelist_01@2x.png in Resources */,
 				F133212F19F340AE00C52D20 /* ic_calc_suit@2x.png in Resources */,
@@ -803,12 +833,14 @@
 				F193DA0119EBCBA70051C32A /* AFURLConnectionOperation.m in Sources */,
 				F14AC23D19DE7E00002BCC98 /* CleanBasket.xcdatamodeld in Sources */,
 				F14AC26219DE9AB8002BCC98 /* OrderViewController.m in Sources */,
+				F133218219F64E9100C52D20 /* CBCouponTableViewCell.m in Sources */,
 				F193DA0419EBCBA70051C32A /* AFURLSessionManager.m in Sources */,
 				F193DA0819EBF1840051C32A /* MBProgressHUD.m in Sources */,
 				F193D9E719EA82F50051C32A /* CBTableViewCell.m in Sources */,
 				F111445619EEDDD500C637AB /* Address.m in Sources */,
 				F14AC23A19DE7E00002BCC98 /* AppDelegate.m in Sources */,
 				F193DA0019EBCBA70051C32A /* AFSecurityPolicy.m in Sources */,
+				F133218619F64F6700C52D20 /* CouponListViewController.m in Sources */,
 				F19DE13F19EEFC8D004B60E7 /* Item.m in Sources */,
 				F193D9FC19EBCBA70051C32A /* AFHTTPRequestOperation.m in Sources */,
 				F133214719F3415500C52D20 /* ChooseOtherLaundryViewController.m in Sources */,

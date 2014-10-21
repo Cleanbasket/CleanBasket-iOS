@@ -74,10 +74,6 @@
         [self.tabBarController setSelectedIndex:0];
         [self.tabBarController dismissViewControllerAnimated:YES completion:nil];
     }
-    
-    if ([[noti name] isEqualToString:@"orderComplete"]) {
-        [self.tabBarController setSelectedIndex:1];
-    }
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application {

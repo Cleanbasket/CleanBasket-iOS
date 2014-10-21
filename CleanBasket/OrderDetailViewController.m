@@ -19,40 +19,50 @@
     [self setTitle:@"주문 상세보기"];
     [self.view setBackgroundColor:[UIColor whiteColor]];
     
-    realm = [RLMRealm defaultRealm];
-    orderList = [[RLMArray alloc] initWithObjectClassName:@"Order"];
-    afManager = [AFHTTPRequestOperationManager manager];
-    [afManager setRequestSerializer:[AFHTTPRequestSerializer new]];
+    orderStateName = @[@"주문완료", @"수거준비", @"수거완료/세탁중", @"배달준비", @"배달완료"];
     
-    // 세션 기반으로 회원의 주문 목록을 받아온다.
-    [afManager POST:@"http://cleanbasket.co.kr/member/order" parameters:@{} success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        jsonDict =  [NSJSONSerialization JSONObjectWithData: [responseObject[@"data"] dataUsingEncoding:NSUTF8StringEncoding]
-                                                    options: NSJSONReadingMutableContainers
-                                                      error: nil];
+    [MBProgressHUD showHUDAddedTo:self.view animated:YES labelText:@"주문 정보 불러오는 중:)"];
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_LOW, 0), ^{
+        afManager = [AFHTTPRequestOperationManager manager];
+        [afManager setRequestSerializer:[AFHTTPRequestSerializer new]];
         
-        [realm beginWriteTransaction];
-        for (NSDictionary *each in jsonDict) {
-            if ([Order objectForPrimaryKey:[each valueForKey:@"oid"]])
-                [realm deleteObject:[Order objectForPrimaryKey:[each valueForKey:@"oid"]]];
-            Order *order = [Order createInDefaultRealmWithObject:each];
-            [realm addObject:order];
-            [orderList addObject:order];
+        // 세션 기반으로 회원의 주문 목록을 받아온다.
+        [afManager POST:@"http://cleanbasket.co.kr/member/order" parameters:@{} success:^(AFHTTPRequestOperation *operation, id responseObject) {
+            NSArray *jsonDict =  [NSJSONSerialization JSONObjectWithData: [responseObject[@"data"] dataUsingEncoding:NSUTF8StringEncoding]
+                                                                 options: NSJSONReadingMutableContainers
+                                                                   error: nil];
             
-        };
+            RLMRealm *realm = [RLMRealm defaultRealm];
+            orderList = [[RLMArray alloc] initWithObjectClassName:@"Order"];
+            [realm beginWriteTransaction];
+            for (NSDictionary *each in jsonDict) {
+                if ([Order objectForPrimaryKey:[each valueForKey:@"oid"]])
+                    [realm deleteObject:[Order objectForPrimaryKey:[each valueForKey:@"oid"]]];
+                Order *order = [Order createInDefaultRealmWithObject:each];
+                [realm addObject:order];
+                [orderList addObject:order];
+                
+            };
+            [realm commitWriteTransaction];
+            
+            orderTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, NAV_STATUS_HEIGHT, DEVICE_WIDTH, DEVICE_HEIGHT - NAV_STATUS_HEIGHT) style:UITableViewStylePlain];
+            [orderTableView setDelegate:self];
+            [orderTableView setDataSource:self];
+            [self.view addSubview:orderTableView];
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [MBProgressHUD hideHUDForView:self.view animated:YES];
+            });
+            
+        } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [MBProgressHUD hideHUDForView:self.view animated:YES];
+            });
+            [self showHudMessage:@"주문 정보를 받아오는 데 실패하였습니다." afterDelay:2];
+            [self performSelector:@selector(popToRootViewController) withObject:self afterDelay:2];
+        }];
         
-        NSLog(@"Orders: %@", orderList);
-        [realm commitWriteTransaction];
-        
-        orderTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, NAV_STATUS_HEIGHT, DEVICE_WIDTH, DEVICE_HEIGHT - NAV_STATUS_HEIGHT) style:UITableViewStylePlain];
-        [orderTableView setDelegate:self];
-        [orderTableView setDataSource:self];
-        
-        [self.view addSubview:orderTableView];
-        
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        [self showHudMessage:@"주문 정보를 받아오는 데 실패하였습니다."];
-        [self performSelector:@selector(popToRootViewController) withObject:self afterDelay:2];
-    }];
+    });
+    
 }
 
 - (void) popToRootViewController {
@@ -67,7 +77,7 @@
 - (void)viewWillDisappear:(BOOL)animated {
 }
 
-- (void) showHudMessage:(NSString*)message {
+- (void) showHudMessage:(NSString*)message afterDelay:(int)delay {
     MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES labelText:message    ];
     
     // Configure for text only and offset down
@@ -77,7 +87,7 @@
     hud.yOffset = 150.f;
     hud.removeFromSuperViewOnHide = YES;
     
-    [hud hide:YES afterDelay:2];
+    [hud hide:YES afterDelay:delay];
     return;
 }
 
@@ -86,7 +96,6 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     static NSString *CellIdentifier = @"OrderCell";
-    Order *currentOrder = [orderList objectAtIndex:[indexPath row]];
     CBOrderDetailTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     
     if (cell == nil) {
@@ -94,6 +103,8 @@
         cell = [[CBOrderDetailTableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier];
     }
     
+    
+    Order *currentOrder = [orderList objectAtIndex:[indexPath row]];
     
     if ([currentOrder pickupInfo]) {
         NSLog(@"create for %@", currentOrder);
@@ -115,25 +126,79 @@
     [cell.orderPickupValueLabel setText:[currentOrder pickup_date]];
     [cell.orderDeliverValueLabel setText:[currentOrder dropoff_date]];
     [cell.managerNameValueLabel setText:([[currentOrder pickupInfo] name]?[[currentOrder pickupInfo] name]:@"미지정")];
+    [cell.orderStatusValueLabel setText:[orderStateName objectAtIndex:[currentOrder state]]];
+    [cell.orderCancelButton addTarget:self action:@selector(orderCancelButtonDidTap:) forControlEvents:UIControlEventTouchUpInside];
     return cell;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return [[Order allObjects] count] - 1;
+    return [orderList count];
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     return 320.0f;
 }
 
-/*
- #pragma mark - Navigation
- 
- // In a storyboard-based application, you will often want to do a little preparation before navigation
- - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
- // Get the new view controller using [segue destinationViewController].
- // Pass the selected object to the new view controller.
- }
- */
+- (void) orderCancelButtonDidTap:(id)sender {
+    [MBProgressHUD showHUDAddedTo:self.view animated:YES labelText:@"주문 취소 요청 중"];
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_LOW, 0), ^{
+        
+        CGPoint hitPoint = [sender convertPoint:CGPointZero toView:orderTableView];
+        NSIndexPath *hitIndex = [orderTableView indexPathForRowAtPoint:hitPoint];
+        CBOrderDetailTableViewCell *selectedCell = (CBOrderDetailTableViewCell*)[orderTableView cellForRowAtIndexPath:hitIndex];
+        NSString *oid = [[selectedCell.orderNumberValueLabel text] substringFromIndex:7];
+        NSLog(@"indexRow: %d", [hitIndex row]);
+        
+        afManager = [AFHTTPRequestOperationManager manager];
+        [afManager setRequestSerializer:[AFJSONRequestSerializer new]];
+        // 세션 기반으로 회원의 주문 목록을 받아온다.
+        [afManager POST:@"http://cleanbasket.co.kr/member/order/del" parameters:@{@"oid":[NSNumber numberWithInt:[oid intValue]]} success:^(AFHTTPRequestOperation *operation, id responseObject) {
+            NSLog(@"%@", responseObject);
+            
+            int constant = [[responseObject valueForKey:@"constant"] intValue];
+            
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [MBProgressHUD hideHUDForView:self.view animated:YES];
+            });
+            
+            switch (constant) {
+                case CBServerConstantSuccess: {
+                    NSLog(@"%d", constant);
+                    RLMRealm *realm = [RLMRealm defaultRealm];
+                    Order *selectedOrder = [orderList objectAtIndex:[hitIndex row]];
+                    [realm beginWriteTransaction];
+                    if ([orderList objectAtIndex:[hitIndex row]])
+                        [orderList removeObjectAtIndex:[hitIndex row]];
+                    [realm deleteObject:selectedOrder];
+                    [realm commitWriteTransaction];
+                    [orderTableView reloadData];
+                    break;
+                }
+                case CBServerConstantError: {
+                    break;
+                }
+                case CBServerConstantsImpossible: {
+                    break;
+                }
+                case CBServerConstantSessionExpired: {
+                    break;
+                }
+                default:
+                    break;
+            }
+            
+            
+            
+        } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [MBProgressHUD hideHUDForView:self.view animated:YES];
+            });
+            [self showHudMessage:@"네트워크 상태를 확인해주세요!" afterDelay:1];
+        }];
+        
+    });
+    
+    
+}
 
 @end

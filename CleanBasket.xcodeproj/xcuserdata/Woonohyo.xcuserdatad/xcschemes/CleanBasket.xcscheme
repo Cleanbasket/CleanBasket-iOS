@@ -15,7 +15,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "F14AC23019DE7E00002BCC98"
-               BuildableName = "&#x110f;&#x1173;&#x1105;&#x1175;&#x11ab;&#x1107;&#x1161;&#x1109;&#x1173;&#x110f;&#x1166;&#x11ba;.app"
+               BuildableName = "CleanBasket.app"
                BlueprintName = "CleanBasket"
                ReferencedContainer = "container:CleanBasket.xcodeproj">
             </BuildableReference>
@@ -29,7 +29,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "F14AC24C19DE7E00002BCC98"
-               BuildableName = "&#x110f;&#x1173;&#x1105;&#x1175;&#x11ab;&#x1107;&#x1161;&#x1109;&#x1173;&#x110f;&#x1166;&#x11ba;Tests.xctest"
+               BuildableName = "CleanBasketTests.xctest"
                BlueprintName = "CleanBasketTests"
                ReferencedContainer = "container:CleanBasket.xcodeproj">
             </BuildableReference>
@@ -47,7 +47,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "F14AC24C19DE7E00002BCC98"
-               BuildableName = "&#x110f;&#x1173;&#x1105;&#x1175;&#x11ab;&#x1107;&#x1161;&#x1109;&#x1173;&#x110f;&#x1166;&#x11ba;Tests.xctest"
+               BuildableName = "CleanBasketTests.xctest"
                BlueprintName = "CleanBasketTests"
                ReferencedContainer = "container:CleanBasket.xcodeproj">
             </BuildableReference>
@@ -57,7 +57,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "F14AC23019DE7E00002BCC98"
-            BuildableName = "&#x110f;&#x1173;&#x1105;&#x1175;&#x11ab;&#x1107;&#x1161;&#x1109;&#x1173;&#x110f;&#x1166;&#x11ba;.app"
+            BuildableName = "CleanBasket.app"
             BlueprintName = "CleanBasket"
             ReferencedContainer = "container:CleanBasket.xcodeproj">
          </BuildableReference>
@@ -76,7 +76,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "F14AC23019DE7E00002BCC98"
-            BuildableName = "&#x110f;&#x1173;&#x1105;&#x1175;&#x11ab;&#x1107;&#x1161;&#x1109;&#x1173;&#x110f;&#x1166;&#x11ba;.app"
+            BuildableName = "CleanBasket.app"
             BlueprintName = "CleanBasket"
             ReferencedContainer = "container:CleanBasket.xcodeproj">
          </BuildableReference>
@@ -94,7 +94,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "F14AC23019DE7E00002BCC98"
-            BuildableName = "&#x110f;&#x1173;&#x1105;&#x1175;&#x11ab;&#x1107;&#x1161;&#x1109;&#x1173;&#x110f;&#x1166;&#x11ba;.app"
+            BuildableName = "CleanBasket.app"
             BlueprintName = "CleanBasket"
             ReferencedContainer = "container:CleanBasket.xcodeproj">
          </BuildableReference>

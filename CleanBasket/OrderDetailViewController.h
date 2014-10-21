@@ -17,10 +17,10 @@
 
 @interface OrderDetailViewController : UIViewController {
     AFHTTPRequestOperationManager *afManager;
-    RLMRealm *realm;
-    NSArray *jsonDict;
+    
     UITableView *orderTableView;
 	RLMArray *orderList;
+    NSArray *orderStateName;
 }
 
 @end

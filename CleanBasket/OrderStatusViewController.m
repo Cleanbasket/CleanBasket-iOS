@@ -12,6 +12,7 @@
 @end
 
 @implementation OrderStatusViewController
+@synthesize dataArray = dataArray;
 
 - (instancetype)init {
     self = [super init];
@@ -29,15 +30,14 @@
     [super viewDidLoad];
     [self.view setBackgroundColor:[UIColor whiteColor]];
     
-    managerPhotoImage = [UIImage imageNamed:@"process_profile.png"];
+    UIImage *managerPhotoImage = [UIImage imageNamed:@"process_profile.png"];
     profileView = [[UIImageView alloc] initWithImage:managerPhotoImage];
     [profileView setFrame:CGRectMake(DEVICE_WIDTH - 80, (DEVICE_HEIGHT - 80)/2, 80, 80)];
     [profileView setContentMode:UIViewContentModeScaleToFill];
-    [profileView.layer setCornerRadius:40];
     [profileView.layer setMasksToBounds:YES];
     
     managerNameLabel = [[UILabel alloc] initWithFrame:CGRectMake(DEVICE_WIDTH - 80, (DEVICE_HEIGHT-80)/2 + 80, 80, 30)];
-    [managerNameLabel setText:([[firstOrder pickupInfo] name]?[[firstOrder pickupInfo] name]:@"미지정")];
+    [managerNameLabel setText:@"배달자"];
     [managerNameLabel setTextColor:[UIColor grayColor]];
     [managerNameLabel setTextAlignment:NSTextAlignmentCenter];
     [managerNameLabel setAdjustsFontSizeToFitWidth:YES];
@@ -49,7 +49,6 @@
     [visitDateLabel setText:([firstOrder pickup_date]?[firstOrder pickup_date]:@"")];
     [visitDateLabel setAdjustsFontSizeToFitWidth:YES];
     
-    UIImage *processEmpty = [UIImage imageNamed:@"process_empty.png"];
     UIImage *process0 = [UIImage imageNamed:@"process_0.png"];
     UIImage *process1 = [UIImage imageNamed:@"process_1.png"];
     UIImage *process2 = [UIImage imageNamed:@"process_2.png"];
@@ -58,10 +57,10 @@
     UIImage *process5 = [UIImage imageNamed:@"process_5.png"];
     UIImage *process6 = [UIImage imageNamed:@"process_6.png"];
     
-    processImages = [NSArray arrayWithObjects:processEmpty, process0, process1, process2, process3, process4, process5, process6, nil];
+    processImages = [NSArray arrayWithObjects:process0, process1, process2, process3, process4, process5, process6, nil];
     
     UITapGestureRecognizer *processImageViewTapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(processImageViewDidTap)];
-    processImageView = [[UIImageView alloc] initWithImage:[processImages objectAtIndex:processIndex]];
+    processImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"process_empty.png"]];
     [processImageView addGestureRecognizer:processImageViewTapGesture];
     [processImageView setUserInteractionEnabled:YES];
     
@@ -97,6 +96,11 @@
                 [realm commitWriteTransaction];
             } else if ([dataArray count] == 0) {
                 [MBProgressHUD hideHUDForView:self.view animated:YES];
+                [processImageView setImage:[UIImage imageNamed:@"process_empty.png"]];
+                [profileView setImage:[UIImage imageNamed:@"process_profile.png"]];
+                [profileView.layer setCornerRadius:0];
+                [managerNameLabel setText:@"배달자"];
+                [visitDateLabel setText:@""];
                 [self showHudMessage:@"주문이 없습니다!"];
                 return;
             }
@@ -107,13 +111,15 @@
             
             if ([[firstOrder pickupInfo] img]) {
                 NSString *filePath = [NSString stringWithFormat:@"http://cleanbasket.co.kr/%@", [[firstOrder pickupInfo] img]];
-                managerPhotoImage = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:filePath]]];
+                UIImage *managerPhotoImage = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:filePath]]];
+                [profileView setImage:managerPhotoImage];
+                [profileView.layer setCornerRadius:40.0f];
             }
-            
-            [profileView setImage:managerPhotoImage];
             
             [managerNameLabel setText:([[firstOrder pickupInfo] name]?[[firstOrder pickupInfo] name]:@"미지정")];
             [visitDateLabel setText:([firstOrder pickup_date]?[firstOrder pickup_date]:@"")];
+            
+            [processImageView setImage:[processImages objectAtIndex:[firstOrder state]]];
             
             dispatch_async(dispatch_get_main_queue(), ^{
                 [MBProgressHUD hideHUDForView:self.view animated:YES];
@@ -151,7 +157,7 @@
     hud.yOffset = 150.f;
     hud.removeFromSuperViewOnHide = YES;
     
-    [hud hide:YES afterDelay:2];
+    [hud hide:YES afterDelay:1];
     return;
 }
 

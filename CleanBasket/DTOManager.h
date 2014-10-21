@@ -21,5 +21,5 @@
 + (id)defaultManager;
 - (void)createUser:(NSDictionary*)userInfo;
 - (void)createItemCode:(NSArray*)itemArray;
-
+- (void)createCoupon:(NSArray*)couponArray;
 @end

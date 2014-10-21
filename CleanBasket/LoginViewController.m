@@ -215,8 +215,7 @@
                         NSLog(@"[COUPON CODE]\r%@", [responseObject valueForKey:@"data"]);
                         
                         NSArray *jsonArray = [NSJSONSerialization JSONObjectWithData:[responseObject[@"data"] dataUsingEncoding:NSUTF8StringEncoding] options:NSJSONReadingMutableContainers error:nil];
-                        NSLog(@"%@", jsonArray);
-                        //                    [dtoManager createCoupon:jsonArray];
+                        [dtoManager createCoupon:jsonArray];
                         
                         dispatch_async(dispatch_get_main_queue(), ^{
                             [MBProgressHUD hideHUDForView:self.view animated:YES];

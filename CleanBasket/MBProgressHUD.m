@@ -1024,4 +1024,6 @@ static const CGFloat kDetailsLabelFontSize = 12.f;
 	[self setNeedsDisplay];
 }
 
+#pragma mark - CustomClassMethod
+
 @end

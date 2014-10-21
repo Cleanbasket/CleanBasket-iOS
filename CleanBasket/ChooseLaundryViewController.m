@@ -22,7 +22,7 @@
 #define MARGIN_REGULAR 50
 #define NUM_MAIN_ITEM 6
 
-@interface ChooseLaundryViewController () <UITextFieldDelegate>
+@interface ChooseLaundryViewController () <UITextFieldDelegate, CouponListViewControllerDelegate>
 @end
 
 @implementation ChooseLaundryViewController
@@ -35,8 +35,6 @@
     UIBarButtonItem *rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"닫기" style:UIBarButtonItemStylePlain target:self action:@selector(cancelButtonDidTouched)];
     [self.navigationItem setRightBarButtonItem:rightBarButtonItem];
     
-    
-    realm = [RLMRealm defaultRealm];
     itemArray = [Item allObjects];
     imageIdx = 0;
     currentItem = [itemArray objectAtIndex:imageIdx];
@@ -224,6 +222,10 @@
     }
     [self setSumValueLabelPrice];
     [self setTotalValueLabelPrice];
+    if (self.currentCoupon == nil) {
+        NSLog(@"NUUUUUUL");
+    }
+
 }
 
 - (void) memoTextFieldEditingDidBegin {
@@ -240,7 +242,7 @@
     if (imageIdx == NUM_MAIN_ITEM) {
         return;
     }
-    
+    RLMRealm *realm = [RLMRealm defaultRealm];
     [realm beginWriteTransaction];
     [currentItem setCount:[stepper value]];
     [quantityLabel setText:[NSString stringWithFormat:@"%d", [currentItem count]]];
@@ -346,7 +348,7 @@
 
 -(BOOL)textFieldShouldReturn:(UITextField *)textField {
     if (textField == memoTextField) {
-        realm = [RLMRealm defaultRealm];
+        RLMRealm *realm = [RLMRealm defaultRealm];
         [realm beginWriteTransaction];
         [self.currentOrder setMemo:[textField text]];
         [realm commitWriteTransaction];
@@ -443,23 +445,60 @@
 
 
 - (void) couponButtonDidTap {
+    if ([self isCouponEmpty]) {
+        [self showHudMessage:@"사용 가능 쿠폰이 없습니다."];
+        return;
+    }
+    
     if ([self isPriceLessThan10K]) {
+        [self showHudMessage:@"10,000 이상 주문시 사용 가능합니다."];
         return;
     };
     
     [couponButton setSelected:!couponButton.selected];
+    // 쿠폰 적용하기!
     if (couponButton.selected) {
         [couponButton setBackgroundColor:CleanBasketRed];
-    } else {
-        [couponButton setBackgroundColor:CleanBasketMint];
+        CouponListViewController *couponListViewController = [[CouponListViewController alloc] init];
+        [couponListViewController setDelegate:self];
+        [self.navigationController pushViewController:couponListViewController animated:YES];
+        
     }
-    
+    // 기 적용 쿠폰 제거
+    else {
+        [couponButton setBackgroundColor:CleanBasketMint];
+        RLMRealm *realm = [RLMRealm defaultRealm];
+        [realm beginWriteTransaction];
+        self.currentCoupon = nil;
+        [self.currentOrder setCoupon:nil];
+        [realm commitWriteTransaction];
+        NSLog(@"%@", self.currentCoupon);
+    }
+}
+
+- (void) setViewController:(CouponListViewController *)controller currentCoupon:(Coupon *)currentCoupon {
+    RLMRealm *realm = [RLMRealm defaultRealm];
+    [realm beginWriteTransaction];
+    self.currentCoupon = currentCoupon;
+    RLMArray *couponArray = [[RLMArray alloc] initWithObjectClassName:@"Coupon"];
+    [couponArray addObject:self.currentCoupon];
+    [self.currentOrder setCoupon:(RLMArray<Coupon>*)couponArray];
+    [realm commitWriteTransaction];
+    NSLog(@"%@", self.currentOrder.coupon);
 }
 
 - (void) confirmButtonDidTap {
-    if ([self isPriceLessThan10K] || [self isUnavailbleArea]) return;
+    if ([self isPriceLessThan10K]) {
+        [self showHudMessage:@"10,000 이상의 주문만 가능합니다."];
+        return;
+    }
     
-    realm = [RLMRealm defaultRealm];
+    if ([self isUnavailbleArea]) {
+        [self showHudMessage:@"현재 강남구/서초구 지역만 이용 가능합니다."];
+        return;
+    }
+    
+    RLMRealm *realm = [RLMRealm defaultRealm];
     [realm beginWriteTransaction];
     [self.currentOrder setPrice:[self calcSumOfLaundryPrice]];
     [self.currentOrder setMemo:[memoTextField text]];
@@ -487,8 +526,6 @@
             [itemJsonArray addObject:jsonItem];
         }
     }
-    NSMutableArray *couponJsonArray = [NSMutableArray array];
-    [couponJsonArray addObject:[NSNumber numberWithInt:1]];
     
     NSDictionary *parameters = @{
                                  @"adrid":[NSNumber numberWithInt:[self.currentAddress adrid]],
@@ -530,7 +567,7 @@
             }
                 break;
             case CBServerConstantError: {
-                [self showHudMessage:@"서버와 통신 중 오류가 발생했습니다."];
+                [self showHudMessage:@"주문 정보 접수에 실패했습니다."];
                 
             }
                 break;
@@ -556,17 +593,6 @@
 
 - (BOOL) isPriceLessThan10K {
     if ([self calcSumOfLaundryPrice] < 10000) {
-        MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES labelText:nil];
-        
-        // Configure for text only and offset down
-        hud.mode = MBProgressHUDModeText;
-        hud.labelText = @"10,000원 이상인 경우에만 가능합니다.";
-        [hud setLabelFont:[UIFont systemFontOfSize:14.0f]];
-        hud.margin = 10.f;
-        hud.yOffset = 150.f;
-        hud.removeFromSuperViewOnHide = YES;
-        
-        [hud hide:YES afterDelay:2];
         return YES;
     } else
         return NO;
@@ -577,21 +603,19 @@
     NSArray *components = [self.currentOrder.address componentsSeparatedByString:@" "];
     NSString *boroughName = [components objectAtIndex:1];
     if (![dtoManager.availableBorough containsObject:boroughName]) {
-        MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES labelText:nil];
-        
-        // Configure for text only and offset down
-        hud.mode = MBProgressHUDModeText;
-        hud.labelText = @"현재 강남구/서초구 지역만 이용이 가능합니다.";
-        [hud setLabelFont:[UIFont systemFontOfSize:14.0f]];
-        hud.margin = 10.f;
-        hud.yOffset = 150.f;
-        hud.removeFromSuperViewOnHide = YES;
-        
-        [hud hide:YES afterDelay:2];
+        return YES;
+    } else {
+        return NO;
+    }
+}
+
+- (BOOL) isCouponEmpty {
+    if ([[Coupon allObjects] count] < 1) {
         return YES;
     }
-    
-    return NO;
+    else {
+        return NO;
+    }
 }
 
 
@@ -605,12 +629,12 @@
     hud.margin = 10.f;
     hud.yOffset = 150.f;
     hud.removeFromSuperViewOnHide = YES;
-    
-    [hud hide:YES afterDelay:2];
+    [hud hide:YES afterDelay:1];
     return;
 }
 
 - (void) resetItemsCount {
+    RLMRealm *realm = [RLMRealm defaultRealm];
     realm = [RLMRealm defaultRealm];
     [realm beginWriteTransaction];
     for (Item *each in itemArray) {

@@ -20,12 +20,13 @@
     UIButton *orderListButton;
 	RLMRealm *realm;
 	AFHTTPRequestOperationManager *afManager;
-	NSArray *dataArray;
 	UIImageView *profileView;
-	UIImage *managerPhotoImage;
+
 	UILabel *managerNameLabel;
 	UILabel *visitDateLabel;
     Order *firstOrder;
 }
+
+@property NSArray *dataArray;
 
 @end

@@ -394,6 +394,7 @@
     [self.view setBackgroundColor:[UIColor whiteColor]];
     [self.navigationItem setTitle:@"주문하기"];
     
+    dtoManager = [DTOManager defaultManager];
     AFManager = [AFHTTPRequestOperationManager manager];
     
     pickupDatePickerViewController = [[PickupDatePickerViewController alloc] init];
@@ -492,6 +493,7 @@
     UIView *contactTextFieldPaddingView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 10, 20)];
     [contactTextField setLeftView:contactTextFieldPaddingView];
     [contactTextField setLeftViewMode:UITextFieldViewModeAlways];
+    [contactTextField setReturnKeyType:UIReturnKeyDone];
     [contactTextField addTarget:self action:@selector(contactTextFieldEditingDidBegin) forControlEvents:UIControlEventEditingDidBegin];
     [contactTextField addTarget:self action:@selector(contactTextFieldEditingDidEnd) forControlEvents:UIControlEventEditingDidEnd];
     
@@ -598,7 +600,6 @@
     UISegmentedControl *control = (UISegmentedControl*)sender;
     NSLog(@"%d", [control selectedSegmentIndex]);
     realm = [RLMRealm defaultRealm];
-    dtoManager = [DTOManager defaultManager];
     NSLog(@"%d", [dtoManager currentUid]);
     
     User *currentUser = [User objectForPrimaryKey:[NSNumber numberWithInt:[dtoManager currentUid]]];
@@ -633,25 +634,7 @@
 }
 
 - (void) orderButtonDidTouched {
-        if ([[pickupDateLabel text] isEqualToString:@"원하시는 날짜를 선택해주세요"] ||
-            [[deliverDateLabel text] isEqualToString:@"원하시는 날짜를 선택해주세요"]) {
-            [self showHudMessage:@"수거일 및 배달일을 설정해주세요."];
-            return;
-        }
-    
-        if ([[inputAddressLabel text] isEqualToString:@"주소가 없습니다"] ||
-            [[inputAddressLabel text] isEqualToString:@"새로운 주소 입력하기"]) {
-            [self showHudMessage:@"유효한 주소를 입력해주세요."];
-            return;
-        }
-    
-        if ([[contactTextField text] length] < 10) {
-            [self showHudMessage:@"유효한 주소를 입력해주세요."];
-            return;
-        }
-    
     if (currentOrder) {
-        
         realm = [RLMRealm defaultRealm];
         [realm beginWriteTransaction];
         [currentOrder setPhone:[contactTextField text]];
@@ -660,7 +643,36 @@
         [currentOrder setAddr_building:[currentAddress addr_building]];
         [currentOrder setAddr_remainder:[currentAddress addr_remainder]];
         [realm commitWriteTransaction];
+        
+//        if ([[pickupDateLabel text] isEqualToString:@"원하시는 날짜를 선택해주세요"] ||
+//            [[deliverDateLabel text] isEqualToString:@"원하시는 날짜를 선택해주세요"]) {
+//            [self showHudMessage:@"수거일 및 배달일을 설정해주세요."];
+//            return;
+//        }
+//        
+//        if ([[inputAddressLabel text] isEqualToString:@"주소가 없습니다"] ||
+//            [[inputAddressLabel text] isEqualToString:@"새로운 주소 입력하기"]) {
+//            [self showHudMessage:@"유효한 주소를 입력해주세요."];
+//            return;
+//        }
+//        
+//        if ([[contactTextField text] length] < 10) {
+//            [self showHudMessage:@"유효한 주소를 입력해주세요."];
+//            return;
+//        }
+//        
+//        if ([self isUnavailbleArea]) {
+//            return;
+//        }
+        
+        ChooseLaundryViewController *chooseLaundry = [[ChooseLaundryViewController alloc] init];
+        [chooseLaundry setCurrentOrder:currentOrder];
+        [chooseLaundry setCurrentAddress:currentAddress];
+        UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:chooseLaundry];
+        [self.navigationController presentViewController:navController animated:YES completion:^{
+        }];
     }
+    
     else {
         UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:nil
                                                             message:@"주문이 제대로 생성되지 않았습니다.\n다시 로그인해주세요."
@@ -669,15 +681,6 @@
                                                   otherButtonTitles:nil, nil];
         [alertView show];
     }
-    
-    ChooseLaundryViewController *chooseLaundry = [[ChooseLaundryViewController alloc] init];
-    [chooseLaundry setCurrentOrder:currentOrder];
-    [chooseLaundry setCurrentAddress:currentAddress];
-    UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:chooseLaundry];
-    [self.navigationController presentViewController:navController animated:YES completion:^{
-    }];
-    
-    NSLog(@"[CURRENT ORDER]\r%@", currentOrder);
 }
 
 - (void) showHudMessage:(NSString*)message {
@@ -690,8 +693,30 @@
     hud.yOffset = 150.f;
     hud.removeFromSuperViewOnHide = YES;
     
-    [hud hide:YES afterDelay:2];
+    [hud hide:YES afterDelay:1];
     return;
 }
+
+- (BOOL) isUnavailbleArea {
+    NSArray *components = [currentOrder.address componentsSeparatedByString:@" "];
+    NSLog(@"%@", [components objectAtIndex:1]);
+    NSString *boroughName = [components objectAtIndex:1];
+    if (![dtoManager.availableBorough containsObject:boroughName]) {
+        MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES labelText:nil];
+        
+        // Configure for text only and offset down
+        hud.mode = MBProgressHUDModeText;
+        hud.labelText = @"현재 강남구/서초구 지역만 이용이 가능합니다.";
+        [hud setLabelFont:[UIFont systemFontOfSize:14.0f]];
+        hud.margin = 10.f;
+        hud.yOffset = 150.f;
+        hud.removeFromSuperViewOnHide = YES;
+        
+        [hud hide:YES afterDelay:2];
+        return YES;
+    }
+    return NO;
+}
+
 
 @end
