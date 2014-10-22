@@ -128,8 +128,7 @@
     [self.view addSubview:iForgotButton];
     
     [emailTextField setText:@"woonohyo@nhnnext.org"];
-    [passwordTextField setText:@"p32759"];
-    
+    [passwordTextField setText:@"p70673"];
 }
 
 - (void)didReceiveMemoryWarning {

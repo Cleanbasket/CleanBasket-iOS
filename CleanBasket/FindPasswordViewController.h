@@ -8,6 +8,8 @@
 
 #import <UIKit/UIKit.h>
 #import "CBConstants.h"
+#import "AFNetworking.h"
+#import "MBProgressHUD.h"
 
 @interface FindPasswordViewController : UIViewController {
     UITextField *emailTextField;

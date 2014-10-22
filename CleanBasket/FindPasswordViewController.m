@@ -24,12 +24,13 @@
     [self.navigationItem setTitle:@"비밀번호 찾기"];
     [self.view setBackgroundColor:[UIColor whiteColor]];
     
-    [self.navigationItem setRightBarButtonItem:[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(doneButtonTouched)]];
+    UIBarButtonItem *rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"닫기" style:UIBarButtonItemStylePlain target:self action:@selector(doneButtonTouched)];
+    [self.navigationItem setRightBarButtonItem:rightBarButtonItem];
     
     emailTextField = [self makeTextField];
     [emailTextField setTag:0];
     [emailTextField setFrame:[self makeRect:emailTextField]];
-    [emailTextField setPlaceholder:@"example@naver.com"];
+    [emailTextField setPlaceholder:@"mail@cleanbasket.co.kr"];
     [emailTextField setReturnKeyType:UIReturnKeyDone];
     
     sendButton = [[UIButton alloc] init];
@@ -72,6 +73,11 @@
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
+- (BOOL)textFieldShouldReturn:(UITextField *)textField {
+    [self sendButtonTouched];
+    return YES;
+}
+
 - (CGRect) makeRect: (UIView*)view {
     return CGRectMake(CenterX, FirstElementY + Interval * [view tag], FieldWidth, FieldHeight);
 }
@@ -82,11 +88,69 @@
         UIAlertView *invalidEmailAlertView = [[UIAlertView alloc] initWithTitle:nil message:@"올바른 회원 정보를 입력해주세요:)" delegate:self cancelButtonTitle:@"닫기" otherButtonTitles:nil, nil];
         [invalidEmailAlertView show];
         return;
-
     }
+    [self.view endEditing:YES];
+    NSDictionary *parameter = @{@"email":[emailTextField text]};
     
-    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:nil message:@"해당 이메일로\n임시비밀번호를 전송했습니다." delegate:self cancelButtonTitle:@"닫기" otherButtonTitles:nil, nil];
-    [alertView show];
+    [MBProgressHUD showHUDAddedTo:self.view animated:YES labelText:@"서버와 통신 중"];
+    AFHTTPRequestOperationManager *afManager = [AFHTTPRequestOperationManager manager];
+    afManager.requestSerializer = [AFJSONRequestSerializer serializer];
+    afManager.responseSerializer = [AFJSONResponseSerializer serializer];
+    
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_LOW, 0), ^{
+        [afManager POST:@"http://cleanbasket.co.kr/password/inquiry"  parameters:parameter success:^(AFHTTPRequestOperation *operation, id responseObject) {
+            NSNumber *constant = [responseObject valueForKey:@"constant"];
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [MBProgressHUD hideHUDForView:self.view animated:YES];
+                switch ([constant intValue]) {
+                    case CBServerConstantSuccess: {
+                        [emailTextField setText:@""];
+                        [self showHudMessage:@"해당 이메일로 새 비밀번호를 전송했습니다."];
+                        [self performSelector:@selector(doneButtonTouched) withObject:nil afterDelay:3];
+                    }
+                        break;
+                    case CBServerConstantError: {
+                        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:nil message:@"서버 오류가 발생했습니다. 매니저에게 연락 부탁드립니다." delegate:self cancelButtonTitle:@"닫기" otherButtonTitles:nil, nil];
+                        [alertView show];
+                    }
+                        break;
+                    case CBServerConstantEmailError: {
+                        [self showHudMessage:@"해당 이메일은 존재하지 않습니다."];
+                    }
+                        break;
+                    default:
+                        break;
+                }
+            });
+            
+        } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [MBProgressHUD hideHUDForView:self.view animated:YES];
+            });
+            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:nil message:@"네트워크 연결 상태를 확인해주세요." delegate:self cancelButtonTitle:@"닫기" otherButtonTitles:nil, nil];
+            [alertView show];
+            NSLog(@"%@", error);
+        }];
+    });
+}
+
+- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event{
+    [self.view endEditing:YES];
+    [super touchesBegan:touches withEvent:event];
+}
+
+- (void) showHudMessage:(NSString*)message {
+    MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES labelText:nil];
+    
+    // Configure for text only and offset down
+    hud.mode = MBProgressHUDModeText;
+    hud.labelText = message;
+    [hud setLabelFont:[UIFont systemFontOfSize:14.0f]];
+    hud.margin = 10.f;
+    hud.yOffset = 150.f;
+    hud.removeFromSuperViewOnHide = YES;
+    [hud hide:YES afterDelay:2];
+    return;
 }
 
 @end

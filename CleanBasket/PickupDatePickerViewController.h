@@ -1,5 +1,5 @@
 //
-//  DeliverDatePickerViewController.h
+//  PickupDatePickerViewController.h
 //  CleanBasket
 //
 //  Created by Wonhyo Yi on 2014. 10. 22..
@@ -18,14 +18,16 @@
 #import "ChooseLaundryViewController.h"
 #import "AddressInputViewController.h"
 
-@interface DeliverDatePickerViewController : UIViewController {
+@interface PickupDatePickerViewController : UIViewController
+{
     UIDatePicker *datePicker;
     UILabel *dateInfoLabel;
+    UIButton *confirmButton;
+    UIButton *cancelButton;
     NSTimer *changeDateInfoLabelBgColorTimer;
     DTOManager *dtoManager;
     RLMRealm *realm;
-    NSString *deliverDateString;
-    UIButton *confirmButton;
+    NSString *pickupDateString;
 }
 
 @property Order *currentOrder;

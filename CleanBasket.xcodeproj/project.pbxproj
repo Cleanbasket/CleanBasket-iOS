@@ -11,6 +11,7 @@
 		F111445619EEDDD500C637AB /* Address.m in Sources */ = {isa = PBXBuildFile; fileRef = F111445519EEDDD500C637AB /* Address.m */; };
 		F113748319F7841000E9A27F /* TermsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F113748219F7841000E9A27F /* TermsViewController.m */; };
 		F113748619F78DA700E9A27F /* DeliverDatePickerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F113748519F78DA700E9A27F /* DeliverDatePickerViewController.m */; };
+		F113748919F78ED500E9A27F /* PickupDatePickerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F113748819F78ED500E9A27F /* PickupDatePickerViewController.m */; };
 		F133212A19F340AE00C52D20 /* ic_calc_blouse@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F133210E19F340AE00C52D20 /* ic_calc_blouse@2x.png */; };
 		F133212B19F340AE00C52D20 /* ic_calc_coat@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F133210F19F340AE00C52D20 /* ic_calc_coat@2x.png */; };
 		F133212C19F340AE00C52D20 /* ic_calc_etc@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F133211019F340AE00C52D20 /* ic_calc_etc@2x.png */; };
@@ -130,6 +131,8 @@
 		F113748219F7841000E9A27F /* TermsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TermsViewController.m; sourceTree = "<group>"; };
 		F113748419F78DA700E9A27F /* DeliverDatePickerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DeliverDatePickerViewController.h; sourceTree = "<group>"; };
 		F113748519F78DA700E9A27F /* DeliverDatePickerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DeliverDatePickerViewController.m; sourceTree = "<group>"; };
+		F113748719F78ED500E9A27F /* PickupDatePickerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PickupDatePickerViewController.h; sourceTree = "<group>"; };
+		F113748819F78ED500E9A27F /* PickupDatePickerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PickupDatePickerViewController.m; sourceTree = "<group>"; };
 		F133210E19F340AE00C52D20 /* ic_calc_blouse@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic_calc_blouse@2x.png"; sourceTree = "<group>"; };
 		F133210F19F340AE00C52D20 /* ic_calc_coat@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic_calc_coat@2x.png"; sourceTree = "<group>"; };
 		F133211019F340AE00C52D20 /* ic_calc_etc@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic_calc_etc@2x.png"; sourceTree = "<group>"; };
@@ -302,14 +305,16 @@
 		F133210B19F3279C00C52D20 /* Order */ = {
 			isa = PBXGroup;
 			children = (
-				F19DE12B19EEF4EF004B60E7 /* ChooseLaundryViewController.h */,
-				F19DE12C19EEF4EF004B60E7 /* ChooseLaundryViewController.m */,
 				F14AC26019DE9AB8002BCC98 /* OrderViewController.h */,
 				F14AC26119DE9AB8002BCC98 /* OrderViewController.m */,
-				F133214519F3415500C52D20 /* ChooseOtherLaundryViewController.h */,
-				F133214619F3415500C52D20 /* ChooseOtherLaundryViewController.m */,
+				F113748719F78ED500E9A27F /* PickupDatePickerViewController.h */,
+				F113748819F78ED500E9A27F /* PickupDatePickerViewController.m */,
 				F113748419F78DA700E9A27F /* DeliverDatePickerViewController.h */,
 				F113748519F78DA700E9A27F /* DeliverDatePickerViewController.m */,
+				F19DE12B19EEF4EF004B60E7 /* ChooseLaundryViewController.h */,
+				F19DE12C19EEF4EF004B60E7 /* ChooseLaundryViewController.m */,
+				F133214519F3415500C52D20 /* ChooseOtherLaundryViewController.h */,
+				F133214619F3415500C52D20 /* ChooseOtherLaundryViewController.m */,
 			);
 			name = Order;
 			sourceTree = "<group>";
@@ -558,6 +563,7 @@
 		F14AC25F19DE7F2E002BCC98 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				F14AC27219DED5B9002BCC98 /* MainControllers */,
 				F14AC27319DED5BD002BCC98 /* TabBarControllers */,
 				F14AC28319DEE188002BCC98 /* MyUITabBarController.h */,
 				F14AC28419DEE188002BCC98 /* MyUITabBarController.m */,
@@ -606,7 +612,6 @@
 				F133218319F64F1400C52D20 /* CouponShare */,
 				F14AC28019DEDEFE002BCC98 /* ServiceInfoViewController.h */,
 				F14AC28119DEDEFE002BCC98 /* ServiceInfoViewController.m */,
-				F14AC27219DED5B9002BCC98 /* MainControllers */,
 			);
 			name = TabBarControllers;
 			sourceTree = "<group>";
@@ -879,6 +884,7 @@
 				F113748319F7841000E9A27F /* TermsViewController.m in Sources */,
 				F193DA1519EC03930051C32A /* DTOManager.m in Sources */,
 				F193DA0319EBCBA70051C32A /* AFURLResponseSerialization.m in Sources */,
+				F113748919F78ED500E9A27F /* PickupDatePickerViewController.m in Sources */,
 				F19DE12919EEF386004B60E7 /* Order.m in Sources */,
 				F14AC23719DE7E00002BCC98 /* main.m in Sources */,
 				F133217319F5ABB300C52D20 /* CBOrderDetailTableViewCell.m in Sources */,
