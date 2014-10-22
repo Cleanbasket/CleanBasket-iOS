@@ -84,7 +84,6 @@
     hud.mode = MBProgressHUDModeText;
     [hud setLabelFont:[UIFont systemFontOfSize:14.0f]];
     hud.margin = 10.f;
-    hud.yOffset = 150.f;
     hud.removeFromSuperViewOnHide = YES;
     
     [hud hide:YES afterDelay:delay];
@@ -99,10 +98,8 @@
     CBOrderDetailTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     
     if (cell == nil) {
-        
         cell = [[CBOrderDetailTableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier];
     }
-    
     
     Order *currentOrder = [orderList objectAtIndex:[indexPath row]];
     
@@ -123,8 +120,8 @@
     [cell.orderPriceValueLabel setText:[NSString stringWithCurrencyFormat:[currentOrder price]]];
     [cell.orderItemsValueLabel setText:nil];
     [cell.orderStatusValueLabel setText:nil];
-    [cell.orderPickupValueLabel setText:[[currentOrder pickup_date] substringToIndex:16]];
-    [cell.orderDeliverValueLabel setText:[[currentOrder dropoff_date] substringToIndex:16]];
+    [cell.orderPickupValueLabel setText:[NSString trimDateString:[currentOrder pickup_date]]];
+    [cell.orderDeliverValueLabel setText:[NSString trimDateString:[currentOrder dropoff_date]]];
     [cell.managerNameValueLabel setText:([[currentOrder pickupInfo] name]?[[currentOrder pickupInfo] name]:@"미지정")];
     [cell.orderStatusValueLabel setText:[orderStateName objectAtIndex:[currentOrder state]]];
     [cell.orderCancelButton addTarget:self action:@selector(orderCancelButtonDidTap:) forControlEvents:UIControlEventTouchUpInside];

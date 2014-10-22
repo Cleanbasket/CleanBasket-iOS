@@ -42,6 +42,7 @@
     UIScrollView *scrollView;
     UIButton *couponButton;
     int totalPrice;
+    UILabel *touchLabel;
 }
 
 @property Order *currentOrder;

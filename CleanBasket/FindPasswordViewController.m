@@ -147,7 +147,6 @@
     hud.labelText = message;
     [hud setLabelFont:[UIFont systemFontOfSize:14.0f]];
     hud.margin = 10.f;
-    hud.yOffset = 150.f;
     hud.removeFromSuperViewOnHide = YES;
     [hud hide:YES afterDelay:2];
     return;

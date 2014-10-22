@@ -30,20 +30,25 @@
     [self.navigationItem setTitle:@"배달일"];
     realm = [RLMRealm defaultRealm];
     
+    pickupDateString = [currentOrder pickup_date];
+    pickupMonth = [pickupDateString substringWithRange:NSMakeRange(5, 2)];
+    pickupDay = [pickupDateString substringWithRange:NSMakeRange(8, 2)];
+    pickupHour = [pickupDateString substringWithRange:NSMakeRange(11, 2)];
+    pickupMinute = [pickupDateString substringWithRange:NSMakeRange(14, 2)];
+    NSLog(@"%d %d %d %d", [pickupMonth intValue], [pickupDay intValue], [pickupHour intValue], [pickupMinute intValue]);
     dateInfoLabel = [[UILabel alloc] initWithFrame:CGRectMake(20, 84, 280, 120)];
     [dateInfoLabel setTextAlignment:NSTextAlignmentCenter];
     [dateInfoLabel setLineBreakMode:NSLineBreakByCharWrapping];
-    [dateInfoLabel setText:@"주문 시간으로부터 3일 후,\n30분 단위로 선택이 가능합니다."];
+    [dateInfoLabel setText:@"수거일로부터 3일 후,\n30분 단위로 선택이 가능합니다."];
     [dateInfoLabel setTextColor:[UIColor grayColor]];
     [dateInfoLabel setNumberOfLines:0];
     [dateInfoLabel.layer setBorderColor:CleanBasketMint.CGColor];
     [dateInfoLabel.layer setBorderWidth:1.0f];
+    [dateInfoLabel.layer setCornerRadius:15.0f];
+    [dateInfoLabel setClipsToBounds:YES];
     
     datePicker = [[UIDatePicker alloc] initWithFrame:CGRectMake(0, 200, DEVICE_WIDTH, 200)];
     [datePicker addTarget:self action:@selector(datePickerChanged) forControlEvents:UIControlEventValueChanged];
-    
-    [self refreshMinMaxDate];
-    [datePicker setMinuteInterval:30];
     
     confirmButton = [[UIButton alloc] initWithFrame:CGRectMake(60, 420, 200, 35)];
     [confirmButton setBackgroundColor:CleanBasketMint];
@@ -52,7 +57,17 @@
     [confirmButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [confirmButton setTitleColor:[UIColor blackColor] forState:UIControlStateHighlighted];
     [confirmButton addTarget:self action:@selector(didTouchConfirmButton) forControlEvents: UIControlEventTouchUpInside];
-    NSLog(@"%@", currentOrder);
+    
+
+    [self refreshMinMaxDate];
+    [datePicker setMinuteInterval:30];
+    [self datePickerChanged];
+    
+    // 수거일로부터 2일 후로 설정
+    NSDateComponents *datePickerComponents = [[NSCalendar currentCalendar] components:NSYearCalendarUnit|NSMonthCalendarUnit|NSDayCalendarUnit|NSHourCalendarUnit|NSMinuteCalendarUnit fromDate:datePicker.date];
+    [datePickerComponents setDay:[pickupDay intValue] + 2];
+    [datePickerComponents setHour:[pickupHour intValue]];
+    [datePicker setDate:[[NSCalendar currentCalendar] dateFromComponents:datePickerComponents]];
     
     [self.view addSubview:dateInfoLabel];
     [self.view addSubview:datePicker];
@@ -85,21 +100,24 @@
 
 - (void) refreshMinMaxDate {
     NSCalendar *calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
-    NSDate *currentDate = [NSDate date];
-    NSDateComponents *currentDateComponents = [[NSCalendar currentCalendar] components:NSYearCalendarUnit|NSMonthCalendarUnit|NSDayCalendarUnit|NSHourCalendarUnit|NSMinuteCalendarUnit fromDate:[NSDate date]];
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    [dateFormatter setDateFormat:@"yyyy-MM-dd HH:mm:00"];
+    NSDate *pickupDate = [dateFormatter dateFromString:pickupDateString];
+
+    NSDateComponents *currentDateComponents = [[NSCalendar currentCalendar] components:NSYearCalendarUnit|NSMonthCalendarUnit|NSDayCalendarUnit|NSHourCalendarUnit|NSMinuteCalendarUnit fromDate:pickupDate];
     
     NSDateComponents *comps = [[NSDateComponents alloc] init];
-    [comps setDay:10];
-    [comps setHour:24 - [currentDateComponents hour]];
-    NSDate *maxDate = [calendar dateByAddingComponents:comps toDate:currentDate options:0];
+    [comps setDay:14];
+    [comps setHour:[pickupHour intValue]];
+    NSDate *maxDate = [calendar dateByAddingComponents:comps toDate:pickupDate options:0];
     
-    [comps setDay:3];
-    [comps setHour:1];
+    [comps setDay:2];
+    [comps setHour:0];
     if ( [currentDateComponents minute] > 31 ) {
         [comps setMinute:60 - [currentDateComponents minute]];
     }
-    //    NSLog(@"%@", comps);
-    NSDate *minDate = [calendar dateByAddingComponents:comps toDate:currentDate options:0];
+    NSDate *minDate = [calendar dateByAddingComponents:comps toDate:pickupDate options:0];
+    NSLog(@"max:%@   min:%@", maxDate, minDate);
     
     [datePicker setMaximumDate:maxDate];
     [datePicker setMinimumDate:minDate];

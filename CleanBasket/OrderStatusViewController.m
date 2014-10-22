@@ -43,11 +43,17 @@
     [managerNameLabel setAdjustsFontSizeToFitWidth:YES];
     [managerNameLabel setFont:[UIFont systemFontOfSize:14.0f]];
     
-    visitDateLabel = [[UILabel alloc] initWithFrame:CGRectMake(DEVICE_WIDTH - 120, (DEVICE_HEIGHT-80)/2 + 97, 120, 30)];
+    visitDateLabel = [[UILabel alloc] initWithFrame:CGRectMake(DEVICE_WIDTH - 130, (DEVICE_HEIGHT-80)/2 + 97, 120, 30)];
     [visitDateLabel setTextColor:[UIColor grayColor]];
-    [visitDateLabel setTextAlignment:NSTextAlignmentCenter];
-    [visitDateLabel setText:([firstOrder pickup_date]?[firstOrder pickup_date]:@"")];
+    [visitDateLabel setTextAlignment:NSTextAlignmentRight];
     [visitDateLabel setAdjustsFontSizeToFitWidth:YES];
+    [visitDateLabel setFont:[UIFont systemFontOfSize:14.0]];
+    
+    visitTimeLabel = [[UILabel alloc] initWithFrame:CGRectMake(DEVICE_WIDTH - 130, (DEVICE_HEIGHT-80)/2 + 112, 120, 30)];
+    [visitTimeLabel setTextColor:[UIColor grayColor]];
+    [visitTimeLabel setTextAlignment:NSTextAlignmentRight];
+    [visitTimeLabel setAdjustsFontSizeToFitWidth:YES];
+    [visitTimeLabel setFont:[UIFont systemFontOfSize:14.0]];
     
     UIImage *process0 = [UIImage imageNamed:@"process_0.png"];
     UIImage *process1 = [UIImage imageNamed:@"process_1.png"];
@@ -59,9 +65,7 @@
     
     processImages = [NSArray arrayWithObjects:process0, process1, process2, process3, process4, process5, process6, nil];
     
-    UITapGestureRecognizer *processImageViewTapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(processImageViewDidTap)];
     processImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"process_empty.png"]];
-    [processImageView addGestureRecognizer:processImageViewTapGesture];
     [processImageView setUserInteractionEnabled:YES];
     
     if (isiPhone5) {
@@ -75,6 +79,7 @@
     [self.view addSubview:profileView];
     [self.view addSubview:managerNameLabel];
     [self.view addSubview:visitDateLabel];
+    [self.view addSubview:visitTimeLabel];
     
 }
 
@@ -117,7 +122,24 @@
             }
             
             [managerNameLabel setText:([[firstOrder pickupInfo] name]?[[firstOrder pickupInfo] name]:@"미지정")];
-            [visitDateLabel setText:([firstOrder pickup_date]?[[firstOrder pickup_date] substringToIndex:16]:@"")];
+            [visitDateLabel setText:@""];
+            [visitTimeLabel setText:@""];
+            
+            if ([firstOrder pickup_date] && [firstOrder state] < 2) {
+                NSString *trimmedString = [NSString trimDateString:[firstOrder pickup_date]];
+                NSString *dateString = [trimmedString substringToIndex:10];
+                NSString *timeString = [trimmedString substringWithRange:NSMakeRange(11, 13)];
+                [visitDateLabel setText:dateString];
+                [visitTimeLabel setText:timeString];
+            }
+            
+            if ([firstOrder dropoff_date] && [firstOrder state] > 1) {
+                NSString *trimmedString = [NSString trimDateString:[firstOrder dropoff_date]];
+                NSString *dateString = [trimmedString substringToIndex:10];
+                NSString *timeString = [trimmedString substringWithRange:NSMakeRange(11, 13)];
+                [visitDateLabel setText:dateString];
+                [visitTimeLabel setText:timeString];
+            }
             
             [processImageView setImage:[processImages objectAtIndex:[firstOrder state]]];
             
@@ -138,15 +160,6 @@
     // Dispose of any resources that can be recreated.
 }
 
-- (void) processImageViewDidTap {
-    ++processIndex;
-    if ( processIndex > 7) {
-        processIndex = 0;
-    }
-    NSLog(@"%d taptaptap", processIndex);
-    [processImageView setImage:[processImages objectAtIndex:processIndex]];
-}
-
 - (void) showHudMessage:(NSString*)message {
     MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES labelText:message    ];
     
@@ -154,7 +167,6 @@
     hud.mode = MBProgressHUDModeText;
     [hud setLabelFont:[UIFont systemFontOfSize:14.0f]];
     hud.margin = 10.f;
-    hud.yOffset = 150.f;
     hud.removeFromSuperViewOnHide = YES;
     
     [hud hide:YES afterDelay:1];

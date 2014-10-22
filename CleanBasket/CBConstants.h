@@ -59,3 +59,4 @@ typedef enum serverConstant : NSUInteger {
 #define isiPhone5 ([[UIScreen mainScreen] bounds].size.height == 568)?TRUE:FALSE
 #define iPhone5 ([[UIScreen mainScreen] bounds].size.height == 568)
 #define COUPON_HEIGHT 162
+#define APP_NAME_STRING @"CleanBasket"

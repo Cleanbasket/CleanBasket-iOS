@@ -79,12 +79,11 @@
 - (void) createCoupon:(NSArray*)couponArray {
     realm = [RLMRealm defaultRealm];
     [realm beginWriteTransaction];
+    [realm deleteObjects:[Coupon allObjects]];
     for ( NSDictionary *each in couponArray) {
         [realm addObject:[Coupon createInDefaultRealmWithObject:each]];
     }
     [realm commitWriteTransaction];
-    NSLog(@"%@", [Coupon allObjects]);
-         
 }
 
 @end

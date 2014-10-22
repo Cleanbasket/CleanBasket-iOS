@@ -187,6 +187,52 @@
 - (void) contactTextFieldEditingDidEnd {
     [scrollView scrollRectToVisible:CGRectMake(0, 0, DEVICE_WIDTH, DEVICE_HEIGHT) animated:YES];
     NSLog(@"%@", [contactTextField text]);
+    
+    if([[contactTextField text] length] > 15) {
+        [self showHudMessage:@"올바르지 않은 연락처입니다."];
+        [contactTextField setText:@""];
+        return;
+    }
+    
+    NSDictionary *parameter = @{@"phone":[contactTextField text]};
+    
+    [MBProgressHUD showHUDAddedTo:self.view animated:YES labelText:@"연락처 업데이트 중"];
+    AFHTTPRequestOperationManager *afManager = [AFHTTPRequestOperationManager manager];
+    afManager.requestSerializer = [AFJSONRequestSerializer serializer];
+    afManager.responseSerializer = [AFJSONResponseSerializer serializer];
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_LOW, 0), ^{
+        [afManager POST:@"http://cleanbasket.co.kr/member/phone/update"  parameters:parameter success:^(AFHTTPRequestOperation *operation, id responseObject) {
+            NSNumber *constant = [responseObject valueForKey:@"constant"];
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [MBProgressHUD hideHUDForView:self.view animated:YES];
+                switch ([constant intValue]) {
+                    case CBServerConstantSuccess: {
+                        [self showHudMessage:@"연락처를 업데이트했습니다."];
+                    }
+                        break;
+                    case CBServerConstantError: {
+                        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:nil message:@"서버 오류가 발생했습니다. 매니저에게 연락 부탁드립니다." delegate:self cancelButtonTitle:@"닫기" otherButtonTitles:nil, nil];
+                        [alertView show];
+                    }
+                        break;
+                    case CBServerConstantSessionExpired: {
+                        [self showHudMessage:@"세션이 만료되었습니다. 다시 로그인해주세요."];
+                    }
+                        break;
+                    default:
+                        break;
+                }
+            });
+            
+        } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [MBProgressHUD hideHUDForView:self.view animated:YES];
+            });
+            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:nil message:@"네트워크 연결 상태를 확인해주세요." delegate:self cancelButtonTitle:@"닫기" otherButtonTitles:nil, nil];
+            [alertView show];
+            NSLog(@"%@", error);
+        }];
+    });
 }
 
 - (void) scrollViewDidTap {
@@ -214,11 +260,15 @@
         currentAddress = [address objectAtIndex:[addressControl selectedSegmentIndex]];
         [inputAddressLabel setText:[currentAddress fullAddress]];
         
+        [realm beginWriteTransaction];
+        if ([Order objectForPrimaryKey:[NSNumber numberWithInt:NEW_INDEX]]) {
+            [realm deleteObject:[Order objectForPrimaryKey:[NSNumber numberWithInt:NEW_INDEX]]];
+        }
         currentOrder = [[Order alloc] init];
         [currentOrder setOid:NEW_INDEX];
-        [realm beginWriteTransaction];
         [realm addObject:currentOrder];
         [realm commitWriteTransaction];
+        NSLog(@"NEW ORDER HAVING PRIMARY KEY 9999 CREATED");
     }
     
     // 사용자가 픽업 날짜를 선택하고 확인을 누른 경우, NEW_INDEX==9999의 Order 객체 이용
@@ -226,7 +276,7 @@
         if ([Order objectForPrimaryKey:[NSNumber numberWithInt:NEW_INDEX]])
         {
             currentOrder = [Order objectForPrimaryKey:[NSNumber numberWithInt:NEW_INDEX]];
-            [pickupDateLabel setText:[currentOrder pickup_date]];
+            [pickupDateLabel setText:[NSString trimDateString:[currentOrder pickup_date]]];
         }
     }
     
@@ -235,8 +285,7 @@
         if ([Order objectForPrimaryKey:[NSNumber numberWithInt:NEW_INDEX]])
         {
             currentOrder = [Order objectForPrimaryKey:[NSNumber numberWithInt:NEW_INDEX]];
-            [deliverDateLabel setText:[currentOrder dropoff_date]];
-            NSLog(@"%@", currentOrder);
+            [deliverDateLabel setText:[NSString trimDateString:[currentOrder dropoff_date]]];
         }
     }
 }
@@ -269,10 +318,18 @@
 - (void) pickupTap {
     PickupDatePickerViewController *pickupDatePickerViewController = [[PickupDatePickerViewController alloc] init];
     [pickupDatePickerViewController setCurrentOrder:currentOrder];
+    [realm beginWriteTransaction];
+    [currentOrder setDropoff_date:nil];
+    [realm commitWriteTransaction];
+    [deliverDateLabel setText:@"원하시는 날짜를 선택해주세요"];
     [self.navigationController pushViewController:pickupDatePickerViewController animated:YES];
 }
 
 - (void) deliverTap {
+    if ([currentOrder.pickup_date length] < 5) {
+        [self showHudMessage:@"수거일을 먼저 설정해주세요:)"];
+        return;
+    }
     DeliverDatePickerViewController *deliverDatePickerViewController = [[DeliverDatePickerViewController alloc] init];
     [deliverDatePickerViewController setCurrentOrder:currentOrder];
     [self.navigationController pushViewController:deliverDatePickerViewController animated:YES];
@@ -298,26 +355,26 @@
         [currentOrder setAddr_remainder:[currentAddress addr_remainder]];
         [realm commitWriteTransaction];
         
-//        if ([[pickupDateLabel text] isEqualToString:@"원하시는 날짜를 선택해주세요"] ||
-//            [[deliverDateLabel text] isEqualToString:@"원하시는 날짜를 선택해주세요"]) {
-//            [self showHudMessage:@"수거일 및 배달일을 설정해주세요."];
-//            return;
-//        }
-//        
-//        if ([[inputAddressLabel text] isEqualToString:@"주소가 없습니다"] ||
-//            [[inputAddressLabel text] isEqualToString:@"새로운 주소 입력하기"]) {
-//            [self showHudMessage:@"유효한 주소를 입력해주세요."];
-//            return;
-//        }
-//        
-//        if ([[contactTextField text] length] < 10) {
-//            [self showHudMessage:@"유효한 주소를 입력해주세요."];
-//            return;
-//        }
-//        
-//        if ([self isUnavailbleArea]) {
-//            return;
-//        }
+        if ([[pickupDateLabel text] isEqualToString:@"원하시는 날짜를 선택해주세요"] ||
+            [[deliverDateLabel text] isEqualToString:@"원하시는 날짜를 선택해주세요"]) {
+            [self showHudMessage:@"수거일 및 배달일을 설정해주세요."];
+            return;
+        }
+        
+        if ([[inputAddressLabel text] isEqualToString:@"주소가 없습니다"] ||
+            [[inputAddressLabel text] isEqualToString:@"새로운 주소 입력하기"]) {
+            [self showHudMessage:@"유효한 주소를 입력해주세요."];
+            return;
+        }
+        
+        if ([[contactTextField text] length] < 10) {
+            [self showHudMessage:@"유효한 주소를 입력해주세요."];
+            return;
+        }
+        
+        if ([self isUnavailbleArea]) {
+            return;
+        }
         
         ChooseLaundryViewController *chooseLaundry = [[ChooseLaundryViewController alloc] init];
         [chooseLaundry setCurrentOrder:currentOrder];
@@ -344,7 +401,6 @@
     hud.mode = MBProgressHUDModeText;
     [hud setLabelFont:[UIFont systemFontOfSize:14.0f]];
     hud.margin = 10.f;
-    hud.yOffset = 150.f;
     hud.removeFromSuperViewOnHide = YES;
     
     [hud hide:YES afterDelay:1];
@@ -363,7 +419,6 @@
         hud.labelText = @"현재 강남구/서초구 지역만 이용이 가능합니다.";
         [hud setLabelFont:[UIFont systemFontOfSize:14.0f]];
         hud.margin = 10.f;
-        hud.yOffset = 150.f;
         hud.removeFromSuperViewOnHide = YES;
         
         [hud hide:YES afterDelay:2];

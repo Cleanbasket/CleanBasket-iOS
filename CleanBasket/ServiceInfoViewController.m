@@ -28,11 +28,6 @@
     [super viewDidLoad];
     [self.view setBackgroundColor:[UIColor whiteColor]];
     
-    UILabel *myLabel = [[UILabel alloc] initWithFrame:CGRectMake(20, 20, 300, 100)];
-    [myLabel setCenter:self.view.center];
-    myLabel.text = @"서비스정보";
-    myLabel.font = [UIFont boldSystemFontOfSize:24.0f];
-    [self.view addSubview:myLabel];
 }
 
 - (void)didReceiveMemoryWarning {

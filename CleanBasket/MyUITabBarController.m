@@ -18,6 +18,7 @@
     self = [super init];
     if (self) {
         UILabel *moreTitleView = [[UILabel alloc] init];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(NotificationReceived:) name:nil object:nil];
         [moreTitleView setText:@"더 보기"];
     }
     
@@ -70,13 +71,18 @@
         [self.navigationController setNavigationBarHidden:NO];
     }
     
-    if ( [item.title isEqualToString:@"진행상태" ]) {
+    if ([item.title isEqualToString:@"진행상태" ]) {
         currentItem = item;
-        UIBarButtonItem *leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"주문내역" style:UIBarButtonItemStylePlain target:self action:@selector(orderBarButtonDidTap:)];
-        [self.navigationItem setLeftBarButtonItem:leftBarButtonItem];
-        
+        [self setOrderListBarButtonItem];
     } else {
         [self.navigationItem setLeftBarButtonItem:nil];
+    }
+    
+    if ([item.title isEqualToString:@"서비스 정보"]){
+        UIBarButtonItem *logoutBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"로그아웃" style:UIBarButtonItemStylePlain target:self action:@selector(logoutBarButtonDidTap)];
+        [self.navigationItem setRightBarButtonItem:logoutBarButtonItem];
+    } else {
+        [self.navigationItem setRightBarButtonItem:nil];
     }
 }
 
@@ -103,17 +109,33 @@
     [self.navigationController pushViewController:orderDetailViewController animated:YES];
 }
 
+- (void) logoutBarButtonDidTap {
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"userDidLogout" object:nil];
+}
+
 - (void) showHudMessage:(NSString*)message afterDelay:(int)delay {
     MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES labelText:message    ];
     // Configure for text only and offset down
     hud.mode = MBProgressHUDModeText;
     [hud setLabelFont:[UIFont systemFontOfSize:14.0f]];
     hud.margin = 10.f;
-    hud.yOffset = 150.f;
     hud.removeFromSuperViewOnHide = YES;
     
     [hud hide:YES afterDelay:delay];
     return;
+}
+
+// AppDelegate로 주문이 접수됨을 알리고, OrderStatusView로 전환
+- (void)NotificationReceived:(NSNotification*)noti {
+    if ([[noti name] isEqualToString:@"checkCompletedOrder"]) {
+        [self setOrderListBarButtonItem];
+        return;
+    }
+}
+
+- (void) setOrderListBarButtonItem {
+    UIBarButtonItem *leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"주문내역" style:UIBarButtonItemStylePlain target:self action:@selector(orderBarButtonDidTap:)];
+    [self.navigationItem setLeftBarButtonItem:leftBarButtonItem];
 }
 
 @end

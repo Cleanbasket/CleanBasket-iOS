@@ -25,9 +25,9 @@
 }
 
 - (void)viewDidLoad {
-    realm = [RLMRealm defaultRealm];
-    [self.navigationItem setTitle:@"수거일"];
     [self.view setBackgroundColor:[UIColor whiteColor]];
+    [self.navigationItem setTitle:@"수거일"];
+    realm = [RLMRealm defaultRealm];
     
     dateInfoLabel = [[UILabel alloc] initWithFrame:CGRectMake(20, 84, 280, 120)];
     [dateInfoLabel setTextAlignment:NSTextAlignmentCenter];
@@ -38,6 +38,7 @@
     [dateInfoLabel.layer setBorderColor:CleanBasketMint.CGColor];
     [dateInfoLabel.layer setBorderWidth:1.0f];
     [dateInfoLabel.layer setCornerRadius:15.0f];
+    [dateInfoLabel setClipsToBounds:YES];
     
     datePicker = [[UIDatePicker alloc] initWithFrame:CGRectMake(0, 200, DEVICE_WIDTH, 200)];
     [datePicker addTarget:self action:@selector(datePickerChanged) forControlEvents:UIControlEventValueChanged];
@@ -50,16 +51,11 @@
     [confirmButton setTitleColor:[UIColor blackColor] forState:UIControlStateHighlighted];
     [confirmButton addTarget:self action:@selector(didTouchConfirmButton) forControlEvents: UIControlEventTouchUpInside];
     
-    cancelButton = [[UIButton alloc] initWithFrame:CGRectMake(170, 430, 130, 30)];
-    [cancelButton setBackgroundColor:CleanBasketRed];
-    [cancelButton.layer setCornerRadius:15.0f];
-    
     [self refreshMinMaxDate];
     [datePicker setMinuteInterval:30];
     [self datePickerChanged];
     
     [self.view addSubview:confirmButton];
-    //[self.view addSubview:cancelButton];
     [self.view addSubview:dateInfoLabel];
     [self.view addSubview:datePicker];
 }

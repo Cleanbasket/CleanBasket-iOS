@@ -14,11 +14,7 @@
 
 //+ (NSDictionary *)defaultPropertyValues
 //{
-//    return @{
-//             @"uid":@NEW_INDEX,
-//             @"email":@"",
-//             @"phone":@"",
-//             @"address":@[]};
+//    return @{@"password":@""};
 //}
 
 // Specify properties to ignore (Realm won't persist these)

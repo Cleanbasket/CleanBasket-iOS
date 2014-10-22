@@ -124,11 +124,20 @@
     [self.view addSubview:signInButton];
     [self.view addSubview:orLabel];
     [self.view addSubview:signUpButton];
-    [self.view addSubview:fbSignUpButton];
     [self.view addSubview:iForgotButton];
     
-    [emailTextField setText:@"woonohyo@nhnnext.org"];
-    [passwordTextField setText:@"p70673"];
+    if ([[User allObjects] count] > 0) {
+        User *latestUser = [[User allObjects] objectAtIndex:0];
+        [emailTextField setText:[latestUser email]];
+        Keychain *keychain = [[Keychain alloc] initWithService:APP_NAME_STRING withGroup:nil];
+        NSData *passwordData = [keychain find:[latestUser email]];
+        if (passwordData) {
+            [passwordTextField setText:[[NSString alloc] initWithData:passwordData encoding:NSUTF8StringEncoding]];
+            [self signIn];
+        } else {
+            NSLog(@"Keychain data not found");
+        }
+    }
 }
 
 - (void)didReceiveMemoryWarning {
@@ -188,6 +197,23 @@
                         [NSJSONSerialization JSONObjectWithData: [responseObject[@"data"] dataUsingEncoding:NSUTF8StringEncoding]
                                                         options: NSJSONReadingMutableContainers
                                                           error: nil];
+                        
+                        // 현재 User ID, PASSWORD를 Keychain에 저장
+                        Keychain *keychain = [[Keychain alloc]initWithService:APP_NAME_STRING withGroup:nil];
+                        NSString *emailAsKey = [emailTextField text];
+                        NSData *passwordAsValue = [[passwordTextField text] dataUsingEncoding:NSUTF8StringEncoding];
+                        if ([keychain insert:emailAsKey :passwordAsValue]) {
+                            NSLog(@"data added to keychain: %@ %@", emailAsKey, passwordAsValue);
+                        } else {
+                            NSLog(@"Failed");
+                            NSLog(@"%@", [keychain find:emailAsKey]);
+                        }
+                        
+                        RLMRealm *realm = [RLMRealm defaultRealm];
+                        [realm beginWriteTransaction];
+                        [realm deleteObjects:[User allObjects]];
+                        [realm commitWriteTransaction];
+                        
                         // 수신한 JSON 데이터를 기반으로, User 객체를 생성한다.
                         [dtoManager createUser:jsonDict];
                         
@@ -222,8 +248,6 @@
                         NSLog(@"%@", error);
                     }];
                     
-                    
-                    
                     break;
                 }
                     // 이메일 주소 없음
@@ -231,8 +255,8 @@
                 {
                     dispatch_async(dispatch_get_main_queue(), ^{
                         [MBProgressHUD hideHUDForView:self.view animated:YES];
+                        [self showHudMessage:@"이메일 주소를 다시 확인해주세요."];
                     });
-                    [self showHudMessage:@"이메일 주소를 다시 확인해주세요."];
                     break;
                 }
                     // 이메일 주소에 대한 비밀번호 다름
@@ -240,8 +264,8 @@
                 {
                     dispatch_async(dispatch_get_main_queue(), ^{
                         [MBProgressHUD hideHUDForView:self.view animated:YES];
+                        [self showHudMessage:@"비밀번호를 다시 확인해주세요."];
                     });
-                    [self showHudMessage:@"비밀번호를 다시 확인해주세요."];
                     break;
                 }
                     // 정지 계정
@@ -249,15 +273,15 @@
                 {
                     dispatch_async(dispatch_get_main_queue(), ^{
                         [MBProgressHUD hideHUDForView:self.view animated:YES];
+                        [self showHudMessage:@"해당 계정은 사용하실 수 없습니다."];
                     });
-                    [self showHudMessage:@"해당 계정은 사용하실 수 없습니다."];
                     break;
                 }
                 default: {
                     dispatch_async(dispatch_get_main_queue(), ^{
                         [MBProgressHUD hideHUDForView:self.view animated:YES];
+                        [self loginFailed];
                     });
-                    [self loginFailed];
                 }
                     break;
             }
@@ -300,7 +324,6 @@
     hud.labelText = message;
     [hud setLabelFont:[UIFont systemFontOfSize:14.0f]];
     hud.margin = 10.f;
-    hud.yOffset = 150.f;
     hud.removeFromSuperViewOnHide = YES;
     [hud hide:YES afterDelay:1];
     return;

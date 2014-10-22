@@ -11,5 +11,5 @@
 @interface NSString (CBString)
 
 + (NSString*) stringWithCurrencyFormat:(int)price;
-
++ (NSString*) trimDateString:(NSString*)dateString;
 @end

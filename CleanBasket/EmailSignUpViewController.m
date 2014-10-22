@@ -100,10 +100,6 @@
     [signUpButton.layer setCornerRadius:15.0f];
     [signUpButton addTarget:self action:@selector(didTouchSignUp) forControlEvents:UIControlEventTouchUpInside];
     
-    [emailTextField setText:@"test1@test.com"];
-    [passwordTextField setText:@"1234"];
-    [passwordCheckTextField setText:@"1234"];
-    
     [self.view addSubview:emailTextField];
     [self.view addSubview:passwordTextField];
     [self.view addSubview:passwordCheckTextField];

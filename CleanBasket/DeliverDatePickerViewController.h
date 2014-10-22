@@ -26,6 +26,11 @@
     RLMRealm *realm;
     NSString *deliverDateString;
     UIButton *confirmButton;
+    NSString *pickupDateString;
+    NSString *pickupMonth;
+    NSString *pickupDay;
+    NSString *pickupHour;
+    NSString *pickupMinute;
 }
 
 @property Order *currentOrder;

@@ -195,7 +195,6 @@
         [buildingName setText:[self.currentAddress addr_building]];
         [remainder setText:[self.currentAddress addr_remainder]];
     }
-    
 }
 
 - (void) confirmButtonDidTouched {
@@ -394,7 +393,6 @@
     hud.mode = MBProgressHUDModeText;
     [hud setLabelFont:[UIFont systemFontOfSize:14.0f]];
     hud.margin = 10.f;
-    hud.yOffset = 150.f;
     hud.removeFromSuperViewOnHide = YES;
     
     [hud hide:YES afterDelay:delay];

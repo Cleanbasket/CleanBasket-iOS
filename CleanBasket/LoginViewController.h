@@ -15,6 +15,8 @@
 #import "AFNetworking.h"
 #import "MBProgressHUD.h"
 #import "DTOManager.h"
+#import "User.h"
+#import "Keychain.h"
 
 @interface LoginViewController : UIViewController {
     UITextField *emailTextField;

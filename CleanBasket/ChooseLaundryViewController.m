@@ -70,7 +70,8 @@
     UITapGestureRecognizer *scrollViewTapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(scrollViewDidTap)];
     
     scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, DEVICE_WIDTH, DEVICE_HEIGHT)];
-    [scrollView setContentSize:CGSizeMake(DEVICE_WIDTH, DEVICE_HEIGHT + 40)];
+    [scrollView setContentSize:CGSizeMake(DEVICE_WIDTH, (iPhone5 ? DEVICE_HEIGHT:  DEVICE_HEIGHT + 40))];
+    NSLog(@"%f", (iPhone5?DEVICE_HEIGHT:DEVICE_HEIGHT+40));
     [scrollView addGestureRecognizer:scrollViewTapGesture];
     
     laundryLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, DEVICE_WIDTH, 30)];
@@ -192,6 +193,13 @@
     [confirmButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [confirmButton addTarget:self action:@selector(confirmButtonDidTap) forControlEvents:UIControlEventTouchUpInside];
     
+    touchLabel = [[UILabel alloc] initWithFrame:CGRectMake(60, 202, IMAGE_WIDTH, 30)];
+    [touchLabel setText:@"Touch Me!"];
+    [touchLabel setTextAlignment:NSTextAlignmentCenter];
+    [touchLabel setFont:[UIFont boldSystemFontOfSize:15.0f]];
+    [touchLabel setTextColor:[UIColor whiteColor]];
+    [touchLabel setHidden:YES];
+    
     [self.view addSubview:scrollView];
     [scrollView addSubview:memoTextField];
     [scrollView addSubview:totalValueLabel];
@@ -206,7 +214,7 @@
     [scrollView addSubview:confirmButton];
     [scrollView addSubview:quantityLabel];
     [scrollView addSubview:couponButton];
-    
+    [scrollView addSubview:touchLabel];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -229,12 +237,12 @@
 }
 
 - (void) memoTextFieldEditingDidBegin {
-    [scrollView setContentSize:CGSizeMake(DEVICE_WIDTH, DEVICE_HEIGHT*1.5)];
+    [scrollView setContentSize:CGSizeMake(DEVICE_WIDTH, (iPhone5 ? DEVICE_HEIGHT+120:DEVICE_HEIGHT+240))];
     [scrollView scrollRectToVisible:CGRectMake(0, 300, DEVICE_WIDTH, DEVICE_HEIGHT) animated:YES];
 }
 
 - (void) memoTextFieldEditingDidEnd {
-    [scrollView setContentSize:CGSizeMake(DEVICE_WIDTH, DEVICE_HEIGHT + 60)];
+    [scrollView setContentSize:CGSizeMake(DEVICE_WIDTH, (iPhone5?DEVICE_HEIGHT:DEVICE_HEIGHT + 60))];
     [scrollView scrollRectToVisible:CGRectMake(0, 80, DEVICE_WIDTH, DEVICE_HEIGHT) animated:YES];
 }
 
@@ -242,6 +250,7 @@
     if (imageIdx == NUM_MAIN_ITEM) {
         return;
     }
+    
     RLMRealm *realm = [RLMRealm defaultRealm];
     [realm beginWriteTransaction];
     [currentItem setCount:[stepper value]];
@@ -273,10 +282,13 @@
         
         // 기타품목이 화면에 나올 경우
         if ( imageIdx == NUM_MAIN_ITEM ) {
+            
+            [touchLabel setHidden:NO];
             [priceValueLabel setText:[NSString stringWithCurrencyFormat:[self calcSumOfOtherLaundryPrice]]];
             [quantityLabel setText:[NSString stringWithFormat:@"%d", [self calcCountOfOtherLaundry]]];
         }
         else {
+            [touchLabel setHidden:YES];
             currentItem = [itemArray objectAtIndex:imageIdx];
             [stepper setValue:[currentItem count]];
             [priceValueLabel setText:[NSString stringWithCurrencyFormat:[currentItem price]]];
@@ -314,10 +326,12 @@
         
         // 기타 품목이 화면에 나올 경우
         if ( imageIdx == NUM_MAIN_ITEM ) {
+            [touchLabel setHidden:NO];
             [priceValueLabel setText:[NSString stringWithCurrencyFormat:[self calcSumOfOtherLaundryPrice]]];
             [quantityLabel setText:[NSString stringWithFormat:@"%d", [self calcCountOfOtherLaundry]]];
         }
         else {
+            [touchLabel setHidden:YES];
             currentItem = [itemArray objectAtIndex:imageIdx];
             [stepper setValue:[currentItem count]];
             [quantityLabel setText:[NSString stringWithFormat:@"%d", [currentItem count]]];
@@ -494,9 +508,9 @@
     RLMRealm *realm = [RLMRealm defaultRealm];
     [realm beginWriteTransaction];
     self.currentCoupon = currentCoupon;
-//    RLMArray *couponArray = [[RLMArray alloc] initWithObjectClassName:@"Coupon"];
-//    [couponArray addObject:self.currentCoupon];
-//    [self.currentOrder setCoupon:(RLMArray<Coupon>*)couponArray];
+    //    RLMArray *couponArray = [[RLMArray alloc] initWithObjectClassName:@"Coupon"];
+    //    [couponArray addObject:self.currentCoupon];
+    //    [self.currentOrder setCoupon:(RLMArray<Coupon>*)couponArray];
     [couponButton setBackgroundColor:CleanBasketRed];
     [realm commitWriteTransaction];
 }
@@ -590,7 +604,11 @@
                 }
                 
                 [memoTextField setText:@""];
+                
+                //AppDelegate로 하여금 현재 선택된 TabBarViewController를 OrderStatusViewController로 변경
                 [[NSNotificationCenter defaultCenter] postNotificationName:@"orderComplete" object:self];
+                
+                // 2초 후 현재 화면 pop
                 [self performSelector:@selector(cancelButtonDidTouched) withObject:self afterDelay:2];
             }
                 break;
@@ -657,7 +675,6 @@
     hud.labelText = message;
     [hud setLabelFont:[UIFont systemFontOfSize:14.0f]];
     hud.margin = 10.f;
-    hud.yOffset = 150.f;
     hud.removeFromSuperViewOnHide = YES;
     [hud hide:YES afterDelay:1];
     return;

@@ -7,7 +7,7 @@
 //
 
 #import "AppDelegate.h"
-#import <Realm/Realm.h>
+
 
 @interface AppDelegate ()
 
@@ -19,7 +19,7 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(NotificationReceived:) name:nil object:nil];
     // reset REALM.IO Database
-    [[NSFileManager defaultManager] removeItemAtPath:[RLMRealm defaultRealmPath] error:nil];
+//    [[NSFileManager defaultManager] removeItemAtPath:[RLMRealm defaultRealmPath] error:nil];
     
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent animated:NO];
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
@@ -49,20 +49,9 @@
     self.couponShareViewController = [[CouponShareViewController alloc] init];
     self.serviceInfoViewController = [[ServiceInfoViewController alloc] init];
     
-    NSArray *myBizViewControllers = [[NSArray alloc] initWithObjects:self.orderViewController, self.orderStatusViewController, self.priceViewController, self.couponShareViewController, self.accountViewController,  self.serviceInfoViewController, nil];
+    NSArray *myBizViewControllers = [[NSArray alloc] initWithObjects:self.orderViewController, self.orderStatusViewController, self.priceViewController, self.couponShareViewController, self.serviceInfoViewController, nil];
     
     [self.tabBarController setViewControllers:myBizViewControllers];
-    
-    /* 서버에서 배달하는 사람 사진 가져오기
-     NSString *filePath = [NSString stringWithFormat:@"http://cleanbasket.co.kr/images/deliverer/18.jpg"];
-     UIImage *image18 = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:filePath]]];
-     UIImageView *imageView = [[UIImageView alloc] initWithImage:image18];
-     [imageView setFrame:CGRectMake(0, 0, 320, 320)];
-     [self.view addSubview:imageView];
-     */
-    
-    //    [self.window addSubview:self.tabBarController.view];
-    //    [self.window setRootViewController:tabNavController];
     return YES;
 }
 
@@ -73,6 +62,17 @@
         [self.tabBarController.navigationController setNavigationBarHidden:NO];
         [self.tabBarController setSelectedIndex:0];
         [self.tabBarController dismissViewControllerAnimated:YES completion:nil];
+        Keychain *keychain = [[Keychain alloc] initWithService:APP_NAME_STRING withGroup:nil];
+        
+        for (User *each in [User allObjects]) {
+            [keychain remove:[each email]];
+        }
+    }
+    
+    // 주문 접수 완료 후 현재 화면을 OrderStatus로 변경
+    if ([[noti name] isEqualToString:@"orderComplete"]) {
+        [self.tabBarController setSelectedIndex:1];
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"checkCompletedOrder" object:nil];
     }
 }
 

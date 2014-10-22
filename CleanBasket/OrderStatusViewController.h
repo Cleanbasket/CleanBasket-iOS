@@ -12,6 +12,7 @@
 #import "CBConstants.h"
 #import "Order.h"
 #import "MBProgressHUD.h"
+#import "NSString+CBString.h"
 
 @interface OrderStatusViewController : UIViewController {
     int processIndex;
@@ -24,6 +25,7 @@
 
 	UILabel *managerNameLabel;
 	UILabel *visitDateLabel;
+    UILabel *visitTimeLabel;
     Order *firstOrder;
 }
 

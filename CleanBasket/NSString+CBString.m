@@ -17,4 +17,14 @@
     return priceAsString;
 }
 
++ (NSString*) trimDateString:(NSString *)dateString {
+    NSString *trimmedString = dateString;
+    trimmedString = [trimmedString substringToIndex:16];
+    NSString *pickupHourString = [trimmedString substringWithRange:NSMakeRange(11, 2)];
+    NSString *pickupMinuteString = [trimmedString substringWithRange:NSMakeRange(14, 2)];
+    int toHour = [pickupHourString intValue] + 1;
+    trimmedString = [trimmedString stringByAppendingString:[NSString stringWithFormat:@" ~ %d:%@", toHour, pickupMinuteString]];
+    return trimmedString;
+}
+
 @end
