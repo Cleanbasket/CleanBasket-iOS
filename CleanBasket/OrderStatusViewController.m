@@ -117,7 +117,7 @@
             }
             
             [managerNameLabel setText:([[firstOrder pickupInfo] name]?[[firstOrder pickupInfo] name]:@"미지정")];
-            [visitDateLabel setText:([firstOrder pickup_date]?[firstOrder pickup_date]:@"")];
+            [visitDateLabel setText:([firstOrder pickup_date]?[[firstOrder pickup_date] substringToIndex:16]:@"")];
             
             [processImageView setImage:[processImages objectAtIndex:[firstOrder state]]];
             

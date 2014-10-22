@@ -21,8 +21,6 @@
     couponTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, DEVICE_WIDTH, DEVICE_HEIGHT) style:UITableViewStylePlain];
     [couponTableView setDelegate:self];
     [couponTableView setDataSource:self];
-    [couponTableView.layer setBorderWidth:1.0f];
-    [couponTableView.layer setBorderColor:[UIColor redColor].CGColor];
     
     [self.view addSubview:couponTableView];
 }

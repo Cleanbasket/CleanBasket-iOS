@@ -210,21 +210,16 @@
                         //                    NSLog(@"%@", error);
                     }];
                     
+                    dispatch_async(dispatch_get_main_queue(), ^{
+                        [MBProgressHUD hideHUDForView:self.view animated:YES];
+                    });
                     // 세션 기반으로 쿠폰들을 가져온다.
                     [manager POST:@"http://cleanbasket.co.kr/member/coupon" parameters:@{} success:^(AFHTTPRequestOperation *operation, id responseObject) {
                         NSLog(@"[COUPON CODE]\r%@", [responseObject valueForKey:@"data"]);
                         
                         NSArray *jsonArray = [NSJSONSerialization JSONObjectWithData:[responseObject[@"data"] dataUsingEncoding:NSUTF8StringEncoding] options:NSJSONReadingMutableContainers error:nil];
                         [dtoManager createCoupon:jsonArray];
-                        
-                        dispatch_async(dispatch_get_main_queue(), ^{
-                            [MBProgressHUD hideHUDForView:self.view animated:YES];
-                        });
-                        
                     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                        dispatch_async(dispatch_get_main_queue(), ^{
-                            [MBProgressHUD hideHUDForView:self.view animated:YES];
-                        });
                         NSLog(@"%@", error);
                     }];
                     
@@ -235,34 +230,19 @@
                     // 이메일 주소 없음
                 case CBServerConstantEmailError:
                 {
-                    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:nil
-                                                                        message:@"이메일 주소를 다시 확인해주세요."
-                                                                       delegate:self
-                                                              cancelButtonTitle:@"닫기"
-                                                              otherButtonTitles:nil, nil];
-                    [alertView show];
+                    [self showHudMessage:@"이메일 주소를 다시 확인해주세요."];
                     break;
                 }
                     // 이메일 주소에 대한 비밀번호 다름
                 case CBServerConstantPasswordError:
                 {
-                    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:nil
-                                                                        message:@"비밀번호를 다시 확인해주세요."
-                                                                       delegate:self
-                                                              cancelButtonTitle:@"닫기"
-                                                              otherButtonTitles:nil, nil];
-                    [alertView show];
+                    [self showHudMessage:@"비밀번호를 다시 확인해주세요."];
                     break;
                 }
                     // 정지 계정
                 case CBServerConstantAccountDisabled :
                 {
-                    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:nil
-                                                                        message:@"해당 계정은 사용하실 수 없습니다."
-                                                                       delegate:self
-                                                              cancelButtonTitle:@"닫기"
-                                                              otherButtonTitles:nil, nil];
-                    [alertView show];
+                    [self showHudMessage:@"해당 계정은 사용하실 수 없습니다."];
                     break;
                 }
                 default:
@@ -295,6 +275,20 @@
     FindPasswordViewController *findPassViewController = [[FindPasswordViewController alloc] init];
     UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:findPassViewController];
     [self.navigationController presentViewController:navController animated:YES completion:nil];
+}
+
+- (void) showHudMessage:(NSString*)message {
+    MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES labelText:nil];
+    
+    // Configure for text only and offset down
+    hud.mode = MBProgressHUDModeText;
+    hud.labelText = message;
+    [hud setLabelFont:[UIFont systemFontOfSize:14.0f]];
+    hud.margin = 10.f;
+    hud.yOffset = 150.f;
+    hud.removeFromSuperViewOnHide = YES;
+    [hud hide:YES afterDelay:1];
+    return;
 }
 
 @end

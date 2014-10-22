@@ -222,10 +222,6 @@
     }
     [self setSumValueLabelPrice];
     [self setTotalValueLabelPrice];
-    if (self.currentCoupon == nil) {
-        NSLog(@"NUUUUUUL");
-    }
-    
 }
 
 - (void) memoTextFieldEditingDidBegin {
@@ -401,15 +397,18 @@
     for (Item *each in itemArray) {
         sumPrice += [each price] * [each count];
     }
+    if (self.currentCoupon) {
+        [sumValueLabel setTextColor:CleanBasketMint];
+    } else {
+        [sumValueLabel setTextColor:[UIColor lightGrayColor]];
+    }
     return sumPrice;
 }
 
 - (void) calcTotalPrice {
+    totalPrice = [self calcSumOfLaundryPrice];
     if ([self calcSumOfLaundryPrice] < 20000) {
         totalPrice = [self calcSumOfLaundryPrice] + 2000;
-    }
-    else {
-        totalPrice = [self calcSumOfLaundryPrice];
     }
 }
 
@@ -418,14 +417,18 @@
         [sumValueLabel setText:@"-"];
     }
     else if ([self calcSumOfLaundryPrice] < 20000) {
-        NSString *sumValue = [NSString stringWithCurrencyFormat:[self calcSumOfLaundryPrice]];
+        int price = [self calcSumOfLaundryPrice];
+        if (self.currentCoupon) price -= self.currentCoupon.value;
+        NSString *sumValue = [NSString stringWithCurrencyFormat:price];
         sumValue = [sumValue stringByAppendingString:@" + "];
         sumValue = [sumValue stringByAppendingString:[NSString stringWithCurrencyFormat:2000]];
         sumValue = [sumValue stringByAppendingString:@"(배송비)"];
         [sumValueLabel setText:sumValue];
     }
     else {
-        [sumValueLabel setText:[NSString stringWithCurrencyFormat:[self calcSumOfLaundryPrice]]];
+        int price = [self calcSumOfLaundryPrice];
+        if (self.currentCoupon) price -= self.currentCoupon.value;
+        [sumValueLabel setText:[NSString stringWithCurrencyFormat:price]];
     }
 }
 
@@ -433,14 +436,14 @@
     [self calcTotalPrice];
     if ([self calcSumOfLaundryPrice] == 0) {
         [totalValueLabel setText:@"-"];
+        return;
     }
-    else if ([self calcSumOfLaundryPrice] < 20000) {
-        NSString *totalValue = [NSString stringWithCurrencyFormat:totalPrice];
-        [totalValueLabel setText:totalValue];
-    }
-    else {
-        [totalValueLabel setText:[NSString stringWithCurrencyFormat:totalPrice]];
-    }
+    
+    int price = totalPrice;
+    if (self.currentCoupon)
+        price -= self.currentCoupon.value;
+    
+    [totalValueLabel setText:[NSString stringWithCurrencyFormat:price]];
 }
 
 
@@ -459,10 +462,15 @@
     // 쿠폰 적용하기!
     if (couponButton.selected) {
         [couponButton setBackgroundColor:CleanBasketRed];
+        UIBarButtonItem *newBackButton =
+        [[UIBarButtonItem alloc] initWithTitle:@""
+                                         style:UIBarButtonItemStylePlain
+                                        target:nil
+                                        action:nil];
+        [[self navigationItem] setBackBarButtonItem:newBackButton];
         CouponListViewController *couponListViewController = [[CouponListViewController alloc] init];
         [couponListViewController setDelegate:self];
         [self.navigationController pushViewController:couponListViewController animated:YES];
-        
     }
     // 기 적용 쿠폰 제거
     else {
@@ -472,7 +480,8 @@
         self.currentCoupon = nil;
         [self.currentOrder setCoupon:nil];
         [realm commitWriteTransaction];
-        NSLog(@"%@", self.currentCoupon);
+        [self setSumValueLabelPrice];
+        [self setTotalValueLabelPrice];
     }
 }
 
@@ -480,11 +489,10 @@
     RLMRealm *realm = [RLMRealm defaultRealm];
     [realm beginWriteTransaction];
     self.currentCoupon = currentCoupon;
-    RLMArray *couponArray = [[RLMArray alloc] initWithObjectClassName:@"Coupon"];
-    [couponArray addObject:self.currentCoupon];
-    [self.currentOrder setCoupon:(RLMArray<Coupon>*)couponArray];
+//    RLMArray *couponArray = [[RLMArray alloc] initWithObjectClassName:@"Coupon"];
+//    [couponArray addObject:self.currentCoupon];
+//    [self.currentOrder setCoupon:(RLMArray<Coupon>*)couponArray];
     [realm commitWriteTransaction];
-    NSLog(@"%@", self.currentOrder.coupon);
 }
 
 - (void) confirmButtonDidTap {
@@ -527,13 +535,9 @@
         }
     }
     NSMutableArray *couponList = [NSMutableArray array];
-    if (self.currentCoupon) {
+    if (self.currentCoupon)
         [couponList addObject:[NSNumber numberWithInt:self.currentCoupon.cpid]];
-        RLMRealm *realm = [RLMRealm defaultRealm];
-        [realm beginWriteTransaction];
-        [realm deleteObject:[Coupon objectForPrimaryKey:[NSNumber numberWithInt:self.currentCoupon.cpid]]];
-        [realm commitWriteTransaction];
-    }
+    
     NSMutableDictionary *parameters = [NSMutableDictionary dictionaryWithDictionary:@{
                                                                                       @"adrid":[NSNumber numberWithInt:[self.currentAddress adrid]],
                                                                                       @"phone":[self.currentOrder phone],
@@ -571,6 +575,14 @@
             case CBServerConstantSuccess: {
                 [self showHudMessage:@"주문이 정상적으로 접수되었습니다."];
                 [self resetItemsCount];
+                
+                if (self.currentCoupon) {
+                    RLMRealm *realm = [RLMRealm defaultRealm];
+                    [realm beginWriteTransaction];
+                    [realm deleteObject:[Coupon objectForPrimaryKey:[NSNumber numberWithInt:self.currentCoupon.cpid]]];
+                    [realm commitWriteTransaction];
+                }
+                
                 [memoTextField setText:@""];
                 [[NSNotificationCenter defaultCenter] postNotificationName:@"orderComplete" object:self];
                 [self performSelector:@selector(cancelButtonDidTouched) withObject:self afterDelay:2];

@@ -91,7 +91,12 @@
         [self showHudMessage:@"주문내역이 없습니다!" afterDelay:1];
         return;
     }
-    
+    UIBarButtonItem *newBackButton =
+    [[UIBarButtonItem alloc] initWithTitle:@""
+                                     style:UIBarButtonItemStylePlain
+                                    target:nil
+                                    action:nil];
+    [[self navigationItem] setBackBarButtonItem:newBackButton];
     OrderDetailViewController *orderDetailViewController = [[OrderDetailViewController alloc] init];
     [self.navigationController pushViewController:orderDetailViewController animated:YES];
 }

@@ -123,8 +123,8 @@
     [cell.orderPriceValueLabel setText:[NSString stringWithCurrencyFormat:[currentOrder price]]];
     [cell.orderItemsValueLabel setText:nil];
     [cell.orderStatusValueLabel setText:nil];
-    [cell.orderPickupValueLabel setText:[currentOrder pickup_date]];
-    [cell.orderDeliverValueLabel setText:[currentOrder dropoff_date]];
+    [cell.orderPickupValueLabel setText:[[currentOrder pickup_date] substringToIndex:16]];
+    [cell.orderDeliverValueLabel setText:[[currentOrder dropoff_date] substringToIndex:16]];
     [cell.managerNameValueLabel setText:([[currentOrder pickupInfo] name]?[[currentOrder pickupInfo] name]:@"미지정")];
     [cell.orderStatusValueLabel setText:[orderStateName objectAtIndex:[currentOrder state]]];
     [cell.orderCancelButton addTarget:self action:@selector(orderCancelButtonDidTap:) forControlEvents:UIControlEventTouchUpInside];
