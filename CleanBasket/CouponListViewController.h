@@ -11,6 +11,7 @@
 #import "CBConstants.h"
 #import <Realm/Realm.h>
 #import "Coupon.h"
+#import "NSString+CBString.h"
 
 @class CouponListViewController;
 @protocol CouponListViewControllerDelegate <NSObject>

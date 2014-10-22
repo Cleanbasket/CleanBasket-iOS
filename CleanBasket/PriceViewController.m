@@ -37,14 +37,14 @@
     itemArray = @[@"와이셔츠", @"정장(한벌)", @"바지/스커트", @"블라우스", @"원피스", @"코트", @"정장(상의)", @"정장(하의)", @"점퍼", @"자켓", @"스웨터", @"교복(한벌)", @"가죽점퍼(Short)", @"가죽점퍼(Long)", @"아웃도어&골프웨어", @"가디건/조끼", @"한복", @"넥타이/스카프/목도리", @"티셔츠", @"추가비용(실크,마,울,캐시미어)",];
     priceArray = @[@"2,000원", @"6,000원", @"3,000원", @"4,000원", @"7,000원", @"8,000원", @"3,500원", @"3,500원", @"7,000원", @"4,000원", @"4,000원", @"5,000원", @"30,000원", @"40,000원", @"10,000원", @"4,000원", @"15,000원", @"1,000원", @"3,000원", @"2,000원"];
     
-    CBLabel *titleLabel = [[CBLabel alloc] initWithFrame:CGRectMake(0, 64, 320, 64)];
+    CBLabel *titleLabel = [[CBLabel alloc] initWithFrame:CGRectMake(0, 64, DEVICE_WIDTH, 64)];
     [titleLabel setText:@"최소주문: 10,000원\n배달비: 2,000원(단, 20,000원 이상 주문시 무료)\n*특수재질은 추가비용 2,000원이 발생할 수 있습니다."];
     [titleLabel setNumberOfLines:0];
     [titleLabel setFont:[UIFont systemFontOfSize:14.0f]];
     [titleLabel setTextColor:CleanBasketMint];
     [titleLabel setBackgroundColor:UltraLightGray];
     
-    priceTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 128, 320, 303) style:UITableViewStylePlain];
+    priceTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 128, DEVICE_WIDTH, DEVICE_HEIGHT - NAV_STATUS_HEIGHT - TAPBAR_HEIGHT - titleLabel.frame.size.height) style:UITableViewStylePlain];
     [priceTableView setDataSource:self];
     [priceTableView setDelegate:self];
     
@@ -53,8 +53,8 @@
 }
 
 - (void)viewWillAppear:(BOOL)animated {
+    [self.navigationController setNavigationBarHidden:NO];
     [self.navigationController.navigationBar setTranslucent:YES];
-    [priceTableView setFrame:CGRectMake(0, 128, 320, 303)];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {

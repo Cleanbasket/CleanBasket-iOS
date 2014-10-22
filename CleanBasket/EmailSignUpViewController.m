@@ -265,8 +265,8 @@
 }
 
 - (void) presentTermsViewController {
-    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:nil message:@"Terms" delegate:self cancelButtonTitle:@"닫기" otherButtonTitles:nil, nil];
-    [alertView show];
+    TermsViewController *termsViewController = [[TermsViewController alloc] init];
+    [self.navigationController pushViewController:termsViewController animated:YES];
 }
 
 @end

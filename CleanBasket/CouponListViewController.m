@@ -42,8 +42,12 @@
         
         cell = [[CBCouponTableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier];
     }
+    NSString *couponName = [currentCoupon name];
+    couponName = [couponName stringByAppendingString:@". "];
+    couponName = [couponName stringByAppendingString:[NSString stringWithCurrencyFormat:[currentCoupon value]]];
+    couponName = [couponName stringByAppendingString:@" 할인권!"];
+    [cell.couponNameLabel setText:couponName];
     [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
-    [cell.couponNameLabel setText:[currentCoupon name]];
     [cell setCpid:[currentCoupon cpid]];
     return cell;
 }
@@ -63,7 +67,7 @@
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return 172.0f;
+    return COUPON_HEIGHT + 10.0f;
 }
 
 @end

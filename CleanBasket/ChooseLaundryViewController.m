@@ -222,6 +222,10 @@
     }
     [self setSumValueLabelPrice];
     [self setTotalValueLabelPrice];
+    
+    if (self.currentCoupon == nil) {
+        [couponButton setSelected:NO];
+    }
 }
 
 - (void) memoTextFieldEditingDidBegin {
@@ -459,9 +463,9 @@
     };
     
     [couponButton setSelected:!couponButton.selected];
+    
     // 쿠폰 적용하기!
     if (couponButton.selected) {
-        [couponButton setBackgroundColor:CleanBasketRed];
         UIBarButtonItem *newBackButton =
         [[UIBarButtonItem alloc] initWithTitle:@""
                                          style:UIBarButtonItemStylePlain
@@ -483,6 +487,7 @@
         [self setSumValueLabelPrice];
         [self setTotalValueLabelPrice];
     }
+    
 }
 
 - (void) setViewController:(CouponListViewController *)controller currentCoupon:(Coupon *)currentCoupon {
@@ -492,6 +497,7 @@
 //    RLMArray *couponArray = [[RLMArray alloc] initWithObjectClassName:@"Coupon"];
 //    [couponArray addObject:self.currentCoupon];
 //    [self.currentOrder setCoupon:(RLMArray<Coupon>*)couponArray];
+    [couponButton setBackgroundColor:CleanBasketRed];
     [realm commitWriteTransaction];
 }
 

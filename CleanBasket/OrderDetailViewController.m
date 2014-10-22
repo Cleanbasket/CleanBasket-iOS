@@ -21,7 +21,7 @@
     
     orderStateName = @[@"주문완료", @"수거준비", @"수거완료/세탁중", @"배달준비", @"배달완료"];
     
-    [MBProgressHUD showHUDAddedTo:self.view animated:YES labelText:@"주문 정보 불러오는 중:)"];
+//    [MBProgressHUD showHUDAddedTo:self.view animated:YES labelText:@"주문 정보 불러오는 중:)"];
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_LOW, 0), ^{
         afManager = [AFHTTPRequestOperationManager manager];
         [afManager setRequestSerializer:[AFHTTPRequestSerializer new]];

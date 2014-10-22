@@ -7,11 +7,11 @@
 //
 
 #import "LoginViewController.h"
-#define FieldHeight 35
+#define FieldHeight 38
 #define FieldWidth 200
 #define CenterX (DEVICE_WIDTH - FieldWidth)/2
 #define FirstElementY 100
-#define Interval 53
+#define Interval (iPhone5 ? 63 : 53)
 
 @interface LoginViewController () <UITextFieldDelegate, UIAlertViewDelegate>
 
@@ -230,28 +230,44 @@
                     // 이메일 주소 없음
                 case CBServerConstantEmailError:
                 {
+                    dispatch_async(dispatch_get_main_queue(), ^{
+                        [MBProgressHUD hideHUDForView:self.view animated:YES];
+                    });
                     [self showHudMessage:@"이메일 주소를 다시 확인해주세요."];
                     break;
                 }
                     // 이메일 주소에 대한 비밀번호 다름
                 case CBServerConstantPasswordError:
                 {
+                    dispatch_async(dispatch_get_main_queue(), ^{
+                        [MBProgressHUD hideHUDForView:self.view animated:YES];
+                    });
                     [self showHudMessage:@"비밀번호를 다시 확인해주세요."];
                     break;
                 }
                     // 정지 계정
                 case CBServerConstantAccountDisabled :
                 {
+                    dispatch_async(dispatch_get_main_queue(), ^{
+                        [MBProgressHUD hideHUDForView:self.view animated:YES];
+                    });
                     [self showHudMessage:@"해당 계정은 사용하실 수 없습니다."];
                     break;
                 }
-                default:
+                default: {
+                    dispatch_async(dispatch_get_main_queue(), ^{
+                        [MBProgressHUD hideHUDForView:self.view animated:YES];
+                    });
                     [self loginFailed];
+                }
                     break;
             }
             
         } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
             NSLog(@"Error: %@", error);
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [MBProgressHUD hideHUDForView:self.view animated:YES];
+            });
             [self loginFailed];
         }];
     });

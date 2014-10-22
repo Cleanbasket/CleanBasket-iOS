@@ -9,8 +9,10 @@
 #import <UIKit/UIKit.h>
 #import "CBConstants.h"
 #import "AddressInputViewController.h"
+#import "TermsViewController.h"
 #import "AFNetworking.h"
 #import "AppDelegate.h"
+
 
 @interface EmailSignUpViewController : UIViewController {
     UITextField *emailTextField;

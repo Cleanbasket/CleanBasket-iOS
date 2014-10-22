@@ -24,7 +24,7 @@
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
         _couponImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"bg_coupon.png"]];
-        [_couponImageView setFrame:CGRectMake(0, 0, DEVICE_WIDTH, 162)];
+        [_couponImageView setFrame:CGRectMake(0, 0, DEVICE_WIDTH, COUPON_HEIGHT)];
         
         _couponNameLabel = [[UILabel alloc] initWithFrame:CGRectMake(20, 110, 280, 30)];
         [_couponNameLabel setTextColor:[UIColor grayColor]];

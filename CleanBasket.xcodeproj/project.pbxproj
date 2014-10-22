@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		F111445319EEDD7A00C637AB /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = F111445219EEDD7A00C637AB /* User.m */; };
 		F111445619EEDDD500C637AB /* Address.m in Sources */ = {isa = PBXBuildFile; fileRef = F111445519EEDDD500C637AB /* Address.m */; };
+		F113748319F7841000E9A27F /* TermsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F113748219F7841000E9A27F /* TermsViewController.m */; };
+		F113748619F78DA700E9A27F /* DeliverDatePickerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F113748519F78DA700E9A27F /* DeliverDatePickerViewController.m */; };
 		F133212A19F340AE00C52D20 /* ic_calc_blouse@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F133210E19F340AE00C52D20 /* ic_calc_blouse@2x.png */; };
 		F133212B19F340AE00C52D20 /* ic_calc_coat@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F133210F19F340AE00C52D20 /* ic_calc_coat@2x.png */; };
 		F133212C19F340AE00C52D20 /* ic_calc_etc@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F133211019F340AE00C52D20 /* ic_calc_etc@2x.png */; };
@@ -124,6 +126,10 @@
 		F111445219EEDD7A00C637AB /* User.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = User.m; sourceTree = "<group>"; };
 		F111445419EEDDD500C637AB /* Address.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Address.h; sourceTree = "<group>"; };
 		F111445519EEDDD500C637AB /* Address.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Address.m; sourceTree = "<group>"; };
+		F113748119F7841000E9A27F /* TermsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TermsViewController.h; sourceTree = "<group>"; };
+		F113748219F7841000E9A27F /* TermsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TermsViewController.m; sourceTree = "<group>"; };
+		F113748419F78DA700E9A27F /* DeliverDatePickerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DeliverDatePickerViewController.h; sourceTree = "<group>"; };
+		F113748519F78DA700E9A27F /* DeliverDatePickerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DeliverDatePickerViewController.m; sourceTree = "<group>"; };
 		F133210E19F340AE00C52D20 /* ic_calc_blouse@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic_calc_blouse@2x.png"; sourceTree = "<group>"; };
 		F133210F19F340AE00C52D20 /* ic_calc_coat@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic_calc_coat@2x.png"; sourceTree = "<group>"; };
 		F133211019F340AE00C52D20 /* ic_calc_etc@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic_calc_etc@2x.png"; sourceTree = "<group>"; };
@@ -302,6 +308,8 @@
 				F14AC26119DE9AB8002BCC98 /* OrderViewController.m */,
 				F133214519F3415500C52D20 /* ChooseOtherLaundryViewController.h */,
 				F133214619F3415500C52D20 /* ChooseOtherLaundryViewController.m */,
+				F113748419F78DA700E9A27F /* DeliverDatePickerViewController.h */,
+				F113748519F78DA700E9A27F /* DeliverDatePickerViewController.m */,
 			);
 			name = Order;
 			sourceTree = "<group>";
@@ -580,6 +588,8 @@
 				F14AC26D19DEB579002BCC98 /* AddressInputViewController.m */,
 				F14AC26F19DED279002BCC98 /* FindPasswordViewController.h */,
 				F14AC27019DED279002BCC98 /* FindPasswordViewController.m */,
+				F113748119F7841000E9A27F /* TermsViewController.h */,
+				F113748219F7841000E9A27F /* TermsViewController.m */,
 			);
 			name = MainControllers;
 			sourceTree = "<group>";
@@ -841,6 +851,7 @@
 				F14AC23A19DE7E00002BCC98 /* AppDelegate.m in Sources */,
 				F193DA0019EBCBA70051C32A /* AFSecurityPolicy.m in Sources */,
 				F133218619F64F6700C52D20 /* CouponListViewController.m in Sources */,
+				F113748619F78DA700E9A27F /* DeliverDatePickerViewController.m in Sources */,
 				F19DE13F19EEFC8D004B60E7 /* Item.m in Sources */,
 				F193D9FC19EBCBA70051C32A /* AFHTTPRequestOperation.m in Sources */,
 				F133214719F3415500C52D20 /* ChooseOtherLaundryViewController.m in Sources */,
@@ -865,6 +876,7 @@
 				F133215119F4196600C52D20 /* NSString+CBString.m in Sources */,
 				F14AC27C19DEDEEC002BCC98 /* AccountViewController.m in Sources */,
 				F193D9FF19EBCBA70051C32A /* AFNetworkReachabilityManager.m in Sources */,
+				F113748319F7841000E9A27F /* TermsViewController.m in Sources */,
 				F193DA1519EC03930051C32A /* DTOManager.m in Sources */,
 				F193DA0319EBCBA70051C32A /* AFURLResponseSerialization.m in Sources */,
 				F19DE12919EEF386004B60E7 /* Order.m in Sources */,

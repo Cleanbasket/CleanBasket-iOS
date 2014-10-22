@@ -25,7 +25,6 @@
     UIButton *fbSignUpButton;
     UIButton *iForgotButton;
     AFHTTPRequestOperationManager *manager;
-    MBProgressHUD *hud;
     DTOManager *dtoManager;
     ServerContant serverConstant;
 }

@@ -91,6 +91,7 @@
         [self showHudMessage:@"주문내역이 없습니다!" afterDelay:1];
         return;
     }
+    
     UIBarButtonItem *newBackButton =
     [[UIBarButtonItem alloc] initWithTitle:@""
                                      style:UIBarButtonItemStylePlain
@@ -98,12 +99,12 @@
                                     action:nil];
     [[self navigationItem] setBackBarButtonItem:newBackButton];
     OrderDetailViewController *orderDetailViewController = [[OrderDetailViewController alloc] init];
+    [MBProgressHUD showHUDAddedTo:orderDetailViewController.view animated:YES labelText:@"주문 정보 불러오는 중:)"];
     [self.navigationController pushViewController:orderDetailViewController animated:YES];
 }
 
 - (void) showHudMessage:(NSString*)message afterDelay:(int)delay {
     MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES labelText:message    ];
-    
     // Configure for text only and offset down
     hud.mode = MBProgressHUDModeText;
     [hud setLabelFont:[UIFont systemFontOfSize:14.0f]];

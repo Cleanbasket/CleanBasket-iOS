@@ -57,3 +57,5 @@ typedef enum serverConstant : NSUInteger {
 #define UltraLightGray Rgb2UIColor(238, 238, 238)
 #define NEW_INDEX 9999
 #define isiPhone5 ([[UIScreen mainScreen] bounds].size.height == 568)?TRUE:FALSE
+#define iPhone5 ([[UIScreen mainScreen] bounds].size.height == 568)
+#define COUPON_HEIGHT 162
