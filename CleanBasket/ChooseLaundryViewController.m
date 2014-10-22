@@ -225,7 +225,7 @@
     if (self.currentCoupon == nil) {
         NSLog(@"NUUUUUUL");
     }
-
+    
 }
 
 - (void) memoTextFieldEditingDidBegin {
@@ -526,18 +526,25 @@
             [itemJsonArray addObject:jsonItem];
         }
     }
-    
-    NSDictionary *parameters = @{
-                                 @"adrid":[NSNumber numberWithInt:[self.currentAddress adrid]],
-                                 @"phone":[self.currentOrder phone],
-                                 @"memo":[self.currentOrder memo],
-                                 @"price":[NSNumber numberWithInt:[self.currentOrder price]],
-                                 @"dropoff_price":[NSNumber numberWithInt:[self.currentOrder dropoff_price]],
-                                 @"pickup_date":[self.currentOrder pickup_date],
-                                 @"dropoff_date":[self.currentOrder dropoff_date],
-                                 @"item":itemJsonArray,
-                                 @"cpid":@[]
-                                 };
+    NSMutableArray *couponList = [NSMutableArray array];
+    if (self.currentCoupon) {
+        [couponList addObject:[NSNumber numberWithInt:self.currentCoupon.cpid]];
+        RLMRealm *realm = [RLMRealm defaultRealm];
+        [realm beginWriteTransaction];
+        [realm deleteObject:[Coupon objectForPrimaryKey:[NSNumber numberWithInt:self.currentCoupon.cpid]]];
+        [realm commitWriteTransaction];
+    }
+    NSMutableDictionary *parameters = [NSMutableDictionary dictionaryWithDictionary:@{
+                                                                                      @"adrid":[NSNumber numberWithInt:[self.currentAddress adrid]],
+                                                                                      @"phone":[self.currentOrder phone],
+                                                                                      @"memo":[self.currentOrder memo],
+                                                                                      @"price":[NSNumber numberWithInt:[self.currentOrder price]],
+                                                                                      @"dropoff_price":[NSNumber numberWithInt:[self.currentOrder dropoff_price]],
+                                                                                      @"pickup_date":[self.currentOrder pickup_date],
+                                                                                      @"dropoff_date":[self.currentOrder dropoff_date],
+                                                                                      @"item":itemJsonArray,
+                                                                                      @"cpid":couponList
+                                                                                      }];
     
     NSString *jsonString = [[NSString alloc] initWithData:[NSJSONSerialization dataWithJSONObject:parameters options:NSJSONWritingPrettyPrinted error:nil] encoding:NSUTF8StringEncoding];
     
@@ -557,6 +564,9 @@
         NSLog(@"%@", [responseObject valueForKey:@"message"]);
         int constant = [[responseObject valueForKey:@"constant"] intValue];
         
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [MBProgressHUD hideHUDForView:self.view animated:YES];
+        });
         switch (constant) {
             case CBServerConstantSuccess: {
                 [self showHudMessage:@"주문이 정상적으로 접수되었습니다."];
@@ -568,7 +578,6 @@
                 break;
             case CBServerConstantError: {
                 [self showHudMessage:@"주문 정보 접수에 실패했습니다."];
-                
             }
                 break;
             case CBServerConstantSessionExpired: {
@@ -588,7 +597,10 @@
         NSLog(@"Error: %@", [error localizedDescription]);
         
     }];
-    [op start];
+    [MBProgressHUD showHUDAddedTo:self.view animated:YES labelText:@"주문을 접수중입니다."];
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_LOW, 0), ^{
+        [op start];
+    });
 }
 
 - (BOOL) isPriceLessThan10K {

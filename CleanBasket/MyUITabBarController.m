@@ -40,16 +40,17 @@
     [[self tabBar] addSubview:v];
     [v.layer setBorderWidth:0];
     
+    
+    
     //set the tab bar title appearance for normal state
     [[UITabBarItem appearance]
-     setTitleTextAttributes:@{UITextAttributeTextColor : [UIColor lightGrayColor],
-                              UITextAttributeFont:[UIFont systemFontOfSize:14.0f]}
+     setTitleTextAttributes:@{NSForegroundColorAttributeName:[UIColor lightGrayColor], NSFontAttributeName:[UIFont systemFontOfSize:14.0f]}
      forState:UIControlStateNormal];
     
     //set the tab bar title appearance for selected state
     [[UITabBarItem appearance]
-     setTitleTextAttributes:@{ UITextAttributeTextColor : CleanBasketMint,
-                               UITextAttributeFont:[UIFont systemFontOfSize:14.0f]}
+     setTitleTextAttributes:@{ NSForegroundColorAttributeName : CleanBasketMint,
+                               NSFontAttributeName:[UIFont systemFontOfSize:14.0f]}
      forState:UIControlStateSelected];
     
     [self.tabBar setTintColor:CleanBasketMint];
