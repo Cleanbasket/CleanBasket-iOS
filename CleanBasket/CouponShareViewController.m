@@ -22,6 +22,7 @@ static const CGFloat kIconSize = 70.0f;
 @interface CouponShareViewController () <UITableViewDelegate, UITableViewDataSource, UIAlertViewDelegate> {
     UITableView *couponTableView;
     UIButton *couponInsertButton;
+    NSString *couponCode;
 }
 
 @end
@@ -107,10 +108,11 @@ static const CGFloat kIconSize = 70.0f;
             NSLog(@"%@", responseObject);
             NSNumber *constant = [responseObject valueForKey:@"constant"];
             NSString *couponUrl = @"http://cleanbasket.co.kr/";
-            NSString *couponCode;
+            NSString *couponCodeAddr;
             if ([responseObject valueForKey:@"data"]) {
-                couponCode = [responseObject valueForKey:@"data"];
-                couponUrl = [couponUrl stringByAppendingString:couponCode];
+                couponCodeAddr = [responseObject valueForKey:@"data"];
+                couponCode = [couponCodeAddr substringFromIndex:7];
+                couponUrl = [couponUrl stringByAppendingString:couponCodeAddr];
             }
             
             dispatch_async(dispatch_get_main_queue(), ^{
@@ -164,7 +166,9 @@ static const CGFloat kIconSize = 70.0f;
                                               [self showHudMessage:@"오류가 발생했습니다. 나중에 다시 시도해주세요."];
                                           } else {
                                               // Success
-                                              [self showHudMessage:@"추천해주셔서 고맙습니다!"];
+                                              [self showHudMessage:@"고맙습니다! 코드가 클립보드에 복사되었습니다!"];
+                                              UIPasteboard *pb = [UIPasteboard generalPasteboard];
+                                              [pb setString:couponCode];
                                               NSLog(@"result %@", results);
                                           }
                                       }];
@@ -203,7 +207,9 @@ static const CGFloat kIconSize = 70.0f;
                                                                   // User clicked the Share button
                                                                   NSString *result = [NSString stringWithFormat: @"Posted story, id: %@", [urlParams valueForKey:@"post_id"]];
                                                                   NSLog(@"result %@", result);
-                                                                  [self showHudMessage:@"추천해주셔서 고맙습니다!"];
+                                                                  [self showHudMessage:@"고맙습니다! 코드가 클립보드에 복사되었습니다!"];
+                                                                  UIPasteboard *pb = [UIPasteboard generalPasteboard];
+                                                                  [pb setString:couponCode];
                                                               }
                                                           }
                                                       }
@@ -234,11 +240,18 @@ static const CGFloat kIconSize = 70.0f;
         [afManager POST:@"http://cleanbasket.co.kr/recommendation"  parameters:@{} success:^(AFHTTPRequestOperation *operation, id responseObject) {
             NSLog(@"%@", responseObject);
             NSNumber *constant = [responseObject valueForKey:@"constant"];
+            NSString *couponUrl = @"http://cleanbasket.co.kr/";
+            NSString *couponCodeAddr;
+            if ([responseObject valueForKey:@"data"]) {
+                couponCodeAddr = [responseObject valueForKey:@"data"];
+                couponCode = [couponCodeAddr substringFromIndex:7];
+                couponUrl = [couponUrl stringByAppendingString:couponCodeAddr];
+            }
             dispatch_async(dispatch_get_main_queue(), ^{
                 [MBProgressHUD hideHUDForView:self.view animated:YES];
                 switch ([constant intValue]) {
                     case CBServerConstantSuccess: {
-                        
+                        [self shareWithKakao:couponUrl];
                     }
                         break;
                     case CBServerConstantError: {
@@ -246,7 +259,7 @@ static const CGFloat kIconSize = 70.0f;
                     }
                         break;
                     case CBServerConstantsDuplication: {
-                        
+                        [self shareWithKakao:couponUrl];
                     }
                         break;
                     case CBServerConstantSessionExpired: {
@@ -267,6 +280,18 @@ static const CGFloat kIconSize = 70.0f;
         }];
     });
     
+}
+
+- (void) shareWithKakao:(NSString*)link {
+    KakaoTalkLinkObject *label
+    = [KakaoTalkLinkObject createLabel:@"CLEAN BASKET\n대한민국 대표 \n세탁 수거배달 서비스\n\n"];
+    
+    KakaoTalkLinkObject *button
+    = [KakaoTalkLinkObject createWebButton:@"할인쿠폰받기"
+                                       url:link];
+    
+    [KOAppCall openKakaoTalkAppLink:@[label, button]];
+
 }
 
 - (void) viewWillAppear:(BOOL)animated {
