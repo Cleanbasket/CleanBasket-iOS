@@ -58,7 +58,7 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    
+    NSLog(@"%d", [self.itemArray count]);
     return [self.itemArray count] - 6;
 }
 
@@ -101,9 +101,11 @@
 - (void) stepperDidTap:(id)sender {
     // stepper를 통해 수량을 변경한 경우 ChooseOtherLaundryItemViewController에 노티 전송
     UIStepper *stepper = (UIStepper*)sender;
-    UITableViewCell *cell = (UITableViewCell*)[sender superview];
+//    UITableViewCell *cell = (UITableViewCell*)[stepper superview];
+    UITableViewCell *cell = (UITableViewCell*)[stepper findSuperViewWithClass:[UITableViewCell class]];
     NSIndexPath *indexPath = [laundryTableView indexPathForCell:cell];
     CBOrderTableViewCell *currentCell = (CBOrderTableViewCell*)[laundryTableView cellForRowAtIndexPath:indexPath];
+    NSLog(@"currentCell: %@", currentCell);
     
     realm = [RLMRealm defaultRealm];
     [realm beginWriteTransaction];

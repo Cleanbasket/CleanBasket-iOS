@@ -7,16 +7,17 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "OrderViewController.h"
-#import "EmailSignUpViewController.h"
-#import "CBConstants.h"
-#import "FindPasswordViewController.h"
 #import "AppDelegate.h"
 #import "AFNetworking.h"
 #import "MBProgressHUD.h"
-#import "DTOManager.h"
-#import "User.h"
-#import "Keychain.h"
+#import "CBConstants.h"
+
+@class OrderViewController;
+@class EmailSignUpViewController;
+@class FindPasswordViewController;
+@class DTOManager;
+@class User;
+@class Keychain;
 
 @interface LoginViewController : UIViewController {
     UITextField *emailTextField;

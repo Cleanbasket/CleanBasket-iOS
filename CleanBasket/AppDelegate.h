@@ -10,17 +10,16 @@
 #import <CoreData/CoreData.h>
 #import <Security/Security.h>
 #import <Realm/Realm.h>
-#import "LoginViewController.h"
-#import "OrderStatusViewController.h"
-#import "PriceViewController.h"
-#import "AccountViewController.h"
-#import "CouponShareViewController.h"
-#import "ServiceInfoViewController.h"
-#import "MyUITabBarController.h"
-#import "CBConstants.h"
 #import "AFNetworking.h"
-#import "Keychain.h"
-#import "User.h"
+#import "CBConstants.h"
+
+@class MyUITabBarController;
+@class OrderViewController;
+@class OrderStatusViewController;
+@class PriceViewController;
+@class AccountViewController;
+@class CouponShareViewController;
+@class ServiceInfoViewController;
 
 @interface AppDelegate : UIResponder <UIApplicationDelegate>
 

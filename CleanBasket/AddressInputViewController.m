@@ -250,8 +250,6 @@
                         [self performSelector:@selector(dismissViewController) withObject:self afterDelay:2];
                     }
                         break;
-                    default:
-                        break;
                 }
             } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
                 NSLog(@"%@", error);
@@ -298,8 +296,6 @@
         case 2:
             return (pickerDongKeys ? [pickerDongKeys count] : 1);
             break;
-        default:
-            break;
     }
     return 1;
 }
@@ -315,9 +311,6 @@
         case 2:
             return (pickerDongKeys ? pickerDongKeys[row] : @"동");
             break;
-            
-        default:
-            break;
     }
     return @"오류";
 }
@@ -329,8 +322,6 @@
         case 1:
             pickerDongKeys = [[pickerAddressData valueForKey:[pickerCityKeys objectAtIndex:[pickerView selectedRowInComponent:0]]] valueForKey:[pickerBoroughKeys objectAtIndex:[pickerView selectedRowInComponent:1]]];
             [pickerView reloadAllComponents];
-            break;
-        default:
             break;
     }
     [self makeFullAddress];

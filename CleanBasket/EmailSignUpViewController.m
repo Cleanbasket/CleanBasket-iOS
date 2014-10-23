@@ -229,9 +229,6 @@
                       [alertView show];
                       break;
                   }
-                      
-                  default:
-                      break;
               }
           } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
               NSLog(@"Error: %@", error);

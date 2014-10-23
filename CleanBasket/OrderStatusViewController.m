@@ -95,23 +95,36 @@
                                                            error: nil];
             realm = [RLMRealm defaultRealm];
             
+            // 로컬에 주문 존재 시, 업데이트를 위해 제거
             if ([dataArray count] > 0 && [Order objectForPrimaryKey:[NSNumber numberWithInt:[[[dataArray objectAtIndex:0] valueForKey:@"oid"] intValue]]]) {
                 [realm beginWriteTransaction];
                 [realm deleteObject:[Order objectForPrimaryKey:[NSNumber numberWithInt:[[[dataArray objectAtIndex:0] valueForKey:@"oid"] intValue]]]];
                 [realm commitWriteTransaction];
-            } else if ([dataArray count] == 0) {
+            }
+            
+            // 주문이 없을 경우 팝업 메세지 후 리턴
+            else if ([dataArray count] == 0) {
                 [MBProgressHUD hideHUDForView:self.view animated:YES];
                 [processImageView setImage:[UIImage imageNamed:@"process_empty.png"]];
                 [profileView setImage:[UIImage imageNamed:@"process_profile.png"]];
                 [profileView.layer setCornerRadius:0];
                 [managerNameLabel setText:@"배달자"];
                 [visitDateLabel setText:@""];
+                [visitTimeLabel setText:@""];
                 [self showHudMessage:@"주문이 없습니다!"];
                 return;
             }
             
+            // 주문들이 있을 경우, 로컬에 삽입 후 첫번째 주문 정보를 뷰에 업데이트한다.
             [realm beginWriteTransaction];
             firstOrder = [Order createInDefaultRealmWithObject:[dataArray objectAtIndex:0]];
+            Coupon *firstCoupon;
+            // 주문에 존재하는 쿠폰은 이미 사용한 것이므로, 로컬에서 제거
+            if ([[firstOrder coupon] count] > 0) {
+                firstCoupon = [[firstOrder coupon] objectAtIndex:0];
+                [realm deleteObject:[Coupon objectForPrimaryKey:[NSNumber numberWithInt:[firstCoupon cpid]]]];
+                NSLog(@"Deleting used coupon");
+            }
             [realm commitWriteTransaction];
             
             if ([[firstOrder pickupInfo] img]) {
@@ -125,6 +138,7 @@
             [visitDateLabel setText:@""];
             [visitTimeLabel setText:@""];
             
+            // 수거해야 할 주문인 경우
             if ([firstOrder pickup_date] && [firstOrder state] < 2) {
                 NSString *trimmedString = [NSString trimDateString:[firstOrder pickup_date]];
                 NSString *dateString = [trimmedString substringToIndex:10];
@@ -133,6 +147,7 @@
                 [visitTimeLabel setText:timeString];
             }
             
+            // 배달해야 할 주문인 경우
             if ([firstOrder dropoff_date] && [firstOrder state] > 1) {
                 NSString *trimmedString = [NSString trimDateString:[firstOrder dropoff_date]];
                 NSString *dateString = [trimmedString substringToIndex:10];
@@ -141,6 +156,7 @@
                 [visitTimeLabel setText:timeString];
             }
             
+            // 현재 주문 상태에 알맞은 그림 선택
             [processImageView setImage:[processImages objectAtIndex:[firstOrder state]]];
             
             dispatch_async(dispatch_get_main_queue(), ^{

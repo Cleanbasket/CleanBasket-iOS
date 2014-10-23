@@ -80,7 +80,9 @@
     
     if ([item.title isEqualToString:@"서비스 정보"]){
         UIBarButtonItem *logoutBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"로그아웃" style:UIBarButtonItemStylePlain target:self action:@selector(logoutBarButtonDidTap)];
+        UIBarButtonItem *passwordBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"비밀번호변경" style:UIBarButtonItemStylePlain target:self action:@selector(passwordBarButtonDidTap)];
         [self.navigationItem setRightBarButtonItem:logoutBarButtonItem];
+        [self.navigationItem setLeftBarButtonItem:passwordBarButtonItem];
     } else {
         [self.navigationItem setRightBarButtonItem:nil];
     }
@@ -111,6 +113,10 @@
 
 - (void) logoutBarButtonDidTap {
     [[NSNotificationCenter defaultCenter] postNotificationName:@"userDidLogout" object:nil];
+}
+
+- (void) passwordBarButtonDidTap {
+    
 }
 
 - (void) showHudMessage:(NSString*)message afterDelay:(int)delay {

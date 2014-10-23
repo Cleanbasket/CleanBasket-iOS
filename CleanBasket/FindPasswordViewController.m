@@ -90,6 +90,7 @@
         return;
     }
     [self.view endEditing:YES];
+   
     NSDictionary *parameter = @{@"email":[emailTextField text]};
     
     [MBProgressHUD showHUDAddedTo:self.view animated:YES labelText:@"서버와 통신 중"];
@@ -117,8 +118,6 @@
                     case CBServerConstantEmailError: {
                         [self showHudMessage:@"해당 이메일은 존재하지 않습니다."];
                     }
-                        break;
-                    default:
                         break;
                 }
             });

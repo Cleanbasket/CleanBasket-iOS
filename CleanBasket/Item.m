@@ -33,8 +33,8 @@
 //    return @[];
 //}
 
-//+ (NSString *)primaryKey {
-//    return @"itid";
-//}
++ (NSString *)primaryKey {
+    return @"item_code";
+}
 
 @end

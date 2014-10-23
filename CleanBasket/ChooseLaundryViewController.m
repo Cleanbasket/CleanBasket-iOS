@@ -7,8 +7,8 @@
 //
 
 #import "ChooseLaundryViewController.h"
-#define IMAGE_WIDTH 200
-#define IMAGE_HEIGHT 200
+static const CGFloat kImageWidth = 200;
+static const CGFloat kImageHeight = 200;
 #define X_FIRST 0
 #define X_SECOND 60
 #define X_THIRD 260
@@ -62,7 +62,7 @@
     NSMutableArray *imageViews = [NSMutableArray array];
     for (UIImage *each in laundryImages) {
         UIImageView *imageView = [[UIImageView alloc] initWithImage:each];
-        [imageView setFrame:CGRectMake(0, 0, IMAGE_WIDTH, IMAGE_HEIGHT)];
+        [imageView setFrame:CGRectMake(0, 0, kImageWidth, kImageHeight)];
         [imageView setContentMode:UIViewContentModeScaleAspectFill];
         [imageViews addObject:imageView];
     }
@@ -70,8 +70,7 @@
     UITapGestureRecognizer *scrollViewTapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(scrollViewDidTap)];
     
     scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, DEVICE_WIDTH, DEVICE_HEIGHT)];
-    [scrollView setContentSize:CGSizeMake(DEVICE_WIDTH, (iPhone5 ? DEVICE_HEIGHT:  DEVICE_HEIGHT + 40))];
-    NSLog(@"%f", (iPhone5?DEVICE_HEIGHT:DEVICE_HEIGHT+40));
+    [scrollView setContentSize:CGSizeMake(DEVICE_WIDTH, (iPhone5 ? DEVICE_HEIGHT-64:  DEVICE_HEIGHT + 40))];
     [scrollView addGestureRecognizer:scrollViewTapGesture];
     
     laundryLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, DEVICE_WIDTH, 30)];
@@ -83,7 +82,7 @@
     
     UITapGestureRecognizer *laundryTapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(laundryImageViewDidTap)];
     
-    laundryImageView = [[UIImageView alloc] initWithFrame:CGRectMake((DEVICE_WIDTH - IMAGE_WIDTH)/2, 30, IMAGE_WIDTH, IMAGE_HEIGHT)];
+    laundryImageView = [[UIImageView alloc] initWithFrame:CGRectMake((DEVICE_WIDTH - kImageWidth)/2, 30, kImageWidth, kImageHeight)];
     [laundryImageView setBackgroundColor:CleanBasketMint];
     [laundryImageView setUserInteractionEnabled:YES];
     [laundryImageView setImage:[laundryImages objectAtIndex:imageIdx]];
@@ -193,7 +192,7 @@
     [confirmButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [confirmButton addTarget:self action:@selector(confirmButtonDidTap) forControlEvents:UIControlEventTouchUpInside];
     
-    touchLabel = [[UILabel alloc] initWithFrame:CGRectMake(60, 202, IMAGE_WIDTH, 30)];
+    touchLabel = [[UILabel alloc] initWithFrame:CGRectMake(60, 202, kImageWidth, 30)];
     [touchLabel setText:@"Touch Me!"];
     [touchLabel setTextAlignment:NSTextAlignmentCenter];
     [touchLabel setFont:[UIFont boldSystemFontOfSize:15.0f]];
@@ -420,6 +419,7 @@
     } else {
         [sumValueLabel setTextColor:[UIColor lightGrayColor]];
     }
+    
     return sumPrice;
 }
 
@@ -528,12 +528,14 @@
     
     RLMRealm *realm = [RLMRealm defaultRealm];
     [realm beginWriteTransaction];
-    [self.currentOrder setPrice:[self calcSumOfLaundryPrice]];
+    [self.currentOrder setPrice:totalPrice];
     [self.currentOrder setMemo:[memoTextField text]];
     if ([self calcSumOfLaundryPrice] < 20000 )
         [self.currentOrder setDropoff_price:2000];
     else
         [self.currentOrder setDropoff_price:0];
+    if([self currentCoupon])
+        [self.currentOrder setPrice:(totalPrice-=self.currentCoupon.value)];
     [self calcSumOfLaundryPrice];
     [realm commitWriteTransaction];
     
@@ -599,6 +601,7 @@
                 if (self.currentCoupon) {
                     RLMRealm *realm = [RLMRealm defaultRealm];
                     [realm beginWriteTransaction];
+                    NSLog(@"Order Complete and Delete Coupon %@ from Local", [Coupon objectForPrimaryKey:[NSNumber numberWithInt:self.currentCoupon.cpid]]);
                     [realm deleteObject:[Coupon objectForPrimaryKey:[NSNumber numberWithInt:self.currentCoupon.cpid]]];
                     [realm commitWriteTransaction];
                 }
@@ -624,11 +627,7 @@
                 [[NSNotificationCenter defaultCenter] postNotificationName:@"sessionExpired" object:self];
             }
                 break;
-            default:
-                break;
         }
-        
-        
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         NSLog(@"Error: %@", [error localizedDescription]);
         

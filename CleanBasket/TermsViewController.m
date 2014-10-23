@@ -51,9 +51,6 @@
         case 1:
             [webView loadRequest:privacyReqeust];
             break;
-            
-        default:
-            break;
     }
 }
 

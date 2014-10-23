@@ -23,7 +23,11 @@
     NSString *pickupHourString = [trimmedString substringWithRange:NSMakeRange(11, 2)];
     NSString *pickupMinuteString = [trimmedString substringWithRange:NSMakeRange(14, 2)];
     int toHour = [pickupHourString intValue] + 1;
-    trimmedString = [trimmedString stringByAppendingString:[NSString stringWithFormat:@" ~ %d:%@", toHour, pickupMinuteString]];
+    if (toHour == 1) {
+        trimmedString = [trimmedString stringByAppendingString:[NSString stringWithFormat:@" ~ 0%d:%@", toHour, pickupMinuteString]];
+    } else {
+        trimmedString = [trimmedString stringByAppendingString:[NSString stringWithFormat:@" ~ %d:%@", toHour, pickupMinuteString]];
+    }
     return trimmedString;
 }
 

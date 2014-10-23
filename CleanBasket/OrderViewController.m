@@ -147,7 +147,7 @@
     [contactTextField addTarget:self action:@selector(contactTextFieldEditingDidEnd) forControlEvents:UIControlEventEditingDidEnd];
     
     UIButton* orderButton = [[UIButton alloc] initWithFrame:CGRectMake((DEVICE_WIDTH - 160)/2, DEVICE_HEIGHT - 107, 160, HEIGHT_REGULAR)];
-    [orderButton setTitle:@"품목선택하기" forState:UIControlStateNormal];
+    [orderButton setTitle:@"품목선택" forState:UIControlStateNormal];
     [orderButton setTitleColor:[UIColor blackColor] forState:UIControlStateHighlighted];
     [orderButton.layer setCornerRadius:15.0f];
     [orderButton setBackgroundColor:CleanBasketMint];
@@ -218,8 +218,6 @@
                     case CBServerConstantSessionExpired: {
                         [self showHudMessage:@"세션이 만료되었습니다. 다시 로그인해주세요."];
                     }
-                        break;
-                    default:
                         break;
                 }
             });

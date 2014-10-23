@@ -7,15 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
-#import <Realm/Realm.h>
-#import "NSString+CBString.h"
-#import "CBCouponTableViewCell.h"
-#import "CBConstants.h"
-#import "Coupon.h"
 
-@interface CouponShareViewController : UIViewController {
-    UITableView *couponTableView;
-    UIButton *couponInsertButton;
-}
+
+
+@interface CouponShareViewController : UIViewController
 
 @end

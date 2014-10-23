@@ -7,6 +7,12 @@
 //
 
 #import "LoginViewController.h"
+#import "DTOManager.h"
+#import "User.h"
+#import "Keychain.h"
+#import "OrderViewController.h"
+#import "EmailSignUpViewController.h"
+#import "FindPasswordViewController.h"
 #define FieldHeight 38
 #define FieldWidth 200
 #define CenterX (DEVICE_WIDTH - FieldWidth)/2
@@ -240,11 +246,13 @@
                     });
                     // 세션 기반으로 쿠폰들을 가져온다.
                     [manager POST:@"http://cleanbasket.co.kr/member/coupon" parameters:@{} success:^(AFHTTPRequestOperation *operation, id responseObject) {
-                        NSLog(@"[COUPON CODE]\r%@", [responseObject valueForKey:@"data"]);
                         
                         NSArray *jsonArray = [NSJSONSerialization JSONObjectWithData:[responseObject[@"data"] dataUsingEncoding:NSUTF8StringEncoding] options:NSJSONReadingMutableContainers error:nil];
                         [dtoManager createCoupon:jsonArray];
                     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                        dispatch_async(dispatch_get_main_queue(), ^{
+                            [MBProgressHUD hideHUDForView:self.view animated:YES];
+                        });
                         NSLog(@"%@", error);
                     }];
                     
@@ -277,13 +285,6 @@
                     });
                     break;
                 }
-                default: {
-                    dispatch_async(dispatch_get_main_queue(), ^{
-                        [MBProgressHUD hideHUDForView:self.view animated:YES];
-                        [self loginFailed];
-                    });
-                }
-                    break;
             }
             
         } failure:^(AFHTTPRequestOperation *operation, NSError *error) {

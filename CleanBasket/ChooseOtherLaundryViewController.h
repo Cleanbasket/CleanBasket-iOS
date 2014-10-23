@@ -12,6 +12,7 @@
 #import "CBConstants.h"
 #import "CBOrderTableViewCell.h"
 #import "Item.h"
+#import "UIView+CBView.h"
 
 @interface ChooseOtherLaundryViewController : UIViewController
 
