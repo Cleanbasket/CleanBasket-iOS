@@ -20,7 +20,6 @@
  
  */
 @interface DTOManager () {
-    User *currentUser;
     Address *address;
     RLMRealm *realm;
 }
@@ -28,6 +27,8 @@
 @end
 
 @implementation DTOManager
+
+@synthesize currentUser = _currentUser;
 
 + (id) defaultManager {
     static DTOManager *sharedDTOManager = nil;
@@ -52,8 +53,8 @@
     self.currentUid = [[responseDict valueForKey:@"uid"] intValue];
     if (![User objectForPrimaryKey:[responseDict valueForKey:@"uid"]]) {
         [realm beginWriteTransaction];
-        currentUser = [User createInDefaultRealmWithObject:responseDict];
-        [realm addObject:currentUser];
+        _currentUser = [User createInDefaultRealmWithObject:responseDict];
+        [realm addObject:_currentUser];
         [realm commitWriteTransaction];
     } else {
         NSLog(@"[Realm] 유저 데이터 중복");

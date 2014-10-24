@@ -19,7 +19,7 @@
 #define FirstElementY 100
 #define Interval (iPhone5 ? 63 : 53)
 
-@interface LoginViewController () <UITextFieldDelegate, UIAlertViewDelegate>
+@interface LoginViewController () <UITextFieldDelegate>
 
 @end
 
@@ -210,8 +210,12 @@
                         NSData *passwordAsValue = [[passwordTextField text] dataUsingEncoding:NSUTF8StringEncoding];
                         if ([keychain insert:emailAsKey :passwordAsValue]) {
                             NSLog(@"data added to keychain: %@ %@", emailAsKey, passwordAsValue);
+                        }
+                        // 실패한 경우 업데이트 시도
+                        else if ([keychain update:emailAsKey :passwordAsValue]) {
+                            NSLog(@"failed to add. keychain data updated: %@ %@", emailAsKey, passwordAsValue);
                         } else {
-                            NSLog(@"Failed");
+                            NSLog(@"Failed update.");
                             NSLog(@"%@", [keychain find:emailAsKey]);
                         }
                         
@@ -224,9 +228,11 @@
                         [dtoManager createUser:jsonDict];
                         
                     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                        //                    NSLog(@"%@ %@", operation, error);
-                        [self loginFailed];
-                        return;
+                        dispatch_async(dispatch_get_main_queue(), ^{
+                            [MBProgressHUD hideHUDForView:self.view animated:YES];
+                            [self showHudMessage:@"네트워크 상태를 확인해주세요"];
+                            NSLog(@"%@", error);
+                        });
                     }];
                     
                     // 세션 기반으로 아이템 코드를 가져온다.
@@ -238,7 +244,11 @@
                         [dtoManager createItemCode:jsonArray];
                         
                     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                        //                    NSLog(@"%@", error);
+                        dispatch_async(dispatch_get_main_queue(), ^{
+                            [MBProgressHUD hideHUDForView:self.view animated:YES];
+                            [self showHudMessage:@"네트워크 상태를 확인해주세요"];
+                            NSLog(@"%@", error);
+                        });
                     }];
                     
                     dispatch_async(dispatch_get_main_queue(), ^{
@@ -300,8 +310,7 @@
 }
 
 - (void) loginFailed {
-    UIAlertView *invalidEmailAlertView = [[UIAlertView alloc] initWithTitle:nil message:@"네트워크 연결 상태를 다시 한 번 확인해주세요." delegate:self cancelButtonTitle:@"닫기" otherButtonTitles:nil, nil];
-    [invalidEmailAlertView show];
+    [self showHudMessage:@"네트워크 연결 상태를 확인해주세요"];
     return;
 }
 

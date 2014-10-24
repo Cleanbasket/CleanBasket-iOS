@@ -85,8 +85,7 @@
 - (void) sendButtonTouched {
     
     if ([emailTextField.text length] <= 0) {
-        UIAlertView *invalidEmailAlertView = [[UIAlertView alloc] initWithTitle:nil message:@"올바른 회원 정보를 입력해주세요:)" delegate:self cancelButtonTitle:@"닫기" otherButtonTitles:nil, nil];
-        [invalidEmailAlertView show];
+        [self showHudMessage:@"올바른 이메일 주소를 입력해주세요:)"];
         return;
     }
     [self.view endEditing:YES];
@@ -111,8 +110,7 @@
                     }
                         break;
                     case CBServerConstantError: {
-                        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:nil message:@"서버 오류가 발생했습니다. 매니저에게 연락 부탁드립니다." delegate:self cancelButtonTitle:@"닫기" otherButtonTitles:nil, nil];
-                        [alertView show];
+                        [self showHudMessage:@"서버 오류가 발생했습니다. 나중에 다시 시도해주세요."];
                     }
                         break;
                     case CBServerConstantEmailError: {
@@ -125,9 +123,8 @@
         } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
             dispatch_async(dispatch_get_main_queue(), ^{
                 [MBProgressHUD hideHUDForView:self.view animated:YES];
+                [self showHudMessage:@"네트워크 상태를 확인해주세요"];
             });
-            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:nil message:@"네트워크 연결 상태를 확인해주세요." delegate:self cancelButtonTitle:@"닫기" otherButtonTitles:nil, nil];
-            [alertView show];
             NSLog(@"%@", error);
         }];
     });

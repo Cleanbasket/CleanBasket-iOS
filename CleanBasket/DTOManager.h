@@ -22,4 +22,7 @@
 - (void)createUser:(NSDictionary*)userInfo;
 - (void)createItemCode:(NSArray*)itemArray;
 - (void)createCoupon:(NSArray*)couponArray;
+
+@property User *currentUser;
+
 @end

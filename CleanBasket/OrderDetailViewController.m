@@ -176,12 +176,14 @@
                     break;
                 }
                 case CBServerConstantsImpossible: {
-                    UIAlertView *impossible = [[UIAlertView alloc] initWithTitle:@"주문 취소 불가" message:@"해당 주문은 취소할 수 없습니다.\n매니저에게 연락 부탁드립니다." delegate:self cancelButtonTitle:@"닫기" otherButtonTitles:nil, nil];
+                    UIAlertView *impossible = [[UIAlertView alloc] initWithTitle:@"주문 취소 불가" message:@"수거 한 주문은 취소할 수 없습니다.\n매니저에게 연락 부탁드립니다." delegate:self cancelButtonTitle:@"닫기" otherButtonTitles:nil, nil];
                     [impossible show];
                     break;
                 }
                 case CBServerConstantSessionExpired: {
-                    [self showHudMessage:@"세션이 만료되었습니다. 다시 로그인해주세요." afterDelay:1];
+                    [self showHudMessage:@"세션이 만료되었습니다. 다시 로그인해주세요." afterDelay:2];
+                    //AppDelegate에 세션이 만료됨을 알림
+                    [[NSNotificationCenter defaultCenter] postNotificationName:@"sessionExpired" object:self];
                     break;
                 }
             }

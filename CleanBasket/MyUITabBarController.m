@@ -7,8 +7,15 @@
 //
 
 #import "MyUITabBarController.h"
+#import <Realm/Realm.h>
+#import "Keychain.h"
+#import "DTOManager.h"
+#import "CBConstants.h"
+#import "OrderDetailViewController.h"
+#import "OrderStatusViewController.h"
+#import "Order.h"
 
-@interface MyUITabBarController () <UINavigationControllerDelegate>
+@interface MyUITabBarController () <UINavigationControllerDelegate, UIAlertViewDelegate>
 
 @end
 
@@ -80,7 +87,7 @@
     
     if ([item.title isEqualToString:@"서비스 정보"]){
         UIBarButtonItem *logoutBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"로그아웃" style:UIBarButtonItemStylePlain target:self action:@selector(logoutBarButtonDidTap)];
-        UIBarButtonItem *passwordBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"비밀번호변경" style:UIBarButtonItemStylePlain target:self action:@selector(passwordBarButtonDidTap)];
+        UIBarButtonItem *passwordBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"비밀번호" style:UIBarButtonItemStylePlain target:self action:@selector(passwordBarButtonDidTap)];
         [self.navigationItem setRightBarButtonItem:logoutBarButtonItem];
         [self.navigationItem setLeftBarButtonItem:passwordBarButtonItem];
     } else {
@@ -116,7 +123,67 @@
 }
 
 - (void) passwordBarButtonDidTap {
-    
+    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"비밀번호 변경" message:@"새로운 비밀번호를 입력해주세요" delegate:self cancelButtonTitle:@"취소" otherButtonTitles:@"확인", nil];
+    [alertView setAlertViewStyle:UIAlertViewStyleSecureTextInput];
+    [alertView show];
+}
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
+    if ([[alertView buttonTitleAtIndex:buttonIndex] isEqualToString:@"확인"]) {
+        NSDictionary *parameter = @{@"password":[[alertView textFieldAtIndex:0] text]};
+        
+        [MBProgressHUD showHUDAddedTo:self.view animated:YES labelText:@"비밀번호 변경 중"];
+        AFHTTPRequestOperationManager *afManager = [AFHTTPRequestOperationManager manager];
+        afManager.requestSerializer = [AFJSONRequestSerializer serializer];
+        afManager.responseSerializer = [AFJSONResponseSerializer serializer];
+        
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_LOW, 0), ^{
+            [afManager POST:@"http://cleanbasket.co.kr/member/password/update"  parameters:parameter success:^(AFHTTPRequestOperation *operation, id responseObject) {
+                NSNumber *constant = [responseObject valueForKey:@"constant"];
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    [MBProgressHUD hideHUDForView:self.view animated:YES];
+                    
+                    switch ([constant intValue]) {
+                        case CBServerConstantSuccess: {
+                            [self showHudMessage:@"비밀번호를 안전하게 변경했습니다!"];
+                            
+                            // 변경한 비밀번호로 keychain 업데이트
+                            Keychain *keychain = [[Keychain alloc]initWithService:APP_NAME_STRING withGroup:nil];
+                            DTOManager *dtoManager = [DTOManager defaultManager];
+                            NSString *emailAsKey = [[dtoManager currentUser] email];
+                            NSData *passwordAsValue = [[[alertView textFieldAtIndex:0] text] dataUsingEncoding:NSUTF8StringEncoding];
+                            
+                            if ([keychain update:emailAsKey :passwordAsValue]) {
+                                NSLog(@"data changed to keychain: %@ %@", emailAsKey, passwordAsValue);
+                            } else {
+                                NSLog(@"Failed");
+                                NSLog(@"%@", [keychain find:emailAsKey]);
+                            }
+                            
+                        }
+                            break;
+                        case CBServerConstantError: {
+                            [self showHudMessage:@"서버 오류가 발생했습니다. 나중에 다시 시도해주세요."];
+                        }
+                            break;
+                        case CBServerConstantSessionExpired: {
+                            [self showHudMessage:@"세션이 만료되었습니다. 다시 로그인해주세요."];
+                            //AppDelegate에 세션이 만료됨을 알림
+                            [[NSNotificationCenter defaultCenter] postNotificationName:@"sessionExpired" object:self];
+                        }
+                            break;
+                    }
+                });
+                
+            } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    [MBProgressHUD hideHUDForView:self.view animated:YES];
+                    [self showHudMessage:@"네트워크 상태를 확인해주세요"];
+                });
+                NSLog(@"%@", error);
+            }];
+        });
+    }
 }
 
 - (void) showHudMessage:(NSString*)message afterDelay:(int)delay {
@@ -142,6 +209,19 @@
 - (void) setOrderListBarButtonItem {
     UIBarButtonItem *leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"주문내역" style:UIBarButtonItemStylePlain target:self action:@selector(orderBarButtonDidTap:)];
     [self.navigationItem setLeftBarButtonItem:leftBarButtonItem];
+}
+
+- (void) showHudMessage:(NSString*)message {
+    MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES labelText:nil];
+    
+    // Configure for text only and offset down
+    hud.mode = MBProgressHUDModeText;
+    hud.labelText = message;
+    [hud setLabelFont:[UIFont systemFontOfSize:14.0f]];
+    hud.margin = 10.f;
+    hud.removeFromSuperViewOnHide = YES;
+    [hud hide:YES afterDelay:1];
+    return;
 }
 
 @end

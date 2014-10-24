@@ -847,6 +847,24 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		F104DB7A19F9F31200C964B3 /* PriceList */ = {
+			isa = PBXGroup;
+			children = (
+				F14AC27819DEDEE6002BCC98 /* PriceViewController.m */,
+				F14AC27719DEDEE6002BCC98 /* PriceViewController.h */,
+			);
+			name = PriceList;
+			sourceTree = "<group>";
+		};
+		F104DB7B19F9F33300C964B3 /* ServiceInfo */ = {
+			isa = PBXGroup;
+			children = (
+				F14AC28019DEDEFE002BCC98 /* ServiceInfoViewController.h */,
+				F14AC28119DEDEFE002BCC98 /* ServiceInfoViewController.m */,
+			);
+			name = ServiceInfo;
+			sourceTree = "<group>";
+		};
 		F133210B19F3279C00C52D20 /* Order */ = {
 			isa = PBXGroup;
 			children = (
@@ -1113,8 +1131,6 @@
 			children = (
 				F14AC27219DED5B9002BCC98 /* MainControllers */,
 				F14AC27319DED5BD002BCC98 /* TabBarControllers */,
-				F14AC28319DEE188002BCC98 /* MyUITabBarController.h */,
-				F14AC28419DEE188002BCC98 /* MyUITabBarController.m */,
 				F14AC25E19DE7F2C002BCC98 /* View */,
 			);
 			name = Controller;
@@ -1153,15 +1169,15 @@
 		F14AC27319DED5BD002BCC98 /* TabBarControllers */ = {
 			isa = PBXGroup;
 			children = (
+				F14AC28319DEE188002BCC98 /* MyUITabBarController.h */,
+				F14AC28419DEE188002BCC98 /* MyUITabBarController.m */,
 				F133210B19F3279C00C52D20 /* Order */,
 				F133216919F5973800C52D20 /* OrderStatus */,
-				F14AC27719DEDEE6002BCC98 /* PriceViewController.h */,
-				F14AC27819DEDEE6002BCC98 /* PriceViewController.m */,
+				F104DB7A19F9F31200C964B3 /* PriceList */,
 				F14AC27A19DEDEEC002BCC98 /* AccountViewController.h */,
 				F14AC27B19DEDEEC002BCC98 /* AccountViewController.m */,
 				F133218319F64F1400C52D20 /* CouponShare */,
-				F14AC28019DEDEFE002BCC98 /* ServiceInfoViewController.h */,
-				F14AC28119DEDEFE002BCC98 /* ServiceInfoViewController.m */,
+				F104DB7B19F9F33300C964B3 /* ServiceInfo */,
 			);
 			name = TabBarControllers;
 			sourceTree = "<group>";

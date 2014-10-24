@@ -629,7 +629,11 @@ static const CGFloat kImageHeight = 200;
                 break;
         }
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        NSLog(@"Error: %@", [error localizedDescription]);
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [MBProgressHUD hideHUDForView:self.view animated:YES];
+            [self showHudMessage:@"네트워크 상태를 확인해주세요"];
+            NSLog(@"Error: %@", [error localizedDescription]);
+        });
         
     }];
     [MBProgressHUD showHUDAddedTo:self.view animated:YES labelText:@"주문을 접수중입니다."];

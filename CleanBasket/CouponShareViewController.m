@@ -134,6 +134,8 @@ static const CGFloat kIconSize = 70.0f;
                     break;
                 case CBServerConstantSessionExpired: {
                     [self showHudMessage:@"세션이 만료되었습니다. 다시 로그인해주세요."];
+                    //AppDelegate에 세션이 만료됨을 알림
+                    [[NSNotificationCenter defaultCenter] postNotificationName:@"sessionExpired" object:self];
                 }
                     break;
             }
@@ -141,8 +143,7 @@ static const CGFloat kIconSize = 70.0f;
         } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
             dispatch_async(dispatch_get_main_queue(), ^{
                 [MBProgressHUD hideHUDForView:self.view animated:YES];
-                UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:nil message:@"네트워크 연결 상태를 확인해주세요." delegate:self cancelButtonTitle:@"닫기" otherButtonTitles:nil, nil];
-                [alertView show];
+                [self showHudMessage:@"네트워크 상태를 확인해주세요"];
             });
             NSLog(@"%@", error);
         }];
@@ -273,8 +274,7 @@ static const CGFloat kIconSize = 70.0f;
         } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
             dispatch_async(dispatch_get_main_queue(), ^{
                 [MBProgressHUD hideHUDForView:self.view animated:YES];
-                UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:nil message:@"네트워크 연결 상태를 확인해주세요." delegate:self cancelButtonTitle:@"닫기" otherButtonTitles:nil, nil];
-                [alertView show];
+                [self showHudMessage:@"네트워크 상태를 확인해주세요"];
             });
             NSLog(@"%@", error);
         }];
@@ -384,8 +384,7 @@ static const CGFloat kIconSize = 70.0f;
             } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
                 dispatch_async(dispatch_get_main_queue(), ^{
                     [MBProgressHUD hideHUDForView:self.view animated:YES];
-                    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:nil message:@"네트워크 연결 상태를 확인해주세요." delegate:self cancelButtonTitle:@"닫기" otherButtonTitles:nil, nil];
-                    [alertView show];
+                    [self showHudMessage:@"네트워크 상태를 확인해주세요"];
                 });
                 NSLog(@"%@", error);
             }];

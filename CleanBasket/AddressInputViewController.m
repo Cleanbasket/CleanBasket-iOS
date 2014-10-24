@@ -247,7 +247,8 @@
                             [MBProgressHUD hideHUDForView:self.view animated:YES];
                         });
                         [self showHudMessage:@"세션이 만료되어 로그인 화면으로 돌아갑니다." afterDelay:2];
-                        [self performSelector:@selector(dismissViewController) withObject:self afterDelay:2];
+                        //AppDelegate에 세션이 만료됨을 알림
+                        [[NSNotificationCenter defaultCenter] postNotificationName:@"sessionExpired" object:self];
                     }
                         break;
                 }

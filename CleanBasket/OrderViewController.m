@@ -211,12 +211,13 @@
                     }
                         break;
                     case CBServerConstantError: {
-                        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:nil message:@"서버 오류가 발생했습니다. 매니저에게 연락 부탁드립니다." delegate:self cancelButtonTitle:@"닫기" otherButtonTitles:nil, nil];
-                        [alertView show];
+                        [self showHudMessage:@"서버 오류가 발생했습니다. 나중에 시도해주세요."];
                     }
                         break;
                     case CBServerConstantSessionExpired: {
                         [self showHudMessage:@"세션이 만료되었습니다. 다시 로그인해주세요."];
+                        //AppDelegate에 세션이 만료됨을 알림
+                        [[NSNotificationCenter defaultCenter] postNotificationName:@"sessionExpired" object:self];
                     }
                         break;
                 }
@@ -225,9 +226,8 @@
         } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
             dispatch_async(dispatch_get_main_queue(), ^{
                 [MBProgressHUD hideHUDForView:self.view animated:YES];
+                [self showHudMessage:@"네트워크 상태를 확인해주세요"];
             });
-            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:nil message:@"네트워크 연결 상태를 확인해주세요." delegate:self cancelButtonTitle:@"닫기" otherButtonTitles:nil, nil];
-            [alertView show];
             NSLog(@"%@", error);
         }];
     });
@@ -383,12 +383,7 @@
     }
     
     else {
-        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:nil
-                                                            message:@"주문이 제대로 생성되지 않았습니다.\n다시 로그인해주세요."
-                                                           delegate:self
-                                                  cancelButtonTitle:@"닫기"
-                                                  otherButtonTitles:nil, nil];
-        [alertView show];
+        [self showHudMessage:@"주문 정보 생성에 실패했습니다. 다시 로그인해주세요."];
     }
 }
 

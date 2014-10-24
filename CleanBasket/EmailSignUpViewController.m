@@ -83,7 +83,7 @@
     [termsLabel setTextColor:[UIColor grayColor]];
     [termsLabel setTextAlignment:NSTextAlignmentLeft];
     
-    termsButton = [[UIButton alloc] initWithFrame:CGRectMake(260, 312, 44, 22)];
+    termsButton = [[UIButton alloc] initWithFrame:CGRectMake(termsLabel.frame.origin.x + 240, 312, 44, 22)];
     [termsButton setTitle:@"약관보기" forState:UIControlStateNormal];
     [termsButton setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
     [termsButton.titleLabel setFont:[UIFont systemFontOfSize:12.0f]];
@@ -156,32 +156,33 @@
 }
 
 - (void)didTouchSignUp {
-    
-    if ([emailTextField.text length] == 0) {
-        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:nil message:@"이메일주소를 입력해주세요." delegate:self cancelButtonTitle:@"닫기" otherButtonTitles:nil, nil];
-        [alertView show];
+    if ([emailTextField.text length] < 1 || [self isValidEmail:emailTextField.text] == NO) {
+        [self showHudMessage:@"올바른 이메일 주소를 입력해주세요."];
         return;
     }
     
     if ([passwordTextField.text length] == 0) {
-        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:nil message:@"비밀번호를 입력해주세요." delegate:self cancelButtonTitle:@"닫기" otherButtonTitles:nil, nil];
-        [alertView show];
+        [self showHudMessage:@"비밀번호를 입력해주세요."];
         return;
     }
     
     if ( [passwordCheckTextField.text length] == 0 ) {
-        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:nil message:@"비밀번호를 한 번 더 입력해주세요." delegate:self cancelButtonTitle:@"닫기" otherButtonTitles:nil, nil];
-        [alertView show];
+        [self showHudMessage:@"비밀번호를 한번 더 입력해주세요."];
         return;
     }
     
     if (!([[passwordTextField text] isEqual:[passwordCheckTextField text]])) {
-        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:nil
-                                                            message:@"비밀번호가 서로 일치하지 않습니다."
-                                                           delegate:self
-                                                  cancelButtonTitle:@"닫기"
-                                                  otherButtonTitles:nil, nil];
-        [alertView show];
+        [self showHudMessage:@"비밀번호가 서로 일치하지 않습니다."];
+        return;
+    }
+    
+    if ([passwordTextField.text length] < 6) {
+        [self showHudMessage:@"보안을 위해 비밀번호는 6자 이상으로 해주세요!"];
+        return;
+    }
+    
+    if ([passwordTextField.text length] > 20) {
+        [self showHudMessage:@"비밀번호가 지나치게 길지 않나요?"];
         return;
     }
     
@@ -194,15 +195,6 @@
                                  @"addr_building":[newAddress valueForKey:@"addr_building"],
                                  @"addr_remainder":[newAddress valueForKey:@"addr_remainder"]
                                  };
-    NSLog(@"\r[SIGNUP WITH]\r%@", parameters);
-    /*
-    if (newAddress != nil) {
-        [parameters setValue:[newAddress valueForKey:@"address"] forKey:@"address"];
-        [parameters setValue:[newAddress valueForKey:@"addr_number"] forKey:@"addr_number"];
-        [parameters setValue:[newAddress valueForKey:@"addr_building"] forKey:@"addr_building"];
-        [parameters setValue:[newAddress valueForKey:@"addr_remainder"] forKey:@"addr_remainder"];
-    }
-     */
     
     [manager POST:@"http://cleanbasket.co.kr/member/join" parameters:parameters
           success:^(AFHTTPRequestOperation *operation, id responseObject) {
@@ -221,21 +213,28 @@
                       break;
                   case 16:
                   {
-                      UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:nil
-                                                                          message:@"해당 이메일 주소는 이미 존재합니다."
-                                                                         delegate:self
-                                                                cancelButtonTitle:@"닫기"
-                                                                otherButtonTitles:nil, nil];
-                      [alertView show];
+                      [self showHudMessage:@"해당 이메일 주소는 이미 존재합니다."];
                       break;
                   }
               }
           } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-              NSLog(@"Error: %@", error);
+              dispatch_async(dispatch_get_main_queue(), ^{
+                  [MBProgressHUD hideHUDForView:self.view animated:YES];
+                  [self showHudMessage:@"네트워크 상태를 확인해주세요"];
+                  NSLog(@"%@", error);
+              });
           }];
 }
 
-
+-(BOOL) isValidEmail:(NSString *)checkString
+{
+    BOOL stricterFilter = NO;
+    NSString *stricterFilterString = @"[A-Z0-9a-z\\._%+-]+@([A-Za-z0-9-]+\\.)+[A-Za-z]{2,4}";
+    NSString *laxString = @".+@([A-Za-z0-9-]+\\.)+[A-Za-z]{2}[A-Za-z]*";
+    NSString *emailRegex = stricterFilter ? stricterFilterString : laxString;
+    NSPredicate *emailTest = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", emailRegex];
+    return [emailTest evaluateWithObject:checkString];
+}
 
 - (BOOL)textFieldShouldReturn:(UITextField*)textField;
 {
@@ -260,6 +259,19 @@
 - (void) presentTermsViewController {
     TermsViewController *termsViewController = [[TermsViewController alloc] init];
     [self.navigationController pushViewController:termsViewController animated:YES];
+}
+
+- (void) showHudMessage:(NSString*)message {
+    MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES labelText:nil];
+    
+    // Configure for text only and offset down
+    hud.mode = MBProgressHUDModeText;
+    hud.labelText = message;
+    [hud setLabelFont:[UIFont systemFontOfSize:14.0f]];
+    hud.margin = 10.f;
+    hud.removeFromSuperViewOnHide = YES;
+    [hud hide:YES afterDelay:1];
+    return;
 }
 
 @end

@@ -9,11 +9,14 @@
 #import "ServiceInfoViewController.h"
 #import "CBConstants.h"
 #import "UILabel+FormattedText.h"
+#import "DTOManager.h"
+#import "User.h"
 
 static const float ARC4RANDOM_MAX = 0x100000000;
 static const CGFloat kLeftMargin = 10;
 static const float kTitleFontSize = 17.0f;
 static const CGFloat kLabelWidth = 300.0f;
+static const CGFloat kButtonWidth = 80.0f;
 
 @interface ServiceInfoViewController () {
     UIScrollView *mainScrollView;
@@ -38,7 +41,20 @@ static const CGFloat kLabelWidth = 300.0f;
     [super viewDidLoad];
     [self.view setBackgroundColor:[UIColor whiteColor]];
     
-    mainScrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 64, DEVICE_WIDTH, DEVICE_HEIGHT)];
+    DTOManager *dtoManager = [DTOManager defaultManager];
+    User *currentUser = [dtoManager currentUser];
+    
+    UILabel *accountInfoLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 64, DEVICE_WIDTH, 40)];
+    NSString *accountString = @"안녕하세요, ";
+    accountString = [accountString stringByAppendingString:[currentUser email]];
+    accountString = [accountString stringByAppendingString:@" 님:)"];
+    [accountInfoLabel setText:accountString];
+    [accountInfoLabel setTextColor:[UIColor whiteColor]];
+    [accountInfoLabel setBackgroundColor:[CleanBasketMint colorWithAlphaComponent:0.8]];
+    [accountInfoLabel setTextAlignment:NSTextAlignmentCenter];
+    [accountInfoLabel setAdjustsFontSizeToFitWidth:YES];
+    
+    mainScrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 104, DEVICE_WIDTH, DEVICE_HEIGHT-64)];
     [mainScrollView setContentSize:CGSizeMake(DEVICE_WIDTH, 1230)];
     
     UILabel *firstInfoLabel = [[UILabel alloc] initWithFrame:CGRectMake(kLeftMargin, 10, kLabelWidth, 55)];
@@ -66,6 +82,7 @@ static const CGFloat kLabelWidth = 300.0f;
     [reliableLabel setText:@"확실한 서비스,\n믿을 수 있는 CLEAN BASKET!\n\n고객님의 소중한 세탁물 보호를 위해 CLEAN BASKET은 세탁업 표준약관을 준수합니다."];
     [reliableLabel setTextColor:CleanBasketMint range:NSMakeRange(0, 30)];
     [reliableLabel setFont:[UIFont systemFontOfSize:kTitleFontSize] range:NSMakeRange(0, 29)];
+    [reliableLabel setTextColor:CleanBasketMint range:NSMakeRange(52, 12)];
     
     UILabel *howToUseLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 400, DEVICE_WIDTH, 50)];
     [howToUseLabel setBackgroundColor:UltraLightGray];
@@ -79,6 +96,7 @@ static const CGFloat kLabelWidth = 300.0f;
     [useOrderLabel setText:@"주문하기\n  1. '주문하기'에 주문서 작성\n  2. '품목선택'을 통해 세탁품목들 선택\n  3. 주문확정!\n  4. 설정한 시간에 CLEAN BASKET이 방문, 세탁물 수거 및 배달"];
     [useOrderLabel setTextColor:CleanBasketMint range:NSMakeRange(0, 4)];
     [useOrderLabel setFont:[UIFont systemFontOfSize:kTitleFontSize] range:NSMakeRange(0, 4)];
+    [useOrderLabel setTextColor:CleanBasketMint range:NSMakeRange(74, 12)];
     
     UILabel *cancelOrderLabel = [[UILabel alloc] initWithFrame:CGRectMake(kLeftMargin, 590, kLabelWidth, 90)];
     [self setLabelForService:cancelOrderLabel];
@@ -100,9 +118,28 @@ static const CGFloat kLabelWidth = 300.0f;
     [qnaLabel setFont:[UIFont systemFontOfSize:18.0f]];
     [qnaLabel setTextAlignment:NSTextAlignmentCenter];
     
-    UILabel *contactLabel = [[UILabel alloc] initWithFrame:CGRectMake(kLeftMargin, 900, kLabelWidth, 60)];
-    [self setLabelForService:contactLabel];
-    [contactLabel setText:@"E-mail: help@cleanbasket.co.kr\nTel: 070-7552-1385\nHomepage: http://www.cleanbasket.co.kr"];
+    UIButton *contactButton = [[UIButton alloc] initWithFrame:CGRectMake((DEVICE_WIDTH - 240)/4, 910, kButtonWidth, 40)];
+    [contactButton addTarget:self action:@selector(makeCallCleanbasket) forControlEvents:UIControlEventTouchUpInside];
+    [contactButton setTitle:@"전화하기" forState:UIControlStateNormal];
+    [contactButton setBackgroundColor:CleanBasketMint];
+    [contactButton.layer setCornerRadius:10.0f];
+//    [contactButton setBackgroundColor:[UIColor blackColor]];
+    
+    UIButton *emailButton = [[UIButton alloc] initWithFrame:CGRectMake((DEVICE_WIDTH - 240)/4*2 + kButtonWidth, 910, kButtonWidth, 40)];
+    [emailButton setTitle:@"이메일" forState:UIControlStateNormal];
+    [emailButton setBackgroundColor:CleanBasketMint];
+    [emailButton.layer setCornerRadius:10.0f];
+    [emailButton addTarget:self action:@selector(makeEmailCleanbasket) forControlEvents:UIControlEventTouchUpInside];
+    
+    UIButton *homepageButton = [[UIButton alloc] initWithFrame:CGRectMake(kButtonWidth*2 + (DEVICE_WIDTH-240)/4*3, 910, kButtonWidth, 40)];
+    [homepageButton setTitle:@"홈페이지" forState:UIControlStateNormal];
+    [homepageButton setBackgroundColor:CleanBasketMint];
+    [homepageButton.layer setCornerRadius:10.0f];
+    [homepageButton addTarget:self action:@selector(makeHomepageCleanbasket) forControlEvents:UIControlEventTouchUpInside];
+    
+//    UILabel *contactLabel = [[UILabel alloc] initWithFrame:CGRectMake(kLeftMargin, 900, kLabelWidth, 60)];
+//    [self setLabelForService:contactLabel];
+//    [contactLabel setText:@"E-mail: help@cleanbasket.co.kr\nTel: 070-7552-1385\nHomepage: http://www.cleanbasket.co.kr"];
     
     UIImageView *logoImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"ic_launcher.png"]];
     [logoImageView setFrame:CGRectMake(40, 1000, 80, 80)];
@@ -122,7 +159,26 @@ static const CGFloat kLabelWidth = 300.0f;
     [mainScrollView addSubview:logoImageView];
     [mainScrollView addSubview:howToUseLabel];
     [mainScrollView addSubview:qnaLabel];
+    [mainScrollView addSubview:contactButton];
+    [mainScrollView addSubview:emailButton];
+    [mainScrollView addSubview:homepageButton];
     [self.view addSubview:mainScrollView];
+    [self.view addSubview:accountInfoLabel];
+}
+
+- (void)makeCallCleanbasket {
+    NSString *phoneNumber = @"tel://070-7552-1385";
+    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:phoneNumber]];
+}
+
+-(void) makeEmailCleanbasket {
+    NSString *emailAddress = @"mailto://help@cleanbasket.co.kr";
+    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:emailAddress]];
+}
+
+- (void) makeHomepageCleanbasket {
+    NSString *homepageAddress = @"http://cleanbasket.co.kr/";
+    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:homepageAddress]];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -148,5 +204,7 @@ static const CGFloat kLabelWidth = 300.0f;
     [mainScrollView addSubview:label];
 //    [self setBorderVisible:label];
 }
+
+
 
 @end

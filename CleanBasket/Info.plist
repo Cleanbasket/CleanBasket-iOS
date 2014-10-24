@@ -35,7 +35,7 @@
 			<string>Editor</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>kakao1a206c0a3ffe9bdb2dec03e686f57d13</string>
+				<string>kakao02a8bd3d3be3552dcc308dd36b620918</string>
 			</array>
 		</dict>
 	</array>
@@ -45,6 +45,8 @@
 	<string>717896151629214</string>
 	<key>FacebookDisplayName</key>
 	<string>CleanBasket</string>
+	<key>KAKAO_APP_KEY</key>
+	<string>02a8bd3d3be3552dcc308dd36b620918</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>UILaunchImageFile</key>
@@ -60,8 +62,6 @@
 		<string>UIInterfaceOrientationPortrait</string>
 		<string>UIInterfaceOrientationPortraitUpsideDown</string>
 	</array>
-	<key>KAKAO_APP_KEY</key>
-	<string>1a206c0a3ffe9bdb2dec03e686f57d13</string>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
 </dict>
