@@ -44,7 +44,7 @@
             NSArray *jsonDict =  [NSJSONSerialization JSONObjectWithData: [responseObject[@"data"] dataUsingEncoding:NSUTF8StringEncoding]
                                                                  options: NSJSONReadingMutableContainers
                                                                    error: nil];
-            
+            NSLog(@"%@", jsonDict);
             RLMRealm *realm = [RLMRealm defaultRealm];
             orderList = [[RLMArray alloc] initWithObjectClassName:@"Order"];
             [realm beginWriteTransaction];
@@ -127,12 +127,12 @@
         [cell.managerPhotoView setImage:defaultPhoto];
         [cell.managerPhotoView.layer setCornerRadius:0];
     }
-    
+    [self orderedItemString:currentOrder];
     [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
     [cell.orderNumberValueLabel setText:[currentOrder order_number]];
     [cell.orderPriceValueLabel setText:[NSString stringWithCurrencyFormat:[currentOrder price]]];
     [cell.orderItemsValueLabel setText:nil];
-    [cell.orderStatusValueLabel setText:nil];
+    [cell.orderStatusValueLabel setText:[orderStateName objectAtIndex:[currentOrder state]]];
     [cell.orderPickupValueLabel setText:[NSString trimDateString:[currentOrder pickup_date]]];
     [cell.orderDeliverValueLabel setText:[NSString trimDateString:[currentOrder dropoff_date]]];
     [cell.managerNameValueLabel setText:([[currentOrder pickupInfo] name]?[[currentOrder pickupInfo] name]:@"미지정")];
@@ -147,6 +147,18 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     return 320.0f;
+}
+
+- (NSString*)orderedItemString:(Order*)currentOrder {
+    NSString *resultString;
+    RLMArray *items = [currentOrder Item];
+    for (Item *each in items) {
+        NSString *itemName = [each name];
+        NSString *itemQuantity = [NSString stringWithFormat:@"%d", [each count]];
+        NSLog(@"%@(%@)", itemName, itemQuantity);
+    }
+    
+    return resultString;
 }
 
 - (void) orderCancelButtonDidTap:(id)sender {

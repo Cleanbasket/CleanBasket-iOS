@@ -56,7 +56,7 @@
     // OrderViewController로 하여금 유저 정보를 View에 채운다.
     [[NSNotificationCenter defaultCenter] postNotificationName:@"didCreateUser" object:self userInfo:[NSDictionary dictionaryWithObject:[responseDict valueForKey:@"uid"] forKey:@"uid"]];
     
-    //    NSLog(@"\r[CURRENT USER]\r%@", currentUser);
+//        NSLog(@"\r[CURRENT USER]\r%@", _currentUser);
 }
 
 - (void) createItemCode:(NSArray*)itemArray {

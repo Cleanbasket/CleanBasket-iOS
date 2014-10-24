@@ -275,8 +275,8 @@ static const CGFloat kIconSize = 70.0f;
             dispatch_async(dispatch_get_main_queue(), ^{
                 [MBProgressHUD hideHUDForView:self.view animated:YES];
                 [self showHudMessage:@"네트워크 상태를 확인해주세요"];
+                NSLog(@"%@", error);
             });
-            NSLog(@"%@", error);
         }];
     });
     
@@ -296,7 +296,6 @@ static const CGFloat kIconSize = 70.0f;
 
 - (void) viewWillAppear:(BOOL)animated {
     [couponTableView reloadData];
-    NSLog(@"%@", [Coupon allObjects]);
 }
 
 - (void)didReceiveMemoryWarning {
@@ -367,7 +366,7 @@ static const CGFloat kIconSize = 70.0f;
                         }
                             break;
                         case CBServerConstantsDuplication: {
-                            [self showHudMessage:@"처음 발급한 쿠폰 번호를 입력해주세요."];
+                            [self showHudMessage:@"이미 발급한 쿠폰입니다. 매니저에게 문의해주세요."];
                         }
                             break;
                         case CBServerConstantsInvalid: {
