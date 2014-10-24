@@ -122,12 +122,25 @@
 
 - (void) passwordBarButtonDidTap {
     UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"비밀번호 변경" message:@"새로운 비밀번호를 입력해주세요" delegate:self cancelButtonTitle:@"취소" otherButtonTitles:@"확인", nil];
-    [alertView setAlertViewStyle:UIAlertViewStyleSecureTextInput];
+    [alertView setAlertViewStyle:UIAlertViewStyleLoginAndPasswordInput];
+    [[alertView textFieldAtIndex:0] setSecureTextEntry:YES];
+    [[alertView textFieldAtIndex:0] setPlaceholder:@"변경 할 비밀번호"];
+    [[alertView textFieldAtIndex:1] setPlaceholder:@"한 번 더!"];
     [alertView show];
 }
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
     if ([[alertView buttonTitleAtIndex:buttonIndex] isEqualToString:@"확인"]) {
+        if ([[[alertView textFieldAtIndex:0] text] length] < 6) {
+            [self showHudMessage:@"비밀번호는 6자 이상으로 입력해주세요." afterDelay:2];
+            return;
+        }
+        
+        if (![[[alertView textFieldAtIndex:0] text] isEqualToString:[[alertView textFieldAtIndex:1]text]]) {
+            [self showHudMessage:@"비밀번호가 서로 다릅니다." afterDelay:2];
+            return;
+        }
+        
         NSDictionary *parameter = @{@"password":[[alertView textFieldAtIndex:0] text]};
         
         [MBProgressHUD showHUDAddedTo:self.view animated:YES labelText:@"비밀번호 변경 중"];

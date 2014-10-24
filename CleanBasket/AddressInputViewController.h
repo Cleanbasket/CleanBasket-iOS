@@ -9,12 +9,10 @@
 #import <UIKit/UIKit.h>
 
 @class Address;
-@class RLMRealm;
 
 @interface AddressInputViewController : UIViewController
 
 @property Address *currentAddress;
 @property BOOL updateAddress;
-@property RLMRealm *realm;
 
 @end

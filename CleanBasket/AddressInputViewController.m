@@ -220,14 +220,13 @@
 - (void) confirmButtonDidTouched {
     if (self.updateAddress) {
         [MBProgressHUD showHUDAddedTo:self.view animated:YES labelText:@"주소 업데이트 중:)"];
+        NSDictionary *data = @{@"type":[NSNumber numberWithInt:[self.currentAddress type]],
+                               @"address":fullAddress,
+                               @"addr_number":[streetNumber text],
+                               @"addr_building":[buildingName text],
+                               @"addr_remainder":[remainder text]
+                               };
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_LOW, 0), ^{
-            NSDictionary *data = @{@"type":[NSNumber numberWithInt:[self.currentAddress type]],
-                                   @"address":fullAddress,
-                                   @"addr_number":[streetNumber text],
-                                   @"addr_building":[buildingName text],
-                                   @"addr_remainder":[remainder text]
-                                   };
-            
             AFHTTPRequestOperationManager *afManager = [AFHTTPRequestOperationManager manager];
             afManager.requestSerializer = [AFJSONRequestSerializer serializer];
             [afManager POST:@"http://cleanbasket.co.kr/member/address/update" parameters:data success:^(AFHTTPRequestOperation *operation, id responseObject) {
@@ -237,13 +236,14 @@
                     case CBServerConstantSuccess: {
                         dispatch_async(dispatch_get_main_queue(), ^{
                             [MBProgressHUD hideHUDForView:self.view animated:YES];
-                            _realm = [RLMRealm defaultRealm];
-                            [_realm beginWriteTransaction];
+                            
+                            RLMRealm *realm = [RLMRealm defaultRealm];
+                            [realm beginWriteTransaction];
                             [self.currentAddress setAddress:fullAddress];
                             [self.currentAddress setAddr_number:[streetNumber text]];
                             [self.currentAddress setAddr_building:[buildingName text]];
                             [self.currentAddress setAddr_remainder:[remainder text]];
-                            [_realm commitWriteTransaction];
+                            [realm commitWriteTransaction];
                             [self showHudMessage:@"주소 업데이트 성공!" afterDelay:1];
                             NSLog(@"[CURRENT ADDRESS] %@", self.currentAddress);
                             [self performSelector:@selector(popViewController) withObject:self afterDelay:1];
@@ -281,8 +281,6 @@
             }];
             
         });
-        
-        //        });
     }
     
     else {

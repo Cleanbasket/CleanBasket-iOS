@@ -19,6 +19,8 @@
 #import "Order.h"
 #import "ChooseLaundryViewController.h"
 #import "AddressInputViewController.h"
+#import "MBProgressHUD.h"
+#import "NSString+CBString.h"
 
 #define X_FIRST 10
 #define X_SECOND 80
