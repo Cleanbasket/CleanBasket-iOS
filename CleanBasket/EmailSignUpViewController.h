@@ -7,24 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "CBConstants.h"
-#import "AddressInputViewController.h"
-#import "TermsViewController.h"
-#import "AFNetworking.h"
-#import "AppDelegate.h"
 
 
-@interface EmailSignUpViewController : UIViewController {
-    UITextField *emailTextField;
-    UITextField *passwordTextField;
-    UITextField *passwordCheckTextField;
-    UITextField *contactTextField;
-    UIButton *addressButton;
-    UILabel *termsLabel;
-    UIButton *termsButton;
-    UIButton *signUpButton;
-    AFHTTPRequestOperationManager *manager;
-    Address *newAddress;
-}
+
+@interface EmailSignUpViewController : UIViewController
 
 @end

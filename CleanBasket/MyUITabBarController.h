@@ -9,8 +9,6 @@
 #import <UIKit/UIKit.h>
 
 
-@interface MyUITabBarController : UITabBarController {
-    UITabBarItem *currentItem;
-}
+@interface MyUITabBarController : UITabBarController 
 
 @end

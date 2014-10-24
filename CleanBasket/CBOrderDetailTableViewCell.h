@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "CBConstants.h"
+
 
 @interface CBOrderDetailTableViewCell : UITableViewCell
 @property UILabel *orderNumberLabel;

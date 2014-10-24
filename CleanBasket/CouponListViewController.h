@@ -7,22 +7,17 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "CBCouponTableViewCell.h"
-#import "CBConstants.h"
-#import <Realm/Realm.h>
-#import "Coupon.h"
-#import "NSString+CBString.h"
+
 
 @class CouponListViewController;
+@class Coupon;
 @protocol CouponListViewControllerDelegate <NSObject>
 
 - (void)setViewController:(CouponListViewController*)controller currentCoupon:(Coupon*)currentCoupon;
 
 @end
 
-@interface CouponListViewController : UIViewController {
-    UITableView *couponTableView;
-}
+@interface CouponListViewController : UIViewController
 
 @property (nonatomic, weak) id <CouponListViewControllerDelegate> delegate;
 

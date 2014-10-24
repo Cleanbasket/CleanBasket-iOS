@@ -306,7 +306,7 @@ static const CGFloat kIconSize = 70.0f;
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     static NSString *CellIdentifier = @"couponCell";
-    int couponIndex = [indexPath row];
+    int couponIndex = (int)[indexPath row];
     RLMArray *couponList = [Coupon allObjects];
     Coupon *currentCoupon = [couponList objectAtIndex:couponIndex];
     

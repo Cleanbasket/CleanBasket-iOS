@@ -7,6 +7,13 @@
 //
 
 #import "ChooseOtherLaundryViewController.h"
+#import <Realm/Realm.h>
+#import "CBTotalPriceView.h"
+#import "CBConstants.h"
+#import "CBOrderTableViewCell.h"
+#import "Item.h"
+#import "UIView+CBView.h"
+
 #define X_FIRST 10
 #define X_SECOND 80
 #define X_CENTER_DEVICE (DEVICE_WIDTH - WIDTH_REGULAR)/2
@@ -58,14 +65,14 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    NSLog(@"%d", [self.itemArray count]);
+    NSLog(@"%lu", (unsigned long)[self.itemArray count]);
     return [self.itemArray count] - 6;
 }
 
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     static NSString *CellIdentifier = @"PriceCell";
-    int itemIndex = [indexPath row] + 6;
+    int itemIndex = (int)[indexPath row] + 6;
     Item *currentItem = [self.itemArray objectAtIndex:itemIndex];
     
     CBOrderTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];

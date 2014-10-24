@@ -7,18 +7,11 @@
 //
 
 #import "DTOManager.h"
-/*
- @interface Deliverer : RLMObject
- @property NSString *name;
- @property NSString *phone;
- @property NSString *img;
- @property NSString *birthday;
- @end
- 
- @implementation Deliverer
- @end
- 
- */
+#import <Realm/Realm.h>
+#import "User.h"
+#import "Address.h"
+#import "Item.h"
+#import "Coupon.h"
 @interface DTOManager () {
     Address *address;
     RLMRealm *realm;

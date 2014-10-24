@@ -13,13 +13,29 @@
 #import "OrderViewController.h"
 #import "EmailSignUpViewController.h"
 #import "FindPasswordViewController.h"
-#define FieldHeight 38
-#define FieldWidth 200
-#define CenterX (DEVICE_WIDTH - FieldWidth)/2
-#define FirstElementY 100
-#define Interval (iPhone5 ? 63 : 53)
+#import "AppDelegate.h"
+#import "AFNetworking.h"
+#import "MBProgressHUD.h"
+#import "CBConstants.h"
 
-@interface LoginViewController () <UITextFieldDelegate>
+#define CenterX (DEVICE_WIDTH - kFieldWidth)/2
+static const CGFloat kFieldHeight = 38.0f;
+static const CGFloat kFieldWidth = 200.0f;
+static const CGFloat kFirstYPosition = 100.0f;
+static CGFloat kSpacing;
+
+@interface LoginViewController () <UITextFieldDelegate> {
+    UITextField *emailTextField;
+    UITextField *passwordTextField;
+    UIButton *signInButton;
+    UILabel *orLabel;
+    UIButton *signUpButton;
+    UIButton *fbSignUpButton;
+    UIButton *iForgotButton;
+    AFHTTPRequestOperationManager *manager;
+    DTOManager *dtoManager;
+    ServerContant serverConstant;
+}
 
 @end
 
@@ -32,6 +48,14 @@
                                                  selector:@selector(didRecieveNotification:)
                                                      name:@"signUpComplete"
                                                    object:nil];
+        if (isiPhone5)
+        {
+            kSpacing = 63.0f;
+        }
+        else
+        {
+            kSpacing = 53.0f;
+        }
     }
     
     return self;
@@ -51,7 +75,7 @@
     [self.view setBackgroundColor:[UIColor whiteColor]];
     manager = [AFHTTPRequestOperationManager manager];
     dtoManager = [DTOManager defaultManager];
-    emailTextField = [[UITextField alloc] initWithFrame:CGRectMake(CenterX, FirstElementY, FieldWidth, FieldHeight)];
+    emailTextField = [[UITextField alloc] initWithFrame:CGRectMake(CenterX, kFirstYPosition, kFieldWidth, kFieldHeight)];
     [emailTextField setDelegate:self];
     [emailTextField setPlaceholder:@"mail@cleanbasket.co.kr"];
     [emailTextField setBackgroundColor:UltraLightGray];
@@ -69,7 +93,7 @@
     [emailTextField setTag:0];
     [emailTextField setAdjustsFontSizeToFitWidth:YES];
     
-    passwordTextField = [[UITextField alloc] initWithFrame:CGRectMake(CenterX, FirstElementY + Interval, FieldWidth, FieldHeight)];
+    passwordTextField = [[UITextField alloc] initWithFrame:CGRectMake(CenterX, kFirstYPosition + kSpacing, kFieldWidth, kFieldHeight)];
     [passwordTextField setDelegate:self];
     [passwordTextField setPlaceholder:@"●●●●●●"];
     [passwordTextField setBackgroundColor:UltraLightGray];
@@ -88,7 +112,7 @@
     [passwordTextField setTag:1];
     
     
-    signInButton = [[UIButton alloc] initWithFrame:CGRectMake(CenterX, FirstElementY + Interval * 2, FieldWidth, FieldHeight)];
+    signInButton = [[UIButton alloc] initWithFrame:CGRectMake(CenterX, kFirstYPosition + kSpacing * 2, kFieldWidth, kFieldHeight)];
     [signInButton setBackgroundColor:CleanBasketMint];
     [signInButton setTitle:@"로그인" forState:UIControlStateNormal];
     [signInButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
@@ -96,12 +120,12 @@
     [signInButton.layer setCornerRadius:15.0f];
     [signInButton addTarget:self action:@selector(signIn) forControlEvents:UIControlEventTouchUpInside];
     
-    orLabel = [[UILabel alloc] initWithFrame:CGRectMake(CenterX, FirstElementY + Interval * 3, FieldWidth, FieldHeight)];
+    orLabel = [[UILabel alloc] initWithFrame:CGRectMake(CenterX, kFirstYPosition + kSpacing * 3, kFieldWidth, kFieldHeight)];
     [orLabel setText:@"처음 이용하시나요?"];
     [orLabel setTextAlignment:NSTextAlignmentCenter];
     [orLabel setTextColor:[UIColor grayColor]];
     
-    signUpButton = [[UIButton alloc] initWithFrame:CGRectMake(CenterX, FirstElementY + Interval * 4, FieldWidth, FieldHeight)];
+    signUpButton = [[UIButton alloc] initWithFrame:CGRectMake(CenterX, kFirstYPosition + kSpacing * 4, kFieldWidth, kFieldHeight)];
     [signUpButton setBackgroundColor:CleanBasketRed];
     [signUpButton setTitle:@"이메일 가입" forState:UIControlStateNormal];
     [signUpButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
@@ -109,14 +133,14 @@
     [signUpButton.layer setCornerRadius:15.0f];
     [signUpButton addTarget:self action:@selector(emailSignUpTouched) forControlEvents:UIControlEventTouchUpInside];
     
-    fbSignUpButton = [[UIButton alloc] initWithFrame:CGRectMake(CenterX, FirstElementY + Interval * 5, FieldWidth, FieldHeight)];
+    fbSignUpButton = [[UIButton alloc] initWithFrame:CGRectMake(CenterX, kFirstYPosition + kSpacing * 5, kFieldWidth, kFieldHeight)];
     [fbSignUpButton setBackgroundColor:FacebookBlue];
     [fbSignUpButton setTitle:@"페이스북 연결하기" forState:UIControlStateNormal];
     [fbSignUpButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [fbSignUpButton setTitleColor:[UIColor blackColor] forState:UIControlStateHighlighted];
     [fbSignUpButton.layer setCornerRadius:15.0f];
     
-    iForgotButton = [[UIButton alloc] initWithFrame:CGRectMake(CenterX, FirstElementY + Interval * 6, FieldWidth, FieldHeight)];
+    iForgotButton = [[UIButton alloc] initWithFrame:CGRectMake(CenterX, kFirstYPosition + kSpacing * 6, kFieldWidth, kFieldHeight)];
     [iForgotButton setBackgroundColor:[UIColor whiteColor]];
     [iForgotButton setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
     [iForgotButton setTitle:@"비밀번호 찾기" forState:UIControlStateNormal];

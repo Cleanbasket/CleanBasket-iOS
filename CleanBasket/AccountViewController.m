@@ -7,6 +7,10 @@
 //
 
 #import "AccountViewController.h"
+#import <Realm/Realm.h>
+#import "AFNetworking.h"
+#import "User.h"
+#import "Order.h"
 #define X_FIRST 10
 #define X_SECOND 80
 #define X_CENTER_DEVICE (DEVICE_WIDTH - WIDTH_REGULAR)/2
@@ -21,6 +25,18 @@
 @class AppDelegate;
 
 @interface AccountViewController ()
+{
+    AFHTTPRequestOperationManager *manager;
+    RLMRealm *realm;
+    UILabel *personalLabel;
+    UILabel *emailLabel;
+    UILabel *emailValueLabel;
+    UILabel *contactLabel;
+    UILabel *contactValueLabel;
+    UILabel *passwordLabel;
+    UIButton *passwordChangeButton;
+    UILabel *pushNotiLabel;
+}
 
 @end
 

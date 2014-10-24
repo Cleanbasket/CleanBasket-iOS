@@ -7,6 +7,7 @@
 //
 
 #import "CBOrderTableViewCell.h"
+#import "CBConstants.h"
 
 @implementation CBOrderTableViewCell {
 

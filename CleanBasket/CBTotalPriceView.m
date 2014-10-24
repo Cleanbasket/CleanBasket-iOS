@@ -7,6 +7,7 @@
 //
 
 #import "CBTotalPriceView.h"
+#import "CBConstants.h"
 #define HEIGHT_MENU 44
 #define HEIGHT_BUTTON 35
 

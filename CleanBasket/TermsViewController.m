@@ -7,8 +7,14 @@
 //
 
 #import "TermsViewController.h"
+#import "CBConstants.h"
+#import "MBProgressHUD.h"
 
-@interface TermsViewController () <UIWebViewDelegate>
+@interface TermsViewController () <UIWebViewDelegate> {
+    NSURLRequest *termsRequest;
+    NSURLRequest *privacyReqeust;
+    UIWebView *webView;
+}
 
 @end
 

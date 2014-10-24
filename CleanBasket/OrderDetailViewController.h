@@ -7,20 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
-#import <Realm/Realm.h>
-#import "AFNetworking.h"
-#import "Order.h"
-#import "MBProgressHUD.h"   
-#import "CBOrderDetailTableViewCell.h"
-#import "NSString+CBString.h"
 
 
-@interface OrderDetailViewController : UIViewController {
-    AFHTTPRequestOperationManager *afManager;
-    
-    UITableView *orderTableView;
-	RLMArray *orderList;
-    NSArray *orderStateName;
-}
+@interface OrderDetailViewController : UIViewController
 
 @end

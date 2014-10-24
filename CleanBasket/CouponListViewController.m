@@ -7,8 +7,15 @@
 //
 
 #import "CouponListViewController.h"
+#import <Realm/Realm.h>
+#import "CBCouponTableViewCell.h"
+#import "CBConstants.h"
+#import "Coupon.h"
+#import "NSString+CBString.h"
 
-@interface CouponListViewController () <UITableViewDataSource, UITableViewDelegate>
+@interface CouponListViewController () <UITableViewDataSource, UITableViewDelegate> {
+    UITableView *couponTableView;
+}
 
 @end
 
@@ -32,7 +39,7 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     static NSString *CellIdentifier = @"couponCell";
-    int couponIndex = [indexPath row];
+    int couponIndex = (int)[indexPath row];
     RLMArray *couponList = [Coupon allObjects];
     Coupon *currentCoupon = [couponList objectAtIndex:couponIndex];
     

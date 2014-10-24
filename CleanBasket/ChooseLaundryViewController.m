@@ -7,8 +7,24 @@
 //
 
 #import "ChooseLaundryViewController.h"
+#import <Realm/Realm.h>
+#import "CBConstants.h"
+#import "ALScrollViewPaging.h"
+#import "ALScrollViewPaging.h"
+#import "RPVerticalStepper.h"
+#import "Order.h"
+#import "Item.h"
+#import "ChooseOtherLaundryViewController.h"
+#import "NSString+CBString.h"
+#import "MBProgressHUD.h"
+#import "DTOManager.h"
+#import "AFNetworking.h"
+#import "CouponListViewController.h"
+#import "Address.h"
+
 static const CGFloat kImageWidth = 200;
 static const CGFloat kImageHeight = 200;
+
 #define X_FIRST 0
 #define X_SECOND 60
 #define X_THIRD 260
@@ -22,7 +38,29 @@ static const CGFloat kImageHeight = 200;
 #define MARGIN_REGULAR 50
 #define NUM_MAIN_ITEM 6
 
-@interface ChooseLaundryViewController () <UITextFieldDelegate, CouponListViewControllerDelegate>
+@interface ChooseLaundryViewController () <UITextFieldDelegate, CouponListViewControllerDelegate>{
+    UIImageView *laundryImageView;
+    NSArray *laundryImages;
+    NSUInteger imageIdx;
+    NSArray *laundryNames;
+    UILabel *laundryLabel;
+    UILabel *quantityLabel;
+    RPVerticalStepper *stepper;
+    RLMArray *itemArray;
+    Item *currentItem;
+    UILabel *priceLabel;
+    UILabel *priceValueLabel;
+    UILabel *sumLabel;
+    UILabel *sumValueLabel;
+    UILabel *totalLabel;
+    UILabel *totalValueLabel;
+    UITextField *memoTextField;
+    UIButton *confirmButton;
+    UIScrollView *scrollView;
+    UIButton *couponButton;
+    int totalPrice;
+    UILabel *touchLabel;
+}
 @end
 
 @implementation ChooseLaundryViewController

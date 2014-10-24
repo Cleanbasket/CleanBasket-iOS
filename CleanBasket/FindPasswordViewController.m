@@ -7,6 +7,9 @@
 //
 
 #import "FindPasswordViewController.h"
+#import "CBConstants.h"
+#import "AFNetworking.h"
+#import "MBProgressHUD.h"
 #define FieldHeight 35
 #define FieldWidth 240
 #define CenterX (DEVICE_WIDTH - FieldWidth)/2
@@ -14,6 +17,10 @@
 #define Interval 45
 
 @interface FindPasswordViewController () <UITextFieldDelegate>
+{
+    UITextField *emailTextField;
+    UIButton *sendButton;
+}
 
 @end
 

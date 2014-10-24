@@ -7,6 +7,7 @@
 //
 
 #import "CBCouponTableViewCell.h"
+#import "CBConstants.h"
 
 @implementation CBCouponTableViewCell
 

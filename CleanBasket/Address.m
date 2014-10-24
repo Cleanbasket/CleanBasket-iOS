@@ -48,7 +48,7 @@
     fullAddress = [fullAddress stringByAppendingString:@" "];
     fullAddress = [fullAddress stringByAppendingString:self.addr_remainder];
     
-    NSLog(@"%d", [fullAddress length]);
+    NSLog(@"%d", (int)[fullAddress length]);
     if ( [fullAddress length] == 3)
         return @"주소가 없습니다";
     else

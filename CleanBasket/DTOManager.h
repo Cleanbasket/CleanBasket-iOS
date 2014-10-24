@@ -7,11 +7,8 @@
 //
 
 #import <Foundation/Foundation.h>
-#import <Realm/Realm.h>
-#import "User.h"
-#import "Address.h"
-#import "Item.h"
-#import "Coupon.h"
+
+@class User;
 
 @interface DTOManager : NSObject
 

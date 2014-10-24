@@ -7,8 +7,32 @@
 //
 
 #import "DeliverDatePickerViewController.h"
+#import <Realm/Realm.h>
+#import "CBConstants.h"
+#import "CBLabel.h"
+#import "AFNetworking.h"
+#import "DTOManager.h"
+#import "User.h"
+#import "Address.h"
+#import "Order.h"
+#import "ChooseLaundryViewController.h"
+#import "AddressInputViewController.h"
 
 @interface DeliverDatePickerViewController ()
+{
+    UIDatePicker *datePicker;
+    UILabel *dateInfoLabel;
+    NSTimer *changeDateInfoLabelBgColorTimer;
+    DTOManager *dtoManager;
+    RLMRealm *realm;
+    NSString *deliverDateString;
+    UIButton *confirmButton;
+    NSString *pickupDateString;
+    NSString *pickupMonth;
+    NSString *pickupDay;
+    NSString *pickupHour;
+    NSString *pickupMinute;
+}
 
 @end
 

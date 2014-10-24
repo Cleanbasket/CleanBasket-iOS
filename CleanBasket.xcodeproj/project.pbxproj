@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		F104DB7D19FA0DA300C964B3 /* CBConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = F104DB7C19FA0DA300C964B3 /* CBConstants.m */; };
 		F111445319EEDD7A00C637AB /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = F111445219EEDD7A00C637AB /* User.m */; };
 		F111445619EEDDD500C637AB /* Address.m in Sources */ = {isa = PBXBuildFile; fileRef = F111445519EEDDD500C637AB /* Address.m */; };
 		F113748319F7841000E9A27F /* TermsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F113748219F7841000E9A27F /* TermsViewController.m */; };
@@ -246,6 +247,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		F104DB7C19FA0DA300C964B3 /* CBConstants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CBConstants.m; sourceTree = "<group>"; };
 		F111445119EEDD7A00C637AB /* User.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = User.h; sourceTree = "<group>"; };
 		F111445219EEDD7A00C637AB /* User.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = User.m; sourceTree = "<group>"; };
 		F111445419EEDDD500C637AB /* Address.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Address.h; sourceTree = "<group>"; };
@@ -1143,6 +1145,7 @@
 				F193DA0519EBF1750051C32A /* MBProgressHUD */,
 				F193D9E819EBCBA70051C32A /* AFNetworking */,
 				F14AC26719DEA2D8002BCC98 /* CBConstants.h */,
+				F104DB7C19FA0DA300C964B3 /* CBConstants.m */,
 				F113748D19F7FBA300E9A27F /* Keychain.h */,
 				F113748E19F7FBA300E9A27F /* Keychain.m */,
 			);
@@ -2190,7 +2193,7 @@
 				TargetAttributes = {
 					F14AC23019DE7E00002BCC98 = {
 						CreatedOnToolsVersion = 6.0.1;
-						DevelopmentTeam = 39WT95YDMW;
+						DevelopmentTeam = B9UX9X862M;
 					};
 					F14AC24C19DE7E00002BCC98 = {
 						CreatedOnToolsVersion = 6.0.1;
@@ -2497,6 +2500,7 @@
 				F113748619F78DA700E9A27F /* DeliverDatePickerViewController.m in Sources */,
 				F19DE13F19EEFC8D004B60E7 /* Item.m in Sources */,
 				F193D9FC19EBCBA70051C32A /* AFHTTPRequestOperation.m in Sources */,
+				F104DB7D19FA0DA300C964B3 /* CBConstants.m in Sources */,
 				F133214719F3415500C52D20 /* ChooseOtherLaundryViewController.m in Sources */,
 				F14AC26519DE9D9C002BCC98 /* EmailSignUpViewController.m in Sources */,
 				F14AC27119DED279002BCC98 /* FindPasswordViewController.m in Sources */,

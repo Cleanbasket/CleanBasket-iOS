@@ -7,13 +7,34 @@
 //
 
 #import "EmailSignUpViewController.h"
-#define FieldHeight 35
-#define FieldWidth 260
-#define CenterX (DEVICE_WIDTH - FieldWidth)/2
-#define FirstElementY 80
-#define Interval 45
+#import "CBConstants.h"
+#import "AddressInputViewController.h"
+#import "TermsViewController.h"
+#import "AFNetworking.h"
+#import "AppDelegate.h"
+#import "Address.h"
+#import "MBProgressHUD.h"
 
-@interface EmailSignUpViewController () <UITextFieldDelegate>
+#define CenterX (DEVICE_WIDTH - kFieldWidth)/2
+
+static const CGFloat kFieldHeight = 35.0f;
+static const CGFloat kFieldWidth = 260.0f;
+static const CGFloat kFirstYPosition = 80.0f;
+static CGFloat kSpacing;
+
+@interface EmailSignUpViewController () <UITextFieldDelegate> {
+    UITextField *emailTextField;
+    UITextField *passwordTextField;
+    UITextField *passwordCheckTextField;
+    UITextField *contactTextField;
+    UIButton *addressButton;
+    UILabel *termsLabel;
+    UIButton *termsButton;
+    UIButton *signUpButton;
+    AFHTTPRequestOperationManager *manager;
+    Address *newAddress;
+    NSDictionary *parameters;
+}
 
 @end
 
@@ -23,6 +44,11 @@
     self = [super init];
     if (self) {
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(notificationReceived:) name:@"addressCreated" object:nil];
+        if (isiPhone5) {
+            kSpacing = 55.0f;
+        } else {
+            kSpacing = 45.0f;
+        }
     }
     return self;
 }
@@ -77,13 +103,13 @@
     [addressButton.titleLabel setAdjustsFontSizeToFitWidth:YES];
     [addressButton.titleLabel setLineBreakMode:NSLineBreakByClipping];
     
-    termsLabel = [[UILabel alloc] initWithFrame:CGRectMake((DEVICE_WIDTH - 280) / 2, 305, 280, 35)];
+    termsLabel = [[UILabel alloc] initWithFrame:CGRectMake((DEVICE_WIDTH - 280) / 2, addressButton.frame.origin.y + kSpacing, 280, 35)];
     [termsLabel setText:@"가입과 함께 약관에 동의하신 것으로 간주합니다."];
     [termsLabel setFont:[UIFont systemFontOfSize:12.0f]];
     [termsLabel setTextColor:[UIColor grayColor]];
     [termsLabel setTextAlignment:NSTextAlignmentLeft];
     
-    termsButton = [[UIButton alloc] initWithFrame:CGRectMake(termsLabel.frame.origin.x + 240, 312, 44, 22)];
+    termsButton = [[UIButton alloc] initWithFrame:CGRectMake(termsLabel.frame.origin.x + 240, termsLabel.frame.origin.y, 44, 35)];
     [termsButton setTitle:@"약관보기" forState:UIControlStateNormal];
     [termsButton setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
     [termsButton.titleLabel setFont:[UIFont systemFontOfSize:12.0f]];
@@ -147,7 +173,7 @@
 }
 
 - (CGRect) makeRect: (UIView*)view {
-    return CGRectMake(CenterX, FirstElementY + Interval * [view tag], FieldWidth, FieldHeight);
+    return CGRectMake(CenterX, kFirstYPosition + kSpacing * [view tag], kFieldWidth, kFieldHeight);
 }
 
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event{
@@ -157,73 +183,88 @@
 
 - (void)didTouchSignUp {
     if ([emailTextField.text length] < 1 || [self isValidEmail:emailTextField.text] == NO) {
-        [self showHudMessage:@"올바른 이메일 주소를 입력해주세요."];
+        [self showHudMessage:@"올바른 이메일 주소를 입력해주세요." delay:1];
         return;
     }
     
     if ([passwordTextField.text length] == 0) {
-        [self showHudMessage:@"비밀번호를 입력해주세요."];
+        [self showHudMessage:@"비밀번호를 입력해주세요." delay:1];
         return;
     }
     
     if ( [passwordCheckTextField.text length] == 0 ) {
-        [self showHudMessage:@"비밀번호를 한번 더 입력해주세요."];
+        [self showHudMessage:@"비밀번호를 한번 더 입력해주세요." delay:1];
         return;
     }
     
     if (!([[passwordTextField text] isEqual:[passwordCheckTextField text]])) {
-        [self showHudMessage:@"비밀번호가 서로 일치하지 않습니다."];
+        [self showHudMessage:@"비밀번호가 서로 일치하지 않습니다." delay:1];
         return;
     }
     
     if ([passwordTextField.text length] < 6) {
-        [self showHudMessage:@"보안을 위해 비밀번호는 6자 이상으로 해주세요!"];
+        [self showHudMessage:@"보안을 위해 비밀번호는 6자 이상으로 해주세요!" delay:1];
         return;
     }
     
     if ([passwordTextField.text length] > 20) {
-        [self showHudMessage:@"비밀번호가 지나치게 길지 않나요?"];
+        [self showHudMessage:@"비밀번호가 지나치게 길지 않나요?" delay:1];
         return;
     }
     
-    NSDictionary *parameters = @{
-                                 @"email": [emailTextField text],
-                                 @"password": [passwordTextField text],
-                                 @"phone":[contactTextField text],
-                                 @"address":[newAddress valueForKey:@"address"],
-                                 @"addr_number":[newAddress valueForKey:@"addr_number"],
-                                 @"addr_building":[newAddress valueForKey:@"addr_building"],
-                                 @"addr_remainder":[newAddress valueForKey:@"addr_remainder"]
-                                 };
+    [MBProgressHUD showHUDAddedTo:self.view animated:YES labelText:@"로그인 중"];
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_LOW, 0), ^{
+        parameters = @{
+                       @"email": [emailTextField text],
+                       @"password": [passwordTextField text],
+                       @"phone":[contactTextField text],
+                       @"address":[newAddress valueForKey:@"address"],
+                       @"addr_number":[newAddress valueForKey:@"addr_number"],
+                       @"addr_building":[newAddress valueForKey:@"addr_building"],
+                       @"addr_remainder":[newAddress valueForKey:@"addr_remainder"]
+                       };
+        
+        [manager POST:@"http://cleanbasket.co.kr/member/join" parameters:parameters
+              success:^(AFHTTPRequestOperation *operation, id responseObject) {
+                  NSNumber *value = responseObject[@"constant"];
+                  switch ([value integerValue]) {
+                      case CBServerConstantSuccess:
+                      {
+                          dispatch_async(dispatch_get_main_queue(), ^{
+                              [MBProgressHUD hideHUDForView:self.view animated:YES];
+                              [self showHudMessage:@"회원가입을 축하드립니다 :)" delay:2];
+                              [self performSelector:@selector(signupComplete) withObject:nil afterDelay:3];
+                          });
+                      }
+                          break;
+                      case CBServerConstantsAccountDuplication:
+                      {
+                          dispatch_async(dispatch_get_main_queue(), ^{
+                              [MBProgressHUD hideHUDForView:self.view animated:YES];
+                              [self showHudMessage:@"해당 이메일 주소는 이미 존재합니다." delay:1];
+                          });
+                          break;
+                      }
+                  }
+              } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                  dispatch_async(dispatch_get_main_queue(), ^{
+                      [MBProgressHUD hideHUDForView:self.view animated:YES];
+                      [self showHudMessage:@"네트워크 상태를 확인해주세요" delay:1];
+                      NSLog(@"%@", error);
+                  });
+              }];
+    });
     
-    [manager POST:@"http://cleanbasket.co.kr/member/join" parameters:parameters
-          success:^(AFHTTPRequestOperation *operation, id responseObject) {
-              NSNumber *value = responseObject[@"constant"];
-              switch ([value integerValue]) {
-                  case 1:
-                  {
-                      [self dismissViewControllerAnimated:YES completion:^{
-                          [[NSNotificationCenter defaultCenter] postNotificationName:@"signUpComplete" object:self userInfo:parameters];
-                          [emailTextField setText:@""];
-                          [passwordTextField setText:@""];
-                          [passwordCheckTextField setText:@""];
-                          [contactTextField setText:@""];
-                      }];
-                  }
-                      break;
-                  case 16:
-                  {
-                      [self showHudMessage:@"해당 이메일 주소는 이미 존재합니다."];
-                      break;
-                  }
-              }
-          } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-              dispatch_async(dispatch_get_main_queue(), ^{
-                  [MBProgressHUD hideHUDForView:self.view animated:YES];
-                  [self showHudMessage:@"네트워크 상태를 확인해주세요"];
-                  NSLog(@"%@", error);
-              });
-          }];
+}
+
+- (void) signupComplete {
+    [self dismissViewControllerAnimated:YES completion:^{
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"signUpComplete" object:self userInfo:parameters];
+        [emailTextField setText:@""];
+        [passwordTextField setText:@""];
+        [passwordCheckTextField setText:@""];
+        [contactTextField setText:@""];
+    }];
 }
 
 -(BOOL) isValidEmail:(NSString *)checkString
@@ -261,7 +302,7 @@
     [self.navigationController pushViewController:termsViewController animated:YES];
 }
 
-- (void) showHudMessage:(NSString*)message {
+- (void) showHudMessage:(NSString*)message delay:(int)delay;{
     MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES labelText:nil];
     
     // Configure for text only and offset down
@@ -270,7 +311,7 @@
     [hud setLabelFont:[UIFont systemFontOfSize:14.0f]];
     hud.margin = 10.f;
     hud.removeFromSuperViewOnHide = YES;
-    [hud hide:YES afterDelay:1];
+    [hud hide:YES afterDelay:delay];
     return;
 }
 

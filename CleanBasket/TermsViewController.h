@@ -7,13 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "CBConstants.h"
-#import "MBProgressHUD.h"
 
-@interface TermsViewController : UIViewController {
-    NSURLRequest *termsRequest;
-    NSURLRequest *privacyReqeust;
-    UIWebView *webView;
-}
+
+@interface TermsViewController : UIViewController
 
 @end

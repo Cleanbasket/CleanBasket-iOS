@@ -14,8 +14,14 @@
 #import "OrderDetailViewController.h"
 #import "OrderStatusViewController.h"
 #import "Order.h"
+#import "MBProgressHUD.h"
+#import "AFNetworking.h"
+#import "User.h"
 
 @interface MyUITabBarController () <UINavigationControllerDelegate, UIAlertViewDelegate>
+{
+    UITabBarItem *currentItem;
+}
 
 @end
 
@@ -36,19 +42,11 @@
     [super viewDidLoad];
     [self.navigationController setNavigationBarHidden:NO];
     [self.navigationItem setTitle:@"주문하기"];
-    
-    //    //로그아웃 버튼 생성
-    //    UIBarButtonItem *rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"로그아웃" style:UIBarButtonItemStylePlain target:self action:@selector(logoutButtonDidTap)];
-    //    [self.navigationItem setRightBarButtonItem:rightBarButtonItem];
-    
-    //create a custom view for the tab bar
     CGRect frame = CGRectMake(0.0, 0.0, self.view.bounds.size.width, 49);
     UIView *v = [[UIView alloc] initWithFrame:frame];
     [v setBackgroundColor:UltraLightGray];
     [[self tabBar] addSubview:v];
     [v.layer setBorderWidth:0];
-    
-    
     
     //set the tab bar title appearance for normal state
     [[UITabBarItem appearance]
@@ -101,7 +99,7 @@
 
 - (void) orderBarButtonDidTap:(id)sender{
     RLMArray *orderList = [Order allObjects];
-    NSLog(@"CURRENT ORDER COUNT: %d", [orderList count]);
+    NSLog(@"CURRENT ORDER COUNT: %lu", (unsigned long)[orderList count]);
     if ([orderList count] == 1) {
         [self showHudMessage:@"주문내역이 없습니다!" afterDelay:1];
         return;

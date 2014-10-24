@@ -7,6 +7,19 @@
 //
 
 #import "OrderViewController.h"
+#import <Realm/Realm.h>
+#import "PickupDatePickerViewController.h"
+#import "DeliverDatePickerViewController.h"
+#import "CBConstants.h"
+#import "CBLabel.h"
+#import "AFNetworking.h"
+#import "DTOManager.h"
+#import "User.h"
+#import "Address.h"
+#import "Order.h"
+#import "ChooseLaundryViewController.h"
+#import "AddressInputViewController.h"
+
 #define X_FIRST 10
 #define X_SECOND 80
 #define X_CENTER_DEVICE (DEVICE_WIDTH - WIDTH_REGULAR)/2
@@ -19,6 +32,17 @@
 #define MARGIN_REGULAR ((isiPhone5) ? 75 : 60)
 
 @interface OrderViewController () <UITabBarControllerDelegate, UITabBarDelegate, UIGestureRecognizerDelegate> {
+    AFHTTPRequestOperationManager *AFManager;
+    RLMRealm *realm;
+    UITextField *contactTextField;
+    CBLabel *inputAddressLabel;
+    DTOManager *dtoManager;
+    Order *currentOrder;
+    CBLabel *pickupDateLabel;
+    CBLabel *deliverDateLabel;
+    UIScrollView *scrollView;
+    UISegmentedControl *addressControl;
+    Address *currentAddress;
 }
 
 @end
@@ -180,6 +204,13 @@
     [scrollView addSubview:addressControl];
 }
 
+- (void) sayHelloToUser {
+    NSString *accountString = @"안녕하세요, ";
+    accountString = [accountString stringByAppendingString:[dtoManager.currentUser email]];
+    accountString = [accountString stringByAppendingString:@" 님:)"];
+    [self showHudMessage:accountString delay:2];
+}
+
 - (void) contactTextFieldEditingDidBegin {
     [scrollView scrollRectToVisible:CGRectMake(0, 180, DEVICE_WIDTH, DEVICE_HEIGHT) animated:YES];
 }
@@ -189,7 +220,7 @@
     NSLog(@"%@", [contactTextField text]);
     
     if([[contactTextField text] length] > 15) {
-        [self showHudMessage:@"올바르지 않은 연락처입니다."];
+        [self showHudMessage:@"올바르지 않은 연락처입니다." delay:1];
         [contactTextField setText:@""];
         return;
     }
@@ -207,15 +238,15 @@
                 [MBProgressHUD hideHUDForView:self.view animated:YES];
                 switch ([constant intValue]) {
                     case CBServerConstantSuccess: {
-                        [self showHudMessage:@"연락처를 업데이트했습니다."];
+                        [self showHudMessage:@"연락처를 업데이트했습니다." delay:1];
                     }
                         break;
                     case CBServerConstantError: {
-                        [self showHudMessage:@"서버 오류가 발생했습니다. 나중에 시도해주세요."];
+                        [self showHudMessage:@"서버 오류가 발생했습니다. 나중에 시도해주세요." delay:1];
                     }
                         break;
                     case CBServerConstantSessionExpired: {
-                        [self showHudMessage:@"세션이 만료되었습니다. 다시 로그인해주세요."];
+                        [self showHudMessage:@"세션이 만료되었습니다. 다시 로그인해주세요." delay:2];
                         //AppDelegate에 세션이 만료됨을 알림
                         [[NSNotificationCenter defaultCenter] postNotificationName:@"sessionExpired" object:self];
                     }
@@ -226,7 +257,7 @@
         } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
             dispatch_async(dispatch_get_main_queue(), ^{
                 [MBProgressHUD hideHUDForView:self.view animated:YES];
-                [self showHudMessage:@"네트워크 상태를 확인해주세요"];
+                [self showHudMessage:@"네트워크 상태를 확인해주세요" delay:2];
             });
             NSLog(@"%@", error);
         }];
@@ -267,6 +298,7 @@
         [realm addObject:currentOrder];
         [realm commitWriteTransaction];
         NSLog(@"NEW ORDER HAVING PRIMARY KEY 9999 CREATED");
+        [self sayHelloToUser];
     }
     
     // 사용자가 픽업 날짜를 선택하고 확인을 누른 경우, NEW_INDEX==9999의 Order 객체 이용
@@ -295,7 +327,7 @@
 
 - (void) userDidChangeAddress:(id)sender {
     UISegmentedControl *control = (UISegmentedControl*)sender;
-    NSLog(@"%d", [control selectedSegmentIndex]);
+    NSLog(@"%d", (int)[control selectedSegmentIndex]);
     realm = [RLMRealm defaultRealm];
     NSLog(@"%d", [dtoManager currentUid]);
     
@@ -325,7 +357,7 @@
 
 - (void) deliverTap {
     if ([currentOrder.pickup_date length] < 5) {
-        [self showHudMessage:@"수거일을 먼저 설정해주세요:)"];
+        [self showHudMessage:@"수거일을 먼저 설정해주세요:)" delay:1];
         return;
     }
     DeliverDatePickerViewController *deliverDatePickerViewController = [[DeliverDatePickerViewController alloc] init];
@@ -355,18 +387,18 @@
         
         if ([[pickupDateLabel text] isEqualToString:@"원하시는 날짜를 선택해주세요"] ||
             [[deliverDateLabel text] isEqualToString:@"원하시는 날짜를 선택해주세요"]) {
-            [self showHudMessage:@"수거일 및 배달일을 설정해주세요."];
+            [self showHudMessage:@"수거일 및 배달일을 설정해주세요." delay:1];
             return;
         }
         
         if ([[inputAddressLabel text] isEqualToString:@"주소가 없습니다"] ||
             [[inputAddressLabel text] isEqualToString:@"새로운 주소 입력하기"]) {
-            [self showHudMessage:@"유효한 주소를 입력해주세요."];
+            [self showHudMessage:@"유효한 주소를 입력해주세요." delay:1];
             return;
         }
         
         if ([[contactTextField text] length] < 10) {
-            [self showHudMessage:@"유효한 주소를 입력해주세요."];
+            [self showHudMessage:@"유효한 주소를 입력해주세요." delay:1];
             return;
         }
         
@@ -383,11 +415,11 @@
     }
     
     else {
-        [self showHudMessage:@"주문 정보 생성에 실패했습니다. 다시 로그인해주세요."];
+        [self showHudMessage:@"주문 정보 생성에 실패했습니다. 다시 로그인해주세요." delay:2];
     }
 }
 
-- (void) showHudMessage:(NSString*)message {
+- (void) showHudMessage:(NSString*)message delay:(int)delay_{
     MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES labelText:message    ];
     
     // Configure for text only and offset down
@@ -396,7 +428,7 @@
     hud.margin = 10.f;
     hud.removeFromSuperViewOnHide = YES;
     
-    [hud hide:YES afterDelay:1];
+    [hud hide:YES afterDelay:delay_];
     return;
 }
 

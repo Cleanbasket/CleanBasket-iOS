@@ -7,12 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
-#import <Realm/Realm.h>
-#import "CBTotalPriceView.h"
-#import "CBConstants.h"
-#import "CBOrderTableViewCell.h"
-#import "Item.h"
-#import "UIView+CBView.h"
+
+
+@class RLMArray;
 
 @interface ChooseOtherLaundryViewController : UIViewController
 

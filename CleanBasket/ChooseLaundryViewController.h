@@ -7,43 +7,13 @@
 //
 
 #import <UIKit/UIKit.h>
-#import <Realm/Realm.h>
-#import "CBConstants.h"
-#import "ALScrollViewPaging.h"
-#import "ALScrollViewPaging.h"
-#import "RPVerticalStepper.h"
-#import "Order.h"
-#import "Item.h"
-#import "ChooseOtherLaundryViewController.h"
-#import "NSString+CBString.h"
-#import "MBProgressHUD.h"
-#import "DTOManager.h"
-#import "AFNetworking.h"
-#import "CouponListViewController.h"
 
-@interface ChooseLaundryViewController : UIViewController {
-    UIImageView *laundryImageView;
-    NSArray *laundryImages;
-    NSUInteger imageIdx;
-    NSArray *laundryNames;
-    UILabel *laundryLabel;
-    UILabel *quantityLabel;
-    RPVerticalStepper *stepper;
-    RLMArray *itemArray;
-    Item *currentItem;
-    UILabel *priceLabel;
-    UILabel *priceValueLabel;
-    UILabel *sumLabel;
-    UILabel *sumValueLabel;
-    UILabel *totalLabel;
-    UILabel *totalValueLabel;
-    UITextField *memoTextField;
-    UIButton *confirmButton;
-    UIScrollView *scrollView;
-    UIButton *couponButton;
-    int totalPrice;
-    UILabel *touchLabel;
-}
+
+@class Order;
+@class Address;
+@class Coupon;
+
+@interface ChooseLaundryViewController : UIViewController
 
 @property Order *currentOrder;
 @property Address *currentAddress;

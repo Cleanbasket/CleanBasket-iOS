@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <UIKit/UIKit.h>
 
 typedef enum serverConstant : NSUInteger {
     CBServerConstantSessionExpired = 0,
@@ -45,6 +46,12 @@ typedef enum serverConstant : NSUInteger {
     CBServerConstantsInvalid = 208
 } ServerContant ;
 
+
+#ifdef DEBUG
+#   define NSLog(...) NSLog(__VA_ARGS__)
+#else
+#   define NSLog(...)
+#endif
 #define FacebookBlue [UIColor colorWithRed:(59/255.0) green:(89/255.0) blue:(152/255.0) alpha:1.0]
 #define CleanBasketMint [UIColor colorWithRed:(94/255.0) green:(213/255.0) blue:(198/255.0) alpha:1.0]
 #define CleanBasketRed Rgb2UIColor(249, 105, 126)
@@ -60,3 +67,4 @@ typedef enum serverConstant : NSUInteger {
 #define iPhone5 ([[UIScreen mainScreen] bounds].size.height == 568)
 #define COUPON_HEIGHT 162
 #define APP_NAME_STRING @"CleanBasket"
+

@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "CBConstants.h"
+
 
 @interface CBTotalPriceView : UIView
 

@@ -7,6 +7,14 @@
 //
 
 #import "AddressInputViewController.h"
+#import <Realm/Realm.h>
+#import "AFNetworking.h"
+#import "CBConstants.h"
+#import "UITextField+CleanBasket.h"
+#import "DTOManager.h"
+#import "MBProgressHUD.h"
+#import "Address.h"
+
 #define FieldHeight 35
 #define FieldWidth 300
 #define CenterX (DEVICE_WIDTH - FieldWidth)/2
@@ -14,7 +22,19 @@
 #define Interval 53
 #define kOFFSET_FOR_KEYBOARD 80.0
 
-@interface AddressInputViewController () <UIPickerViewDataSource, UIPickerViewDelegate, UITextFieldDelegate>
+@interface AddressInputViewController () <UIPickerViewDataSource, UIPickerViewDelegate, UITextFieldDelegate> {
+    NSDictionary *viewProperty;
+    NSDictionary *pickerAddressData;
+    NSArray *pickerCityKeys;
+    NSMutableArray *pickerBoroughKeys;
+    NSMutableArray *pickerDongKeys;
+    UITextField *streetNumber;
+    UITextField *buildingName;
+    UITextField *remainder;
+    NSString *fullAddress;
+    UIPickerView *addrPickerView;
+    DTOManager *dtoManager;
+}
 
 @end
 
@@ -199,8 +219,8 @@
 
 - (void) confirmButtonDidTouched {
     if (self.updateAddress) {
-//        [MBProgressHUD showHUDAddedTo:self.view animated:YES labelText:@"업데이트 중"];
-//        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_LOW, 0), ^{
+        [MBProgressHUD showHUDAddedTo:self.view animated:YES labelText:@"주소 업데이트 중:)"];
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_LOW, 0), ^{
             NSDictionary *data = @{@"type":[NSNumber numberWithInt:[self.currentAddress type]],
                                    @"address":fullAddress,
                                    @"addr_number":[streetNumber text],
@@ -215,19 +235,19 @@
                 switch (constant) {
                         // 주소 업데이트 성공
                     case CBServerConstantSuccess: {
-//                        dispatch_async(dispatch_get_main_queue(), ^{
-//                            [MBProgressHUD hideHUDForView:self.view animated:YES];
-//                        });
-                        _realm = [RLMRealm defaultRealm];
-                        [_realm beginWriteTransaction];
-                        [self.currentAddress setAddress:fullAddress];
-                        [self.currentAddress setAddr_number:[streetNumber text]];
-                        [self.currentAddress setAddr_building:[buildingName text]];
-                        [self.currentAddress setAddr_remainder:[remainder text]];
-                        [_realm commitWriteTransaction];
-                        [self showHudMessage:@"주소 업데이트 성공!" afterDelay:1];
-                        NSLog(@"[CURRENT ADDRESS] %@", self.currentAddress);
-                        [self performSelector:@selector(popViewController) withObject:self afterDelay:1];
+                        dispatch_async(dispatch_get_main_queue(), ^{
+                            [MBProgressHUD hideHUDForView:self.view animated:YES];
+                            _realm = [RLMRealm defaultRealm];
+                            [_realm beginWriteTransaction];
+                            [self.currentAddress setAddress:fullAddress];
+                            [self.currentAddress setAddr_number:[streetNumber text]];
+                            [self.currentAddress setAddr_building:[buildingName text]];
+                            [self.currentAddress setAddr_remainder:[remainder text]];
+                            [_realm commitWriteTransaction];
+                            [self showHudMessage:@"주소 업데이트 성공!" afterDelay:1];
+                            NSLog(@"[CURRENT ADDRESS] %@", self.currentAddress);
+                            [self performSelector:@selector(popViewController) withObject:self afterDelay:1];
+                        });
                     }
                         
                         break;
@@ -236,8 +256,8 @@
                     case CBServerConstantError: {
                         dispatch_async(dispatch_get_main_queue(), ^{
                             [MBProgressHUD hideHUDForView:self.view animated:YES];
+                            [self showHudMessage:@"서버 오류가 발생했습니다.\n다시 시도해주세요." afterDelay:2];
                         });
-                        [self showHudMessage:@"서버 오류가 발생했습니다.\n다시 시도해주세요." afterDelay:2];
                     }
                         break;
                         
@@ -245,18 +265,24 @@
                     case CBServerConstantSessionExpired: {
                         dispatch_async(dispatch_get_main_queue(), ^{
                             [MBProgressHUD hideHUDForView:self.view animated:YES];
+                            [self showHudMessage:@"세션이 만료되어 로그인 화면으로 돌아갑니다." afterDelay:2];
+                            //AppDelegate에 세션이 만료됨을 알림
+                            [[NSNotificationCenter defaultCenter] postNotificationName:@"sessionExpired" object:self];
                         });
-                        [self showHudMessage:@"세션이 만료되어 로그인 화면으로 돌아갑니다." afterDelay:2];
-                        //AppDelegate에 세션이 만료됨을 알림
-                        [[NSNotificationCenter defaultCenter] postNotificationName:@"sessionExpired" object:self];
                     }
                         break;
                 }
             } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                NSLog(@"%@", error);
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    [MBProgressHUD hideHUDForView:self.view animated:YES];
+                    [self showHudMessage:@"네트워크 상태를 확인해주세요." afterDelay:2];
+                    NSLog(@"%@", error);
+                });
             }];
             
-//        });
+        });
+        
+        //        });
     }
     
     else {
@@ -268,7 +294,6 @@
         
         // EmailSignUpViewController로 사용자가 작성한 Address를 전송한다.
         [[NSNotificationCenter defaultCenter] postNotificationName:@"addressCreated" object:self userInfo:[NSDictionary dictionaryWithObject:newAddress forKey:@"data"]];
-        
         [streetNumber setText:@""];
         [buildingName setText:@""];
         [remainder setText:@""];

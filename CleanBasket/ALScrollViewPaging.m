@@ -93,7 +93,7 @@ const int kDotWidth = 7;
 //add pages to the scrollview
 - (void)addPages:(NSArray *)pages {
     _pages = pages;
-    int numberOfPages = [pages count];
+    long numberOfPages = (unsigned long)[pages count];
     for (int i = 0; i < [pages count]; i++) {
         CGRect frame;
         frame.origin.x = self.frame.size.width * i;
@@ -127,7 +127,7 @@ const int kDotWidth = 7;
 		//switch the page when more than 50% of the previous/next page is visible
 		CGFloat pageWidth = self.frame.size.width;
 		NSInteger page = floor((self.contentOffset.x - pageWidth / 2) / pageWidth) + 1;
-		self.currentPage = page;
+		self.currentPage = (int)page;
         pageControl.currentPage = self.currentPage;
 	}
 }

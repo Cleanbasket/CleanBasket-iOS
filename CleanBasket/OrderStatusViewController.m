@@ -7,8 +7,27 @@
 //
 
 #import "OrderStatusViewController.h"
+#import <Realm/Realm.h>
+#import "AFNetworking.h"
+#import "CBConstants.h"
+#import "Order.h"
+#import "MBProgressHUD.h"
+#import "NSString+CBString.h"
 
-@interface OrderStatusViewController ()
+@interface OrderStatusViewController (){
+    int processIndex;
+    UIImageView *processImageView;
+    NSArray *processImages;
+    UIButton *orderListButton;
+    RLMRealm *realm;
+    AFHTTPRequestOperationManager *afManager;
+    UIImageView *profileView;
+    
+    UILabel *managerNameLabel;
+    UILabel *visitDateLabel;
+    UILabel *visitTimeLabel;
+    Order *firstOrder;
+}
 @end
 
 @implementation OrderStatusViewController

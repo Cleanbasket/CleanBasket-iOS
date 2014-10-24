@@ -20,6 +20,7 @@ static const CGFloat kButtonWidth = 80.0f;
 
 @interface ServiceInfoViewController () {
     UIScrollView *mainScrollView;
+    UILabel *accountInfoLabel;
 }
 
 @end
@@ -41,14 +42,8 @@ static const CGFloat kButtonWidth = 80.0f;
     [super viewDidLoad];
     [self.view setBackgroundColor:[UIColor whiteColor]];
     
-    DTOManager *dtoManager = [DTOManager defaultManager];
-    User *currentUser = [dtoManager currentUser];
     
-    UILabel *accountInfoLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 64, DEVICE_WIDTH, 40)];
-    NSString *accountString = @"안녕하세요, ";
-    accountString = [accountString stringByAppendingString:[currentUser email]];
-    accountString = [accountString stringByAppendingString:@" 님:)"];
-    [accountInfoLabel setText:accountString];
+    accountInfoLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 64, DEVICE_WIDTH, 40)];
     [accountInfoLabel setTextColor:[UIColor whiteColor]];
     [accountInfoLabel setBackgroundColor:[CleanBasketMint colorWithAlphaComponent:0.8]];
     [accountInfoLabel setTextAlignment:NSTextAlignmentCenter];
@@ -164,6 +159,15 @@ static const CGFloat kButtonWidth = 80.0f;
     [mainScrollView addSubview:homepageButton];
     [self.view addSubview:mainScrollView];
     [self.view addSubview:accountInfoLabel];
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    DTOManager *dtoManager = [DTOManager defaultManager];
+    User *currentUser = [dtoManager currentUser];
+    NSString *accountString = @"안녕하세요, ";
+    accountString = [accountString stringByAppendingString:[currentUser email]];
+    accountString = [accountString stringByAppendingString:@" 님:)"];
+    [accountInfoLabel setText:accountString];
 }
 
 - (void)makeCallCleanbasket {

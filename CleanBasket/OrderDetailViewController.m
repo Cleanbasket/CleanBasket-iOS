@@ -7,8 +7,21 @@
 //
 
 #import "OrderDetailViewController.h"
+#import <Realm/Realm.h>
+#import "AFNetworking.h"
+#import "Order.h"
+#import "MBProgressHUD.h"
+#import "CBOrderDetailTableViewCell.h"
+#import "NSString+CBString.h"
 
-@interface OrderDetailViewController () <UITableViewDataSource, UITableViewDelegate>
+
+@interface OrderDetailViewController () <UITableViewDataSource, UITableViewDelegate>{
+    AFHTTPRequestOperationManager *afManager;
+    
+    UITableView *orderTableView;
+    RLMArray *orderList;
+    NSArray *orderStateName;
+}
 
 @end
 
@@ -144,13 +157,11 @@
         NSIndexPath *hitIndex = [orderTableView indexPathForRowAtPoint:hitPoint];
         CBOrderDetailTableViewCell *selectedCell = (CBOrderDetailTableViewCell*)[orderTableView cellForRowAtIndexPath:hitIndex];
         NSString *oid = [[selectedCell.orderNumberValueLabel text] substringFromIndex:7];
-        NSLog(@"indexRow: %d", [hitIndex row]);
         
         afManager = [AFHTTPRequestOperationManager manager];
         [afManager setRequestSerializer:[AFJSONRequestSerializer new]];
         // 세션 기반으로 회원의 주문 목록을 받아온다.
         [afManager POST:@"http://cleanbasket.co.kr/member/order/del" parameters:@{@"oid":[NSNumber numberWithInt:[oid intValue]]} success:^(AFHTTPRequestOperation *operation, id responseObject) {
-            NSLog(@"%@", responseObject);
             
             int constant = [[responseObject valueForKey:@"constant"] intValue];
             

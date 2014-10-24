@@ -7,6 +7,7 @@
 //
 
 #import "CBOrderDetailTableViewCell.h"
+#import "CBConstants.h"
 #define X_FIRST 10
 #define X_SECOND X_FIRST + WIDTH_FIRST + X_MARGIN
 #define X_CENTER_DEVICE (DEVICE_WIDTH - WIDTH_REGULAR)/2
