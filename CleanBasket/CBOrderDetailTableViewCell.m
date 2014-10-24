@@ -52,6 +52,7 @@
 		[_orderItemsLabel setTextColor:CleanBasketMint];
 		_orderItemsValueLabel = [[UILabel alloc] initWithFrame:[self frameForSecondAt:2]];
 		[_orderItemsValueLabel setTextColor:[UIColor lightGrayColor]];
+        [_orderItemsValueLabel setAdjustsFontSizeToFitWidth:YES];
 		
 		_orderStatusLabel = [[UILabel alloc] initWithFrame:[self frameForFirstAt:3]];
 		[_orderStatusLabel setText:@"진행상태"];

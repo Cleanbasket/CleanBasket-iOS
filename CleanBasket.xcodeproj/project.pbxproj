@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		F104DB7D19FA0DA300C964B3 /* CBConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = F104DB7C19FA0DA300C964B3 /* CBConstants.m */; };
+		F104DB8019FA2DA800C964B3 /* Item_code.m in Sources */ = {isa = PBXBuildFile; fileRef = F104DB7F19FA2DA800C964B3 /* Item_code.m */; };
 		F111445319EEDD7A00C637AB /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = F111445219EEDD7A00C637AB /* User.m */; };
 		F111445619EEDDD500C637AB /* Address.m in Sources */ = {isa = PBXBuildFile; fileRef = F111445519EEDDD500C637AB /* Address.m */; };
 		F113748319F7841000E9A27F /* TermsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F113748219F7841000E9A27F /* TermsViewController.m */; };
@@ -248,6 +249,8 @@
 
 /* Begin PBXFileReference section */
 		F104DB7C19FA0DA300C964B3 /* CBConstants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CBConstants.m; sourceTree = "<group>"; };
+		F104DB7E19FA2DA800C964B3 /* Item_code.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Item_code.h; sourceTree = "<group>"; };
+		F104DB7F19FA2DA800C964B3 /* Item_code.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Item_code.m; sourceTree = "<group>"; };
 		F111445119EEDD7A00C637AB /* User.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = User.h; sourceTree = "<group>"; };
 		F111445219EEDD7A00C637AB /* User.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = User.m; sourceTree = "<group>"; };
 		F111445419EEDDD500C637AB /* Address.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Address.h; sourceTree = "<group>"; };
@@ -1107,6 +1110,8 @@
 				F19DE14419EEFD43004B60E7 /* Deliverer.m */,
 				F133216D19F5A0B100C52D20 /* PickupInfo.h */,
 				F133216E19F5A0B100C52D20 /* PickupInfo.m */,
+				F104DB7E19FA2DA800C964B3 /* Item_code.h */,
+				F104DB7F19FA2DA800C964B3 /* Item_code.m */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -2480,6 +2485,7 @@
 			files = (
 				F19DE14819EF5121004B60E7 /* ALScrollViewPaging.m in Sources */,
 				F133216C19F5976D00C52D20 /* OrderDetailViewController.m in Sources */,
+				F104DB8019FA2DA800C964B3 /* Item_code.m in Sources */,
 				F193DA0219EBCBA70051C32A /* AFURLRequestSerialization.m in Sources */,
 				F193DA0B19EBF9FE0051C32A /* UITextField+CleanBasket.m in Sources */,
 				F19DE15519EF8473004B60E7 /* RPVerticalStepper.m in Sources */,

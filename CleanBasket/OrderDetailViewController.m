@@ -52,6 +52,14 @@
                 if ([Order objectForPrimaryKey:[each valueForKey:@"oid"]])
                     [realm deleteObject:[Order objectForPrimaryKey:[each valueForKey:@"oid"]]];
                 Order *order = [Order createInDefaultRealmWithObject:each];
+                RLMArray *items = [each valueForKey:@"item"];
+                for (NSDictionary *each in items) {
+                    if ([Item objectForPrimaryKey:[each valueForKey:@"itid"]]) {
+                        [realm deleteObject:[Item objectForPrimaryKey:[each valueForKey:@"itid"]]];
+                    }
+                    Item *newItem = [Item createInDefaultRealmWithObject:each];
+                    [[order Item] addObject:newItem];
+                }
                 [realm addObject:order];
                 [orderList addObject:order];
                 
@@ -127,11 +135,10 @@
         [cell.managerPhotoView setImage:defaultPhoto];
         [cell.managerPhotoView.layer setCornerRadius:0];
     }
-    [self orderedItemString:currentOrder];
     [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
     [cell.orderNumberValueLabel setText:[currentOrder order_number]];
     [cell.orderPriceValueLabel setText:[NSString stringWithCurrencyFormat:[currentOrder price]]];
-    [cell.orderItemsValueLabel setText:nil];
+    [cell.orderItemsValueLabel setText:[self orderedItemString:currentOrder]];
     [cell.orderStatusValueLabel setText:[orderStateName objectAtIndex:[currentOrder state]]];
     [cell.orderPickupValueLabel setText:[NSString trimDateString:[currentOrder pickup_date]]];
     [cell.orderDeliverValueLabel setText:[NSString trimDateString:[currentOrder dropoff_date]]];
@@ -150,13 +157,15 @@
 }
 
 - (NSString*)orderedItemString:(Order*)currentOrder {
-    NSString *resultString;
+    NSString *resultString = @"";
     RLMArray *items = [currentOrder Item];
     for (Item *each in items) {
         NSString *itemName = [each name];
         NSString *itemQuantity = [NSString stringWithFormat:@"%d", [each count]];
-        NSLog(@"%@(%@)", itemName, itemQuantity);
+        NSString *nameAndQuantity = [NSString stringWithFormat:@"%@(%@) ", itemName, itemQuantity];
+        resultString = [resultString stringByAppendingString:nameAndQuantity];
     }
+    NSLog(@"result: %@", resultString);
     
     return resultString;
 }
@@ -172,7 +181,7 @@
         
         afManager = [AFHTTPRequestOperationManager manager];
         [afManager setRequestSerializer:[AFJSONRequestSerializer new]];
-        // 세션 기반으로 회원의 주문 목록을 받아온다.
+        // 세션 기반으로 회원의 주문을 취소한다.
         [afManager POST:@"http://cleanbasket.co.kr/member/order/del" parameters:@{@"oid":[NSNumber numberWithInt:[oid intValue]]} success:^(AFHTTPRequestOperation *operation, id responseObject) {
             
             int constant = [[responseObject valueForKey:@"constant"] intValue];
@@ -189,6 +198,8 @@
                     [realm beginWriteTransaction];
                     if ([orderList objectAtIndex:[hitIndex row]])
                         [orderList removeObjectAtIndex:[hitIndex row]];
+                    RLMArray *items = [selectedOrder Item];
+                    [realm deleteObjects:items];
                     [realm deleteObject:selectedOrder];
                     [realm commitWriteTransaction];
                     [orderTableView reloadData];

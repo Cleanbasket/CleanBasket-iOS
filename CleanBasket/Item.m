@@ -16,7 +16,6 @@
 {
     return @{
              @"count":@0,
-             @"itid":@0,
              @"oid":@0,
              @"name":@"",
              @"descr":@"",
@@ -34,7 +33,7 @@
 //}
 
 + (NSString *)primaryKey {
-    return @"item_code";
+    return @"itid";
 }
 
 @end

@@ -10,7 +10,7 @@
 #import <Realm/Realm.h>
 #import "User.h"
 #import "Address.h"
-#import "Item.h"
+#import "Item_code.h"
 #import "Coupon.h"
 @interface DTOManager () {
     Address *address;
@@ -62,15 +62,15 @@
 - (void) createItemCode:(NSArray*)itemArray {
     realm = [RLMRealm defaultRealm];
     [realm beginWriteTransaction];
-    [realm deleteObjects:[Item allObjects]];
+    [realm deleteObjects:[Item_code allObjects]];
     for (NSDictionary* each in itemArray) {
-        if (![Item objectForPrimaryKey:[NSNumber numberWithInt:[[each valueForKey:@"item_code"] intValue]]])
-            [realm addObject:[Item createInDefaultRealmWithObject:each]];
+        if (![Item_code objectForPrimaryKey:[NSNumber numberWithInt:[[each valueForKey:@"itid"] intValue]]])
+            [realm addObject:[Item_code createInDefaultRealmWithObject:each]];
         else
             NSLog(@"Duplicated Item");
     }
     [realm commitWriteTransaction];
-    NSLog(@"%@", [Item allObjects]);
+    NSLog(@"%@", [Item_code allObjects]);
 }
 
 - (void) createCoupon:(NSArray*)couponArray {
