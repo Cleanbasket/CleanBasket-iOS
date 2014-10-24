@@ -63,7 +63,7 @@
     dateInfoLabel = [[UILabel alloc] initWithFrame:CGRectMake(20, 84, 280, 120)];
     [dateInfoLabel setTextAlignment:NSTextAlignmentCenter];
     [dateInfoLabel setLineBreakMode:NSLineBreakByCharWrapping];
-    [dateInfoLabel setText:@"수거일로부터 3일 후,\n30분 단위로 선택이 가능합니다."];
+    [dateInfoLabel setText:@"수거일로부터 48시간 후,\n30분 단위로 선택이 가능합니다."];
     [dateInfoLabel setTextColor:[UIColor grayColor]];
     [dateInfoLabel setNumberOfLines:0];
     [dateInfoLabel.layer setBorderColor:CleanBasketMint.CGColor];
@@ -87,9 +87,9 @@
     [datePicker setMinuteInterval:30];
     [self datePickerChanged];
     
-    // 수거일로부터 2일 후로 설정
+    // 수거일로부터 3일 후로 설정
     NSDateComponents *datePickerComponents = [[NSCalendar currentCalendar] components:NSYearCalendarUnit|NSMonthCalendarUnit|NSDayCalendarUnit|NSHourCalendarUnit|NSMinuteCalendarUnit fromDate:datePicker.date];
-    [datePickerComponents setDay:[pickupDay intValue] + 2];
+    [datePickerComponents setDay:[pickupDay intValue] + 3];
     [datePickerComponents setHour:[pickupHour intValue]];
     [datePicker setDate:[[NSCalendar currentCalendar] dateFromComponents:datePickerComponents]];
     

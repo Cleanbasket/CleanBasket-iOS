@@ -18,6 +18,8 @@
 
 @property UILabel *orderItemsLabel;
 @property UILabel *orderItemsValueLabel;
+@property UILabel *orderItemsValueLargeLabel;
+@property UIButton *orderItemsValueInvisibleButton;
 
 @property UILabel *orderStatusLabel;
 @property UILabel *orderStatusValueLabel;

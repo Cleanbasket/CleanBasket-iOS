@@ -16,6 +16,7 @@
 @property int price;
 @property NSString *img;
 @property NSString *rdate;
+@property int count;
 
 @end
 

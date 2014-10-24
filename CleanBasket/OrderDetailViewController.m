@@ -15,9 +15,8 @@
 #import "NSString+CBString.h"
 
 
-@interface OrderDetailViewController () <UITableViewDataSource, UITableViewDelegate>{
+@interface OrderDetailViewController () <UITableViewDataSource, UITableViewDelegate, UIGestureRecognizerDelegate>{
     AFHTTPRequestOperationManager *afManager;
-    
     UITableView *orderTableView;
     RLMArray *orderList;
     NSArray *orderStateName;
@@ -69,6 +68,7 @@
             orderTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, NAV_STATUS_HEIGHT, DEVICE_WIDTH, DEVICE_HEIGHT - NAV_STATUS_HEIGHT) style:UITableViewStylePlain];
             [orderTableView setDelegate:self];
             [orderTableView setDataSource:self];
+            [orderTableView setSeparatorColor:[UIColor clearColor]];
             [self.view addSubview:orderTableView];
             dispatch_async(dispatch_get_main_queue(), ^{
                 [MBProgressHUD hideHUDForView:self.view animated:YES];
@@ -135,16 +135,19 @@
         [cell.managerPhotoView setImage:defaultPhoto];
         [cell.managerPhotoView.layer setCornerRadius:0];
     }
+    
     [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
     [cell.orderNumberValueLabel setText:[currentOrder order_number]];
     [cell.orderPriceValueLabel setText:[NSString stringWithCurrencyFormat:[currentOrder price]]];
     [cell.orderItemsValueLabel setText:[self orderedItemString:currentOrder]];
+    [cell.orderItemsValueLargeLabel setText:[self orderedItemString:currentOrder]];
     [cell.orderStatusValueLabel setText:[orderStateName objectAtIndex:[currentOrder state]]];
     [cell.orderPickupValueLabel setText:[NSString trimDateString:[currentOrder pickup_date]]];
     [cell.orderDeliverValueLabel setText:[NSString trimDateString:[currentOrder dropoff_date]]];
     [cell.managerNameValueLabel setText:([[currentOrder pickupInfo] name]?[[currentOrder pickupInfo] name]:@"미지정")];
     [cell.orderStatusValueLabel setText:[orderStateName objectAtIndex:[currentOrder state]]];
     [cell.orderCancelButton addTarget:self action:@selector(orderCancelButtonDidTap:) forControlEvents:UIControlEventTouchUpInside];
+    
     return cell;
 }
 
@@ -153,7 +156,7 @@
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return 320.0f;
+    return DEVICE_WIDTH;
 }
 
 - (NSString*)orderedItemString:(Order*)currentOrder {

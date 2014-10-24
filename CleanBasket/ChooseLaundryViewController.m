@@ -13,7 +13,7 @@
 #import "ALScrollViewPaging.h"
 #import "RPVerticalStepper.h"
 #import "Order.h"
-#import "Item.h"
+#import "Item_code.h"
 #import "ChooseOtherLaundryViewController.h"
 #import "NSString+CBString.h"
 #import "MBProgressHUD.h"
@@ -73,7 +73,7 @@ static const CGFloat kImageHeight = 200;
     UIBarButtonItem *rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"닫기" style:UIBarButtonItemStylePlain target:self action:@selector(cancelButtonDidTouched)];
     [self.navigationItem setRightBarButtonItem:rightBarButtonItem];
     
-    itemArray = [Item allObjects];
+    itemArray = [Item_code allObjects];
     imageIdx = 0;
     currentItem = [itemArray objectAtIndex:imageIdx];
     

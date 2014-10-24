@@ -85,6 +85,8 @@
     // 주문 접수 완료 후 현재 화면을 OrderStatus로 변경
     if ([[noti name] isEqualToString:@"orderComplete"]) {
         [self.tabBarController setSelectedIndex:1];
+        
+        // MyUITabBarController에게 주문이 완료됨을 알림
         [[NSNotificationCenter defaultCenter] postNotificationName:@"checkCompletedOrder" object:nil];
     }
 }

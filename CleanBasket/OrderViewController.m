@@ -320,6 +320,12 @@
             [deliverDateLabel setText:[NSString trimDateString:[currentOrder dropoff_date]]];
         }
     }
+    // 주문이 완료된 경우, 수거일과 배달일 초기화
+    if ([[noti name] isEqualToString:@"checkCompletedOrder"]) {
+        [pickupDateLabel setText:@"원하시는 날짜를 선택해주세요"];
+        [deliverDateLabel setText:@"원하시는 날짜를 선택해주세요"];
+        return;
+    }
 }
 
 - (void) setInputAddressLabel {

@@ -51,8 +51,16 @@
 		[_orderItemsLabel setText:@"주문품목"];
 		[_orderItemsLabel setTextColor:CleanBasketMint];
 		_orderItemsValueLabel = [[UILabel alloc] initWithFrame:[self frameForSecondAt:2]];
+        [_orderItemsValueLabel setUserInteractionEnabled:YES];
 		[_orderItemsValueLabel setTextColor:[UIColor lightGrayColor]];
         [_orderItemsValueLabel setAdjustsFontSizeToFitWidth:YES];
+        _orderItemsValueLargeLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, DEVICE_WIDTH, DEVICE_WIDTH)];
+        [_orderItemsValueLargeLabel setBackgroundColor:UltraLightGray];
+        [_orderItemsValueLargeLabel setAdjustsFontSizeToFitWidth:YES];
+        [_orderItemsValueLargeLabel setNumberOfLines:0];
+        [_orderItemsValueLargeLabel setTextColor:[UIColor lightGrayColor]];
+        [_orderItemsValueLargeLabel setHidden:YES];
+        [_orderItemsValueLargeLabel setUserInteractionEnabled:YES];
 		
 		_orderStatusLabel = [[UILabel alloc] initWithFrame:[self frameForFirstAt:3]];
 		[_orderStatusLabel setText:@"진행상태"];
@@ -87,24 +95,10 @@
 		[_orderCancelButton.layer setCornerRadius:10.0f];
 		[_orderCancelButton setTitle:@"주문취소" forState:UIControlStateNormal];
 		[_orderCancelButton setTitleColor:[UIColor blackColor] forState:UIControlStateHighlighted];
-		
-//		[_orderNumberLabel setBackgroundColor:[UIColor redColor]];
-//		[_orderNumberValueLabel setBackgroundColor:[UIColor blueColor]];
-//		[_orderPriceLabel setBackgroundColor:[UIColor redColor]];
-//		[_orderPriceValueLabel setBackgroundColor:[UIColor blueColor]];
-//		[_orderItemsLabel setBackgroundColor:[UIColor redColor]];
-//		[_orderItemsValueLabel setBackgroundColor:[UIColor blueColor]];
-//		[_orderStatusLabel setBackgroundColor:[UIColor redColor]];
-//		[_orderStatusValueLabel setBackgroundColor:[UIColor blueColor]];
-//		[_orderPickupLabel setBackgroundColor:[UIColor redColor]];
-//		[_orderPickupValueLabel setBackgroundColor:[UIColor blueColor]];
-//		[_orderDeliverLabel setBackgroundColor:[UIColor redColor]];
-//		[_orderDeliverValueLabel setBackgroundColor:[UIColor blueColor]];
-//		[_managerPhotoView setBackgroundColor:[UIColor redColor]];
-//		[_managerNameLabel setBackgroundColor:[UIColor redColor]];
-//		[_managerNameValueLabel setBackgroundColor:[UIColor blueColor]];
+        
 		[_orderCancelButton setBackgroundColor:CleanBasketRed];
 		
+        [self addSubview:_orderItemsValueLargeLabel];
 		[self addSubview:_orderNumberLabel];
 		[self addSubview:_orderNumberValueLabel];
 		[self addSubview:_orderPriceLabel];

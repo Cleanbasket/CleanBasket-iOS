@@ -23,6 +23,7 @@ static const CGFloat kIconSize = 70.0f;
     UITableView *couponTableView;
     UIButton *couponInsertButton;
     NSString *couponCode;
+    UIImageView *noCouponImageView;
 }
 
 @end
@@ -48,6 +49,14 @@ static const CGFloat kIconSize = 70.0f;
     [couponTableView setDataSource:self];
     [couponTableView.layer setBorderColor:CleanBasketMint.CGColor];
     [couponTableView.layer setBorderWidth:1.0f];
+    [couponTableView setSeparatorColor:[UIColor clearColor]];
+    
+    noCouponImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"bg_coupon.png"]];
+    [noCouponImageView setFrame:CGRectMake(0, 0, DEVICE_WIDTH, 162.0)];
+    UILabel *couponNameLabel = [[UILabel alloc] initWithFrame:CGRectMake(20, 110, 280, 30)];
+    [couponNameLabel setTextColor:[UIColor grayColor]];
+    [couponNameLabel setText:@"쿠폰이 없어요ㅠㅠ"];
+    [noCouponImageView addSubview:couponNameLabel];
     
     couponInsertButton = [[UIButton alloc] initWithFrame:CGRectMake(60, couponTableView.frame.origin.y + couponTableView.frame.size.height + 10, 200, 38)];
     [couponInsertButton setTitle:@"쿠폰번호 입력" forState:UIControlStateNormal];
@@ -87,6 +96,7 @@ static const CGFloat kIconSize = 70.0f;
     //    [fbImageView setFrame:CGRectMake(60, NAV_STATUS_HEIGHT+COUPON_HEIGHT+90, kIconSize, kIconSize)];
     //    [kaImageView setFrame:CGRectMake(200, NAV_STATUS_HEIGHT+COUPON_HEIGHT+90, kIconSize, kIconSize)];
     
+    [couponTableView addSubview:noCouponImageView];
     [self.view addSubview:promoteView];
     [promoteView addSubview:fbButton];
     [promoteView addSubview:kaButton];
@@ -291,11 +301,15 @@ static const CGFloat kIconSize = 70.0f;
                                        url:link];
     
     [KOAppCall openKakaoTalkAppLink:@[label, button]];
-
 }
 
 - (void) viewWillAppear:(BOOL)animated {
     [couponTableView reloadData];
+    if ([[Coupon allObjects] count] < 1) {
+        [noCouponImageView setHidden:NO];
+    } else {
+        [noCouponImageView setHidden:YES];
+    }
 }
 
 - (void)didReceiveMemoryWarning {
