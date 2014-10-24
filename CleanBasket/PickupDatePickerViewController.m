@@ -51,7 +51,7 @@
     dateInfoLabel = [[UILabel alloc] initWithFrame:CGRectMake(20, 84, 280, 120)];
     [dateInfoLabel setTextAlignment:NSTextAlignmentCenter];
     [dateInfoLabel setLineBreakMode:NSLineBreakByCharWrapping];
-    [dateInfoLabel setText:@"현재 시간으로부터 1시간 후,\n30분 단위로 선택이 가능합니다.\n(최장 2주)"];
+    [dateInfoLabel setText:@"현재 시간으로부터 1시간 후,\n30분 단위로 선택이 가능합니다.\n(최장 2주)\n영업시간: 오전 10시 ~ 밤 12시 30분"];
     [dateInfoLabel setTextColor:[UIColor grayColor]];
     [dateInfoLabel setNumberOfLines:0];
     [dateInfoLabel.layer setBorderColor:CleanBasketMint.CGColor];

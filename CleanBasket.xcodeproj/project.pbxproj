@@ -61,7 +61,6 @@
 		F133216F19F5A0B100C52D20 /* PickupInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = F133216E19F5A0B100C52D20 /* PickupInfo.m */; };
 		F133217319F5ABB300C52D20 /* CBOrderDetailTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F133217219F5ABB300C52D20 /* CBOrderDetailTableViewCell.m */; };
 		F133217519F5D3A200C52D20 /* process_profile.png in Resources */ = {isa = PBXBuildFile; fileRef = F133217419F5D3A200C52D20 /* process_profile.png */; };
-		F133217819F5DE9200C52D20 /* 18.jpg in Resources */ = {isa = PBXBuildFile; fileRef = F133217719F5DE9200C52D20 /* 18.jpg */; };
 		F133217A19F5EC7200C52D20 /* LaunchScreen_White.jpg in Resources */ = {isa = PBXBuildFile; fileRef = F133217919F5EC7200C52D20 /* LaunchScreen_White.jpg */; };
 		F133217C19F5FE7B00C52D20 /* ic_profile_no.png in Resources */ = {isa = PBXBuildFile; fileRef = F133217B19F5FE7B00C52D20 /* ic_profile_no.png */; };
 		F133217E19F64E7000C52D20 /* bg_coupon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F133217D19F64E7000C52D20 /* bg_coupon@2x.png */; };
@@ -317,7 +316,6 @@
 		F133217119F5ABB300C52D20 /* CBOrderDetailTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CBOrderDetailTableViewCell.h; sourceTree = "<group>"; };
 		F133217219F5ABB300C52D20 /* CBOrderDetailTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CBOrderDetailTableViewCell.m; sourceTree = "<group>"; };
 		F133217419F5D3A200C52D20 /* process_profile.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = process_profile.png; sourceTree = "<group>"; };
-		F133217719F5DE9200C52D20 /* 18.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = 18.jpg; sourceTree = "<group>"; };
 		F133217919F5EC7200C52D20 /* LaunchScreen_White.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = LaunchScreen_White.jpg; sourceTree = "<group>"; };
 		F133217B19F5FE7B00C52D20 /* ic_profile_no.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ic_profile_no.png; sourceTree = "<group>"; };
 		F133217D19F64E7000C52D20 /* bg_coupon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bg_coupon@2x.png"; sourceTree = "<group>"; };
@@ -895,7 +893,6 @@
 				F182336719F93582008E6510 /* ic_launcher@2x.png */,
 				F133217D19F64E7000C52D20 /* bg_coupon@2x.png */,
 				F133217919F5EC7200C52D20 /* LaunchScreen_White.jpg */,
-				F133217619F5DE1A00C52D20 /* Manager */,
 				F133215819F4604F00C52D20 /* orderStatusIcon */,
 				F133215719F4604400C52D20 /* tabbarIcon */,
 				F133215619F4603000C52D20 /* laundryIcon */,
@@ -1000,14 +997,6 @@
 				F133217219F5ABB300C52D20 /* CBOrderDetailTableViewCell.m */,
 			);
 			name = OrderStatus;
-			sourceTree = "<group>";
-		};
-		F133217619F5DE1A00C52D20 /* Manager */ = {
-			isa = PBXGroup;
-			children = (
-				F133217719F5DE9200C52D20 /* 18.jpg */,
-			);
-			name = Manager;
 			sourceTree = "<group>";
 		};
 		F133217F19F64E7A00C52D20 /* CouponTableViewCell */ = {
@@ -2416,7 +2405,6 @@
 				F133212B19F340AE00C52D20 /* ic_calc_coat@2x.png in Resources */,
 				F19DE15619EF8473004B60E7 /* stepperBottomButton.png in Resources */,
 				F133213E19F340AE00C52D20 /* tab_order@2x.png in Resources */,
-				F133217819F5DE9200C52D20 /* 18.jpg in Resources */,
 				F133214319F340AE00C52D20 /* tab_service.png in Resources */,
 				F133213F19F340AE00C52D20 /* tab_price.png in Resources */,
 				F133214419F340AE00C52D20 /* tab_service@2x.png in Resources */,
