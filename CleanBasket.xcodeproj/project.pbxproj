@@ -48,7 +48,6 @@
 		F133214B19F344E100C52D20 /* CBOrderTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F133214A19F344E100C52D20 /* CBOrderTableViewCell.m */; };
 		F133214E19F35FAE00C52D20 /* CBTotalPriceView.m in Sources */ = {isa = PBXBuildFile; fileRef = F133214D19F35FAE00C52D20 /* CBTotalPriceView.m */; };
 		F133215119F4196600C52D20 /* NSString+CBString.m in Sources */ = {isa = PBXBuildFile; fileRef = F133215019F4196600C52D20 /* NSString+CBString.m */; };
-		F133215519F432C100C52D20 /* bg_coupon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F133215419F432C100C52D20 /* bg_coupon@2x.png */; };
 		F133216119F4607B00C52D20 /* process_0.png in Resources */ = {isa = PBXBuildFile; fileRef = F133215919F4607B00C52D20 /* process_0.png */; };
 		F133216219F4607B00C52D20 /* process_1.png in Resources */ = {isa = PBXBuildFile; fileRef = F133215A19F4607B00C52D20 /* process_1.png */; };
 		F133216319F4607B00C52D20 /* process_2.png in Resources */ = {isa = PBXBuildFile; fileRef = F133215B19F4607B00C52D20 /* process_2.png */; };
@@ -794,7 +793,7 @@
 			isa = PBXProject;
 			attributes = {
 				CLASSPREFIX = CB;
-				LastUpgradeCheck = 0600;
+				LastUpgradeCheck = 0610;
 				ORGANIZATIONNAME = WashAppKorea;
 				TargetAttributes = {
 					F14AC23019DE7E00002BCC98 = {
@@ -879,7 +878,6 @@
 				F19DE15B19EF8473004B60E7 /* stepperPlusSymbol@2x.png in Resources */,
 				F133213819F340AE00C52D20 /* ic_menu_progress_02@2x.png in Resources */,
 				F133213219F340AE00C52D20 /* ic_menu_coupon_02@2x.png in Resources */,
-				F133215519F432C100C52D20 /* bg_coupon@2x.png in Resources */,
 				F133213D19F340AE00C52D20 /* tab_order.png in Resources */,
 				F133213319F340AE00C52D20 /* ic_menu_order_01@2x.png in Resources */,
 				F133213619F340AE00C52D20 /* ic_menu_pricelist_02@2x.png in Resources */,
@@ -1065,10 +1063,6 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
-					"$(PROJECT_DIR)/FacebookSDK",
-					"$(PROJECT_DIR)/FacebookSDK/FBAudienceNetwork",
-					/Users/Woonohyo/Documents/FacebookSDK,
-					"/Users/Woonohyo/Documents/Development/iOS/kakao-ios-sdk-1.0.22",
 					/Users/Woonohyo/Documents/Development/iOS/FacebookSDK,
 				);
 				INFOPLIST_FILE = CleanBasket/Info.plist;
@@ -1094,10 +1088,6 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
-					"$(PROJECT_DIR)/FacebookSDK",
-					"$(PROJECT_DIR)/FacebookSDK/FBAudienceNetwork",
-					/Users/Woonohyo/Documents/FacebookSDK,
-					"/Users/Woonohyo/Documents/Development/iOS/kakao-ios-sdk-1.0.22",
 					/Users/Woonohyo/Documents/Development/iOS/FacebookSDK,
 				);
 				INFOPLIST_FILE = CleanBasket/Info.plist;
