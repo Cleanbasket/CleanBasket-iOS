@@ -35,7 +35,7 @@
 - (instancetype)init {
     self = [super init];
     if (self) {
-        self.availableBorough = [NSArray arrayWithObjects:@"강남구", @"서초구", nil];
+        self.availableBorough = [NSArray arrayWithObjects:@"강남구", @"서초구",@"마포구",@"성동구",@"용산구", nil];
     }
     
     return self;
