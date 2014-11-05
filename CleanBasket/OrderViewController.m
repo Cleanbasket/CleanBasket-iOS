@@ -449,7 +449,7 @@
         
         // Configure for text only and offset down
         hud.mode = MBProgressHUDModeText;
-        hud.labelText = @"현재 강남/서초/성동/용산/마포 지역만 이용이 가능합니다.";
+        hud.labelText = @"강남/서초/성동/용산/마포만 이용이 가능합니다.";
         [hud setLabelFont:[UIFont systemFontOfSize:14.0f]];
         hud.margin = 10.f;
         hud.removeFromSuperViewOnHide = YES;
