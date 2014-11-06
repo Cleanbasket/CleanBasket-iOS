@@ -43,7 +43,7 @@ static const CGFloat kIconSize = 70.0f;
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self.view setBackgroundColor:[UIColor whiteColor]];
-    [self setTitle:@"보유 쿠폰"];
+    [self setTitle:@"쿠폰"];
     couponTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 64, DEVICE_WIDTH, (iPhone5?COUPON_HEIGHT+80:COUPON_HEIGHT)) style:UITableViewStylePlain];
     [couponTableView setDelegate:self];
     [couponTableView setDataSource:self];

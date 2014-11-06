@@ -133,7 +133,7 @@
                                            @"동소문동4가", @"동소문동5가", @"동소문동6가", @"동소문동7가", @"보문동1가", @"보문동2가",
                                            @"보문동3가", @"보문동4가", @"보문동5가", @"보문동6가", @"보문동7가", @"삼선동1가",
                                            @"삼선동2가", @"삼선동3가", @"삼선동4가", @"삼선동5가", @"상월곡동", @"석관동", @"성북동",
-                                           @"성북동1가", @"안암동1가", @"안암동2가", @"안암동3가", @"암암동4가", @"안암동5가",
+                                           @"성북동1가", @"안암동1가", @"안암동2가", @"안암동3가", @"안암동4가", @"안암동5가",
                                            @"월곡1동", @"월곡2동", @"장위1동", @"장위2동", @"장위3동", @"장위동", @"정릉1동",
                                            @"정릉2동", @"정릉3동", @"정릉4동", @"정릉동", @"종암동", @"하월곡동"],
                                 @"송파구" : @[@"가락1동", @"가락2동", @"가락동", @"가락본동", @"거여1동", @"거여2동", @"거여동", @"마천1동",
@@ -308,6 +308,31 @@
     return 3;
 }
 
+- (UIView *)pickerView:(UIPickerView *)pickerView viewForRow:(NSInteger)row forComponent:(NSInteger)component reusingView:(UIView *)view {
+    UILabel* tView = (UILabel*)view;
+    if (!tView){
+        tView = [[UILabel alloc] init];
+        // Setup label properties - frame, font, colors etc
+        [tView setAdjustsFontSizeToFitWidth:YES];
+        [tView setTextAlignment:NSTextAlignmentCenter];
+    }
+    
+    switch (component) {
+        case 0:
+            [tView setText:[pickerCityKeys objectAtIndex:row]];
+            break;
+        case 1:
+            [tView setText:[pickerBoroughKeys objectAtIndex:row]];
+            break;
+        case 2:
+            [tView setText:[pickerDongKeys objectAtIndex:row]];
+            break;
+        default:
+            break;
+    }
+    
+    return tView;
+}
 
 - (NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component {
     switch (component) {
@@ -324,6 +349,8 @@
     return 1;
 }
 
+// - (UIView *)pickerView:(UIPickerView *)pickerView viewForRow:(NSInteger)row forComponent:(NSInteger)component reusingView:(UIView *)view 로 인해 구현 필요 없음
+/*
 - (NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component {
     switch (component) {
         case 0:
@@ -338,6 +365,7 @@
     }
     return @"오류";
 }
+ */
 
 - (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component {
     switch (component) {
