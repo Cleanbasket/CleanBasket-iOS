@@ -143,7 +143,7 @@ static const CGFloat kButtonWidth = 80.0f;
     NSString * appVersionString = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleShortVersionString"];
     NSString *versionString = @"현재 버전: ";
     versionString = [versionString stringByAppendingString:appVersionString];
-    versionString = [versionString stringByAppendingString:@"\n\n최신 버전: 1.2"];
+    versionString = [versionString stringByAppendingString:@"\n\n최신 버전: 1.3"];
     UILabel *versionLabel = [[UILabel alloc] initWithFrame:CGRectMake(160, 1000, 120, 80)];
     [versionLabel setTextAlignment:NSTextAlignmentLeft];
     [versionLabel setTextColor:[UIColor grayColor]];
