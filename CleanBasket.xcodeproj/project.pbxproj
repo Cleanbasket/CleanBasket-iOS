@@ -81,6 +81,11 @@
 		F14AC27F19DEDEF7002BCC98 /* CouponShareViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F14AC27E19DEDEF7002BCC98 /* CouponShareViewController.m */; };
 		F14AC28219DEDEFE002BCC98 /* ServiceInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F14AC28119DEDEFE002BCC98 /* ServiceInfoViewController.m */; };
 		F14AC28519DEE188002BCC98 /* MyUITabBarController.m in Sources */ = {isa = PBXBuildFile; fileRef = F14AC28419DEE188002BCC98 /* MyUITabBarController.m */; };
+		F17F14B61A0B679100798FBA /* BaseAnimation.m in Sources */ = {isa = PBXBuildFile; fileRef = F17F14AD1A0B679100798FBA /* BaseAnimation.m */; };
+		F17F14B71A0B679100798FBA /* ModalAnimation.m in Sources */ = {isa = PBXBuildFile; fileRef = F17F14AF1A0B679100798FBA /* ModalAnimation.m */; };
+		F17F14B81A0B679100798FBA /* SlideAnimation.m in Sources */ = {isa = PBXBuildFile; fileRef = F17F14B11A0B679100798FBA /* SlideAnimation.m */; };
+		F17F14B91A0B679100798FBA /* ShuffleAnimation.m in Sources */ = {isa = PBXBuildFile; fileRef = F17F14B31A0B679100798FBA /* ShuffleAnimation.m */; };
+		F17F14BA1A0B679100798FBA /* ScaleAnimation.m in Sources */ = {isa = PBXBuildFile; fileRef = F17F14B51A0B679100798FBA /* ScaleAnimation.m */; };
 		F182336419F91AE9008E6510 /* UILabel+FormattedText.m in Sources */ = {isa = PBXBuildFile; fileRef = F182336319F91AE9008E6510 /* UILabel+FormattedText.m */; };
 		F182336619F92674008E6510 /* tab_service_after@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F182336519F92674008E6510 /* tab_service_after@2x.png */; };
 		F182336819F93582008E6510 /* ic_launcher@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F182336719F93582008E6510 /* ic_launcher@2x.png */; };
@@ -242,6 +247,16 @@
 		F14AC28119DEDEFE002BCC98 /* ServiceInfoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ServiceInfoViewController.m; sourceTree = "<group>"; };
 		F14AC28319DEE188002BCC98 /* MyUITabBarController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyUITabBarController.h; sourceTree = "<group>"; };
 		F14AC28419DEE188002BCC98 /* MyUITabBarController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyUITabBarController.m; sourceTree = "<group>"; };
+		F17F14AC1A0B679100798FBA /* BaseAnimation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BaseAnimation.h; sourceTree = "<group>"; };
+		F17F14AD1A0B679100798FBA /* BaseAnimation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BaseAnimation.m; sourceTree = "<group>"; };
+		F17F14AE1A0B679100798FBA /* ModalAnimation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ModalAnimation.h; sourceTree = "<group>"; };
+		F17F14AF1A0B679100798FBA /* ModalAnimation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ModalAnimation.m; sourceTree = "<group>"; };
+		F17F14B01A0B679100798FBA /* SlideAnimation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SlideAnimation.h; sourceTree = "<group>"; };
+		F17F14B11A0B679100798FBA /* SlideAnimation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SlideAnimation.m; sourceTree = "<group>"; };
+		F17F14B21A0B679100798FBA /* ShuffleAnimation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShuffleAnimation.h; sourceTree = "<group>"; };
+		F17F14B31A0B679100798FBA /* ShuffleAnimation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShuffleAnimation.m; sourceTree = "<group>"; };
+		F17F14B41A0B679100798FBA /* ScaleAnimation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ScaleAnimation.h; sourceTree = "<group>"; };
+		F17F14B51A0B679100798FBA /* ScaleAnimation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ScaleAnimation.m; sourceTree = "<group>"; };
 		F182336219F91AE9008E6510 /* UILabel+FormattedText.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UILabel+FormattedText.h"; sourceTree = "<group>"; };
 		F182336319F91AE9008E6510 /* UILabel+FormattedText.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UILabel+FormattedText.m"; sourceTree = "<group>"; };
 		F182336519F92674008E6510 /* tab_service_after@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "tab_service_after@2x.png"; sourceTree = "<group>"; };
@@ -522,6 +537,7 @@
 		F14AC23319DE7E00002BCC98 /* CleanBasket */ = {
 			isa = PBXGroup;
 			children = (
+				F17F14AB1A0B676B00798FBA /* Animation */,
 				F14AC26619DEA2B4002BCC98 /* Util */,
 				F14AC25F19DE7F2E002BCC98 /* Controller */,
 				F14AC25D19DE7F26002BCC98 /* Model */,
@@ -657,6 +673,23 @@
 				F104DB7B19F9F33300C964B3 /* ServiceInfo */,
 			);
 			name = TabBarControllers;
+			sourceTree = "<group>";
+		};
+		F17F14AB1A0B676B00798FBA /* Animation */ = {
+			isa = PBXGroup;
+			children = (
+				F17F14AC1A0B679100798FBA /* BaseAnimation.h */,
+				F17F14AD1A0B679100798FBA /* BaseAnimation.m */,
+				F17F14AE1A0B679100798FBA /* ModalAnimation.h */,
+				F17F14AF1A0B679100798FBA /* ModalAnimation.m */,
+				F17F14B01A0B679100798FBA /* SlideAnimation.h */,
+				F17F14B11A0B679100798FBA /* SlideAnimation.m */,
+				F17F14B21A0B679100798FBA /* ShuffleAnimation.h */,
+				F17F14B31A0B679100798FBA /* ShuffleAnimation.m */,
+				F17F14B41A0B679100798FBA /* ScaleAnimation.h */,
+				F17F14B51A0B679100798FBA /* ScaleAnimation.m */,
+			);
+			name = Animation;
 			sourceTree = "<group>";
 		};
 		F182375319F951F0008E6510 /* Frameworks */ = {
@@ -903,16 +936,19 @@
 				F19DE14819EF5121004B60E7 /* ALScrollViewPaging.m in Sources */,
 				F133216C19F5976D00C52D20 /* OrderDetailViewController.m in Sources */,
 				F104DB8019FA2DA800C964B3 /* Item_code.m in Sources */,
+				F17F14BA1A0B679100798FBA /* ScaleAnimation.m in Sources */,
 				F193DA0219EBCBA70051C32A /* AFURLRequestSerialization.m in Sources */,
 				F193DA0B19EBF9FE0051C32A /* UITextField+CleanBasket.m in Sources */,
 				F19DE15519EF8473004B60E7 /* RPVerticalStepper.m in Sources */,
 				F19DE12D19EEF4EF004B60E7 /* ChooseLaundryViewController.m in Sources */,
 				F133214B19F344E100C52D20 /* CBOrderTableViewCell.m in Sources */,
+				F17F14B91A0B679100798FBA /* ShuffleAnimation.m in Sources */,
 				F193DA0119EBCBA70051C32A /* AFURLConnectionOperation.m in Sources */,
 				F14AC23D19DE7E00002BCC98 /* CleanBasket.xcdatamodeld in Sources */,
 				F14AC26219DE9AB8002BCC98 /* OrderViewController.m in Sources */,
 				F113749219F8D46E00E9A27F /* UIView+CBView.m in Sources */,
 				F133218219F64E9100C52D20 /* CBCouponTableViewCell.m in Sources */,
+				F17F14B61A0B679100798FBA /* BaseAnimation.m in Sources */,
 				F193DA0419EBCBA70051C32A /* AFURLSessionManager.m in Sources */,
 				F193DA0819EBF1840051C32A /* MBProgressHUD.m in Sources */,
 				F193D9E719EA82F50051C32A /* CBTableViewCell.m in Sources */,
@@ -922,6 +958,7 @@
 				F133218619F64F6700C52D20 /* CouponListViewController.m in Sources */,
 				F113748619F78DA700E9A27F /* DeliverDatePickerViewController.m in Sources */,
 				F19DE13F19EEFC8D004B60E7 /* Item.m in Sources */,
+				F17F14B71A0B679100798FBA /* ModalAnimation.m in Sources */,
 				F193D9FC19EBCBA70051C32A /* AFHTTPRequestOperation.m in Sources */,
 				F104DB7D19FA0DA300C964B3 /* CBConstants.m in Sources */,
 				F133214719F3415500C52D20 /* ChooseOtherLaundryViewController.m in Sources */,
@@ -950,6 +987,7 @@
 				F193DA1519EC03930051C32A /* DTOManager.m in Sources */,
 				F193DA0319EBCBA70051C32A /* AFURLResponseSerialization.m in Sources */,
 				F113748919F78ED500E9A27F /* PickupDatePickerViewController.m in Sources */,
+				F17F14B81A0B679100798FBA /* SlideAnimation.m in Sources */,
 				F19DE12919EEF386004B60E7 /* Order.m in Sources */,
 				F182336419F91AE9008E6510 /* UILabel+FormattedText.m in Sources */,
 				F113748F19F7FBA300E9A27F /* Keychain.m in Sources */,

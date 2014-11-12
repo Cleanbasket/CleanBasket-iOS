@@ -21,7 +21,7 @@
 @class CouponShareViewController;
 @class ServiceInfoViewController;
 
-@interface AppDelegate : UIResponder <UIApplicationDelegate>
+@interface AppDelegate : UIResponder <UIApplicationDelegate, UITabBarControllerDelegate>
 
 @property (strong, nonatomic) UIWindow *window;
 // tabbar를 loginView로 옮겨보자

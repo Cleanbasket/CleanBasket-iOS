@@ -20,8 +20,17 @@
 #import "Keychain.h"
 #import "User.h"
 
-@interface AppDelegate ()
+#import "ModalAnimation.h"
+#import "SlideAnimation.h"
+#import "ShuffleAnimation.h"
+#import "ScaleAnimation.h"
 
+@interface AppDelegate () <UIViewControllerTransitioningDelegate, UIViewControllerAnimatedTransitioning> {
+    ModalAnimation *_modalAnimationController;
+    SlideAnimation *_slideAnimationController;
+    ShuffleAnimation *_shuffleAnimationController;
+}
+@property (nonatomic) BOOL presentMode;
 @end
 
 @implementation AppDelegate
@@ -30,7 +39,7 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(NotificationReceived:) name:nil object:nil];
     // reset REALM.IO Database
-//        [[NSFileManager defaultManager] removeItemAtPath:[RLMRealm defaultRealmPath] error:nil];
+    //        [[NSFileManager defaultManager] removeItemAtPath:[RLMRealm defaultRealmPath] error:nil];
     
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent animated:NO];
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
@@ -49,9 +58,19 @@
     [self.window setRootViewController:navController];
     
     self.tabBarController = [[MyUITabBarController alloc] init];
-    [self.tabBarController.moreNavigationController setTitle:@"더 보기"];
+    [_tabBarController.moreNavigationController setTitle:@"더 보기"];
     [self.tabBarController.moreNavigationController.view setTintColor:CleanBasketMint];
     self.tabNavController = [[UINavigationController alloc] initWithRootViewController:self.tabBarController];
+    
+    //Load our animation controllers
+    _modalAnimationController = [[ModalAnimation alloc] init];
+    _slideAnimationController = [[SlideAnimation alloc] init];
+    _shuffleAnimationController = [[ShuffleAnimation alloc] init];
+    
+    [_tabBarController setDelegate:self];
+    [_tabBarController setTransitioningDelegate:self];
+    [_tabBarController setModalTransitionStyle:UIModalTransitionStyleCrossDissolve];
+    [_tabBarController.view setBackgroundColor:UltraLightGray];
     
     self.orderViewController = [[OrderViewController alloc] init];
     self.orderStatusViewController = [[OrderStatusViewController alloc] init];
@@ -63,9 +82,53 @@
     NSArray *myBizViewControllers = [[NSArray alloc] initWithObjects:self.orderViewController, self.orderStatusViewController, self.priceViewController, self.couponShareViewController, self.serviceInfoViewController, nil];
     
     [self.tabBarController setViewControllers:myBizViewControllers];
-    
-    
+
     return YES;
+}
+
+- (id<UIViewControllerAnimatedTransitioning>)tabBarController:(UITabBarController *)tabBarController animationControllerForTransitionFromViewController:(UIViewController *)fromVC toViewController:(UIViewController *)toVC {
+    
+     [fromVC setTransitioningDelegate:self];
+     [fromVC setModalTransitionStyle:UIModalTransitionStyleCrossDissolve];
+     [toVC setTransitioningDelegate:self];
+     [toVC setModalTransitionStyle:UIModalTransitionStyleCrossDissolve];
+    
+    return self;
+}
+
+
+#pragma mark - UIViewControllerTransitioningDelegate Methods
+- (NSTimeInterval)transitionDuration:(id<UIViewControllerContextTransitioning>)transitionContext {
+    return 1.0f;
+}
+
+- (void)animateTransition:(id<UIViewControllerContextTransitioning>)transitionContext {
+    
+    UIViewController *fromVC = [transitionContext viewControllerForKey:UITransitionContextFromViewControllerKey];
+    UIViewController *toVC = [transitionContext viewControllerForKey:UITransitionContextToViewControllerKey];
+    
+     NSLog(@"from %@ to %@", fromVC, toVC);
+     
+     [[transitionContext containerView] addSubview:fromVC.view];
+     [[transitionContext containerView] addSubview:toVC.view];
+     
+     CGRect dismissRect = fromVC.view.frame;
+     dismissRect.origin.x = -320;
+     CGRect appearToRect = toVC.view.frame;
+     appearToRect.origin.x = 0;
+     
+     CGRect appearFromRect = toVC.view.frame;
+     appearFromRect.origin.x = 320;
+     [toVC.view setFrame:appearFromRect];
+     
+     [UIView animateWithDuration:0.3f animations:^{
+     NSLog(@"Animating");
+     [fromVC.view setFrame:dismissRect];
+     [toVC.view setFrame:appearToRect];
+     } completion:^(BOOL finished) {
+     [transitionContext completeTransition:YES];
+     }];
+ 
 }
 
 

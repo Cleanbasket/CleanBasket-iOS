@@ -22,6 +22,7 @@
 {
     UITabBarItem *currentItem;
 }
+@property (nonatomic) BOOL presentMode;
 
 @end
 
@@ -66,8 +67,6 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
-
-
 
 - (void)tabBar:(UITabBar *)tabBar didSelectItem:(UITabBarItem *)item {
     if (item.title == nil) {

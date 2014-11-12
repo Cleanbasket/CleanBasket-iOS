@@ -81,17 +81,16 @@
     [confirmButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [confirmButton setTitleColor:[UIColor blackColor] forState:UIControlStateHighlighted];
     [confirmButton addTarget:self action:@selector(didTouchConfirmButton) forControlEvents: UIControlEventTouchUpInside];
-    
-
-    [self refreshMinMaxDate];
     [datePicker setMinuteInterval:30];
-    [self datePickerChanged];
     
     // 수거일로부터 3일 후로 설정
     NSDateComponents *datePickerComponents = [[NSCalendar currentCalendar] components:NSYearCalendarUnit|NSMonthCalendarUnit|NSDayCalendarUnit|NSHourCalendarUnit|NSMinuteCalendarUnit fromDate:datePicker.date];
     [datePickerComponents setDay:[pickupDay intValue] + 3];
     [datePickerComponents setHour:[pickupHour intValue]];
     [datePicker setDate:[[NSCalendar currentCalendar] dateFromComponents:datePickerComponents]];
+    
+    [self refreshMinMaxDate];
+    [self datePickerChanged];
     
     [self.view addSubview:dateInfoLabel];
     [self.view addSubview:datePicker];
@@ -176,6 +175,15 @@
             [datePickerComponents setMinute:0];
             [datePicker setDate:[[NSCalendar currentCalendar] dateFromComponents:datePickerComponents]];
         }
+    }
+    
+    if ( [currentDateComponents minute] < 30 ) {
+        [datePickerComponents setMinute:30];
+        [datePicker setDate:[[NSCalendar currentCalendar] dateFromComponents:datePickerComponents]];
+    }
+    else {
+        [datePickerComponents setMinute:0];
+        [datePicker setDate:[[NSCalendar currentCalendar] dateFromComponents:datePickerComponents]];
     }
     
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
