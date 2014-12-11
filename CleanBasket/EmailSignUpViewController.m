@@ -120,7 +120,7 @@ static CGFloat kSpacing;
     [signUpButton setFrame:[self makeRect:signUpButton]];
     [signUpButton setBackgroundColor:CleanBasketMint];
     [signUpButton setTitle:@"가입하기" forState:UIControlStateNormal];
-    [signUpButton setTitle:@"반가워요!" forState:UIControlStateHighlighted];
+    [signUpButton setTitle:@"반가워요" forState:UIControlStateHighlighted];
     [signUpButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [signUpButton setTitleColor:[UIColor blackColor] forState:UIControlStateHighlighted];
     [signUpButton.layer setCornerRadius:15.0f];
@@ -309,6 +309,7 @@ static CGFloat kSpacing;
     hud.mode = MBProgressHUDModeText;
     hud.labelText = message;
     [hud setLabelFont:[UIFont systemFontOfSize:14.0f]];
+    
     hud.margin = 10.f;
     hud.removeFromSuperViewOnHide = YES;
     [hud hide:YES afterDelay:delay];
