@@ -39,7 +39,7 @@
         [afManager setRequestSerializer:[AFHTTPRequestSerializer new]];
         
         // 세션 기반으로 회원의 주문 목록을 받아온다.
-        [afManager POST:@"http://cleanbasket.co.kr/member/order" parameters:@{} success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        [afManager POST:@"https://www.cleanbasket.co.kr/member/order" parameters:@{} success:^(AFHTTPRequestOperation *operation, id responseObject) {
             NSArray *jsonDict =  [NSJSONSerialization JSONObjectWithData: [responseObject[@"data"] dataUsingEncoding:NSUTF8StringEncoding]
                                                                  options: NSJSONReadingMutableContainers
                                                                    error: nil];
@@ -126,7 +126,7 @@
     
     if ([currentOrder pickupInfo]) {
         NSLog(@"create for %@", currentOrder);
-        NSString *filePath = [NSString stringWithFormat:@"http://cleanbasket.co.kr/%@", [[currentOrder pickupInfo] img]];
+        NSString *filePath = [NSString stringWithFormat:@"https://www.cleanbasket.co.kr/%@", [[currentOrder pickupInfo] img]];
         UIImage *managerPhoto = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:filePath]]];
         [cell.managerPhotoView setImage:managerPhoto];
         [cell.managerPhotoView.layer setCornerRadius:cell.managerPhotoView.frame.size.width / 2];
@@ -185,7 +185,7 @@
         afManager = [AFHTTPRequestOperationManager manager];
         [afManager setRequestSerializer:[AFJSONRequestSerializer new]];
         // 세션 기반으로 회원의 주문을 취소한다.
-        [afManager POST:@"http://cleanbasket.co.kr/member/order/del" parameters:@{@"oid":[NSNumber numberWithInt:[oid intValue]]} success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        [afManager POST:@"https://www.cleanbasket.co.kr/member/order/del" parameters:@{@"oid":[NSNumber numberWithInt:[oid intValue]]} success:^(AFHTTPRequestOperation *operation, id responseObject) {
             
             int constant = [[responseObject valueForKey:@"constant"] intValue];
             
@@ -224,9 +224,6 @@
                     break;
                 }
             }
-            
-            
-            
         } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
             dispatch_async(dispatch_get_main_queue(), ^{
                 [MBProgressHUD hideHUDForView:self.view animated:YES];

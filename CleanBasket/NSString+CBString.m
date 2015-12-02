@@ -13,6 +13,8 @@
 + (NSString*) stringWithCurrencyFormat:(int)price {
     NSNumberFormatter *numberFormatter = [[NSNumberFormatter alloc] init];
     [numberFormatter setNumberStyle: NSNumberFormatterCurrencyStyle];
+    [numberFormatter setMaximumFractionDigits:0];
+    [numberFormatter setCurrencySymbol:@"₩"];
     NSString *priceAsString = [numberFormatter stringFromNumber:[NSNumber numberWithInt:price]];
     return priceAsString;
 }

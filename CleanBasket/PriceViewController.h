@@ -11,10 +11,11 @@
 #import "CBLabel.h"
 #import "CBTableViewCell.h"
 
+@class RLMArray;
+
 @interface PriceViewController : UIViewController {
-    NSArray *itemArray;
-    NSArray *priceArray;
     UITableView *priceTableView;
 }
 
+@property RLMArray *itemArray;
 @end

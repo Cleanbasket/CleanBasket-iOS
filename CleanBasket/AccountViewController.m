@@ -68,8 +68,9 @@
 
 - (void) userDidLogout {
     manager.requestSerializer = [AFJSONRequestSerializer serializer];
-    [manager POST:@"http://cleanbasket.co.kr/logout" parameters:@{} success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        NSArray *cookies = [[NSHTTPCookieStorage sharedHTTPCookieStorage] cookiesForURL: [NSURL URLWithString:@"http://cleanbasket.co.kr/"]];
+    
+    [manager POST:@"https://www.cleanbasket.co.kr/logout" parameters:@{} success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSArray *cookies = [[NSHTTPCookieStorage sharedHTTPCookieStorage] cookiesForURL: [NSURL URLWithString:@"https://www.cleanbasket.co.kr/"]];
         for (NSHTTPCookie *cookie in cookies)
         {
             [[NSHTTPCookieStorage sharedHTTPCookieStorage] deleteCookie:cookie];

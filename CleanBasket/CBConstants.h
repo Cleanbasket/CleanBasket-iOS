@@ -28,7 +28,9 @@ typedef enum serverConstant : NSUInteger {
     CBServerConstantsImpossible,
     CBServerConstantsAccountDuplication,
     CBServerConstantsSessionValid = 17,
-    
+    CBServerConstantsAreaUnavailable = 18,
+    CBServerConstantsDateUnavailable = 19,
+
     CBServerConstantsPushAssignPickup = 100,
     CBServerConstantsPushAssignDropoff,
     CBServerConstantsPushSoonPickup,

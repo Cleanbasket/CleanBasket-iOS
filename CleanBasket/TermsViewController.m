@@ -33,8 +33,8 @@
     [termsSegment.layer setCornerRadius:0.0f];
     [termsSegment addTarget:self action:@selector(termsSegementChanged:) forControlEvents:UIControlEventValueChanged];
     
-    NSURL *termsURL = [[NSURL alloc] initWithString:@"http://www.cleanbasket.co.kr/term-of-use"];
-    NSURL *privacyURL = [[NSURL alloc] initWithString:@"http://www.cleanbasket.co.kr/privacy"];
+    NSURL *termsURL = [[NSURL alloc] initWithString:@"https://www.cleanbasket.co.kr/term-of-use"];
+    NSURL *privacyURL = [[NSURL alloc] initWithString:@"https://www.cleanbasket.co.kr/privacy"];
     termsRequest = [NSURLRequest requestWithURL:termsURL];
     privacyReqeust = [NSURLRequest requestWithURL:privacyURL];
     

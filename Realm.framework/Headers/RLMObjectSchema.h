@@ -16,8 +16,9 @@
 //
 ////////////////////////////////////////////////////////////////////////////
 
+@class RLMProperty;
+
 #import <Foundation/Foundation.h>
-#import "RLMProperty.h"
 
 /**
  This class represents Realm model object schemas persisted to Realm in an RLMSchema.
@@ -54,5 +55,10 @@
  @return RLMProperty object or nil if there is no property with the given name.
  */
 - (RLMProperty *)objectForKeyedSubscript:(id <NSCopying>)propertyName;
+
+/**
+ Returns YES if equal to objectSchema
+*/
+- (BOOL)isEqualToObjectSchema:(RLMObjectSchema *)objectSchema;
 
 @end

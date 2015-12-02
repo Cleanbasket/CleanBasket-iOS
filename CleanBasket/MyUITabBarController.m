@@ -150,7 +150,7 @@
         afManager.responseSerializer = [AFJSONResponseSerializer serializer];
         
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_LOW, 0), ^{
-            [afManager POST:@"http://cleanbasket.co.kr/member/password/update"  parameters:parameter success:^(AFHTTPRequestOperation *operation, id responseObject) {
+            [afManager POST:@"https://www.cleanbasket.co.kr/member/password/update"  parameters:parameter success:^(AFHTTPRequestOperation *operation, id responseObject) {
                 NSNumber *constant = [responseObject valueForKey:@"constant"];
                 dispatch_async(dispatch_get_main_queue(), ^{
                     [MBProgressHUD hideHUDForView:self.view animated:YES];

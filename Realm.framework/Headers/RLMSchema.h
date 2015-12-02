@@ -17,7 +17,8 @@
 ////////////////////////////////////////////////////////////////////////////
 
 #import <Foundation/Foundation.h>
-#import "RLMObjectSchema.h"
+
+@class RLMObjectSchema;
 
 /**
  This class represents the collection of model object schemas persisted to Realm.
@@ -57,5 +58,10 @@
  @see               RLMObjectSchema
  */
 - (RLMObjectSchema *)objectForKeyedSubscript:(id <NSCopying>)className;
+
+/**
+ Returns YES if schema are equal
+ */
+- (BOOL)isEqualToSchema:(RLMSchema *)schema;
 
 @end

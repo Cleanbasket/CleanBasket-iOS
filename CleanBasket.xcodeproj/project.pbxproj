@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		143730A11BEDE5930025189A /* libc++.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 143730A01BEDE5930025189A /* libc++.dylib */; };
+		143730A31BEDED190025189A /* Realm.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 143730A21BEDED190025189A /* Realm.framework */; };
+		147B48391BEE07080081F446 /* KakaoOpenSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 147B48381BEE07080081F446 /* KakaoOpenSDK.framework */; };
+		14B892AB1BEF07BD0001DF52 /* FacebookSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 14B892AA1BEF07BD0001DF52 /* FacebookSDK.framework */; };
 		F104DB7D19FA0DA300C964B3 /* CBConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = F104DB7C19FA0DA300C964B3 /* CBConstants.m */; };
 		F104DB8019FA2DA800C964B3 /* Item_code.m in Sources */ = {isa = PBXBuildFile; fileRef = F104DB7F19FA2DA800C964B3 /* Item_code.m */; };
 		F111445319EEDD7A00C637AB /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = F111445219EEDD7A00C637AB /* User.m */; };
@@ -88,7 +92,6 @@
 		F17F14BA1A0B679100798FBA /* ScaleAnimation.m in Sources */ = {isa = PBXBuildFile; fileRef = F17F14B51A0B679100798FBA /* ScaleAnimation.m */; };
 		F182336419F91AE9008E6510 /* UILabel+FormattedText.m in Sources */ = {isa = PBXBuildFile; fileRef = F182336319F91AE9008E6510 /* UILabel+FormattedText.m */; };
 		F182336619F92674008E6510 /* tab_service_after@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F182336519F92674008E6510 /* tab_service_after@2x.png */; };
-		F182336819F93582008E6510 /* ic_launcher@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F182336719F93582008E6510 /* ic_launcher@2x.png */; };
 		F182336B19F94559008E6510 /* ic_coupon_facebook@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F182336919F94559008E6510 /* ic_coupon_facebook@2x.png */; };
 		F182336C19F9455A008E6510 /* ic_coupon_kakao@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F182336A19F94559008E6510 /* ic_coupon_kakao@2x.png */; };
 		F193D9E419EA78E80051C32A /* CBLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = F193D9E319EA78E80051C32A /* CBLabel.m */; };
@@ -106,8 +109,6 @@
 		F193DA0B19EBF9FE0051C32A /* UITextField+CleanBasket.m in Sources */ = {isa = PBXBuildFile; fileRef = F193DA0A19EBF9FE0051C32A /* UITextField+CleanBasket.m */; };
 		F193DA0F19EBFB230051C32A /* UIView+CleanBasket.m in Sources */ = {isa = PBXBuildFile; fileRef = F193DA0E19EBFB230051C32A /* UIView+CleanBasket.m */; };
 		F193DA1519EC03930051C32A /* DTOManager.m in Sources */ = {isa = PBXBuildFile; fileRef = F193DA1419EC03930051C32A /* DTOManager.m */; };
-		F19DE12419EEE0CF004B60E7 /* Realm.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F19DE12319EEE0CF004B60E7 /* Realm.framework */; };
-		F19DE12619EEE111004B60E7 /* libc++.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = F19DE12519EEE111004B60E7 /* libc++.dylib */; };
 		F19DE12919EEF386004B60E7 /* Order.m in Sources */ = {isa = PBXBuildFile; fileRef = F19DE12819EEF386004B60E7 /* Order.m */; };
 		F19DE12D19EEF4EF004B60E7 /* ChooseLaundryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F19DE12C19EEF4EF004B60E7 /* ChooseLaundryViewController.m */; };
 		F19DE13F19EEFC8D004B60E7 /* Item.m in Sources */ = {isa = PBXBuildFile; fileRef = F19DE13E19EEFC8D004B60E7 /* Item.m */; };
@@ -123,8 +124,6 @@
 		F19DE15B19EF8473004B60E7 /* stepperPlusSymbol@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F19DE15219EF8473004B60E7 /* stepperPlusSymbol@2x.png */; };
 		F19DE15C19EF8473004B60E7 /* stepperTopButton.png in Resources */ = {isa = PBXBuildFile; fileRef = F19DE15319EF8473004B60E7 /* stepperTopButton.png */; };
 		F19DE15D19EF8473004B60E7 /* stepperTopButton@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F19DE15419EF8473004B60E7 /* stepperTopButton@2x.png */; };
-		F1EB57221A0A19D1007929BD /* KakaoOpenSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F1EB57211A0A19D1007929BD /* KakaoOpenSDK.framework */; };
-		F1EB57241A0A19EA007929BD /* FacebookSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F1EB57231A0A19EA007929BD /* FacebookSDK.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -138,6 +137,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		143730A01BEDE5930025189A /* libc++.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libc++.dylib"; path = "../../sdk/build-tools/22.0.1/libc++.dylib"; sourceTree = "<group>"; };
+		143730A21BEDED190025189A /* Realm.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Realm.framework; sourceTree = "<group>"; };
+		147B48381BEE07080081F446 /* KakaoOpenSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = KakaoOpenSDK.framework; sourceTree = "<group>"; };
+		14B892AA1BEF07BD0001DF52 /* FacebookSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FacebookSDK.framework; sourceTree = "<group>"; };
 		F104DB7C19FA0DA300C964B3 /* CBConstants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CBConstants.m; sourceTree = "<group>"; };
 		F104DB7E19FA2DA800C964B3 /* Item_code.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Item_code.h; sourceTree = "<group>"; };
 		F104DB7F19FA2DA800C964B3 /* Item_code.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Item_code.m; sourceTree = "<group>"; };
@@ -260,7 +263,6 @@
 		F182336219F91AE9008E6510 /* UILabel+FormattedText.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UILabel+FormattedText.h"; sourceTree = "<group>"; };
 		F182336319F91AE9008E6510 /* UILabel+FormattedText.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UILabel+FormattedText.m"; sourceTree = "<group>"; };
 		F182336519F92674008E6510 /* tab_service_after@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "tab_service_after@2x.png"; sourceTree = "<group>"; };
-		F182336719F93582008E6510 /* ic_launcher@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic_launcher@2x.png"; sourceTree = "<group>"; };
 		F182336919F94559008E6510 /* ic_coupon_facebook@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic_coupon_facebook@2x.png"; sourceTree = "<group>"; };
 		F182336A19F94559008E6510 /* ic_coupon_kakao@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic_coupon_kakao@2x.png"; sourceTree = "<group>"; };
 		F193D9E219EA78E80051C32A /* CBLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CBLabel.h; sourceTree = "<group>"; };
@@ -294,8 +296,6 @@
 		F193DA0E19EBFB230051C32A /* UIView+CleanBasket.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+CleanBasket.m"; sourceTree = "<group>"; };
 		F193DA1319EC03930051C32A /* DTOManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DTOManager.h; sourceTree = "<group>"; };
 		F193DA1419EC03930051C32A /* DTOManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DTOManager.m; sourceTree = "<group>"; };
-		F19DE12319EEE0CF004B60E7 /* Realm.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Realm.framework; sourceTree = "<group>"; };
-		F19DE12519EEE111004B60E7 /* libc++.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libc++.dylib"; path = "usr/lib/libc++.dylib"; sourceTree = SDKROOT; };
 		F19DE12719EEF386004B60E7 /* Order.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Order.h; sourceTree = "<group>"; };
 		F19DE12819EEF386004B60E7 /* Order.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Order.m; sourceTree = "<group>"; };
 		F19DE12B19EEF4EF004B60E7 /* ChooseLaundryViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChooseLaundryViewController.h; sourceTree = "<group>"; };
@@ -318,8 +318,6 @@
 		F19DE15219EF8473004B60E7 /* stepperPlusSymbol@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "stepperPlusSymbol@2x.png"; sourceTree = "<group>"; };
 		F19DE15319EF8473004B60E7 /* stepperTopButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = stepperTopButton.png; sourceTree = "<group>"; };
 		F19DE15419EF8473004B60E7 /* stepperTopButton@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "stepperTopButton@2x.png"; sourceTree = "<group>"; };
-		F1EB57211A0A19D1007929BD /* KakaoOpenSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = KakaoOpenSDK.framework; sourceTree = "<group>"; };
-		F1EB57231A0A19EA007929BD /* FacebookSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FacebookSDK.framework; path = ../../../Development/iOS/FacebookSDK/FacebookSDK.framework; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -327,11 +325,11 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				143730A11BEDE5930025189A /* libc++.dylib in Frameworks */,
+				14B892AB1BEF07BD0001DF52 /* FacebookSDK.framework in Frameworks */,
 				F113748C19F7FB4500E9A27F /* Security.framework in Frameworks */,
-				F1EB57241A0A19EA007929BD /* FacebookSDK.framework in Frameworks */,
-				F1EB57221A0A19D1007929BD /* KakaoOpenSDK.framework in Frameworks */,
-				F19DE12619EEE111004B60E7 /* libc++.dylib in Frameworks */,
-				F19DE12419EEE0CF004B60E7 /* Realm.framework in Frameworks */,
+				147B48391BEE07080081F446 /* KakaoOpenSDK.framework in Frameworks */,
+				143730A31BEDED190025189A /* Realm.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -348,8 +346,8 @@
 		F104DB7A19F9F31200C964B3 /* PriceList */ = {
 			isa = PBXGroup;
 			children = (
-				F14AC27819DEDEE6002BCC98 /* PriceViewController.m */,
 				F14AC27719DEDEE6002BCC98 /* PriceViewController.h */,
+				F14AC27819DEDEE6002BCC98 /* PriceViewController.m */,
 			);
 			name = PriceList;
 			sourceTree = "<group>";
@@ -385,7 +383,6 @@
 			children = (
 				F182336919F94559008E6510 /* ic_coupon_facebook@2x.png */,
 				F182336A19F94559008E6510 /* ic_coupon_kakao@2x.png */,
-				F182336719F93582008E6510 /* ic_launcher@2x.png */,
 				F133217D19F64E7000C52D20 /* bg_coupon@2x.png */,
 				F133217919F5EC7200C52D20 /* LaunchScreen_White.jpg */,
 				F133215819F4604F00C52D20 /* orderStatusIcon */,
@@ -695,10 +692,10 @@
 		F182375319F951F0008E6510 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				F1EB57231A0A19EA007929BD /* FacebookSDK.framework */,
-				F1EB57211A0A19D1007929BD /* KakaoOpenSDK.framework */,
-				F19DE12319EEE0CF004B60E7 /* Realm.framework */,
-				F19DE12519EEE111004B60E7 /* libc++.dylib */,
+				143730A01BEDE5930025189A /* libc++.dylib */,
+				14B892AA1BEF07BD0001DF52 /* FacebookSDK.framework */,
+				147B48381BEE07080081F446 /* KakaoOpenSDK.framework */,
+				143730A21BEDED190025189A /* Realm.framework */,
 				F113748A19F7F8F500E9A27F /* Security.framework */,
 			);
 			name = Frameworks;
@@ -826,7 +823,7 @@
 			isa = PBXProject;
 			attributes = {
 				CLASSPREFIX = CB;
-				LastUpgradeCheck = 0610;
+				LastUpgradeCheck = 0710;
 				ORGANIZATIONNAME = WashAppKorea;
 				TargetAttributes = {
 					F14AC23019DE7E00002BCC98 = {
@@ -879,7 +876,6 @@
 				F133216719F4607B00C52D20 /* process_6.png in Resources */,
 				F133213419F340AE00C52D20 /* ic_menu_order_02@2x.png in Resources */,
 				F182336C19F9455A008E6510 /* ic_coupon_kakao@2x.png in Resources */,
-				F182336819F93582008E6510 /* ic_launcher@2x.png in Resources */,
 				F133217519F5D3A200C52D20 /* process_profile.png in Resources */,
 				F133216819F4607B00C52D20 /* process_empty.png in Resources */,
 				F133216219F4607B00C52D20 /* process_1.png in Resources */,
@@ -1034,7 +1030,9 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
+				ENABLE_BITCODE = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
@@ -1049,7 +1047,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.1;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -1075,6 +1073,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = YES;
+				ENABLE_BITCODE = NO;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
@@ -1084,7 +1083,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.1;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
@@ -1096,20 +1095,23 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
-					/Users/Woonohyo/Documents/Development/iOS/FacebookSDK,
+					"/Users/ganghan-yong/Documents/FacebookSDK",
 				);
 				INFOPLIST_FILE = CleanBasket/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = (
 					"-force_load",
 					"$(SRCROOT)/KakaoOpenSDK.framework/KakaoOpenSDK",
 				);
+				PRODUCT_BUNDLE_IDENTIFIER = "kr.co.washAppKorea.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = CleanBasket;
 				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = 1;
@@ -1122,20 +1124,23 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
-					/Users/Woonohyo/Documents/Development/iOS/FacebookSDK,
+					"/Users/ganghan-yong/Documents/FacebookSDK",
 				);
 				INFOPLIST_FILE = CleanBasket/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = (
 					"-force_load",
 					"$(SRCROOT)/KakaoOpenSDK.framework/KakaoOpenSDK",
 				);
+				PRODUCT_BUNDLE_IDENTIFIER = "kr.co.washAppKorea.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = CleanBasket;
 				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = 1;
@@ -1157,6 +1162,7 @@
 				);
 				INFOPLIST_FILE = CleanBasketTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "kr.co.washappkorea.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = CleanBasketTests;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/CleanBasket.app/CleanBasket";
 			};
@@ -1172,6 +1178,7 @@
 				);
 				INFOPLIST_FILE = CleanBasketTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "kr.co.washappkorea.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = CleanBasketTests;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/CleanBasket.app/CleanBasket";
 			};

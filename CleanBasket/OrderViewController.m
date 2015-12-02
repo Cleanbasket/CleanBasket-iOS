@@ -234,7 +234,7 @@
     afManager.requestSerializer = [AFJSONRequestSerializer serializer];
     afManager.responseSerializer = [AFJSONResponseSerializer serializer];
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_LOW, 0), ^{
-        [afManager POST:@"http://cleanbasket.co.kr/member/phone/update"  parameters:parameter success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        [afManager POST:@"https://www.cleanbasket.co.kr/member/phone/update"  parameters:parameter success:^(AFHTTPRequestOperation *operation, id responseObject) {
             NSNumber *constant = [responseObject valueForKey:@"constant"];
             dispatch_async(dispatch_get_main_queue(), ^{
                 [MBProgressHUD hideHUDForView:self.view animated:YES];
@@ -410,10 +410,6 @@
             return;
         }
         
-        if ([self isUnavailbleArea]) {
-            return;
-        }
-        
         ChooseLaundryViewController *chooseLaundry = [[ChooseLaundryViewController alloc] init];
         [chooseLaundry setCurrentOrder:currentOrder];
         [chooseLaundry setCurrentAddress:currentAddress];
@@ -439,26 +435,5 @@
     [hud hide:YES afterDelay:delay_];
     return;
 }
-
-- (BOOL) isUnavailbleArea {
-    NSArray *components = [currentOrder.address componentsSeparatedByString:@" "];
-    NSLog(@"%@", [components objectAtIndex:1]);
-    NSString *boroughName = [components objectAtIndex:1];
-    if (![dtoManager.availableBorough containsObject:boroughName]) {
-        MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES labelText:nil];
-        
-        // Configure for text only and offset down
-        hud.mode = MBProgressHUDModeText;
-        hud.labelText = @"강남/서초/성동/용산/마포만 이용이 가능합니다.";
-        [hud setLabelFont:[UIFont systemFontOfSize:14.0f]];
-        hud.margin = 10.f;
-        hud.removeFromSuperViewOnHide = YES;
-        
-        [hud hide:YES afterDelay:2];
-        return YES;
-    }
-    return NO;
-}
-
 
 @end

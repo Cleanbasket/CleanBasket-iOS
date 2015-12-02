@@ -114,10 +114,10 @@ static const CGFloat kIconSize = 70.0f;
     afManager.responseSerializer = [AFJSONResponseSerializer serializer];
     
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_LOW, 0), ^{
-        [afManager POST:@"http://cleanbasket.co.kr/recommendation"  parameters:@{} success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        [afManager POST:@"https://www.cleanbasket.co.kr/recommendation"  parameters:@{} success:^(AFHTTPRequestOperation *operation, id responseObject) {
             NSLog(@"%@", responseObject);
             NSNumber *constant = [responseObject valueForKey:@"constant"];
-            NSString *couponUrl = @"http://cleanbasket.co.kr/";
+            NSString *couponUrl = @"https://www.cleanbasket.co.kr/";
             NSString *couponCodeAddr;
             if ([responseObject valueForKey:@"data"]) {
                 couponCodeAddr = [responseObject valueForKey:@"data"];
@@ -248,10 +248,10 @@ static const CGFloat kIconSize = 70.0f;
     afManager.responseSerializer = [AFJSONResponseSerializer serializer];
     
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_LOW, 0), ^{
-        [afManager POST:@"http://cleanbasket.co.kr/recommendation"  parameters:@{} success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        [afManager POST:@"https://www.cleanbasket.co.kr/recommendation"  parameters:@{} success:^(AFHTTPRequestOperation *operation, id responseObject) {
             NSLog(@"%@", responseObject);
             NSNumber *constant = [responseObject valueForKey:@"constant"];
-            NSString *couponUrl = @"http://cleanbasket.co.kr/";
+            NSString *couponUrl = @"https://www.cleanbasket.co.kr/";
             NSString *couponCodeAddr;
             if ([responseObject valueForKey:@"data"]) {
                 couponCodeAddr = [responseObject valueForKey:@"data"];
@@ -369,7 +369,7 @@ static const CGFloat kIconSize = 70.0f;
         afManager.responseSerializer = [AFJSONResponseSerializer serializer];
         
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_LOW, 0), ^{
-            [afManager POST:@"http://cleanbasket.co.kr/member/coupon/issue"  parameters:parameter success:^(AFHTTPRequestOperation *operation, id responseObject) {
+            [afManager POST:@"https://www.cleanbasket.co.kr/member/coupon/issue"  parameters:parameter success:^(AFHTTPRequestOperation *operation, id responseObject) {
                 NSNumber *constant = [responseObject valueForKey:@"constant"];
                 dispatch_async(dispatch_get_main_queue(), ^{
                     [MBProgressHUD hideHUDForView:self.view animated:YES];

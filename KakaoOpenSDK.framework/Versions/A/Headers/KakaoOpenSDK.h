@@ -1,5 +1,5 @@
 /**
-* Copyright 2014 Kakao Corp.
+* Copyright 2015 Kakao Corp.
 *
 * Redistribution and modification in source or binary forms are not permitted without specific prior written permission.
 *
@@ -16,23 +16,18 @@
 * limitations under the License.
 */
 
-#import "KOUser.h"
-#import "KOTalkProfile.h"
-#import "KOStoryProfile.h"
-#import "KOStoryLinkInfo.h"
-#import "KOStoryMyStoryInfo.h"
-#import "KOStoryMyStoryImageInfo.h"
-#import "KOStoryPostInfo.h"
 #import "KOError.h"
 #import "KOImages.h"
 #import "KOLoginButton.h"
 #import "KOAppCall.h"
 #import "KOSession.h"
-#import "KOSessionTask+API.h"
 #import "KOSessionTask+UserManagementAPI.h"
+#import "KOSessionTask+TalkAPI.h"
 #import "KOSessionTask+StoryAPI.h"
 #import "KOSessionTask+PushAPI.h"
-#import "KakaoTalkLinkObject.h"
-#import "KakaoTalkLinkAction.h"
+#import "KOSessionTask+TokenAPI.h"
+#import "KOSessionTask+FriendAPI.h"
+#import "KOSessionTask+AgeAuthAPI.h"
+#import "KOSessionTask+StorageAPI.h"
 
-#define KAKAO_SDK_IOS_VERSION_STRING @"1.0.22"
+#define KAKAO_SDK_IOS_VERSION_STRING @"1.0.44"

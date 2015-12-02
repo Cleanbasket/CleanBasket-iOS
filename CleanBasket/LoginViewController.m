@@ -203,13 +203,13 @@ static CGFloat kSpacing;
                                                                                        @"remember" : @"true",
                                                                                        @"regid":@""
                                                                                        }];
-    
+
     manager.requestSerializer = [AFHTTPRequestSerializer serializer];
     manager.responseSerializer = [AFJSONResponseSerializer serializerWithReadingOptions:NSJSONReadingMutableContainers];
     
     [MBProgressHUD showHUDAddedTo:self.view animated:YES labelText:@"로그인 중"];
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_LOW, 0), ^{
-        [manager POST:@"http://cleanbasket.co.kr/auth" parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        [manager POST:@"https://www.cleanbasket.co.kr/auth" parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
             NSNumber *value = responseObject[@"constant"];
             switch ([value integerValue]) {
                     // 회원정보 일치: 로그인 성공
@@ -222,7 +222,7 @@ static CGFloat kSpacing;
                     }];
                     // 로그인 성공 시, 세션 기반으로 회원 정보를 받아온다.
                     manager.requestSerializer = [AFJSONRequestSerializer serializer];
-                    [manager POST:@"http://cleanbasket.co.kr/member" parameters:@{} success:^(AFHTTPRequestOperation *operation, id responseObject) {
+                    [manager POST:@"https://www.cleanbasket.co.kr/member" parameters:@{} success:^(AFHTTPRequestOperation *operation, id responseObject) {
                         NSDictionary *jsonDict =
                         [NSJSONSerialization JSONObjectWithData: [responseObject[@"data"] dataUsingEncoding:NSUTF8StringEncoding]
                                                         options: NSJSONReadingMutableContainers
@@ -260,7 +260,7 @@ static CGFloat kSpacing;
                     }];
                     
                     // 세션 기반으로 아이템 코드를 가져온다.
-                    [manager POST:@"http://cleanbasket.co.kr/item/code" parameters:@{} success:^(AFHTTPRequestOperation *operation, id responseObject) {
+                    [manager POST:@"https://www.cleanbasket.co.kr/item/code" parameters:@{} success:^(AFHTTPRequestOperation *operation, id responseObject) {
                         //                    NSLog(@"[ITEM CODE]\r%@", [responseObject valueForKey:@"data"]);
                         
                         NSArray *jsonArray = [NSJSONSerialization JSONObjectWithData:[responseObject[@"data"] dataUsingEncoding:NSUTF8StringEncoding] options:NSJSONReadingMutableContainers error:nil];
@@ -279,7 +279,7 @@ static CGFloat kSpacing;
                         [MBProgressHUD hideHUDForView:self.view animated:YES];
                     });
                     // 세션 기반으로 쿠폰들을 가져온다.
-                    [manager POST:@"http://cleanbasket.co.kr/member/coupon" parameters:@{} success:^(AFHTTPRequestOperation *operation, id responseObject) {
+                    [manager POST:@"https://www.cleanbasket.co.kr/member/coupon" parameters:@{} success:^(AFHTTPRequestOperation *operation, id responseObject) {
                         
                         NSArray *jsonArray = [NSJSONSerialization JSONObjectWithData:[responseObject[@"data"] dataUsingEncoding:NSUTF8StringEncoding] options:NSJSONReadingMutableContainers error:nil];
                         [dtoManager createCoupon:jsonArray];

@@ -151,13 +151,13 @@
     
     NSDateComponents *datePickerComponents = [[NSCalendar currentCalendar] components:NSYearCalendarUnit|NSMonthCalendarUnit|NSDayCalendarUnit|NSHourCalendarUnit|NSMinuteCalendarUnit fromDate:datePicker.date];
     
-    if([datePickerComponents hour] < 10 && [datePickerComponents hour] > 1)
+    if([datePickerComponents hour] < 10 && [datePickerComponents hour] > 0)
     {
         [datePickerComponents setHour:10];
         [datePickerComponents setMinute:0];
         [datePicker setDate:[[NSCalendar currentCalendar] dateFromComponents:datePickerComponents]];
-    } else if ( [datePickerComponents hour] == 1) {
-        [datePickerComponents setHour:0];
+    } else if ( [datePickerComponents hour] == 0) {
+        [datePickerComponents setHour:23];
         [datePickerComponents setMinute:30];
         [datePicker setDate:[[NSCalendar currentCalendar] dateFromComponents:datePickerComponents]];
     }

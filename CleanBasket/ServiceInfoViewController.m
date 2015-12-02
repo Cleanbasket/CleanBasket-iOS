@@ -181,7 +181,7 @@ static const CGFloat kButtonWidth = 80.0f;
 }
 
 - (void) makeHomepageCleanbasket {
-    NSString *homepageAddress = @"http://cleanbasket.co.kr/";
+    NSString *homepageAddress = @"https://www.cleanbasket.co.kr/";
     [[UIApplication sharedApplication] openURL:[NSURL URLWithString:homepageAddress]];
 }
 

@@ -108,7 +108,7 @@
         afManager = [AFHTTPRequestOperationManager manager];
         [afManager setRequestSerializer:[AFHTTPRequestSerializer new]];
         // 세션 기반으로 회원의 주문 목록을 받아온다.
-        [afManager POST:@"http://cleanbasket.co.kr/member/order" parameters:@{} success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        [afManager POST:@"https://www.cleanbasket.co.kr/member/order" parameters:@{} success:^(AFHTTPRequestOperation *operation, id responseObject) {
             dataArray =  [NSJSONSerialization JSONObjectWithData: [responseObject[@"data"] dataUsingEncoding:NSUTF8StringEncoding]
                                                          options: NSJSONReadingMutableContainers
                                                            error: nil];
@@ -147,7 +147,7 @@
             [realm commitWriteTransaction];
             
             if ([[firstOrder pickupInfo] img]) {
-                NSString *filePath = [NSString stringWithFormat:@"http://cleanbasket.co.kr/%@", [[firstOrder pickupInfo] img]];
+                NSString *filePath = [NSString stringWithFormat:@"https://www.cleanbasket.co.kr/%@", [[firstOrder pickupInfo] img]];
                 UIImage *managerPhotoImage = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:filePath]]];
                 [profileView setImage:managerPhotoImage];
                 [profileView.layer setCornerRadius:40.0f];

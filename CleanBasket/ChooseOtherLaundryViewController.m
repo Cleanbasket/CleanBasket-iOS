@@ -52,6 +52,8 @@
     [self calculateTotalPrice];
     NSNumberFormatter *numberFormatter = [[NSNumberFormatter alloc] init];
     [numberFormatter setNumberStyle: NSNumberFormatterCurrencyStyle];
+    [numberFormatter setMaximumFractionDigits:0];
+    [numberFormatter setCurrencySymbol:@"₩"];
     NSString *priceAsString = [numberFormatter stringFromNumber:[NSNumber numberWithInt:totalPrice]];
     [totalPriceView.totalPriceLabel setText:priceAsString];
     
@@ -85,6 +87,9 @@
     // Configure the cell...
     NSNumberFormatter *numberFormatter = [[NSNumberFormatter alloc] init];
     [numberFormatter setNumberStyle: NSNumberFormatterCurrencyStyle];
+    [numberFormatter setMaximumFractionDigits:0];
+    [numberFormatter setCurrencySymbol:@"₩"];
+
     NSString *priceAsString = [numberFormatter stringFromNumber:[NSNumber numberWithInt:[currentItem price]]];
     [cell.priceLabel setText:priceAsString];
     

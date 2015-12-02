@@ -45,7 +45,7 @@
     [self.navigationItem setTitle:@"주소입력"];
     [self.view setBackgroundColor:[UIColor whiteColor]];
     
-    addrPickerView = [[UIPickerView alloc] initWithFrame:CGRectMake(0, 162, DEVICE_WIDTH, 0)];
+    addrPickerView = [[UIPickerView alloc] initWithFrame:CGRectMake(0, 162, DEVICE_WIDTH, 162)];
     [addrPickerView setDelegate:self];
     [addrPickerView setDataSource:self];
     
@@ -229,7 +229,7 @@
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_LOW, 0), ^{
             AFHTTPRequestOperationManager *afManager = [AFHTTPRequestOperationManager manager];
             afManager.requestSerializer = [AFJSONRequestSerializer serializer];
-            [afManager POST:@"http://cleanbasket.co.kr/member/address/update" parameters:data success:^(AFHTTPRequestOperation *operation, id responseObject) {
+            [afManager POST:@"https://www.cleanbasket.co.kr/member/address/update" parameters:data success:^(AFHTTPRequestOperation *operation, id responseObject) {
                 int constant = [[responseObject valueForKey:@"constant"] intValue];
                 switch (constant) {
                         // 주소 업데이트 성공

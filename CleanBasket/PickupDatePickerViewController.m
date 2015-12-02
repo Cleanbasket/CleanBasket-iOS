@@ -51,7 +51,7 @@
     dateInfoLabel = [[UILabel alloc] initWithFrame:CGRectMake(20, 84, 280, 120)];
     [dateInfoLabel setTextAlignment:NSTextAlignmentCenter];
     [dateInfoLabel setLineBreakMode:NSLineBreakByCharWrapping];
-    [dateInfoLabel setText:@"현재 시간으로부터 1시간 후,\n30분 단위로 선택이 가능합니다.\n(최장 2주)\n영업시간: 오전 10시 ~ 밤 12시 30분"];
+    [dateInfoLabel setText:@"현재 시간으로부터 2시간 후,\n30분 단위로 선택이 가능합니다.\n(최장 2주)\n영업시간: 오전 10시 ~ 밤 12시 30분"];
     [dateInfoLabel setTextColor:[UIColor grayColor]];
     [dateInfoLabel setNumberOfLines:0];
     [dateInfoLabel.layer setBorderColor:CleanBasketMint.CGColor];
@@ -118,6 +118,9 @@
     if ( [currentDateComponents minute] > 31 ) {
         [comps setMinute:60 - [currentDateComponents minute]];
     }
+    else {
+        [comps setHour:2];
+    }
     NSDate *minDate = [calendar dateByAddingComponents:comps toDate:currentDate options:0];
     
     [datePicker setMaximumDate:maxDate];
@@ -129,13 +132,13 @@
     
     NSDateComponents *datePickerComponents = [[NSCalendar currentCalendar] components:NSYearCalendarUnit|NSMonthCalendarUnit|NSDayCalendarUnit|NSHourCalendarUnit|NSMinuteCalendarUnit fromDate:datePicker.date];
     
-    if([datePickerComponents hour] < 10 && [datePickerComponents hour] > 1)
+    if([datePickerComponents hour] < 10 && [datePickerComponents hour] > 0)
     {
         [datePickerComponents setHour:10];
         [datePickerComponents setMinute:0];
         [datePicker setDate:[[NSCalendar currentCalendar] dateFromComponents:datePickerComponents]];
-    } else if ( [datePickerComponents hour] == 1) {
-        [datePickerComponents setHour:0];
+    } else if ( [datePickerComponents hour] == 0) {
+        [datePickerComponents setHour:23];
         [datePickerComponents setMinute:30];
         [datePicker setDate:[[NSCalendar currentCalendar] dateFromComponents:datePickerComponents]];
     }

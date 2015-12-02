@@ -559,11 +559,6 @@ static const CGFloat kImageHeight = 200;
         return;
     }
     
-    if ([self isUnavailbleArea]) {
-        [self showHudMessage:@"현재 강남구/서초구 지역만 이용 가능합니다."];
-        return;
-    }
-    
     RLMRealm *realm = [RLMRealm defaultRealm];
     [realm beginWriteTransaction];
     [self.currentOrder setPrice:totalPrice];
@@ -612,7 +607,7 @@ static const CGFloat kImageHeight = 200;
     
     NSString *jsonString = [[NSString alloc] initWithData:[NSJSONSerialization dataWithJSONObject:parameters options:NSJSONWritingPrettyPrinted error:nil] encoding:NSUTF8StringEncoding];
     
-    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:@"http://cleanbasket.co.kr/member/order/add"]
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:@"https://www.cleanbasket.co.kr/member/order/add"]
                                                            cachePolicy:NSURLRequestReloadIgnoringCacheData  timeoutInterval:10];
     
     [request setHTTPMethod:@"POST"];
@@ -657,6 +652,17 @@ static const CGFloat kImageHeight = 200;
                 [self showHudMessage:@"주문 정보 접수에 실패했습니다."];
             }
                 break;
+                
+            case CBServerConstantsAreaUnavailable: {
+                [self showHudMessage:@"서비스 가능 지역이 아닙니다"];
+            }
+                break;
+
+            case CBServerConstantsDateUnavailable: {
+                [self showHudMessage:@"죄송합니다. 해당 수거/배달일은 휴무입니다"];
+            }
+                break;
+                
             case CBServerConstantSessionExpired: {
                 [self showHudMessage:@"세션이 만료되었습니다. 로그인화면으로 돌아갑니다."];
                 [self resetItemsCount];
@@ -685,17 +691,6 @@ static const CGFloat kImageHeight = 200;
         return YES;
     } else
         return NO;
-}
-
-- (BOOL) isUnavailbleArea {
-    DTOManager *dtoManager = [DTOManager defaultManager];
-    NSArray *components = [self.currentOrder.address componentsSeparatedByString:@" "];
-    NSString *boroughName = [components objectAtIndex:1];
-    if (![dtoManager.availableBorough containsObject:boroughName]) {
-        return YES;
-    } else {
-        return NO;
-    }
 }
 
 - (BOOL) isCouponEmpty {

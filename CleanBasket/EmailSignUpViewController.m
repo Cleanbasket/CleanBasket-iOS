@@ -224,7 +224,7 @@ static CGFloat kSpacing;
                        @"addr_remainder":[newAddress valueForKey:@"addr_remainder"]
                        };
         
-        [manager POST:@"http://cleanbasket.co.kr/member/join" parameters:parameters
+        [manager POST:@"https://www.cleanbasket.co.kr/member/join" parameters:parameters
               success:^(AFHTTPRequestOperation *operation, id responseObject) {
                   NSNumber *value = responseObject[@"constant"];
                   switch ([value integerValue]) {
