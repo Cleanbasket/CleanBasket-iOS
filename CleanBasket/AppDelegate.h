@@ -8,10 +8,14 @@
 
 #import <UIKit/UIKit.h>
 
+@class LoginViewController;
+@class WebViewController;
+
 @interface AppDelegate : UIResponder <UIApplicationDelegate>
 
 @property (strong, nonatomic) UIWindow *window;
-
+@property (strong, nonatomic) LoginViewController *loginVC;
+@property (strong, nonatomic) WebViewController *webVC;
 
 @end
 

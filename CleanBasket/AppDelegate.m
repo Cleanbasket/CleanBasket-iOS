@@ -7,6 +7,10 @@
 //
 
 #import "AppDelegate.h"
+#import "LoginViewController.h"
+#import "WebViewController.h"
+#import "CBConstants.h"
+#import "AuthCheckViewController.h"
 
 @interface AppDelegate ()
 
@@ -16,8 +20,63 @@
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
+
+    self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+
     // Override point for customization after application launch.
+    self.window.backgroundColor = [UIColor whiteColor];
+    [self.window makeKeyAndVisible];
+
+
+    UIStoryboard *sb = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+
+    AuthCheckViewController *authCheckViewController = (AuthCheckViewController *) [sb instantiateViewControllerWithIdentifier:@"AuthVC"];
+//    LoginViewController *loginViewController = [[LoginViewController alloc] init];
+    UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:authCheckViewController];
+    [[UINavigationBar appearance] setTintColor:[UIColor whiteColor]];
+    [[UINavigationBar appearance] setBarTintColor:CleanBasketMint];
+    [[UINavigationBar appearance] setTitleTextAttributes:@{NSForegroundColorAttributeName:[UIColor whiteColor]}];
+
+
+    [self.window setRootViewController:navController];
+
+
+    LoginViewController *loginViewController = (LoginViewController *) [sb instantiateViewControllerWithIdentifier:@"LoginVC"];
+    _loginVC = (id) [[UINavigationController alloc] initWithRootViewController:loginViewController];
+
+    WebViewController *webViewController = (WebViewController *) [sb instantiateViewControllerWithIdentifier:@"WebVC"];
+    _webVC = webViewController;
+
+
+//    self.tabBarController = [[MyUITabBarController alloc] init];
+//    [_tabBarController.moreNavigationController setTitle:@"더 보기"];
+//    [self.tabBarController.moreNavigationController.view setTintColor:CleanBasketMint];
+//    self.tabNavController = [[UINavigationController alloc] initWithRootViewController:self.tabBarController];
+//
+//    //Load our animation controllers
+//    _modalAnimationController = [[ModalAnimation alloc] init];
+//    _slideAnimationController = [[SlideAnimation alloc] init];
+//    _shuffleAnimationController = [[ShuffleAnimation alloc] init];
+//
+//    [_tabBarController setDelegate:self];
+//    [_tabBarController setTransitioningDelegate:self];
+//    [_tabBarController setModalTransitionStyle:UIModalTransitionStyleCrossDissolve];
+//    [_tabBarController.view setBackgroundColor:UltraLightGray];
+//
+//    self.orderViewController = [[OrderViewController alloc] init];
+//    self.orderStatusViewController = [[OrderStatusViewController alloc] init];
+//    self.priceViewController = [[PriceViewController alloc] init];
+//    self.accountViewController = [[AccountViewController alloc] init];
+//    self.couponShareViewController = [[CouponShareViewController alloc] init];
+//    self.serviceInfoViewController = [[ServiceInfoViewController alloc] init];
+//
+//    NSArray *myBizViewControllers = [[NSArray alloc] initWithObjects:self.orderViewController, self.orderStatusViewController, self.priceViewController, self.couponShareViewController, self.serviceInfoViewController, nil];
+//
+//    [self.tabBarController setViewControllers:myBizViewControllers];
+
     return YES;
+
+
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application {
