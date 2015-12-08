@@ -9,32 +9,60 @@
 /* Begin PBXBuildFile section */
 		1FE23AF11C157C0600B37752 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FE23AF01C157C0600B37752 /* main.m */; };
 		1FE23AF41C157C0600B37752 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FE23AF31C157C0600B37752 /* AppDelegate.m */; };
-		1FE23AF71C157C0600B37752 /* FirstViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FE23AF61C157C0600B37752 /* FirstViewController.m */; };
-		1FE23AFA1C157C0600B37752 /* SecondViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FE23AF91C157C0600B37752 /* SecondViewController.m */; };
 		1FE23AFD1C157C0600B37752 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1FE23AFB1C157C0600B37752 /* Main.storyboard */; };
 		1FE23AFF1C157C0600B37752 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1FE23AFE1C157C0600B37752 /* Assets.xcassets */; };
 		1FE23B021C157C0600B37752 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1FE23B001C157C0600B37752 /* LaunchScreen.storyboard */; };
 		1FE23B0A1C15842000B37752 /* KakaoOpenSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1FE23B091C15842000B37752 /* KakaoOpenSDK.framework */; };
-		B31A5D9EA3BD1CAF84BB8E8E /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 094D9C19928C5A9791C2AFA4 /* libPods.a */; };
+		1FE23B181C16EE5200B37752 /* TTTAttributedLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FE23B0F1C16EE5200B37752 /* TTTAttributedLabel.m */; };
+		1FE23B191C16EE5200B37752 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 1FE23B101C16EE5200B37752 /* Info.plist */; };
+		1FE23B1A1C16EE5200B37752 /* TTTAttributedLabel.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 1FE23B121C16EE5200B37752 /* TTTAttributedLabel.xcconfig */; };
+		1FE23B1B1C16EE5200B37752 /* TTTAttributedLabel-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FE23B131C16EE5200B37752 /* TTTAttributedLabel-dummy.m */; };
+		1FE23B1E1C17127D00B37752 /* WebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FE23B1D1C17127D00B37752 /* WebViewController.m */; };
+		5F265984CB2C70090214CCC8 /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6968616A63B1C2881CB1DF77 /* Pods.framework */; };
+		ED0893FD2E0CD70AC2D96D6E /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = ED0890A88338423ED595A4BD /* User.m */; };
+		ED0895D74CBFB7EE824F7B7E /* SecondViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = ED0896B69E7D518A553CD698 /* SecondViewController.m */; };
+		ED0896BBCA0717E9680235A0 /* AuthCheckViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = ED0890F90EF3952BF099A5B6 /* AuthCheckViewController.m */; };
+		ED0897B1B351A9BB14686D10 /* FirstViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = ED089BA85BBC71B2C49DAFC4 /* FirstViewController.m */; };
+		ED089D43FCADED63B1C31F1F /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = ED0890CA1A6750D545C6A16D /* LoginViewController.m */; };
+		ED089F74757F055DFE32554C /* Address.m in Sources */ = {isa = PBXBuildFile; fileRef = ED0890FB9B1E7E5DCBCD705E /* Address.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		094D9C19928C5A9791C2AFA4 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		1FE23AEC1C157C0600B37752 /* CleanBasket.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CleanBasket.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1FE23AF01C157C0600B37752 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		1FE23AF21C157C0600B37752 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		1FE23AF31C157C0600B37752 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
-		1FE23AF51C157C0600B37752 /* FirstViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FirstViewController.h; sourceTree = "<group>"; };
-		1FE23AF61C157C0600B37752 /* FirstViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FirstViewController.m; sourceTree = "<group>"; };
-		1FE23AF81C157C0600B37752 /* SecondViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SecondViewController.h; sourceTree = "<group>"; };
-		1FE23AF91C157C0600B37752 /* SecondViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SecondViewController.m; sourceTree = "<group>"; };
 		1FE23AFC1C157C0600B37752 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		1FE23AFE1C157C0600B37752 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		1FE23B011C157C0600B37752 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		1FE23B031C157C0700B37752 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		1FE23B091C15842000B37752 /* KakaoOpenSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = KakaoOpenSDK.framework; sourceTree = "<group>"; };
+		1FE23B0E1C16EE5200B37752 /* TTTAttributedLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TTTAttributedLabel.h; path = TTTAttributedLabel/TTTAttributedLabel.h; sourceTree = "<group>"; };
+		1FE23B0F1C16EE5200B37752 /* TTTAttributedLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TTTAttributedLabel.m; path = TTTAttributedLabel/TTTAttributedLabel.m; sourceTree = "<group>"; };
+		1FE23B101C16EE5200B37752 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		1FE23B111C16EE5200B37752 /* TTTAttributedLabel.modulemap */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = "sourcecode.module-map"; path = TTTAttributedLabel.modulemap; sourceTree = "<group>"; };
+		1FE23B121C16EE5200B37752 /* TTTAttributedLabel.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = TTTAttributedLabel.xcconfig; sourceTree = "<group>"; };
+		1FE23B131C16EE5200B37752 /* TTTAttributedLabel-dummy.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "TTTAttributedLabel-dummy.m"; sourceTree = "<group>"; };
+		1FE23B141C16EE5200B37752 /* TTTAttributedLabel-prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "TTTAttributedLabel-prefix.pch"; sourceTree = "<group>"; };
+		1FE23B151C16EE5200B37752 /* TTTAttributedLabel-umbrella.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "TTTAttributedLabel-umbrella.h"; sourceTree = "<group>"; };
+		1FE23B1C1C17127D00B37752 /* WebViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = WebViewController.h; path = Controller/WebViewController.h; sourceTree = "<group>"; };
+		1FE23B1D1C17127D00B37752 /* WebViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = WebViewController.m; path = Controller/WebViewController.m; sourceTree = "<group>"; };
 		29418028C1BC3BD76BF7F80C /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
+		6968616A63B1C2881CB1DF77 /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		958C75E790AEAEE35D0D3A34 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
+		ED0890A88338423ED595A4BD /* User.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = User.m; path = Model/User.m; sourceTree = "<group>"; };
+		ED0890CA1A6750D545C6A16D /* LoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LoginViewController.m; path = Controller/LoginViewController.m; sourceTree = "<group>"; };
+		ED0890F90EF3952BF099A5B6 /* AuthCheckViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AuthCheckViewController.m; path = Controller/AuthCheckViewController.m; sourceTree = "<group>"; };
+		ED0890FB9B1E7E5DCBCD705E /* Address.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Address.m; path = Model/Address.m; sourceTree = "<group>"; };
+		ED0891FC4514556676A5173E /* CBConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CBConstants.h; path = Util/CBConstants.h; sourceTree = "<group>"; };
+		ED0895986932195F41D6AB59 /* Address.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Address.h; path = Model/Address.h; sourceTree = "<group>"; };
+		ED0896B69E7D518A553CD698 /* SecondViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SecondViewController.m; path = Controller/SecondViewController.m; sourceTree = "<group>"; };
+		ED089A3A00D6B66095C26695 /* SecondViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SecondViewController.h; path = Controller/SecondViewController.h; sourceTree = "<group>"; };
+		ED089A51FC087856758DEC68 /* LoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LoginViewController.h; path = Controller/LoginViewController.h; sourceTree = "<group>"; };
+		ED089BA85BBC71B2C49DAFC4 /* FirstViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FirstViewController.m; path = Controller/FirstViewController.m; sourceTree = "<group>"; };
+		ED089CA64025D13384136205 /* User.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = User.h; path = Model/User.h; sourceTree = "<group>"; };
+		ED089D7E837959E573F32610 /* AuthCheckViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AuthCheckViewController.h; path = Controller/AuthCheckViewController.h; sourceTree = "<group>"; };
+		ED089D9D4733067A364A56C5 /* FirstViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FirstViewController.h; path = Controller/FirstViewController.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -42,8 +70,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B31A5D9EA3BD1CAF84BB8E8E /* libPods.a in Frameworks */,
 				1FE23B0A1C15842000B37752 /* KakaoOpenSDK.framework in Frameworks */,
+				5F265984CB2C70090214CCC8 /* Pods.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -71,17 +99,29 @@
 		1FE23AEE1C157C0600B37752 /* CleanBasket */ = {
 			isa = PBXGroup;
 			children = (
+				1FE23B171C16EE5200B37752 /* TTTAttributedLabel */,
 				1FE23AF21C157C0600B37752 /* AppDelegate.h */,
 				1FE23AF31C157C0600B37752 /* AppDelegate.m */,
-				1FE23AF51C157C0600B37752 /* FirstViewController.h */,
-				1FE23AF61C157C0600B37752 /* FirstViewController.m */,
-				1FE23AF81C157C0600B37752 /* SecondViewController.h */,
-				1FE23AF91C157C0600B37752 /* SecondViewController.m */,
 				1FE23AFB1C157C0600B37752 /* Main.storyboard */,
 				1FE23AFE1C157C0600B37752 /* Assets.xcassets */,
 				1FE23B001C157C0600B37752 /* LaunchScreen.storyboard */,
 				1FE23B031C157C0700B37752 /* Info.plist */,
 				1FE23AEF1C157C0600B37752 /* Supporting Files */,
+				ED0890A88338423ED595A4BD /* User.m */,
+				ED089CA64025D13384136205 /* User.h */,
+				ED0890FB9B1E7E5DCBCD705E /* Address.m */,
+				ED0895986932195F41D6AB59 /* Address.h */,
+				ED089D7E837959E573F32610 /* AuthCheckViewController.h */,
+				ED089A3A00D6B66095C26695 /* SecondViewController.h */,
+				ED0896B69E7D518A553CD698 /* SecondViewController.m */,
+				ED089BA85BBC71B2C49DAFC4 /* FirstViewController.m */,
+				ED089D9D4733067A364A56C5 /* FirstViewController.h */,
+				ED0890F90EF3952BF099A5B6 /* AuthCheckViewController.m */,
+				ED0891FC4514556676A5173E /* CBConstants.h */,
+				ED0890CA1A6750D545C6A16D /* LoginViewController.m */,
+				ED089A51FC087856758DEC68 /* LoginViewController.h */,
+				1FE23B1C1C17127D00B37752 /* WebViewController.h */,
+				1FE23B1D1C17127D00B37752 /* WebViewController.m */,
 			);
 			path = CleanBasket;
 			sourceTree = "<group>";
@@ -92,6 +132,31 @@
 				1FE23AF01C157C0600B37752 /* main.m */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		1FE23B161C16EE5200B37752 /* Support Files */ = {
+			isa = PBXGroup;
+			children = (
+				1FE23B101C16EE5200B37752 /* Info.plist */,
+				1FE23B111C16EE5200B37752 /* TTTAttributedLabel.modulemap */,
+				1FE23B121C16EE5200B37752 /* TTTAttributedLabel.xcconfig */,
+				1FE23B131C16EE5200B37752 /* TTTAttributedLabel-dummy.m */,
+				1FE23B141C16EE5200B37752 /* TTTAttributedLabel-prefix.pch */,
+				1FE23B151C16EE5200B37752 /* TTTAttributedLabel-umbrella.h */,
+			);
+			name = "Support Files";
+			path = "../Target Support Files/TTTAttributedLabel";
+			sourceTree = "<group>";
+		};
+		1FE23B171C16EE5200B37752 /* TTTAttributedLabel */ = {
+			isa = PBXGroup;
+			children = (
+				1FE23B0E1C16EE5200B37752 /* TTTAttributedLabel.h */,
+				1FE23B0F1C16EE5200B37752 /* TTTAttributedLabel.m */,
+				1FE23B161C16EE5200B37752 /* Support Files */,
+			);
+			name = TTTAttributedLabel;
+			path = ../Pods/TTTAttributedLabel;
 			sourceTree = "<group>";
 		};
 		7BD7C8D1B72C4DDC21AAD546 /* Pods */ = {
@@ -107,7 +172,7 @@
 			isa = PBXGroup;
 			children = (
 				1FE23B091C15842000B37752 /* KakaoOpenSDK.framework */,
-				094D9C19928C5A9791C2AFA4 /* libPods.a */,
+				6968616A63B1C2881CB1DF77 /* Pods.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -172,8 +237,10 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1FE23B191C16EE5200B37752 /* Info.plist in Resources */,
 				1FE23B021C157C0600B37752 /* LaunchScreen.storyboard in Resources */,
 				1FE23AFF1C157C0600B37752 /* Assets.xcassets in Resources */,
+				1FE23B1A1C16EE5200B37752 /* TTTAttributedLabel.xcconfig in Resources */,
 				1FE23AFD1C157C0600B37752 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -233,10 +300,17 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				1FE23AFA1C157C0600B37752 /* SecondViewController.m in Sources */,
+				1FE23B1B1C16EE5200B37752 /* TTTAttributedLabel-dummy.m in Sources */,
 				1FE23AF41C157C0600B37752 /* AppDelegate.m in Sources */,
-				1FE23AF71C157C0600B37752 /* FirstViewController.m in Sources */,
+				1FE23B1E1C17127D00B37752 /* WebViewController.m in Sources */,
 				1FE23AF11C157C0600B37752 /* main.m in Sources */,
+				ED0893FD2E0CD70AC2D96D6E /* User.m in Sources */,
+				ED089F74757F055DFE32554C /* Address.m in Sources */,
+				ED0895D74CBFB7EE824F7B7E /* SecondViewController.m in Sources */,
+				ED0897B1B351A9BB14686D10 /* FirstViewController.m in Sources */,
+				ED0896BBCA0717E9680235A0 /* AuthCheckViewController.m in Sources */,
+				ED089D43FCADED63B1C31F1F /* LoginViewController.m in Sources */,
+				1FE23B181C16EE5200B37752 /* TTTAttributedLabel.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
