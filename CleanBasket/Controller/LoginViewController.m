@@ -7,6 +7,7 @@
 #import "WebViewController.h"
 #import "AppDelegate.h"
 #import "CBConstants.h"
+#import "SignInViewController.h"
 
 @implementation LoginViewController
 
@@ -47,6 +48,23 @@
 - (void)viewWillAppear:(BOOL)animated {
 
     [self.navigationController setNavigationBarHidden:YES animated:NO];
+}
+
+- (IBAction)loginWithEmail:(id)sender {
+    
+    
+    UIStoryboard *sb = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+    SignInViewController *signInViewController = [sb instantiateViewControllerWithIdentifier:@"SignInVC"];
+
+    [self presentViewController:signInViewController animated:NO completion:nil];
+//
+//    UIView *overlayView = [[UIView alloc] initWithFrame:self.view.frame];
+//
+//    overlayView.backgroundColor = [UIColor blackColor];
+//    overlayView.alpha = 0.5f;
+//
+//    [self.view addSubview:overlayView];
+
 }
 
 

@@ -18,6 +18,9 @@
 		1FE23B1A1C16EE5200B37752 /* TTTAttributedLabel.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 1FE23B121C16EE5200B37752 /* TTTAttributedLabel.xcconfig */; };
 		1FE23B1B1C16EE5200B37752 /* TTTAttributedLabel-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FE23B131C16EE5200B37752 /* TTTAttributedLabel-dummy.m */; };
 		1FE23B1E1C17127D00B37752 /* WebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FE23B1D1C17127D00B37752 /* WebViewController.m */; };
+		1FE6134A1C1E25B2009B4EA5 /* SignInViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FE613491C1E25B2009B4EA5 /* SignInViewController.m */; };
+		1FE6134D1C1E2E40009B4EA5 /* SignTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FE6134C1C1E2E40009B4EA5 /* SignTextField.m */; };
+		1FE613501C1E3346009B4EA5 /* RoundedButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FE6134F1C1E3346009B4EA5 /* RoundedButton.m */; };
 		5F265984CB2C70090214CCC8 /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6968616A63B1C2881CB1DF77 /* Pods.framework */; };
 		ED0893FD2E0CD70AC2D96D6E /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = ED0890A88338423ED595A4BD /* User.m */; };
 		ED0895D74CBFB7EE824F7B7E /* SecondViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = ED0896B69E7D518A553CD698 /* SecondViewController.m */; };
@@ -47,6 +50,12 @@
 		1FE23B151C16EE5200B37752 /* TTTAttributedLabel-umbrella.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "TTTAttributedLabel-umbrella.h"; sourceTree = "<group>"; };
 		1FE23B1C1C17127D00B37752 /* WebViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = WebViewController.h; path = Controller/WebViewController.h; sourceTree = "<group>"; };
 		1FE23B1D1C17127D00B37752 /* WebViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = WebViewController.m; path = Controller/WebViewController.m; sourceTree = "<group>"; };
+		1FE613481C1E25B2009B4EA5 /* SignInViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SignInViewController.h; path = Controller/SignInViewController.h; sourceTree = "<group>"; };
+		1FE613491C1E25B2009B4EA5 /* SignInViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SignInViewController.m; path = Controller/SignInViewController.m; sourceTree = "<group>"; };
+		1FE6134B1C1E2E40009B4EA5 /* SignTextField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SignTextField.h; path = Util/SignTextField.h; sourceTree = "<group>"; };
+		1FE6134C1C1E2E40009B4EA5 /* SignTextField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SignTextField.m; path = Util/SignTextField.m; sourceTree = "<group>"; };
+		1FE6134E1C1E3346009B4EA5 /* RoundedButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RoundedButton.h; path = Util/RoundedButton.h; sourceTree = "<group>"; };
+		1FE6134F1C1E3346009B4EA5 /* RoundedButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RoundedButton.m; path = Util/RoundedButton.m; sourceTree = "<group>"; };
 		29418028C1BC3BD76BF7F80C /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 		6968616A63B1C2881CB1DF77 /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		958C75E790AEAEE35D0D3A34 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
@@ -99,29 +108,11 @@
 		1FE23AEE1C157C0600B37752 /* CleanBasket */ = {
 			isa = PBXGroup;
 			children = (
-				1FE23B171C16EE5200B37752 /* TTTAttributedLabel */,
-				1FE23AF21C157C0600B37752 /* AppDelegate.h */,
-				1FE23AF31C157C0600B37752 /* AppDelegate.m */,
-				1FE23AFB1C157C0600B37752 /* Main.storyboard */,
-				1FE23AFE1C157C0600B37752 /* Assets.xcassets */,
-				1FE23B001C157C0600B37752 /* LaunchScreen.storyboard */,
-				1FE23B031C157C0700B37752 /* Info.plist */,
+				1FE613441C1E24FD009B4EA5 /* Model */,
+				1FE613451C1E253B009B4EA5 /* Controller */,
+				1FE613461C1E2549009B4EA5 /* Util */,
+				1FE613471C1E2561009B4EA5 /* Other */,
 				1FE23AEF1C157C0600B37752 /* Supporting Files */,
-				ED0890A88338423ED595A4BD /* User.m */,
-				ED089CA64025D13384136205 /* User.h */,
-				ED0890FB9B1E7E5DCBCD705E /* Address.m */,
-				ED0895986932195F41D6AB59 /* Address.h */,
-				ED089D7E837959E573F32610 /* AuthCheckViewController.h */,
-				ED089A3A00D6B66095C26695 /* SecondViewController.h */,
-				ED0896B69E7D518A553CD698 /* SecondViewController.m */,
-				ED089BA85BBC71B2C49DAFC4 /* FirstViewController.m */,
-				ED089D9D4733067A364A56C5 /* FirstViewController.h */,
-				ED0890F90EF3952BF099A5B6 /* AuthCheckViewController.m */,
-				ED0891FC4514556676A5173E /* CBConstants.h */,
-				ED0890CA1A6750D545C6A16D /* LoginViewController.m */,
-				ED089A51FC087856758DEC68 /* LoginViewController.h */,
-				1FE23B1C1C17127D00B37752 /* WebViewController.h */,
-				1FE23B1D1C17127D00B37752 /* WebViewController.m */,
 			);
 			path = CleanBasket;
 			sourceTree = "<group>";
@@ -157,6 +148,62 @@
 			);
 			name = TTTAttributedLabel;
 			path = ../Pods/TTTAttributedLabel;
+			sourceTree = "<group>";
+		};
+		1FE613441C1E24FD009B4EA5 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				ED0890A88338423ED595A4BD /* User.m */,
+				ED089CA64025D13384136205 /* User.h */,
+				ED0890FB9B1E7E5DCBCD705E /* Address.m */,
+				ED0895986932195F41D6AB59 /* Address.h */,
+			);
+			name = Model;
+			sourceTree = "<group>";
+		};
+		1FE613451C1E253B009B4EA5 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				ED089D7E837959E573F32610 /* AuthCheckViewController.h */,
+				ED0890F90EF3952BF099A5B6 /* AuthCheckViewController.m */,
+				ED089A3A00D6B66095C26695 /* SecondViewController.h */,
+				ED0896B69E7D518A553CD698 /* SecondViewController.m */,
+				ED089BA85BBC71B2C49DAFC4 /* FirstViewController.m */,
+				ED089D9D4733067A364A56C5 /* FirstViewController.h */,
+				ED0890CA1A6750D545C6A16D /* LoginViewController.m */,
+				ED089A51FC087856758DEC68 /* LoginViewController.h */,
+				1FE23B1C1C17127D00B37752 /* WebViewController.h */,
+				1FE23B1D1C17127D00B37752 /* WebViewController.m */,
+				1FE613481C1E25B2009B4EA5 /* SignInViewController.h */,
+				1FE613491C1E25B2009B4EA5 /* SignInViewController.m */,
+			);
+			name = Controller;
+			sourceTree = "<group>";
+		};
+		1FE613461C1E2549009B4EA5 /* Util */ = {
+			isa = PBXGroup;
+			children = (
+				ED0891FC4514556676A5173E /* CBConstants.h */,
+				1FE6134B1C1E2E40009B4EA5 /* SignTextField.h */,
+				1FE6134C1C1E2E40009B4EA5 /* SignTextField.m */,
+				1FE6134E1C1E3346009B4EA5 /* RoundedButton.h */,
+				1FE6134F1C1E3346009B4EA5 /* RoundedButton.m */,
+			);
+			name = Util;
+			sourceTree = "<group>";
+		};
+		1FE613471C1E2561009B4EA5 /* Other */ = {
+			isa = PBXGroup;
+			children = (
+				1FE23B171C16EE5200B37752 /* TTTAttributedLabel */,
+				1FE23AF21C157C0600B37752 /* AppDelegate.h */,
+				1FE23AF31C157C0600B37752 /* AppDelegate.m */,
+				1FE23AFB1C157C0600B37752 /* Main.storyboard */,
+				1FE23AFE1C157C0600B37752 /* Assets.xcassets */,
+				1FE23B001C157C0600B37752 /* LaunchScreen.storyboard */,
+				1FE23B031C157C0700B37752 /* Info.plist */,
+			);
+			name = Other;
 			sourceTree = "<group>";
 		};
 		7BD7C8D1B72C4DDC21AAD546 /* Pods */ = {
@@ -304,13 +351,16 @@
 				1FE23AF41C157C0600B37752 /* AppDelegate.m in Sources */,
 				1FE23B1E1C17127D00B37752 /* WebViewController.m in Sources */,
 				1FE23AF11C157C0600B37752 /* main.m in Sources */,
+				1FE6134A1C1E25B2009B4EA5 /* SignInViewController.m in Sources */,
 				ED0893FD2E0CD70AC2D96D6E /* User.m in Sources */,
 				ED089F74757F055DFE32554C /* Address.m in Sources */,
+				1FE613501C1E3346009B4EA5 /* RoundedButton.m in Sources */,
 				ED0895D74CBFB7EE824F7B7E /* SecondViewController.m in Sources */,
 				ED0897B1B351A9BB14686D10 /* FirstViewController.m in Sources */,
 				ED0896BBCA0717E9680235A0 /* AuthCheckViewController.m in Sources */,
 				ED089D43FCADED63B1C31F1F /* LoginViewController.m in Sources */,
 				1FE23B181C16EE5200B37752 /* TTTAttributedLabel.m in Sources */,
+				1FE6134D1C1E2E40009B4EA5 /* SignTextField.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

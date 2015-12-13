@@ -23,6 +23,7 @@
 
 - (void)awakeFromNib {
 
+    [self.navigationItem setTitle:@"크린바스켓"];
 
 }
 
@@ -30,7 +31,10 @@
 - (void)viewWillAppear:(BOOL)animated {
 
     [self.navigationController setNavigationBarHidden:NO animated:NO];
-    [_webView loadRequest:[NSURLRequest requestWithURL:_url]];
+
+    if (_url){
+        [_webView loadRequest:[NSURLRequest requestWithURL:_url]];
+    }
 }
 
 - (void)didReceiveMemoryWarning {
