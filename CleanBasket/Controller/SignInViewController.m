@@ -7,8 +7,14 @@
 //
 
 #import "SignInViewController.h"
+#import "AFNetworking/AFNetworking.h"
+#import "SignTextField.h"
+#import "CBConstants.h"
 
 @interface SignInViewController ()
+
+@property (weak, nonatomic) IBOutlet SignTextField *emailTextField;
+@property (weak, nonatomic) IBOutlet SignTextField *pwTextField;
 
 @end
 
@@ -22,9 +28,47 @@
 
 - (void)awakeFromNib {
 
-
+    [self setModalPresentationStyle:UIModalPresentationCustom];
+    [self setNeedsStatusBarAppearanceUpdate];
 }
 
+- (IBAction)login:(id)sender {
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+
+
+
+//    manager.requestSerializer = [AFHTTPRequestSerializer serializer];
+//    manager.responseSerializer = [AFJSONResponseSerializer serializerWithReadingOptions:NSJSONReadingMutableContainers];
+
+//
+    manager.responseSerializer = [AFJSONResponseSerializer serializer];
+    manager.responseSerializer.acceptableContentTypes = [manager.responseSerializer.acceptableContentTypes setByAddingObject:@"text/html"];
+    manager.requestSerializer = [AFJSONRequestSerializer serializer];
+////
+//    [manager.requestSerializer setValue:@"application/json" forHTTPHeaderField:@"Accept"];
+//    [manager.requestSerializer setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
+//
+    NSDictionary *parameters = @{@"email": _emailTextField.text,
+                                 @"password": _pwTextField.text,
+                                 @"remember":@"true"};
+
+//    NSString *authUrl = [NSString stringWithFormat:@"%@auth",REAL_SERVER_URL_STRING];
+    
+    [manager POST:@"http://www.cleanbasket.co.kr/auth" parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSLog(@"JSON: %@", responseObject );
+
+//        _emailTextField.text = responseObject;
+
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"Error: %@", error);
+    }];
+}
+
+- (IBAction)goToSignUp:(id)sender {
+}
+
+- (IBAction)goToFindPw:(id)sender {
+}
 
 - (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
 
@@ -33,7 +77,7 @@
     if ([touch view] == self.view){
 
         NSLog(@"타치");
-        [self dismissViewControllerAnimated:NO completion:nil];
+        [self dismissViewControllerAnimated:YES completion:nil];
     }
 
 
@@ -53,5 +97,9 @@
     // Pass the selected object to the new view controller.
 }
 */
+
+- (UIStatusBarStyle)preferredStatusBarStyle {
+    return UIStatusBarStyleLightContent;
+}
 
 @end

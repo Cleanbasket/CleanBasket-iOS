@@ -56,7 +56,12 @@
     UIStoryboard *sb = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
     SignInViewController *signInViewController = [sb instantiateViewControllerWithIdentifier:@"SignInVC"];
 
-    [self presentViewController:signInViewController animated:NO completion:nil];
+    if ([UIDevice currentDevice].systemVersion.integerValue >= 7)
+        [self setModalPresentationStyle:UIModalPresentationCurrentContext];
+
+    [self presentViewController:signInViewController animated:YES completion:nil];
+
+//    [self presentViewController:signInViewController animated:YES completion:nil];
 //
 //    UIView *overlayView = [[UIView alloc] initWithFrame:self.view.frame];
 //

@@ -11,8 +11,6 @@
 #import "AppDelegate.h"
 #import <AFNetworking/AFNetworking.h>
 
-#define TEST_SERVER_URL @"http://54.183.212.215:8080/"
-#define REAL_SERVER_URL @"http://www.cleanbasket.co.kr/"
 
 @interface AuthCheckViewController ()
 

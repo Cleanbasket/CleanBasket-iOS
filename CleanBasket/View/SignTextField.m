@@ -19,7 +19,6 @@
 - (void)drawRect:(CGRect)rect {
     // Drawing code
     [self setValue:[UIColor lightGrayColor] forKeyPath:@"_placeholderLabel.textColor"];
-    [self setValue:[UIColor lightGrayColor] forKeyPath:@"_clearButton.textColor"];
 
     CALayer *border = [CALayer layer];
     CGFloat borderWidth = 1;
