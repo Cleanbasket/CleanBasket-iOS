@@ -14,9 +14,6 @@
 		1FE23B021C157C0600B37752 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1FE23B001C157C0600B37752 /* LaunchScreen.storyboard */; };
 		1FE23B0A1C15842000B37752 /* KakaoOpenSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1FE23B091C15842000B37752 /* KakaoOpenSDK.framework */; };
 		1FE23B181C16EE5200B37752 /* TTTAttributedLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FE23B0F1C16EE5200B37752 /* TTTAttributedLabel.m */; };
-		1FE23B191C16EE5200B37752 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 1FE23B101C16EE5200B37752 /* Info.plist */; };
-		1FE23B1A1C16EE5200B37752 /* TTTAttributedLabel.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 1FE23B121C16EE5200B37752 /* TTTAttributedLabel.xcconfig */; };
-		1FE23B1B1C16EE5200B37752 /* TTTAttributedLabel-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FE23B131C16EE5200B37752 /* TTTAttributedLabel-dummy.m */; };
 		1FE23B1E1C17127D00B37752 /* WebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FE23B1D1C17127D00B37752 /* WebViewController.m */; };
 		1FE6134A1C1E25B2009B4EA5 /* SignInViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FE613491C1E25B2009B4EA5 /* SignInViewController.m */; };
 		1FE6134D1C1E2E40009B4EA5 /* SignTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FE6134C1C1E2E40009B4EA5 /* SignTextField.m */; };
@@ -42,12 +39,6 @@
 		1FE23B091C15842000B37752 /* KakaoOpenSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = KakaoOpenSDK.framework; sourceTree = "<group>"; };
 		1FE23B0E1C16EE5200B37752 /* TTTAttributedLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TTTAttributedLabel.h; path = TTTAttributedLabel/TTTAttributedLabel.h; sourceTree = "<group>"; };
 		1FE23B0F1C16EE5200B37752 /* TTTAttributedLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TTTAttributedLabel.m; path = TTTAttributedLabel/TTTAttributedLabel.m; sourceTree = "<group>"; };
-		1FE23B101C16EE5200B37752 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		1FE23B111C16EE5200B37752 /* TTTAttributedLabel.modulemap */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = "sourcecode.module-map"; path = TTTAttributedLabel.modulemap; sourceTree = "<group>"; };
-		1FE23B121C16EE5200B37752 /* TTTAttributedLabel.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = TTTAttributedLabel.xcconfig; sourceTree = "<group>"; };
-		1FE23B131C16EE5200B37752 /* TTTAttributedLabel-dummy.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "TTTAttributedLabel-dummy.m"; sourceTree = "<group>"; };
-		1FE23B141C16EE5200B37752 /* TTTAttributedLabel-prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "TTTAttributedLabel-prefix.pch"; sourceTree = "<group>"; };
-		1FE23B151C16EE5200B37752 /* TTTAttributedLabel-umbrella.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "TTTAttributedLabel-umbrella.h"; sourceTree = "<group>"; };
 		1FE23B1C1C17127D00B37752 /* WebViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = WebViewController.h; path = Controller/WebViewController.h; sourceTree = "<group>"; };
 		1FE23B1D1C17127D00B37752 /* WebViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = WebViewController.m; path = Controller/WebViewController.m; sourceTree = "<group>"; };
 		1FE613481C1E25B2009B4EA5 /* SignInViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SignInViewController.h; path = Controller/SignInViewController.h; sourceTree = "<group>"; };
@@ -125,26 +116,11 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
-		1FE23B161C16EE5200B37752 /* Support Files */ = {
-			isa = PBXGroup;
-			children = (
-				1FE23B101C16EE5200B37752 /* Info.plist */,
-				1FE23B111C16EE5200B37752 /* TTTAttributedLabel.modulemap */,
-				1FE23B121C16EE5200B37752 /* TTTAttributedLabel.xcconfig */,
-				1FE23B131C16EE5200B37752 /* TTTAttributedLabel-dummy.m */,
-				1FE23B141C16EE5200B37752 /* TTTAttributedLabel-prefix.pch */,
-				1FE23B151C16EE5200B37752 /* TTTAttributedLabel-umbrella.h */,
-			);
-			name = "Support Files";
-			path = "../Target Support Files/TTTAttributedLabel";
-			sourceTree = "<group>";
-		};
 		1FE23B171C16EE5200B37752 /* TTTAttributedLabel */ = {
 			isa = PBXGroup;
 			children = (
 				1FE23B0E1C16EE5200B37752 /* TTTAttributedLabel.h */,
 				1FE23B0F1C16EE5200B37752 /* TTTAttributedLabel.m */,
-				1FE23B161C16EE5200B37752 /* Support Files */,
 			);
 			name = TTTAttributedLabel;
 			path = ../Pods/TTTAttributedLabel;
@@ -284,10 +260,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				1FE23B191C16EE5200B37752 /* Info.plist in Resources */,
 				1FE23B021C157C0600B37752 /* LaunchScreen.storyboard in Resources */,
 				1FE23AFF1C157C0600B37752 /* Assets.xcassets in Resources */,
-				1FE23B1A1C16EE5200B37752 /* TTTAttributedLabel.xcconfig in Resources */,
 				1FE23AFD1C157C0600B37752 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -347,7 +321,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				1FE23B1B1C16EE5200B37752 /* TTTAttributedLabel-dummy.m in Sources */,
 				1FE23AF41C157C0600B37752 /* AppDelegate.m in Sources */,
 				1FE23B1E1C17127D00B37752 /* WebViewController.m in Sources */,
 				1FE23AF11C157C0600B37752 /* main.m in Sources */,
