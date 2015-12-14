@@ -41,7 +41,9 @@
 
     if (1) {
         AppDelegate *appDelegate = [[UIApplication sharedApplication] delegate];
-        [self presentViewController:appDelegate.loginVC animated:NO completion:nil];
+
+        [appDelegate.window setRootViewController:appDelegate.loginVC];
+//        [self presentViewController:appDelegate.loginVC animated:NO completion:nil];
     }
     else {
 

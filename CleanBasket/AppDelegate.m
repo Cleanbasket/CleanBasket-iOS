@@ -28,6 +28,12 @@
     [self.window makeKeyAndVisible];
 
 
+    [[UITabBarItem appearance] setTitleTextAttributes:@{ NSForegroundColorAttributeName : [UIColor whiteColor] }
+                                             forState:UIControlStateNormal];
+    [[UITabBarItem appearance] setTitleTextAttributes:@{ NSForegroundColorAttributeName : [UIColor blackColor] }
+                                             forState:UIControlStateSelected];
+
+
     UIStoryboard *sb = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
 
     AuthCheckViewController *authCheckViewController = (AuthCheckViewController *) [sb instantiateViewControllerWithIdentifier:@"AuthVC"];

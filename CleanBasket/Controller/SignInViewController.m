@@ -10,6 +10,7 @@
 #import "AFNetworking/AFNetworking.h"
 #import "SignTextField.h"
 #import "CBConstants.h"
+#import "AppDelegate.h"
 
 @interface SignInViewController ()
 
@@ -56,6 +57,15 @@
     
     [manager POST:@"http://www.cleanbasket.co.kr/auth" parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSLog(@"JSON: %@", responseObject );
+
+
+        UIStoryboard *sb = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+        UIViewController *mainTBC = [sb instantiateViewControllerWithIdentifier:@"MainTBC"];
+
+        AppDelegate *appDelegate = [[UIApplication sharedApplication] delegate];
+
+        [appDelegate.window setRootViewController:mainTBC];
+
 
 //        _emailTextField.text = responseObject;
 

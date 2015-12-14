@@ -124,7 +124,7 @@
                         <viewControllerLayoutGuide type="top" id="jE4-bU-Sjh"/>
                         <viewControllerLayoutGuide type="bottom" id="95N-PX-7hy"/>
                     </layoutGuides>
-                    <view key="view" alpha="0.90000000000000002" contentMode="scaleToFill" id="Xjp-iU-eHP">
+                    <view key="view" alpha="0.94999999999999996" contentMode="scaleToFill" id="Xjp-iU-eHP">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
@@ -282,7 +282,67 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ZcE-97-nTd" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1801" y="182"/>
+            <point key="canvasLocation" x="1733" y="184"/>
+        </scene>
+        <!--주문현황-->
+        <scene sceneID="pC6-jc-o8e">
+            <objects>
+                <viewController id="o2E-gK-UqG" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="Jw2-nL-uq1"/>
+                        <viewControllerLayoutGuide type="bottom" id="t9C-ru-5d1"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="knx-5I-NlQ">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="551"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <tabBarItem key="tabBarItem" title="주문현황" id="95D-Pn-zRq"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="0Oe-I7-yYI" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1733" y="-1929"/>
+        </scene>
+        <!--주문하기-->
+        <scene sceneID="JTn-TO-UVB">
+            <objects>
+                <viewController id="103-zA-C0X" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="N0i-pc-k0G"/>
+                        <viewControllerLayoutGuide type="bottom" id="pnb-Ix-IWN"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="K2q-AX-X84">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="551"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <tabBarItem key="tabBarItem" title="주문하기" id="lqQ-AT-b7n"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="waw-FX-eB3" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1733" y="-2565"/>
+        </scene>
+        <!--Tab Bar Controller-->
+        <scene sceneID="h4Q-ia-tiu">
+            <objects>
+                <tabBarController storyboardIdentifier="MainTBC" useStoryboardIdentifierAsRestorationIdentifier="YES" id="MC0-x5-DSg" sceneMemberID="viewController">
+                    <tabBar key="tabBar" contentMode="scaleToFill" translucent="NO" id="2uT-Vb-FfI">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="49"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <color key="backgroundColor" red="0.51372549020000002" green="0.85882352939999995" blue="0.81960784310000001" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="barTintColor" red="0.51372549020000002" green="0.85882352939999995" blue="0.81960784310000001" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="selectedImageTintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </tabBar>
+                    <connections>
+                        <segue destination="103-zA-C0X" kind="relationship" relationship="viewControllers" id="Acz-65-hbS"/>
+                        <segue destination="o2E-gK-UqG" kind="relationship" relationship="viewControllers" id="9Pf-tN-wUW"/>
+                        <segue destination="2Px-Gs-65q" kind="relationship" relationship="viewControllers" id="tcC-gQ-Urz"/>
+                        <segue destination="iWH-oX-Ujy" kind="relationship" relationship="viewControllers" id="gde-d5-ofE"/>
+                    </connections>
+                </tabBarController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="KFg-Dp-B6U" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="887" y="-1605"/>
         </scene>
         <!--Sign In View Controller-->
         <scene sceneID="FyQ-rc-ORu">
@@ -392,7 +452,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="pe8-co-Vej" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1733" y="885"/>
+            <point key="canvasLocation" x="1753" y="885"/>
         </scene>
         <!--Sign In View Controller-->
         <scene sceneID="vg2-W1-LuB">
@@ -475,6 +535,99 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="iST-18-WtD" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1081" y="1569"/>
+        </scene>
+        <!--1:1 문의-->
+        <scene sceneID="fgn-4j-wbP">
+            <objects>
+                <viewController id="iWH-oX-Ujy" customClass="HelpViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="tPc-dH-nos"/>
+                        <viewControllerLayoutGuide type="bottom" id="wID-d1-aLa"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="s33-Zs-A6t">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="551"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="cOx-Qk-xXK">
+                                <rect key="frame" x="164" y="86" width="272" height="380"/>
+                                <subviews>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="rud-rc-0fo">
+                                        <rect key="frame" x="51" y="0.0" width="160" height="160"/>
+                                        <color key="backgroundColor" red="0.51372549020000002" green="0.85882352939999995" blue="0.81960784310000001" alpha="1" colorSpace="calibratedRGB"/>
+                                    </imageView>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="무엇이든 물어보세요" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OXG-c6-g8c">
+                                        <rect key="frame" x="19" y="227" width="224" height="33"/>
+                                        <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="20"/>
+                                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" minimumFontSize="5" translatesAutoresizingMaskIntoConstraints="NO" id="bH6-bZ-tTB">
+                                        <rect key="frame" x="2" y="330" width="262" height="50"/>
+                                        <attributedString key="attributedText">
+                                            <fragment content="고객센터 연결하기 070-7552-1385">
+                                                <attributes>
+                                                    <color key="NSColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <font key="NSFont" size="17" name="AppleSDGothicNeo-Regular"/>
+                                                    <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="truncatingTail" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
+                                                    <integer key="NSUnderline" value="1"/>
+                                                </attributes>
+                                            </fragment>
+                                        </attributedString>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4Ig-Z9-EQL" customClass="RoundedButton">
+                                        <rect key="frame" x="80" y="170" width="103" height="40"/>
+                                        <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="16"/>
+                                        <state key="normal" title="실시간 상담">
+                                            <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                        </state>
+                                    </button>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="고객센터와 실시간 채팅이 가능합니다(운영시간 : 오전 10시 ~ 오후 6시)" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" minimumFontSize="5" preferredMaxLayoutWidth="260" translatesAutoresizingMaskIntoConstraints="NO" id="tom-P3-tZw">
+                                        <rect key="frame" x="5" y="270" width="262" height="50"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="272" id="7l8-dE-dex"/>
+                                    <constraint firstAttribute="height" constant="380" id="K3X-Lw-YDU"/>
+                                </constraints>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="cOx-Qk-xXK" firstAttribute="centerX" secondItem="s33-Zs-A6t" secondAttribute="centerX" id="LFU-oi-96L"/>
+                            <constraint firstItem="cOx-Qk-xXK" firstAttribute="centerY" secondItem="s33-Zs-A6t" secondAttribute="centerY" id="gaO-FQ-sCW"/>
+                        </constraints>
+                    </view>
+                    <tabBarItem key="tabBarItem" title="1:1 문의" id="56X-8A-Qxz"/>
+                    <connections>
+                        <outlet property="callLabel" destination="bH6-bZ-tTB" id="kFt-hG-I62"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="fyQ-Tb-Hzw" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1733" y="-645"/>
+        </scene>
+        <!--내 정보-->
+        <scene sceneID="zq2-Sf-MCv">
+            <objects>
+                <viewController id="2Px-Gs-65q" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="0zw-YL-Gsj"/>
+                        <viewControllerLayoutGuide type="bottom" id="3oN-Ah-5JE"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="McN-1N-hia">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="551"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <tabBarItem key="tabBarItem" title="내 정보" id="B6y-jc-KOc"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="rJK-dx-k7p" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1733" y="-1283"/>
         </scene>
     </scenes>
 </document>
