@@ -1,0 +1,78 @@
+
+/* Class = "UILabel"; text = "로그인에 있어 개인정보 수집 및 이용에 대한 안내 및 서비스 이용약관에 동의합니다."; ObjectID = "0XM-vc-bJT"; */
+"0XM-vc-bJT.text" = "로그인에 있어 개인정보 수집 및 이용에 대한 안내 및 서비스 이용약관에 동의합니다.";
+
+/* Class = "UITextField"; placeholder = "Password"; ObjectID = "3Ub-hI-7ME"; */
+"3Ub-hI-7ME.placeholder" = "Password";
+
+/* Class = "UIButton"; normalTitle = "실시간 상담"; ObjectID = "4Ig-Z9-EQL"; */
+"4Ig-Z9-EQL.normalTitle" = "실시간 상담";
+
+/* Class = "UITabBarItem"; title = "1:1 문의"; ObjectID = "56X-8A-Qxz"; */
+"56X-8A-Qxz.title" = "1:1 문의";
+
+/* Class = "UILabel"; text = "가입"; ObjectID = "5nI-bw-46t"; */
+"5nI-bw-46t.text" = "가입";
+
+/* Class = "UILabel"; text = "지금 바로 사용해보세요"; ObjectID = "63K-dJ-fgd"; */
+"63K-dJ-fgd.text" = "지금 바로 사용해보세요";
+
+/* Class = "UILabel"; text = "아이디(이메일)을 입력해주세요"; ObjectID = "68G-ib-0fU"; */
+"68G-ib-0fU.text" = "아이디(이메일)을 입력해주세요";
+
+/* Class = "UITextField"; placeholder = "Password"; ObjectID = "6oa-8K-4ke"; */
+"6oa-8K-4ke.placeholder" = "Password";
+
+/* Class = "UITabBarItem"; title = "주문현황"; ObjectID = "95D-Pn-zRq"; */
+"95D-Pn-zRq.title" = "주문현황";
+
+/* Class = "UITabBarItem"; title = "내 정보"; ObjectID = "B6y-jc-KOc"; */
+"B6y-jc-KOc.title" = "내 정보";
+
+/* Class = "UIButton"; normalTitle = "비밀번호 찾기"; ObjectID = "Coq-ge-PF8"; */
+"Coq-ge-PF8.normalTitle" = "비밀번호 찾기";
+
+/* Class = "UITextField"; placeholder = "Email"; ObjectID = "Dpz-4H-9L5"; */
+"Dpz-4H-9L5.placeholder" = "Email";
+
+/* Class = "UIButton"; normalTitle = "로그인"; ObjectID = "F5h-iP-jna"; */
+"F5h-iP-jna.normalTitle" = "로그인";
+
+/* Class = "UIButton"; normalTitle = "이메일 로그인"; ObjectID = "GeB-RW-G7z"; */
+"GeB-RW-G7z.normalTitle" = "이메일 로그인";
+
+/* Class = "UILabel"; text = "이메일 로그인"; ObjectID = "M1U-xF-021"; */
+"M1U-xF-021.text" = "이메일 로그인";
+
+/* Class = "UILabel"; text = "무엇이든 물어보세요"; ObjectID = "OXG-c6-g8c"; */
+"OXG-c6-g8c.text" = "무엇이든 물어보세요";
+
+/* Class = "UIButton"; normalTitle = "가입"; ObjectID = "PXO-yX-QPe"; */
+"PXO-yX-QPe.normalTitle" = "가입";
+
+/* Class = "UIButton"; normalTitle = "확인"; ObjectID = "Ueg-LS-lZp"; */
+"Ueg-LS-lZp.normalTitle" = "확인";
+
+/* Class = "UITextField"; placeholder = "Repeat Password"; ObjectID = "i4a-Py-wPx"; */
+"i4a-Py-wPx.placeholder" = "Repeat Password";
+
+/* Class = "UILabel"; text = "크린바스켓"; ObjectID = "jXc-jL-fK1"; */
+"jXc-jL-fK1.text" = "크린바스켓";
+
+/* Class = "UITabBarItem"; title = "주문하기"; ObjectID = "lqQ-AT-b7n"; */
+"lqQ-AT-b7n.title" = "주문하기";
+
+/* Class = "UIButton"; normalTitle = "가입"; ObjectID = "mx0-hk-gRV"; */
+"mx0-hk-gRV.normalTitle" = "가입";
+
+/* Class = "UITextField"; placeholder = "Email"; ObjectID = "p1k-gH-dfD"; */
+"p1k-gH-dfD.placeholder" = "Email";
+
+/* Class = "UIButton"; normalTitle = "카카오톡 로그인"; ObjectID = "sbP-xO-Oai"; */
+"sbP-xO-Oai.normalTitle" = "카카오톡 로그인";
+
+/* Class = "UILabel"; text = "고객센터와 실시간 채팅이 가능합니다(운영시간 : 오전 10시 ~ 오후 6시)"; ObjectID = "tom-P3-tZw"; */
+"tom-P3-tZw.text" = "고객센터와 실시간 채팅이 가능합니다(운영시간 : 오전 10시 ~ 오후 6시)";
+
+/* Class = "UITextField"; placeholder = "Email"; ObjectID = "xWz-WO-xWf"; */
+"xWz-WO-xWf.placeholder" = "Email";
