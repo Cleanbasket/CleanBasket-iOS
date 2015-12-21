@@ -7,10 +7,12 @@
 
 #import "TTTAttributedLabel.h"
 
-@interface LoginViewController : UIViewController<TTTAttributedLabelDelegate> {
+@interface LoginViewController : UIViewController<TTTAttributedLabelDelegate, UIScrollViewDelegate> {
 
 }
 
 @property (weak, nonatomic) IBOutlet TTTAttributedLabel *privacyLinkLabel;
+@property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
+@property (weak, nonatomic) IBOutlet UIPageControl *pageControl;
 
 @end

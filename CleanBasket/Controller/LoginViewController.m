@@ -9,13 +9,20 @@
 #import "CBConstants.h"
 #import "SignInViewController.h"
 
+@interface LoginViewController()
+
+@property CGFloat screenWidth;
+
+@end
+
 @implementation LoginViewController
+
 
 - (void)viewDidLoad{
     [super viewDidLoad];
 
-
-
+    _scrollView.delegate = self;
+    
     //이용약관 링크 라벨
     _privacyLinkLabel.delegate = self;
 
@@ -26,10 +33,6 @@
     _privacyLinkLabel.activeLinkAttributes = [NSDictionary dictionaryWithDictionary:mutableActiveLinkAttributes];
     _privacyLinkLabel.inactiveLinkAttributes = [NSDictionary dictionaryWithDictionary:mutableActiveLinkAttributes];
 
-
-//    _privacyLinkLabel.linkAttributes = linkAttr;
-//    _privacyLinkLabel.activeLinkAttributes = linkAttr;
-//    _privacyLinkLabel.inactiveLinkAttributes = linkAttr;
 
     NSURL *privacyUrl = [NSURL URLWithString:@"https://www.cleanbasket.co.kr/privacy"];
     NSString *privacyString = _privacyLinkLabel.text;
@@ -44,6 +47,21 @@
     
     
 }
+
+
+- (void)awakeFromNib{
+    
+    self.automaticallyAdjustsScrollViewInsets = NO;
+}
+
+- (void)viewDidLayoutSubviews{
+    
+    _screenWidth = _scrollView.frame.size.width;
+    [_scrollView setContentSize:CGSizeMake(_screenWidth*3, _scrollView.frame.size.height)];
+
+}
+
+
 
 - (void)viewWillAppear:(BOOL)animated {
 
@@ -61,15 +79,24 @@
 
     [self presentViewController:signInViewController animated:YES completion:nil];
 
-//    [self presentViewController:signInViewController animated:YES completion:nil];
-//
-//    UIView *overlayView = [[UIView alloc] initWithFrame:self.view.frame];
-//
-//    overlayView.backgroundColor = [UIColor blackColor];
-//    overlayView.alpha = 0.5f;
-//
-//    [self.view addSubview:overlayView];
 
+}
+
+
+#pragma mark - ScrollviewDelegate
+- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView{
+    
+    CGFloat offsetX = scrollView.contentOffset.x;
+    NSInteger currentPage = offsetX/_screenWidth;
+    [_pageControl setCurrentPage:currentPage];
+    
+    //마지막 3번째 페이지 도달하면 페이지컨트롤 숨김
+    if (currentPage == 2) {
+        [_pageControl setHidden:YES];
+    } else {
+        [_pageControl setHidden:NO];
+    }
+    
 }
 
 
