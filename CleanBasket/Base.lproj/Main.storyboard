@@ -188,13 +188,44 @@
                                     </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="pVI-6K-JZN" userLabel="Intro2">
                                         <rect key="frame" x="320" y="0.0" width="320" height="568"/>
+                                        <subviews>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="크린바스켓 서비스 지역을 알려드립니다" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" minimumFontSize="13" translatesAutoresizingMaskIntoConstraints="NO" id="RdM-Zc-ncV">
+                                                <rect key="frame" x="0.0" y="40" width="320" height="60"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="60" id="STn-HW-0fb"/>
+                                                </constraints>
+                                                <fontDescription key="fontDescription" type="system" weight="medium" pointSize="25"/>
+                                                <color key="textColor" red="0.43921568630000002" green="0.43921568630000002" blue="0.43921568630000002" alpha="1" colorSpace="calibratedRGB"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ic_login_seoul" translatesAutoresizingMaskIntoConstraints="NO" id="zlZ-wj-vQM">
+                                                <rect key="frame" x="0.0" y="140" width="320" height="20"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="20" id="FaC-Sy-EIz"/>
+                                                </constraints>
+                                            </imageView>
+                                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ic_login_seoul_map" translatesAutoresizingMaskIntoConstraints="NO" id="DYg-vI-NfL">
+                                                <rect key="frame" x="0.0" y="170" width="320" height="251"/>
+                                            </imageView>
+                                        </subviews>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <constraints>
+                                            <constraint firstItem="RdM-Zc-ncV" firstAttribute="leading" secondItem="pVI-6K-JZN" secondAttribute="leading" id="4KV-yf-ChD"/>
+                                            <constraint firstAttribute="trailing" secondItem="DYg-vI-NfL" secondAttribute="trailing" id="Dlv-qb-kXG"/>
+                                            <constraint firstItem="DYg-vI-NfL" firstAttribute="top" secondItem="zlZ-wj-vQM" secondAttribute="bottom" constant="10" id="FTX-uI-8vX"/>
+                                            <constraint firstAttribute="trailing" secondItem="zlZ-wj-vQM" secondAttribute="trailing" id="gEP-7g-rMv"/>
+                                            <constraint firstAttribute="trailing" secondItem="RdM-Zc-ncV" secondAttribute="trailing" id="iHo-1K-Srx"/>
+                                            <constraint firstItem="RdM-Zc-ncV" firstAttribute="top" secondItem="pVI-6K-JZN" secondAttribute="top" constant="40" id="rAu-sZ-9rP"/>
+                                            <constraint firstItem="DYg-vI-NfL" firstAttribute="leading" secondItem="pVI-6K-JZN" secondAttribute="leading" id="wvf-vW-jDj"/>
+                                            <constraint firstItem="zlZ-wj-vQM" firstAttribute="leading" secondItem="pVI-6K-JZN" secondAttribute="leading" id="x21-Bo-XQH"/>
+                                            <constraint firstItem="zlZ-wj-vQM" firstAttribute="top" secondItem="RdM-Zc-ncV" secondAttribute="bottom" constant="40" id="zoE-GL-HVK"/>
+                                        </constraints>
                                     </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="nWe-re-7wO" userLabel="LoginView">
                                         <rect key="frame" x="640" y="0.0" width="320" height="568"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="로그인에 있어 개인정보 수집 및 이용에 대한 안내 및 서비스 이용약관에 동의합니다." textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="8" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="0XM-vc-bJT" customClass="TTTAttributedLabel">
-                                                <rect key="frame" x="0.0" y="547" width="320" height="21"/>
+                                                <rect key="frame" x="0.0" y="537" width="320" height="21"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="21" id="eVd-dU-wKb"/>
                                                 </constraints>
@@ -245,7 +276,7 @@
                                             <constraint firstAttribute="trailing" secondItem="0XM-vc-bJT" secondAttribute="trailing" id="431-70-gO4"/>
                                             <constraint firstItem="0XM-vc-bJT" firstAttribute="leading" secondItem="nWe-re-7wO" secondAttribute="leading" id="4lS-je-7EU"/>
                                             <constraint firstItem="qHH-9w-qie" firstAttribute="centerY" secondItem="nWe-re-7wO" secondAttribute="centerY" id="Neq-Oc-1rf"/>
-                                            <constraint firstAttribute="bottom" secondItem="0XM-vc-bJT" secondAttribute="bottom" id="W8v-Uj-GzK"/>
+                                            <constraint firstAttribute="bottom" secondItem="0XM-vc-bJT" secondAttribute="bottom" constant="10" id="W8v-Uj-GzK"/>
                                             <constraint firstItem="qHH-9w-qie" firstAttribute="centerX" secondItem="nWe-re-7wO" secondAttribute="centerX" id="qdS-sL-M9R"/>
                                         </constraints>
                                     </view>
@@ -307,7 +338,7 @@
                         <viewControllerLayoutGuide type="top" id="jE4-bU-Sjh"/>
                         <viewControllerLayoutGuide type="bottom" id="95N-PX-7hy"/>
                     </layoutGuides>
-                    <view key="view" alpha="0.90000000000000002" contentMode="scaleToFill" id="Xjp-iU-eHP">
+                    <view key="view" alpha="0.91000000000000003" contentMode="scaleToFill" id="Xjp-iU-eHP">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
@@ -535,7 +566,7 @@
                         <viewControllerLayoutGuide type="top" id="A65-gA-ifG"/>
                         <viewControllerLayoutGuide type="bottom" id="tQp-y2-Ppv"/>
                     </layoutGuides>
-                    <view key="view" alpha="0.85000002384185791" contentMode="scaleToFill" id="IdR-cB-hDn">
+                    <view key="view" alpha="0.91000000000000003" contentMode="scaleToFill" id="IdR-cB-hDn">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
@@ -816,6 +847,8 @@
     <resources>
         <image name="ic_login_email" width="45" height="27"/>
         <image name="ic_login_kakaotalk" width="37" height="34"/>
+        <image name="ic_login_seoul" width="118" height="21"/>
+        <image name="ic_login_seoul_map" width="328" height="251"/>
         <image name="ic_service_introduce_01mobile" width="42" height="74"/>
         <image name="ic_service_introduce_02cleaning" width="78" height="46"/>
         <image name="ic_service_introduce_03price" width="74" height="71"/>
