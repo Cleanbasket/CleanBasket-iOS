@@ -14,8 +14,11 @@
 
 @interface SignInViewController ()
 
+@property (weak, nonatomic) IBOutlet UIView *signInView;
+@property (weak, nonatomic) IBOutlet UIView *signUpView;
 @property (weak, nonatomic) IBOutlet SignTextField *emailTextField;
 @property (weak, nonatomic) IBOutlet SignTextField *pwTextField;
+@property (weak, nonatomic) IBOutlet UIView *findPasswordView;
 
 @end
 
@@ -23,12 +26,10 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
 }
 
 
 - (void)awakeFromNib {
-
     [self setModalPresentationStyle:UIModalPresentationCustom];
     [self setNeedsStatusBarAppearanceUpdate];
 }
@@ -74,24 +75,51 @@
     }];
 }
 
+
+- (IBAction)signUp:(id)sender {
+}
+
+- (IBAction)findPassword:(id)sender {
+}
+
+
+
 - (IBAction)goToSignUp:(id)sender {
+    
+    
+    [_signInView setHidden:YES];
+    [_signUpView setHidden:NO];
+    [_findPasswordView setHidden:YES];
+    
+    
 }
 
 - (IBAction)goToFindPw:(id)sender {
+    
+    [_signInView setHidden:YES];
+    [_signUpView setHidden:YES];
+    [_findPasswordView setHidden:NO];
 }
 
-- (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
 
+- (IBAction)returnToSignIn:(id)sender {
+    [_signInView setHidden:NO];
+    [_signUpView setHidden:YES];
+    [_findPasswordView setHidden:YES];
+}
+
+
+// 배경 터치하면 취소
+- (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
 
     UITouch  *touch = [touches anyObject];
     if ([touch view] == self.view){
-
-        NSLog(@"타치");
         [self dismissViewControllerAnimated:YES completion:nil];
     }
 
 
 }
+
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
