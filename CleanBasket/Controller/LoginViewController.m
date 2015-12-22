@@ -91,11 +91,7 @@
     [_pageControl setCurrentPage:currentPage];
     
     //마지막 3번째 페이지 도달하면 페이지컨트롤 숨김
-    if (currentPage == 2) {
-        [_pageControl setHidden:YES];
-    } else {
-        [_pageControl setHidden:NO];
-    }
+    [_pageControl setHidden:currentPage == 2];
     
 }
 

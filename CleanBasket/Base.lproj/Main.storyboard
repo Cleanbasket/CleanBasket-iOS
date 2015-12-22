@@ -700,7 +700,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
-                    <tabBarItem key="tabBarItem" title="주문현황" id="95D-Pn-zRq"/>
+                    <tabBarItem key="tabBarItem" title="주문현황" image="ic_menu_2delivery" id="95D-Pn-zRq"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="0Oe-I7-yYI" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -719,33 +719,49 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
-                    <tabBarItem key="tabBarItem" title="주문하기" id="lqQ-AT-b7n"/>
+                    <tabBarItem key="tabBarItem" title="주문하기" image="ic_menu_1order" id="lqQ-AT-b7n"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="waw-FX-eB3" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1976" y="-765"/>
         </scene>
-        <!--Tab Bar Controller-->
+        <!--Main Tab Bar View Controller-->
         <scene sceneID="h4Q-ia-tiu">
             <objects>
-                <tabBarController storyboardIdentifier="MainTBC" useStoryboardIdentifierAsRestorationIdentifier="YES" id="MC0-x5-DSg" sceneMemberID="viewController">
-                    <tabBar key="tabBar" contentMode="scaleToFill" translucent="NO" id="2uT-Vb-FfI">
+                <tabBarController storyboardIdentifier="MainTBC" useStoryboardIdentifierAsRestorationIdentifier="YES" id="MC0-x5-DSg" customClass="MainTabBarViewController" sceneMemberID="viewController">
+                    <tabBar key="tabBar" contentMode="scaleToFill" semanticContentAttribute="forceLeftToRight" barStyle="black" translucent="NO" id="2uT-Vb-FfI">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="49"/>
                         <autoresizingMask key="autoresizingMask"/>
-                        <color key="backgroundColor" red="0.51372549020000002" green="0.85882352939999995" blue="0.81960784310000001" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="backgroundColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                         <color key="barTintColor" red="0.51372549020000002" green="0.85882352939999995" blue="0.81960784310000001" alpha="1" colorSpace="calibratedRGB"/>
-                        <color key="selectedImageTintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </tabBar>
                     <connections>
                         <segue destination="103-zA-C0X" kind="relationship" relationship="viewControllers" id="Acz-65-hbS"/>
                         <segue destination="o2E-gK-UqG" kind="relationship" relationship="viewControllers" id="9Pf-tN-wUW"/>
-                        <segue destination="2Px-Gs-65q" kind="relationship" relationship="viewControllers" id="tcC-gQ-Urz"/>
                         <segue destination="iWH-oX-Ujy" kind="relationship" relationship="viewControllers" id="gde-d5-ofE"/>
+                        <segue destination="oMV-7b-Pah" kind="relationship" relationship="viewControllers" id="sVF-PK-loj"/>
                     </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="KFg-Dp-B6U" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1525" y="147"/>
+        </scene>
+        <!--내 정보-->
+        <scene sceneID="2X6-Bl-SrF">
+            <objects>
+                <navigationController navigationBarHidden="YES" id="oMV-7b-Pah" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="내 정보" image="ic_menu_3information" id="a4H-w5-7AM"/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="W4e-ba-pa6">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="2Px-Gs-65q" kind="relationship" relationship="rootViewController" id="mby-g9-nI1"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="cGW-iC-I3r" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1976" y="448"/>
         </scene>
         <!--1:1 문의-->
         <scene sceneID="fgn-4j-wbP">
@@ -811,7 +827,7 @@
                             <constraint firstItem="cOx-Qk-xXK" firstAttribute="centerY" secondItem="s33-Zs-A6t" secondAttribute="centerY" id="gaO-FQ-sCW"/>
                         </constraints>
                     </view>
-                    <tabBarItem key="tabBarItem" title="1:1 문의" id="56X-8A-Qxz"/>
+                    <tabBarItem key="tabBarItem" title="1:1 문의" image="ic_menu_4alarm" id="56X-8A-Qxz"/>
                     <connections>
                         <outlet property="callLabel" destination="bH6-bZ-tTB" id="kFt-hG-I62"/>
                     </connections>
@@ -831,20 +847,156 @@
                     <view key="view" contentMode="scaleToFill" id="McN-1N-hia">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="519"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ic_class_clean" translatesAutoresizingMaskIntoConstraints="NO" id="clk-3o-oJv">
+                                <rect key="frame" x="0.0" y="20" width="320" height="120"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="120" id="EeB-aj-9Wo"/>
+                                </constraints>
+                            </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="test@example.com" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="dFy-gE-tYV">
+                                <rect key="frame" x="0.0" y="148" width="320" height="21"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="21" id="Uq0-zS-tbB"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" red="0.43921568630000002" green="0.43921568630000002" blue="0.43921568630000002" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="크린바스켓" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="bPy-kj-5vk">
+                                <rect key="frame" x="0.0" y="177" width="320" height="25"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="25" id="4ar-IH-ZfF"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                <color key="textColor" red="0.43921568630000002" green="0.43921568630000002" blue="0.43921568630000002" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="적립률 2%" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="8k0-B0-bLg">
+                                <rect key="frame" x="0.0" y="210" width="320" height="21"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="21" id="tMf-vA-gWx"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <color key="textColor" red="0.43921568630000002" green="0.43921568630000002" blue="0.43921568630000002" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="사용 가능 마일리지 5,240" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="3uf-P1-YsE">
+                                <rect key="frame" x="0.0" y="235" width="320" height="21"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="21" id="aHy-8T-Bh8"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <color key="textColor" red="0.43921568630000002" green="0.43921568630000002" blue="0.43921568630000002" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="oWD-w2-WQt" customClass="BottomBorderButton">
+                                <rect key="frame" x="0.0" y="470" width="320" height="49"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="19"/>
+                                <inset key="titleEdgeInsets" minX="41" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="50" maxY="0.0"/>
+                                <state key="normal" title="설정" image="ic_information_setting">
+                                    <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="C73-g7-vb7" customClass="BottomBorderButton">
+                                <rect key="frame" x="0.0" y="422" width="320" height="48"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="19"/>
+                                <inset key="titleEdgeInsets" minX="41" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="50" maxY="0.0"/>
+                                <state key="normal" title="알람" image="ic_information_alarm">
+                                    <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1Qe-mO-Ur6" customClass="BottomBorderButton">
+                                <rect key="frame" x="0.0" y="373" width="320" height="49"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="19"/>
+                                <inset key="titleEdgeInsets" minX="30" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                <state key="normal" title="공지사항" image="ic_information_notification">
+                                    <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="DlN-VJ-Ypa" customClass="BottomBorderButton">
+                                <rect key="frame" x="0.0" y="324" width="320" height="49"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="19"/>
+                                <inset key="titleEdgeInsets" minX="29" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="50" maxY="0.0"/>
+                                <state key="normal" title="쿠폰" image="ic_information_coupon_info">
+                                    <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                            </button>
+                            <button opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3Sd-j6-eZr" customClass="RoundedButton">
+                                <rect key="frame" x="30" y="264" width="260" height="40"/>
+                                <color key="backgroundColor" red="0.51372549020000002" green="0.85882352939999995" blue="0.81960784310000001" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="40" id="DMm-Pc-OJE"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="17"/>
+                                <state key="normal" title="등급보기">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                            </button>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="oWD-w2-WQt" firstAttribute="top" secondItem="C73-g7-vb7" secondAttribute="bottom" id="1sO-fd-5Mu"/>
+                            <constraint firstItem="3uf-P1-YsE" firstAttribute="top" secondItem="8k0-B0-bLg" secondAttribute="bottom" constant="4" id="2PA-Su-jae"/>
+                            <constraint firstItem="C73-g7-vb7" firstAttribute="top" secondItem="1Qe-mO-Ur6" secondAttribute="bottom" id="4AU-FH-8hc"/>
+                            <constraint firstAttribute="trailing" secondItem="DlN-VJ-Ypa" secondAttribute="trailing" id="50S-Rw-VyI"/>
+                            <constraint firstItem="oWD-w2-WQt" firstAttribute="leading" secondItem="McN-1N-hia" secondAttribute="leading" id="6hW-li-uiN"/>
+                            <constraint firstAttribute="trailing" secondItem="dFy-gE-tYV" secondAttribute="trailing" id="7fN-6G-uuU"/>
+                            <constraint firstAttribute="trailing" secondItem="3Sd-j6-eZr" secondAttribute="trailing" constant="30" id="8tJ-xp-v7D"/>
+                            <constraint firstItem="3uf-P1-YsE" firstAttribute="leading" secondItem="McN-1N-hia" secondAttribute="leading" id="9iH-mB-x0T"/>
+                            <constraint firstAttribute="trailing" secondItem="clk-3o-oJv" secondAttribute="trailing" id="Att-9T-gvy"/>
+                            <constraint firstItem="1Qe-mO-Ur6" firstAttribute="top" secondItem="DlN-VJ-Ypa" secondAttribute="bottom" id="Gw5-ZY-aE2"/>
+                            <constraint firstItem="dFy-gE-tYV" firstAttribute="leading" secondItem="McN-1N-hia" secondAttribute="leading" id="HsY-fk-jeM"/>
+                            <constraint firstItem="bPy-kj-5vk" firstAttribute="leading" secondItem="McN-1N-hia" secondAttribute="leading" id="JR4-On-qVV"/>
+                            <constraint firstItem="3Sd-j6-eZr" firstAttribute="top" secondItem="3uf-P1-YsE" secondAttribute="bottom" constant="8" id="KJw-tt-VtC"/>
+                            <constraint firstItem="clk-3o-oJv" firstAttribute="top" secondItem="0zw-YL-Gsj" secondAttribute="bottom" id="L6V-fJ-2up"/>
+                            <constraint firstAttribute="trailing" secondItem="oWD-w2-WQt" secondAttribute="trailing" id="LKG-T8-pxF"/>
+                            <constraint firstItem="8k0-B0-bLg" firstAttribute="leading" secondItem="McN-1N-hia" secondAttribute="leading" id="PEf-Uf-y8O"/>
+                            <constraint firstItem="bPy-kj-5vk" firstAttribute="top" secondItem="dFy-gE-tYV" secondAttribute="bottom" constant="8" id="QMx-fz-CvM"/>
+                            <constraint firstItem="oWD-w2-WQt" firstAttribute="height" secondItem="DlN-VJ-Ypa" secondAttribute="height" id="QzD-Am-RXP"/>
+                            <constraint firstItem="C73-g7-vb7" firstAttribute="height" secondItem="DlN-VJ-Ypa" secondAttribute="height" id="W1f-DC-Wfd"/>
+                            <constraint firstItem="clk-3o-oJv" firstAttribute="leading" secondItem="McN-1N-hia" secondAttribute="leading" id="Xpr-X2-XrC"/>
+                            <constraint firstItem="8k0-B0-bLg" firstAttribute="top" secondItem="bPy-kj-5vk" secondAttribute="bottom" constant="8" id="Yyt-nv-KvF"/>
+                            <constraint firstItem="DlN-VJ-Ypa" firstAttribute="leading" secondItem="McN-1N-hia" secondAttribute="leading" id="ZiV-as-NJY"/>
+                            <constraint firstItem="DlN-VJ-Ypa" firstAttribute="top" secondItem="3Sd-j6-eZr" secondAttribute="bottom" constant="20" id="b4f-Jh-hYz"/>
+                            <constraint firstAttribute="trailing" secondItem="bPy-kj-5vk" secondAttribute="trailing" id="cDC-yp-F7z"/>
+                            <constraint firstItem="3oN-Ah-5JE" firstAttribute="top" secondItem="oWD-w2-WQt" secondAttribute="bottom" id="fxQ-Kc-Axl"/>
+                            <constraint firstAttribute="trailing" secondItem="C73-g7-vb7" secondAttribute="trailing" id="h5r-nc-pRg"/>
+                            <constraint firstAttribute="trailing" secondItem="1Qe-mO-Ur6" secondAttribute="trailing" id="h77-HB-Ten"/>
+                            <constraint firstItem="dFy-gE-tYV" firstAttribute="top" secondItem="clk-3o-oJv" secondAttribute="bottom" constant="8" id="mR5-jz-gxN"/>
+                            <constraint firstAttribute="trailing" secondItem="8k0-B0-bLg" secondAttribute="trailing" id="mU6-36-UhK"/>
+                            <constraint firstItem="C73-g7-vb7" firstAttribute="leading" secondItem="McN-1N-hia" secondAttribute="leading" id="rnL-8K-Yve"/>
+                            <constraint firstItem="1Qe-mO-Ur6" firstAttribute="height" secondItem="DlN-VJ-Ypa" secondAttribute="height" id="rnx-o9-KKQ"/>
+                            <constraint firstItem="3Sd-j6-eZr" firstAttribute="leading" secondItem="McN-1N-hia" secondAttribute="leading" constant="30" id="s79-z4-IyO"/>
+                            <constraint firstItem="1Qe-mO-Ur6" firstAttribute="leading" secondItem="McN-1N-hia" secondAttribute="leading" id="ucb-Ag-qf0"/>
+                            <constraint firstAttribute="trailing" secondItem="3uf-P1-YsE" secondAttribute="trailing" id="wZ8-DH-DoO"/>
+                        </constraints>
                     </view>
-                    <tabBarItem key="tabBarItem" title="내 정보" id="B6y-jc-KOc"/>
+                    <tabBarItem key="tabBarItem" title="내 정보" image="ic_menu_3information" id="B6y-jc-KOc"/>
+                    <navigationItem key="navigationItem" id="MNR-e7-HvD"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="rJK-dx-k7p" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1976" y="452"/>
+            <point key="canvasLocation" x="2403" y="448"/>
         </scene>
     </scenes>
     <resources>
+        <image name="ic_class_clean" width="160" height="160"/>
+        <image name="ic_information_alarm" width="50" height="41"/>
+        <image name="ic_information_coupon_info" width="64" height="34"/>
+        <image name="ic_information_notification" width="63" height="49"/>
+        <image name="ic_information_setting" width="52" height="53"/>
         <image name="ic_login_email" width="45" height="27"/>
         <image name="ic_login_kakaotalk" width="37" height="34"/>
         <image name="ic_login_seoul" width="118" height="21"/>
         <image name="ic_login_seoul_map" width="328" height="251"/>
+        <image name="ic_menu_1order" width="25" height="25"/>
+        <image name="ic_menu_2delivery" width="25" height="25"/>
+        <image name="ic_menu_3information" width="25" height="25"/>
+        <image name="ic_menu_4alarm" width="25" height="25"/>
         <image name="ic_qna" width="220" height="195"/>
         <image name="ic_service_introduce_01mobile" width="42" height="74"/>
         <image name="ic_service_introduce_02cleaning" width="78" height="46"/>
@@ -852,5 +1004,4 @@
         <image name="ic_service_introduce_04time" width="69" height="69"/>
         <image name="img_main_logo" width="391" height="390"/>
     </resources>
-    <color key="tintColor" red="0.51372549020000002" green="0.85882352939999995" blue="0.81960784310000001" alpha="1" colorSpace="calibratedRGB"/>
 </document>

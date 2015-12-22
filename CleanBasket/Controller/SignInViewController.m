@@ -109,6 +109,7 @@
 }
 
 
+//Todo: 키보드처리(키보드 가리기, 뷰 올리기)
 // 배경 터치하면 취소
 - (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
 

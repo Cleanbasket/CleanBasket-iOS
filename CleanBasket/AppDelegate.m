@@ -11,6 +11,7 @@
 #import "WebViewController.h"
 #import "CBConstants.h"
 #import "AuthCheckViewController.h"
+#import "MainTabBarViewController.h"
 
 @interface AppDelegate ()
 
@@ -32,6 +33,8 @@
                                              forState:UIControlStateNormal];
     [[UITabBarItem appearance] setTitleTextAttributes:@{ NSForegroundColorAttributeName : [UIColor blackColor] }
                                              forState:UIControlStateSelected];
+    [[UITabBar appearance] setTintColor:[UIColor blackColor]];
+
 
 
     UIStoryboard *sb = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
@@ -44,7 +47,9 @@
     [[UINavigationBar appearance] setTitleTextAttributes:@{NSForegroundColorAttributeName:[UIColor whiteColor]}];
 
 
-    [self.window setRootViewController:navController];
+    MainTabBarViewController *tabBarViewController = (MainTabBarViewController *) [sb instantiateViewControllerWithIdentifier:@"MainTBC"];
+    
+    [self.window setRootViewController:tabBarViewController];
 
 
     LoginViewController *loginViewController = (LoginViewController *) [sb instantiateViewControllerWithIdentifier:@"LoginVC"];
