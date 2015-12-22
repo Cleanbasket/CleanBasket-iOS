@@ -12,6 +12,7 @@
 #import "CBConstants.h"
 #import "AuthCheckViewController.h"
 #import "MainTabBarViewController.h"
+#import "ModalViewController.h"
 
 @interface AppDelegate ()
 
@@ -55,8 +56,11 @@
     LoginViewController *loginViewController = (LoginViewController *) [sb instantiateViewControllerWithIdentifier:@"LoginVC"];
     _loginVC = (id) [[UINavigationController alloc] initWithRootViewController:loginViewController];
 
-    WebViewController *webViewController = (WebViewController *) [sb instantiateViewControllerWithIdentifier:@"WebVC"];
-    _webVC = webViewController;
+
+    _webVC = (WebViewController *) [sb instantiateViewControllerWithIdentifier:@"WebVC"];
+
+
+    _modalVC =     (ModalViewController *) [sb instantiateViewControllerWithIdentifier:@"ModalVC"];
 
 
 //    self.tabBarController = [[MyUITabBarController alloc] init];
