@@ -918,6 +918,9 @@
                                 <state key="normal" title="공지사항" image="ic_information_notification">
                                     <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
+                                <connections>
+                                    <action selector="showNoticeVC:" destination="2Px-Gs-65q" eventType="touchUpInside" id="18Y-f2-3uq"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="DlN-VJ-Ypa" customClass="BottomBorderButton">
                                 <rect key="frame" x="0.0" y="296" width="320" height="56"/>
@@ -1051,6 +1054,7 @@
                                                         <constraint firstAttribute="width" constant="49" id="eTj-ah-n5J"/>
                                                         <constraint firstAttribute="height" constant="31" id="hVo-UI-6fn"/>
                                                     </constraints>
+                                                    <color key="onTintColor" red="0.51372549020000002" green="0.85882352939999995" blue="0.81960784310000001" alpha="1" colorSpace="calibratedRGB"/>
                                                 </switch>
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" fixedFrame="YES" text="이벤트 알람" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="h3c-nt-7AY">
                                                     <rect key="frame" x="15" y="0.0" width="245" height="43"/>
@@ -1078,6 +1082,7 @@
                                                         <constraint firstAttribute="height" constant="31" id="suK-my-qIS"/>
                                                         <constraint firstAttribute="width" constant="49" id="xeT-ha-y3E"/>
                                                     </constraints>
+                                                    <color key="onTintColor" red="0.51372549020000002" green="0.85882352939999995" blue="0.81960784310000001" alpha="1" colorSpace="calibratedRGB"/>
                                                 </switch>
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" fixedFrame="YES" text="주문 알람" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Nix-TA-utc">
                                                     <rect key="frame" x="15" y="0.0" width="245" height="43"/>
@@ -1096,7 +1101,7 @@
                             </tableViewSection>
                             <tableViewSection headerTitle="버전 정보" id="9P2-yo-W7w">
                                 <cells>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" textLabel="hJx-L2-Ubi" detailTextLabel="jUG-zl-kQc" style="IBUITableViewCellStyleSubtitle" id="a4o-AS-OT4">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" textLabel="hJx-L2-Ubi" detailTextLabel="jUG-zl-kQc" style="IBUITableViewCellStyleSubtitle" id="a4o-AS-OT4">
                                         <rect key="frame" x="0.0" y="276" width="320" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="a4o-AS-OT4" id="zCJ-vU-fgj">
@@ -1120,7 +1125,7 @@
                                             </subviews>
                                         </tableViewCellContentView>
                                     </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" textLabel="qML-b5-smj" detailTextLabel="QU6-f5-uNo" style="IBUITableViewCellStyleSubtitle" id="YLF-N6-Ike">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" textLabel="qML-b5-smj" detailTextLabel="QU6-f5-uNo" style="IBUITableViewCellStyleSubtitle" id="YLF-N6-Ike">
                                         <rect key="frame" x="0.0" y="320" width="320" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="YLF-N6-Ike" id="HFV-0G-KYq">
@@ -1175,7 +1180,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ZYx-0o-MOO" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2816" y="789"/>
+            <point key="canvasLocation" x="2816" y="932"/>
         </scene>
         <!--Modal View Controller-->
         <scene sceneID="5ym-xy-SEG">
@@ -1341,7 +1346,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="4zw-Ft-Jlq" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2816" y="147"/>
+            <point key="canvasLocation" x="2816" y="42"/>
         </scene>
     </scenes>
     <resources>

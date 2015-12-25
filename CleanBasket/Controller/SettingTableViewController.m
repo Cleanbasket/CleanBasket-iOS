@@ -23,12 +23,12 @@
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
     
+    [self setTitle:NSLocalizedString(@"setting", @"설정")];
     self.tableView.tableFooterView = [UIView new];
     
 }
 
 - (void)viewWillAppear:(BOOL)animated {
-    
     [self.navigationController setNavigationBarHidden:NO animated:YES];
 }
 

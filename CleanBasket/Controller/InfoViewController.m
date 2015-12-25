@@ -9,6 +9,7 @@
 #import "InfoViewController.h"
 #import "ModalViewController.h"
 #import "AppDelegate.h"
+#import "NoticeViewController.h"
 
 @interface InfoViewController ()
 
@@ -23,7 +24,13 @@
 }
 
 
-
+- (IBAction)showNoticeVC:(id)sender {
+    
+    NoticeViewController *noticeViewController = [NoticeViewController new];
+//    [noticeViewController loadNotice];
+    [self.navigationController pushViewController:noticeViewController animated:YES];
+    
+}
 
 - (void)viewWillAppear:(BOOL)animated {
     
