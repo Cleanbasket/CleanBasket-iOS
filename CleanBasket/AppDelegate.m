@@ -41,7 +41,7 @@
     UIStoryboard *sb = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
 
     AuthCheckViewController *authCheckViewController = (AuthCheckViewController *) [sb instantiateViewControllerWithIdentifier:@"AuthVC"];
-//    LoginViewController *loginViewController = [[LoginViewController alloc] init];
+    
     UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:authCheckViewController];
     [[UINavigationBar appearance] setTintColor:[UIColor whiteColor]];
     [[UINavigationBar appearance] setBarTintColor:CleanBasketMint];

@@ -6,6 +6,7 @@ pod 'ZendeskSDK'
 pod 'Realm'
 pod "ODSAccordionView"
 pod 'SVProgressHUD'
+pod 'RateView'
 
 
 use_frameworks!

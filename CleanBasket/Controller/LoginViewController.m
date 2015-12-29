@@ -8,6 +8,7 @@
 #import "AppDelegate.h"
 #import "CBConstants.h"
 #import "SignInViewController.h"
+#import <KakaoOpenSDK/KakaoOpenSDK.h>
 
 @interface LoginViewController()
 
@@ -34,13 +35,13 @@
     _privacyLinkLabel.inactiveLinkAttributes = [NSDictionary dictionaryWithDictionary:mutableActiveLinkAttributes];
 
 
-    NSURL *privacyUrl = [NSURL URLWithString:@"https://www.cleanbasket.co.kr/privacy"];
+    NSURL *privacyUrl = [NSURL URLWithString:@"http://www.cleanbasket.co.kr/privacy"];
     NSString *privacyString = _privacyLinkLabel.text;
     NSRange privacyRange = [privacyString rangeOfString:@"개인정보 수집 및 이용에 대한 안내"];
     [_privacyLinkLabel addLinkToURL:privacyUrl withRange:privacyRange];
 
 
-    NSURL *termUrl = [NSURL URLWithString:@"https://www.cleanbasket.co.kr/term-of-use"];
+    NSURL *termUrl = [NSURL URLWithString:@"http://www.cleanbasket.co.kr/term-of-use"];
     NSString *termString = _privacyLinkLabel.text;
     NSRange termRange = [termString rangeOfString:@"이용약관"];
     [_privacyLinkLabel addLinkToURL:termUrl withRange:termRange];
@@ -79,8 +80,31 @@
 
     [self presentViewController:signInViewController animated:YES completion:nil];
 
-
 }
+
+- (IBAction)loginWithKakao:(id)sender {
+    [[KOSession sharedSession] close];
+    
+    [[KOSession sharedSession] openWithCompletionHandler:^(NSError *error) {
+        if ([[KOSession sharedSession] isOpen]) {
+            // login success
+            NSLog(@"login succeeded.");
+            
+            UIStoryboard *sb = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+            UIViewController *mainTBC = [sb instantiateViewControllerWithIdentifier:@"MainTBC"];
+            
+            AppDelegate *appDelegate = [[UIApplication sharedApplication] delegate];
+            
+            [appDelegate.window setRootViewController:mainTBC];
+            
+        } else {
+            // failed
+            NSLog(@"login failed.");
+        }
+    }];
+}
+
+
 
 
 #pragma mark - ScrollviewDelegate

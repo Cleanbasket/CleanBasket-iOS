@@ -18,7 +18,6 @@
 
 @property (nonatomic) NSMutableArray *notices;
 @property (nonatomic) ODSAccordionView *accordionView;
-@property (weak, nonatomic) IBOutlet UIView *noticeView;
 
 @end
 
@@ -26,7 +25,7 @@
 
 
 - (void)viewDidLoad {
-//    [super viewDidLoad];
+    [super viewDidLoad];
     self.title = NSLocalizedString(@"notice_title",@"공지사항");
 
 }
@@ -49,19 +48,17 @@
     style.dividerColor = [UIColor lightGrayColor];
     style.headerHeight = 50;
     style.stickyHeaders = YES;
-//    style.animationDuration = 0.2;
-//    style.arrowHeight = 1;
 
     _notices = [NSMutableArray new];
 
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     manager.responseSerializer = [AFJSONResponseSerializer serializer];
     manager.responseSerializer.acceptableContentTypes = [manager.responseSerializer.acceptableContentTypes setByAddingObject:@"text/html"];
-//    manager.requestSerializer = [AFJSONRequestSerializer serializer];
 
     [manager GET:@"http://www.cleanbasket.co.kr/notice"
       parameters:nil
          success:^(AFHTTPRequestOperation *operation, id responseObject) {
+
 
              NSError *jsonError;
              NSData *objectData = [responseObject[@"data"] dataUsingEncoding:NSUTF8StringEncoding];
@@ -82,11 +79,9 @@
 
              _accordionView = [[ODSAccordionView alloc] initWithSections:_notices andSectionStyle:style];
              _accordionView.keyboardDismissMode = UIScrollViewKeyboardDismissModeOnDrag;
-//             [self.view addSubview:_accordionView];
              self.view = _accordionView;
-//             self.view.backgroundColor = lightBlue;
-
-
+             self.view.backgroundColor = [UIColor whiteColor];
+             [SVProgressHUD dismiss];
 
 
          } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
@@ -111,18 +106,21 @@
 -(void)viewDidAppear:(BOOL)animated {
 
     [SVProgressHUD show];
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+//    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         [self loadNotice];
-        dispatch_async(dispatch_get_main_queue(), ^{
-            [SVProgressHUD dismiss];
-        });
-    });
+//        dispatch_async(dispatch_get_main_queue(), ^{
+//            [SVProgressHUD dismiss];
+//        });
+//    });
 
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+    [SVProgressHUD dismiss];
 }
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
 }
 
 /*
