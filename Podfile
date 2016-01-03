@@ -1,4 +1,4 @@
-platform :ios, '7.1'
+platform :ios, '8.0'
 
 
 pod "AFNetworking", "~> 2.0"

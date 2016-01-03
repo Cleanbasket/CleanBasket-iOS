@@ -42,10 +42,9 @@
 //    manager.requestSerializer = [AFHTTPRequestSerializer serializer];
 //    manager.responseSerializer = [AFJSONResponseSerializer serializerWithReadingOptions:NSJSONReadingMutableContainers];
 
-//
     manager.responseSerializer = [AFJSONResponseSerializer serializer];
     manager.responseSerializer.acceptableContentTypes = [manager.responseSerializer.acceptableContentTypes setByAddingObject:@"text/html"];
-    manager.requestSerializer = [AFJSONRequestSerializer serializer];
+//    manager.requestSerializer = [AFJSONRequestSerializer serializer];
 ////
 //    [manager.requestSerializer setValue:@"application/json" forHTTPHeaderField:@"Accept"];
 //    [manager.requestSerializer setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
@@ -57,18 +56,15 @@
 //    NSString *authUrl = [NSString stringWithFormat:@"%@auth",REAL_SERVER_URL_STRING];
     
     [manager POST:@"http://www.cleanbasket.co.kr/auth" parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        
+        [self.view endEditing:YES];
+        
         NSLog(@"JSON: %@", responseObject );
-
 
         UIStoryboard *sb = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
         UIViewController *mainTBC = [sb instantiateViewControllerWithIdentifier:@"MainTBC"];
-
         AppDelegate *appDelegate = [[UIApplication sharedApplication] delegate];
-
         [appDelegate.window setRootViewController:mainTBC];
-
-
-//        _emailTextField.text = responseObject;
 
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         NSLog(@"Error: %@", error);
