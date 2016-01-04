@@ -10,8 +10,10 @@
 #import "ModalViewController.h"
 #import "AppDelegate.h"
 #import "NoticeViewController.h"
+#import "BottomBorderButton.h"
 
 @interface InfoViewController ()
+
 
 @end
 
@@ -19,8 +21,11 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
+
     [self setTitle:NSLocalizedString(@"menu_label_information", @"내 정보")];
+    
+    
+    
 }
 
 
@@ -28,6 +33,8 @@
     
     NoticeViewController *noticeViewController = [NoticeViewController new];
 //    [noticeViewController loadNotice];
+
+
     [self.navigationController pushViewController:noticeViewController animated:YES];
     
 }

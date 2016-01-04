@@ -27,7 +27,9 @@
     [self.layer addSublayer:topBorder];
     
     self.layer.masksToBounds = YES;
-    
+
+    self.imageView.contentMode = UIViewContentModeScaleAspectFit;
+//    self.imageEdgeInsets = UIEdgeInsetsMake(5,0,5,0);
     
 }
 
