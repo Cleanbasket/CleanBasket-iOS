@@ -10,6 +10,8 @@
 #import "LoginViewController.h"
 #import "AppDelegate.h"
 #import <AFNetworking/AFNetworking.h>
+#import <Realm/Realm.h>
+#import "User.h"
 
 
 @interface AuthCheckViewController ()
@@ -26,6 +28,7 @@
     [self authCheck];
 
 
+    
 
 }
 
@@ -34,19 +37,49 @@
 }
 
 
-
-
 //로그인 체크 메서드
 - (void)authCheck{
 
-    if (1) {
-        AppDelegate *appDelegate = [[UIApplication sharedApplication] delegate];
-
-        [appDelegate.window setRootViewController:appDelegate.loginVC];
-//        [self presentViewController:appDelegate.loginVC animated:NO completion:nil];
+    
+//    RLMRealm *realm = [RLMRealm defaultRealm];
+    
+    RLMResults<User *> *users = [User allObjects];
+    
+    //유저 있으면 바로 로그인, 없으면 loginVC로 이동
+    if (users.count) {
+        
+        User *user = [users firstObject];
+        
+        AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+        
+        manager.responseSerializer = [AFJSONResponseSerializer serializer];
+        manager.responseSerializer.acceptableContentTypes = [manager.responseSerializer.acceptableContentTypes setByAddingObject:@"text/html"];
+        
+        NSDictionary *parameters = @{@"email": user.email,
+                                     @"password": user.password };
+        
+        
+        [manager POST:@"http://www.cleanbasket.co.kr/auth" parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+            
+            
+            
+            UIStoryboard *sb = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+            UIViewController *mainTBC = [sb instantiateViewControllerWithIdentifier:@"MainTBC"];
+            AppDelegate *appDelegate = [[UIApplication sharedApplication] delegate];
+            [appDelegate.window setRootViewController:mainTBC];
+            
+        } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+            NSLog(@"Error: %@", error);
+        }];
     }
+    
     else {
+        
+        AppDelegate *appDelegate = [[UIApplication sharedApplication] delegate];
+        [appDelegate.window setRootViewController:appDelegate.loginVC];
 
+        
+        
     }
 
 

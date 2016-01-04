@@ -7,6 +7,9 @@
 //
 
 #import "SettingTableViewController.h"
+#import <Realm/Realm.h>
+#import "User.h"
+#import "AppDelegate.h"
 
 @interface SettingTableViewController ()
 
@@ -59,6 +62,24 @@
     }
 }
 
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    NSLog(@"%@",indexPath);
+    
+    //로그아웃
+    if (indexPath.section == 0 && indexPath.row == 1) {
+        
+        RLMRealm *realm = [RLMRealm defaultRealm];
+        
+        [realm beginWriteTransaction];
+        [realm deleteObjects:[User allObjects]];
+        [realm commitWriteTransaction];
+        
+        AppDelegate *appDelegate = [[UIApplication sharedApplication]delegate];
+        [appDelegate.window setRootViewController:appDelegate.loginVC];
+        
+    }
+    
+}
 
 /*
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {

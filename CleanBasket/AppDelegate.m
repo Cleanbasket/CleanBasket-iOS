@@ -48,9 +48,9 @@
     [[UINavigationBar appearance] setTitleTextAttributes:@{NSForegroundColorAttributeName:[UIColor whiteColor]}];
 
 
-    MainTabBarViewController *tabBarViewController = (MainTabBarViewController *) [sb instantiateViewControllerWithIdentifier:@"MainTBC"];
+//    MainTabBarViewController *tabBarViewController = (MainTabBarViewController *) [sb instantiateViewControllerWithIdentifier:@"MainTBC"];
     
-    [self.window setRootViewController:tabBarViewController];
+    [self.window setRootViewController:navController];
 
 
     LoginViewController *loginViewController = (LoginViewController *) [sb instantiateViewControllerWithIdentifier:@"LoginVC"];

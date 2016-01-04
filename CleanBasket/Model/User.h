@@ -10,6 +10,7 @@
 
 @property int uid;
 @property NSString *email;
+@property NSString *password;
 @property NSString *phone;
 @property RLMArray<Address> *address;
 @end
