@@ -37,6 +37,9 @@
     [[UITabBar appearance] setTintColor:[UIColor blackColor]];
 
 
+    [[UILabel appearanceWhenContainedIn:[UITableViewHeaderFooterView class], nil] setFont:[UIFont boldSystemFontOfSize:14]];
+
+
 
     UIStoryboard *sb = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
 
@@ -46,6 +49,7 @@
     [[UINavigationBar appearance] setTintColor:[UIColor whiteColor]];
     [[UINavigationBar appearance] setBarTintColor:CleanBasketMint];
     [[UINavigationBar appearance] setTitleTextAttributes:@{NSForegroundColorAttributeName:[UIColor whiteColor]}];
+    [[UINavigationBar appearance] setTranslucent:NO];
 
 
 //    MainTabBarViewController *tabBarViewController = (MainTabBarViewController *) [sb instantiateViewControllerWithIdentifier:@"MainTBC"];

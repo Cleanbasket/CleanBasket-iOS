@@ -75,7 +75,7 @@
         [realm commitWriteTransaction];
         
         AppDelegate *appDelegate = [[UIApplication sharedApplication]delegate];
-        [appDelegate.window setRootViewController:appDelegate.loginVC];
+        [appDelegate.window setRootViewController:(UIViewController*)appDelegate.loginVC];
         
     }
     
