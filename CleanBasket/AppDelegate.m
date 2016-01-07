@@ -13,8 +13,12 @@
 #import "AuthCheckViewController.h"
 #import "MainTabBarViewController.h"
 #import "ModalViewController.h"
+#import <AFNetworking/AFNetworking.h>
 
 @interface AppDelegate ()
+
+@property AuthCheckViewController *authCheckViewController;
+@property id lastViewController;
 
 @end
 
@@ -26,7 +30,7 @@
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
 
     // Override point for customization after application launch.
-    self.window.backgroundColor = [UIColor whiteColor];
+    self.window.backgroundColor = CleanBasketMint;
     [self.window makeKeyAndVisible];
 
 
@@ -43,17 +47,12 @@
 
     UIStoryboard *sb = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
 
-    AuthCheckViewController *authCheckViewController = (AuthCheckViewController *) [sb instantiateViewControllerWithIdentifier:@"AuthVC"];
+    _authCheckViewController = (AuthCheckViewController *) [sb instantiateViewControllerWithIdentifier:@"AuthVC"];
     
     [[UINavigationBar appearance] setTintColor:[UIColor whiteColor]];
     [[UINavigationBar appearance] setBarTintColor:CleanBasketMint];
     [[UINavigationBar appearance] setTitleTextAttributes:@{NSForegroundColorAttributeName:[UIColor whiteColor]}];
     [[UINavigationBar appearance] setTranslucent:NO];
-
-
-//    MainTabBarViewController *tabBarViewController = (MainTabBarViewController *) [sb instantiateViewControllerWithIdentifier:@"MainTBC"];
-    
-    [self.window setRootViewController:authCheckViewController];
 
 
     LoginViewController *loginViewController = (LoginViewController *) [sb instantiateViewControllerWithIdentifier:@"LoginVC"];
@@ -65,32 +64,9 @@
 
     _modalVC =     (ModalViewController *) [sb instantiateViewControllerWithIdentifier:@"ModalVC"];
 
+    UIViewController *tempIntroVC =  (ModalViewController *) [sb instantiateViewControllerWithIdentifier:@"TempIntroVC"];
 
-//    self.tabBarController = [[MyUITabBarController alloc] init];
-//    [_tabBarController.moreNavigationController setTitle:@"더 보기"];
-//    [self.tabBarController.moreNavigationController.view setTintColor:CleanBasketMint];
-//    self.tabNavController = [[UINavigationController alloc] initWithRootViewController:self.tabBarController];
-//
-//    //Load our animation controllers
-//    _modalAnimationController = [[ModalAnimation alloc] init];
-//    _slideAnimationController = [[SlideAnimation alloc] init];
-//    _shuffleAnimationController = [[ShuffleAnimation alloc] init];
-//
-//    [_tabBarController setDelegate:self];
-//    [_tabBarController setTransitioningDelegate:self];
-//    [_tabBarController setModalTransitionStyle:UIModalTransitionStyleCrossDissolve];
-//    [_tabBarController.view setBackgroundColor:UltraLightGray];
-//
-//    self.orderViewController = [[OrderViewController alloc] init];
-//    self.orderStatusViewController = [[OrderStatusViewController alloc] init];
-//    self.priceViewController = [[PriceViewController alloc] init];
-//    self.accountViewController = [[AccountViewController alloc] init];
-//    self.couponShareViewController = [[CouponShareViewController alloc] init];
-//    self.serviceInfoViewController = [[ServiceInfoViewController alloc] init];
-//
-//    NSArray *myBizViewControllers = [[NSArray alloc] initWithObjects:self.orderViewController, self.orderStatusViewController, self.priceViewController, self.couponShareViewController, self.serviceInfoViewController, nil];
-//
-//    [self.tabBarController setViewControllers:myBizViewControllers];
+    [self.window setRootViewController:tempIntroVC];
 
     return YES;
 
@@ -105,6 +81,8 @@
 - (void)applicationDidEnterBackground:(UIApplication *)application {
     // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
     // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
+    _lastViewController = self.window.rootViewController;
+    
 }
 
 - (void)applicationWillEnterForeground:(UIApplication *)application {
@@ -112,7 +90,33 @@
 }
 
 - (void)applicationDidBecomeActive:(UIApplication *)application {
-    // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
+    
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    
+    manager.responseSerializer = [AFJSONResponseSerializer serializer];
+    manager.responseSerializer.acceptableContentTypes = [manager.responseSerializer.acceptableContentTypes setByAddingObject:@"text/html"];
+    
+    [manager GET:@"http://www.cleanbasket.co.kr/auth/check"
+      parameters:nil
+         success:^(AFHTTPRequestOperation *operation, id responseObject) {
+
+             if ([responseObject[@"constant"]integerValue] == 17) {
+                 if (_lastViewController) {
+                     [self.window setRootViewController:_lastViewController];
+                 }
+             } else {
+                 [self.window setRootViewController:_authCheckViewController];
+             }
+             
+             
+             
+         } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+             NSLog(@"Error: %@", error);
+             
+             [self.window setRootViewController:_authCheckViewController];
+             
+         }];
+
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application {
