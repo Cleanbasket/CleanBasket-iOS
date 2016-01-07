@@ -45,7 +45,6 @@
 
     AuthCheckViewController *authCheckViewController = (AuthCheckViewController *) [sb instantiateViewControllerWithIdentifier:@"AuthVC"];
     
-    UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:authCheckViewController];
     [[UINavigationBar appearance] setTintColor:[UIColor whiteColor]];
     [[UINavigationBar appearance] setBarTintColor:CleanBasketMint];
     [[UINavigationBar appearance] setTitleTextAttributes:@{NSForegroundColorAttributeName:[UIColor whiteColor]}];
@@ -54,7 +53,7 @@
 
 //    MainTabBarViewController *tabBarViewController = (MainTabBarViewController *) [sb instantiateViewControllerWithIdentifier:@"MainTBC"];
     
-    [self.window setRootViewController:navController];
+    [self.window setRootViewController:authCheckViewController];
 
 
     LoginViewController *loginViewController = (LoginViewController *) [sb instantiateViewControllerWithIdentifier:@"LoginVC"];

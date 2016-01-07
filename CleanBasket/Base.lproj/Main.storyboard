@@ -18,10 +18,10 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Bz9-SN-Imw" userLabel="ContentWrap">
+                            <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Bz9-SN-Imw" userLabel="ContentWrap">
                                 <rect key="frame" x="10" y="100" width="300" height="370"/>
                                 <subviews>
-                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="img_main_logo" translatesAutoresizingMaskIntoConstraints="NO" id="jcd-JL-CBf">
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="img_main_logo" translatesAutoresizingMaskIntoConstraints="NO" id="jcd-JL-CBf">
                                         <rect key="frame" x="0.0" y="0.0" width="300" height="300"/>
                                     </imageView>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="크린바스켓" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="E1k-3W-UxW">
@@ -49,6 +49,11 @@
                             <constraint firstItem="Bz9-SN-Imw" firstAttribute="centerY" secondItem="47V-H5-gNT" secondAttribute="centerY" constant="1" id="7fW-U1-0hF"/>
                         </constraints>
                     </view>
+                    <connections>
+                        <outlet property="descLabel" destination="fi1-Am-18o" id="u1N-EQ-FOd"/>
+                        <outlet property="logoImageView" destination="jcd-JL-CBf" id="kdi-k3-FyV"/>
+                        <outlet property="titleLabel" destination="E1k-3W-UxW" id="Gxk-mr-F1w"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="vaC-VD-5Co" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
