@@ -65,7 +65,6 @@
         
         [manager POST:@"http://www.cleanbasket.co.kr/auth" parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
             
-            [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
             [UIView animateWithDuration:0.5f
                                   delay:0.3f
                                 options:UIViewAnimationOptionCurveEaseInOut
@@ -75,6 +74,8 @@
                              }
                              completion:^(BOOL finished){
                                  
+                                 [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
+
 
                                  
                                  UIStoryboard *sb = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
@@ -85,7 +86,7 @@
             
             }];
  
-            [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
+
             [UIView animateWithDuration:0.5f
                                   delay:0.0f
                                 options:UIViewAnimationOptionCurveEaseInOut
@@ -99,7 +100,7 @@
                                  
                                  
                              }];
-            [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
+
             [UIView animateWithDuration:0.5f
                                   delay:0.15f
                                 options:UIViewAnimationOptionCurveEaseInOut

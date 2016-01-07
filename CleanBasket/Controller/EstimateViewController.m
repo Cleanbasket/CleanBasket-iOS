@@ -229,7 +229,7 @@
     
     NSString *indexString = [NSString stringWithFormat:@"%li,%li",(long)clickedButtonIndexPath.section,(long)clickedButtonIndexPath.row];
 
-    if (_selectedItemsCounts){
+    if ([[_selectedItemsCounts objectForKey:indexString] integerValue]){
         NSInteger number = [[_selectedItemsCounts objectForKey:indexString] integerValue];
         number+=1;
         _selectedItemsCounts[indexString] = @(number);
@@ -257,18 +257,29 @@
     
     NSString *indexString = [NSString stringWithFormat:@"%li,%li",clickedButtonIndexPath.section,clickedButtonIndexPath.row];
     
-    if (_selectedItemsCounts){
+    if ([[_selectedItemsCounts objectForKey:indexString] integerValue]){
         NSInteger number = [[_selectedItemsCounts objectForKey:indexString] integerValue];
         number-=1;
         _selectedItemsCounts[indexString] = @(number);
+        
+        
     } else {
         _selectedItemsCounts[indexString] = @0;
     }
-
-
+    
+    
     NSDictionary *item = _items[clickedButtonIndexPath.section][clickedButtonIndexPath.row];
+    
+//
+    NSInteger indexOfname = [_selectedItems indexOfObject:item];
+    
+    if(indexOfname != NSNotFound){
+        NSLog(@"%ld",[_selectedItems indexOfObject:item]);
 
-    [_selectedItems removeObjectAtIndex:[_selectedItems indexOfObject:item]];
+        [_selectedItems removeObjectAtIndex:[_selectedItems indexOfObject:item]];
+    }
+
+
 
     [_tableView reloadRowsAtIndexPaths:@[clickedButtonIndexPath] withRowAnimation:UITableViewRowAnimationNone];
     [self calculateTotal];
@@ -310,6 +321,8 @@
 
     if (indexPath.row == categoryIndex){
         [collectionViewCell selected];
+    } else {
+        [collectionViewCell unselected];
     }
 
     return collectionViewCell;
