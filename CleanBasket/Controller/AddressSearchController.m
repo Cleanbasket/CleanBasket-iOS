@@ -7,7 +7,9 @@
 //
 
 #import "AddressSearchController.h"
+#import "CBConstants.h"
 #import <AFNetworking/AFNetworking.h>
+#import <SVProgressHUD/SVProgressHUD.h>
 
 @interface AddressSearchController ()<UITableViewDataSource,UITableViewDelegate, UISearchBarDelegate, UIAlertViewDelegate>
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
@@ -315,6 +317,7 @@ NSMutableArray *searchResult, *allAddress, *supportAddress, *supportAllDongsAddr
         
         NSString *remainder = [alertView textFieldAtIndex:0].text;
         [self updateAddress:alertView.message remainder:remainder];
+        [SVProgressHUD show];
         
     }
     
@@ -362,35 +365,63 @@ NSMutableArray *searchResult, *allAddress, *supportAddress, *supportAllDongsAddr
 }
 
 - (void)updateAddress:(NSString*)address remainder:(NSString*)remainder{
-    
-    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-    
-    
+
+
+        AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+
+
     manager.requestSerializer = [AFJSONRequestSerializer serializer];
-    
+    manager.responseSerializer = [AFJSONResponseSerializer serializerWithReadingOptions:NSJSONReadingAllowFragments];
+
     manager.responseSerializer.acceptableContentTypes = [manager.responseSerializer.acceptableContentTypes setByAddingObject:@"text/html"];
 
 
-    
-    NSDictionary *parameters = @{@"address":address,@"address_remainder":remainder};
-    
-    NSLog(@"파라미터 : %@", parameters);
-    
+
+    NSDictionary *parameters = @{@"address":address,
+                                 @"addr_remainder":remainder
+    };
+
+
     [manager POST:@"http://www.cleanbasket.co.kr/member/address/update"
        parameters:parameters
-     
-         success:^(AFHTTPRequestOperation *operation, id responseObject) {
-             
-             NSLog(@"%@",responseObject[@"constant"]);
-             
-             if (responseObject[@"constant"]) {
-                 [self dismissThisVC:nil];
-             }
-             
-             
-         } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-             NSLog(@"Error: %@", error);
-         }];
+
+          success:^(AFHTTPRequestOperation *operation, id responseObject) {
+
+              NSLog(@"%@",responseObject);
+
+              NSLog(@"결과: %@", [NSString stringWithUTF8String:[responseObject[@"message"] UTF8String]]);
+
+              if ([responseObject[@"constant"] integerValue] == CBServerConstantSuccess) {
+                  [[NSNotificationCenter defaultCenter] postNotificationName:@"didFinishEditAddress" object:nil];
+
+                  [self dismissThisVC:nil];
+                  [SVProgressHUD showSuccessWithStatus:NSLocalizedString(@"success",nil)];
+              }
+
+
+          } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                NSLog(@"Error: %@", error);
+            }];
+
+//
+//
+//    [manager POST:@"http://www.cleanbasket.co.kr/member/address/update"
+//       parameters:parameters
+//
+//         success:^(AFHTTPRequestOperation *operation, id responseObject) {
+//
+//             NSLog(@"%@",responseObject[@"constant"]);
+//
+//             if ([responseObject[@"constant"] integerValue] == CBServerConstantSuccess) {
+//                 [[NSNotificationCenter defaultCenter] postNotificationName:@"didFinishEditAddress" object:nil];
+//
+//                 [self dismissThisVC:nil];
+//             }
+//
+//
+//         } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+//             NSLog(@"Error: %@", error);
+//         }];
 
 }
 

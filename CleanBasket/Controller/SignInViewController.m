@@ -181,6 +181,46 @@
 
 
 - (IBAction)signUp:(id)sender {
+
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+
+    manager.requestSerializer = [AFJSONRequestSerializer serializer];
+
+    manager.responseSerializer = [AFJSONResponseSerializer serializer];
+    manager.responseSerializer.acceptableContentTypes = [manager.responseSerializer.acceptableContentTypes setByAddingObject:@"text/html"];
+
+
+    NSDictionary *parameters = @{@"email":_signUpEmailTF.text,@"password":_signUpPwTF.text};
+
+    [manager POST:@"http://www.cleanbasket.co.kr/member/register" parameters:parameters
+          success:^(AFHTTPRequestOperation *operation, id responseObject) {
+
+              NSLog(@"res : %@",responseObject);
+
+              NSNumber *value = responseObject[@"constant"];
+              switch ([value integerValue]) {
+                  case CBServerConstantSuccess:
+                  {
+
+                      [SVProgressHUD showSuccessWithStatus:NSLocalizedString(@"sign_up_success",nil)];
+
+                      [_emailTextField setText:parameters[@"email"]];
+                      [_pwTextField setText:parameters[@"password"]];
+                      [self login:nil];
+
+                  }
+                      break;
+                  case CBServerConstantsAccountDuplication:
+                  {
+                      [SVProgressHUD showErrorWithStatus:NSLocalizedString(@"email_duplication",nil)];
+                      break;
+                  }
+              }
+          } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                [SVProgressHUD showErrorWithStatus:NSLocalizedString(@"network_error",nil)];
+                NSLog(@"%@",error);
+            }];
+
 }
 
 - (IBAction)findPassword:(id)sender {

@@ -22,6 +22,7 @@ typedef enum : NSUInteger {
 @property (weak, nonatomic) IBOutlet UIView *timeSelectView;
 @property (weak, nonatomic) IBOutlet UIView *paymentView;
 @property (weak, nonatomic) IBOutlet UIView *priceView;
+@property (weak, nonatomic) IBOutlet UILabel *addressLabel;
 @property (weak, nonatomic) IBOutlet UIView *addressView;
 @property (weak, nonatomic) IBOutlet UILabel *paymentMethodLabel;
 @property (weak, nonatomic) IBOutlet UILabel *estimatePriceLabel;
@@ -31,6 +32,7 @@ typedef enum : NSUInteger {
 @property CBPaymentMethod paymentMethod;
 @property NSNumber *estimatePrice;
 @property NSNumberFormatter *numberFormatter;
+@property NSString *addressString;
 
 @end
 
@@ -72,6 +74,14 @@ CGFloat defaultConst;
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(checkCreditCard)
                                                  name:@"didFinishAddCredit" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(getAddress)
+                                                 name:@"didFinishEditAddress" object:nil];
+    _addressString = [NSString string];
+    [_addressLabel setText:_addressString];
+
+
+    [self getAddress];
 
 
 }
@@ -185,79 +195,15 @@ CGFloat defaultConst;
 
 - (void)editAddress{
 
-    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
 
+    UIStoryboard *sb = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+    UINavigationController *addAddressNC = [sb instantiateViewControllerWithIdentifier:@"AddAddressNC"];
 
-    manager.requestSerializer = [AFJSONRequestSerializer serializer];
-    manager.responseSerializer = [AFJSONResponseSerializer serializerWithReadingOptions:NSJSONReadingAllowFragments];
-
-    manager.responseSerializer.acceptableContentTypes = [manager.responseSerializer.acceptableContentTypes setByAddingObject:@"text/html"];
-
-
-
-    NSDictionary *parameters = @{@"address":@"서울 강남구 역삼동",
-                                 @"addr_remainder":@"605-12 대암빌딩 104호" ,
-                                 @"type":@"0",
-            @"addr_building":@"",
-            @"addr_number":@""
-    };
-
-
-    [manager POST:@"http://www.cleanbasket.co.kr/member/address/update"
-       parameters:parameters
-
-          success:^(AFHTTPRequestOperation *operation, id responseObject) {
-
-              NSLog(@"결과: %@", [NSString stringWithUTF8String:[responseObject[@"message"] UTF8String]]);
-
-              if (responseObject[@"constant"]) {
-              }
-
-
-          } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                NSLog(@"Error: %@", error);
-            }];
+    [self presentViewController:addAddressNC animated:YES completion:nil];
 
 
 
 
-
-//    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-//
-//    manager.responseSerializer = [AFJSONResponseSerializer serializer];
-//    manager.responseSerializer.acceptableContentTypes = [manager.responseSerializer.acceptableContentTypes setByAddingObject:@"text/html"];
-//
-//
-//
-//    [manager GET:@"http://www.cleanbasket.co.kr/member/address"
-//      parameters:nil
-//         success:^(AFHTTPRequestOperation *operation, id responseObject) {
-//
-//
-//
-//             NSError *jsonError;
-//             NSData *objectData = [responseObject[@"data"] dataUsingEncoding:NSUTF8StringEncoding];
-//             NSArray *data = [NSJSONSerialization JSONObjectWithData:objectData
-//                                                             options:NSJSONReadingMutableContainers
-//                                                               error:&jsonError];
-//
-//             NSLog(@"message : %@, data : %@",responseObject[@"message"],data);
-//
-//
-//             if (!data.count){
-//                 //주소없을때처리
-//
-//                 [self presentAddAddressVC];
-//
-//             } else {
-//                 //주소있을때처리
-//
-//             }
-//
-//
-//         } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-//                NSLog(@"Error: %@", error);
-//            }];
 }
 
 
@@ -271,55 +217,40 @@ CGFloat defaultConst;
 
 - (void)getAddress{
 
+
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
 
     manager.responseSerializer = [AFJSONResponseSerializer serializer];
     manager.responseSerializer.acceptableContentTypes = [manager.responseSerializer.acceptableContentTypes setByAddingObject:@"text/html"];
 
-    [manager GET:@"http://www.cleanbasket.co.kr/district"
+
+
+    [manager GET:@"http://www.cleanbasket.co.kr/member/address"
       parameters:nil
          success:^(AFHTTPRequestOperation *operation, id responseObject) {
-//
-//
-
-                           NSError *jsonError;
-                           NSData *objectData = [responseObject[@"data"] dataUsingEncoding:NSUTF8StringEncoding];
-                           NSArray *datas = [NSJSONSerialization JSONObjectWithData:objectData
-                                                                           options:NSJSONReadingMutableContainers
-                                                                             error:&jsonError];
 
 
-             NSString *currentLanguage = [NSLocale preferredLanguages][0];
 
-             //한글일때
-             if ([currentLanguage isEqualToString:@"ko"]) {
+             NSError *jsonError;
+             NSData *objectData = [responseObject[@"data"] dataUsingEncoding:NSUTF8StringEncoding];
+             NSArray *data = [NSJSONSerialization JSONObjectWithData:objectData
+                                                             options:NSJSONReadingMutableContainers
+                                                               error:&jsonError];
 
-                 for (NSDictionary *data in datas){
+             NSLog(@"message : %@, data : %@",responseObject[@"message"],data);
 
-                     NSInteger dcid = [(NSNumber *)data[@"dcid"] integerValue];
 
-                     if ( !(dcid % 2) ){
-                         NSLog(@"%@\n", data);
-                     }
+             if (!data.count){
+                 //주소없을때처리
 
-                 }
+//                 [self presentAddAddressVC];
 
+             } else {
+                 //주소있을때처리
+                 _addressString = [NSString stringWithFormat:@"%@ %@",data.firstObject[@"address"],data.firstObject[@"addr_remainder"]];
+                 [_addressLabel setText:_addressString];
              }
-             //영어일때
-             else if([currentLanguage isEqualToString:@"en"]) {
 
-                 for (NSDictionary *data in datas){
-
-                     NSInteger dcid = [(NSNumber *)data[@"dcid"] integerValue];
-
-                     if (dcid % 2){
-                         NSLog(@"%@\n", data);
-                     }
-
-                 }
-
-
-             }
 
          } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
                 NSLog(@"Error: %@", error);
