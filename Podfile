@@ -8,6 +8,8 @@ pod "ODSAccordionView"
 pod 'SVProgressHUD'
 pod 'RateView'
 
+pod 'BEMCheckBox'
+
 
 use_frameworks!
 pod 'TTTAttributedLabel'

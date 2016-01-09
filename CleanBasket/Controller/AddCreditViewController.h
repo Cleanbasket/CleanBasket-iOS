@@ -8,6 +8,8 @@
 
 #import <UIKit/UIKit.h>
 
-@interface AddCreditViewController : UIViewController
+#import "UITextField+maxLength.h"
+
+@interface AddCreditViewController : UIViewController<UITextFieldDelegate>
 
 @end

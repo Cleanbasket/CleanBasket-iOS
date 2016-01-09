@@ -15,6 +15,8 @@
 #import "User.h"
 #import <SVProgressHUD/SVProgressHUD.h>
 
+
+
 @interface SignInViewController ()
 
 @property (weak, nonatomic) IBOutlet UIView *signInView;
@@ -25,6 +27,12 @@
 @property (weak, nonatomic) IBOutlet UIButton *findPwBtn;
 
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
+@property CGSize scrollViewContentSize;
+
+@property (weak, nonatomic) IBOutlet SignTextField *findPasswordEmailTF;
+@property (weak, nonatomic) IBOutlet SignTextField *signUpEmailTF;
+@property (weak, nonatomic) IBOutlet SignTextField *signUpPwTF;
+@property (weak, nonatomic) IBOutlet SignTextField *signUpPwRepeatTF;
 
 
 @end
@@ -32,16 +40,34 @@
 @implementation SignInViewController
 
 - (void)viewDidLoad {
+    
+    
+    switch ((NSInteger)_modalType) {
+        case CBModalTypeSignIn:
+            
+            break;
+            
+        default:
+            break;
+    }
+    
     [super viewDidLoad];
     
-    [_scrollView setContentSize:self.view.frame.size];
+    _scrollViewContentSize = self.view.frame.size;
 
+    _scrollView.contentSize = _scrollViewContentSize;
     
-    NSLog(@"%f,%f",_scrollView.contentSize.width,_scrollView.contentSize.height);
+    NSLog(@"첨 시작 %f,%f",_scrollView.contentSize.width,_scrollView.contentSize.height);
 
     
     _emailTextField.delegate = self;
     _pwTextField.delegate = self;
+
+    [self setNeedsStatusBarAppearanceUpdate];
+
+    [self preferredStatusBarStyle];
+
+//    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent animated:YES];
 }
 
 
@@ -165,6 +191,11 @@
 - (IBAction)goToSignUp:(id)sender {
 
 
+//    _signInViewHeightConstraint.constant = 340.0f;
+//    [UIView animateWithDuration:0.5f animations:^{
+//        [self.view layoutIfNeeded];
+//    }];
+    
     [_signInView setHidden:YES];
     [_signUpView setHidden:NO];
     [_findPasswordView setHidden:YES];
@@ -225,9 +256,11 @@
     // Dispose of any resources that can be recreated.
 }
 
-- (UIStatusBarStyle)preferredStatusBarStyle {
+- (UIStatusBarStyle)preferredStatusBarStyle
+{
     return UIStatusBarStyleLightContent;
 }
+
 
 -(void)viewWillAppear:(BOOL)animated
 {
@@ -244,8 +277,8 @@
 -(void) registNotification
 {
     [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(keyboardWasShown:)
-                                                 name:UIKeyboardDidShowNotification
+                                             selector:@selector(keyboardWillShow:)
+                                                 name:UIKeyboardWillShowNotification
                                                object:nil];
 
     [[NSNotificationCenter defaultCenter] addObserver:self
@@ -257,60 +290,41 @@
 -(void) unregistNotification
 {
     [[NSNotificationCenter defaultCenter] removeObserver:self
-                                                    name:UIKeyboardDidShowNotification object:nil];
+                                                    name:UIKeyboardWillShowNotification object:nil];
 
     [[NSNotificationCenter defaultCenter] removeObserver:self
-                                                    name:UIKeyboardDidHideNotification object:nil];
+                                                    name:UIKeyboardWillHideNotification object:nil];
 }
 
 
--(void)textFieldDidBeginEditing:(UITextField *)textField
-{
-//    self.activeField = textField;
-//    self.activeField.delegate = self;
-}
-
--(void)textFieldDidEndEditing:(UITextField *)textField
-{
-//    self.activeField = nil;
-}
-
-- (void)keyboardWasShown:(NSNotification*)aNotification
+- (void)keyboardWillShow:(NSNotification*)aNotification
 {
     NSDictionary* info = [aNotification userInfo];
     CGSize kbSize = [[info objectForKey:UIKeyboardFrameBeginUserInfoKey] CGRectValue].size;
 
-    UIEdgeInsets contentInsets = UIEdgeInsetsMake(0.0, 0.0, kbSize.height, 0.0);
-    self.scrollView.contentInset = contentInsets;
-    self.scrollView.scrollIndicatorInsets = contentInsets;
-
     CGRect aRect = self.view.frame;
     aRect.size.height -= kbSize.height;
+    
+    CGRect signinViewFrame = _signInView.frame;
 
-    if (!CGRectContainsPoint(aRect, _findPwBtn.frame.origin) ) {
+    CGPoint signinViewBottomPoint = CGPointMake(0, signinViewFrame.origin.y+signinViewFrame.size.height);
+    
+    if (!CGRectContainsPoint(aRect, signinViewBottomPoint) ) {
         [self.scrollView setContentSize:CGSizeMake(CGRectGetWidth(self.scrollView.frame), CGRectGetHeight(self.scrollView.frame) + kbSize.height)];
-        CGPoint scrollPoint = CGPointMake(0.0, _findPwBtn.frame.origin.y - aRect.size.height + _findPwBtn.frame.size.height);
+        CGPoint scrollPoint = CGPointMake(0.0, kbSize.height/2.0f);
         [self.scrollView setContentOffset:scrollPoint animated:YES];
 
-        NSLog(@"%f,%f",_scrollView.contentSize.width,_scrollView.contentSize.height);
-
-//        [self.scrollView scrollRectToVisible:_findPwBtn.frame animated:YES];
     }
 
-
-//    if (!CGRectContainsPoint(aRect, buttonOrigin)){
-//
-//        CGPoint scrollPoint = CGPointMake(0.0, buttonOrigin.y - visibleRect.size.height + buttonHeight);
-//
-//        [self.scrollView setContentOffset:scrollPoint animated:YES];
-//
-//    }
 
 }
 
 - (void)keyboardWillBeHidden:(NSNotification*)aNotification
 {
+    _scrollView.contentSize = _scrollViewContentSize;
     [self.scrollView setContentOffset:CGPointZero animated:YES];
+
+
 }
 
 @end

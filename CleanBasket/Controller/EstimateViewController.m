@@ -344,6 +344,11 @@
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 - (IBAction)confirm:(id)sender {
+
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"didFinishEstimate"
+                                                        object:nil
+                                                      userInfo:@{@"totalPrice":@(totalPrice)}];
+
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 

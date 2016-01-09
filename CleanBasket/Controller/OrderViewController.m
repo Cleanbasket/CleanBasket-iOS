@@ -7,15 +7,30 @@
 //
 
 #import "OrderViewController.h"
+#import "AppDelegate.h"
 #import <AFNetworking/AFNetworking.h>
+#import <SVProgressHUD/SVProgressHUD.h>
 
-@interface OrderViewController ()
+typedef enum : NSUInteger {
+    CBPaymentMethodCard=0,
+    CBPaymentMethodCash,
+    CBPaymentMethodInApp,
+    CBPaymentMethodNone = 10,
+} CBPaymentMethod;
+
+@interface OrderViewController () <UIActionSheetDelegate>
 @property (weak, nonatomic) IBOutlet UIView *timeSelectView;
 @property (weak, nonatomic) IBOutlet UIView *paymentView;
 @property (weak, nonatomic) IBOutlet UIView *priceView;
 @property (weak, nonatomic) IBOutlet UIView *addressView;
+@property (weak, nonatomic) IBOutlet UILabel *paymentMethodLabel;
+@property (weak, nonatomic) IBOutlet UILabel *estimatePriceLabel;
 
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *testConst;
+
+@property CBPaymentMethod paymentMethod;
+@property NSNumber *estimatePrice;
+@property NSNumberFormatter *numberFormatter;
 
 @end
 
@@ -42,7 +57,37 @@ CGFloat defaultConst;
     [_timeSelectView setAlpha:0.0f];
     [_paymentView setAlpha:0.0f];
     [_priceView setAlpha:0.0f];
+    
+    _estimatePrice = [NSNumber new];
+    _paymentMethod = CBPaymentMethodNone;
 
+
+
+    _numberFormatter = [NSNumberFormatter new];
+    [_numberFormatter setNumberStyle:NSNumberFormatterDecimalStyle];
+
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(finishedEstimate:)
+                                                 name:@"didFinishEstimate" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(checkCreditCard)
+                                                 name:@"didFinishAddCredit" object:nil];
+
+
+}
+
+- (void)finishedEstimate:(NSNotification *)notification {
+
+    NSNumber *totalPrice = notification.userInfo[@"totalPrice"];
+    if ([totalPrice integerValue]){
+        _estimatePrice = totalPrice;
+        [_estimatePriceLabel setHidden:NO];
+        NSString *totalPriceString = [NSString stringWithFormat:@"%@%@",[_numberFormatter stringFromNumber:_estimatePrice],NSLocalizedString(@"monetary_unit",@"원")];
+        [_estimatePriceLabel setText:totalPriceString];
+    }
+    else {
+        [_estimatePriceLabel setHidden:YES];
+    }
 
 }
 
@@ -140,43 +185,79 @@ CGFloat defaultConst;
 
 - (void)editAddress{
 
-
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
 
-    manager.responseSerializer = [AFJSONResponseSerializer serializer];
+
+    manager.requestSerializer = [AFJSONRequestSerializer serializer];
+    manager.responseSerializer = [AFJSONResponseSerializer serializerWithReadingOptions:NSJSONReadingAllowFragments];
+
     manager.responseSerializer.acceptableContentTypes = [manager.responseSerializer.acceptableContentTypes setByAddingObject:@"text/html"];
 
 
 
-    [manager GET:@"http://www.cleanbasket.co.kr/member/address"
-      parameters:nil
-         success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    NSDictionary *parameters = @{@"address":@"서울 강남구 역삼동",
+                                 @"addr_remainder":@"605-12 대암빌딩 104호" ,
+                                 @"type":@"0",
+            @"addr_building":@"",
+            @"addr_number":@""
+    };
 
 
+    [manager POST:@"http://www.cleanbasket.co.kr/member/address/update"
+       parameters:parameters
 
-             NSError *jsonError;
-             NSData *objectData = [responseObject[@"data"] dataUsingEncoding:NSUTF8StringEncoding];
-             NSArray *data = [NSJSONSerialization JSONObjectWithData:objectData
-                                                             options:NSJSONReadingMutableContainers
-                                                               error:&jsonError];
+          success:^(AFHTTPRequestOperation *operation, id responseObject) {
 
-             NSLog(@"message : %@, data : %@",responseObject[@"message"],data);
+              NSLog(@"결과: %@", [NSString stringWithUTF8String:[responseObject[@"message"] UTF8String]]);
 
-
-             if (!data.count){
-                 //주소없을때처리
-
-                 [self presentAddAddressVC];
-
-             } else {
-                 //주소있을때처리
-
-             }
+              if (responseObject[@"constant"]) {
+              }
 
 
-         } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+          } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
                 NSLog(@"Error: %@", error);
             }];
+
+
+
+
+
+//    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+//
+//    manager.responseSerializer = [AFJSONResponseSerializer serializer];
+//    manager.responseSerializer.acceptableContentTypes = [manager.responseSerializer.acceptableContentTypes setByAddingObject:@"text/html"];
+//
+//
+//
+//    [manager GET:@"http://www.cleanbasket.co.kr/member/address"
+//      parameters:nil
+//         success:^(AFHTTPRequestOperation *operation, id responseObject) {
+//
+//
+//
+//             NSError *jsonError;
+//             NSData *objectData = [responseObject[@"data"] dataUsingEncoding:NSUTF8StringEncoding];
+//             NSArray *data = [NSJSONSerialization JSONObjectWithData:objectData
+//                                                             options:NSJSONReadingMutableContainers
+//                                                               error:&jsonError];
+//
+//             NSLog(@"message : %@, data : %@",responseObject[@"message"],data);
+//
+//
+//             if (!data.count){
+//                 //주소없을때처리
+//
+//                 [self presentAddAddressVC];
+//
+//             } else {
+//                 //주소있을때처리
+//
+//             }
+//
+//
+//         } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+//                NSLog(@"Error: %@", error);
+//            }];
 }
 
 
@@ -247,17 +328,123 @@ CGFloat defaultConst;
 
 - (void)paymentMethod{
     NSLog(@"결제수단탭");
+
+
+    UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:NSLocalizedString(@"payment_method",@"결제수단")
+                                                             delegate:self
+                                                    cancelButtonTitle:NSLocalizedString(@"label_cancel",@"취소")
+                                               destructiveButtonTitle:nil
+                                                    otherButtonTitles:NSLocalizedString(@"payment_card",nil),NSLocalizedString(@"payment_cash",nil),NSLocalizedString(@"payment_in_app_finish",nil),nil];
+
+    [actionSheet showFromTabBar:self.tabBarController.tabBar];
+
 }
 
+
+- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
+
+    switch (buttonIndex){
+        case CBPaymentMethodCard:{
+            _paymentMethod = CBPaymentMethodCard;
+            [_paymentMethodLabel setHidden:NO];
+            [_paymentMethodLabel setText:[actionSheet buttonTitleAtIndex:buttonIndex]];
+            NSLog(@"카드결제");
+            break;
+        }
+        case CBPaymentMethodCash:{
+            _paymentMethod = CBPaymentMethodCash;
+            [_paymentMethodLabel setHidden:NO];
+            [_paymentMethodLabel setText:[actionSheet buttonTitleAtIndex:buttonIndex]];
+            NSLog(@"현금결제");
+            break;
+        }
+        case CBPaymentMethodInApp:{
+            _paymentMethod = CBPaymentMethodInApp;
+            [_paymentMethodLabel setHidden:NO];
+            [_paymentMethodLabel setText:[actionSheet buttonTitleAtIndex:buttonIndex]];
+            NSLog(@"인앱결제");
+            [self checkCreditCard];
+            break;
+        }
+        default:
+            _paymentMethod = CBPaymentMethodNone;
+            [_paymentMethodLabel setHidden:YES];
+            [_paymentMethodLabel setText:@""];
+            break;
+    }
+
+}
+
+
+- (void)actionSheetCancel:(UIActionSheet *)actionSheet {
+}
+
+
+
+
+- (void)checkCreditCard{
+
+    [SVProgressHUD show];
+
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+
+    manager.responseSerializer = [AFJSONResponseSerializer serializer];
+    manager.responseSerializer.acceptableContentTypes = [manager.responseSerializer.acceptableContentTypes setByAddingObject:@"text/html"];
+
+
+    [manager GET:@"http://www.cleanbasket.co.kr/member/payment"
+      parameters:nil
+         success:^(AFHTTPRequestOperation *operation, id responseObject) {
+
+
+
+             NSError *jsonError;
+             NSData *objectData = [responseObject[@"data"] dataUsingEncoding:NSUTF8StringEncoding];
+             NSDictionary *data = [NSJSONSerialization JSONObjectWithData:objectData
+                                                             options:NSJSONReadingMutableContainers
+                                                               error:&jsonError];
+
+             NSLog(@"message : %@, data : %@",responseObject[@"message"],data);
+
+             if ([data[@"cardName"] isEqualToString:@""]){
+                 [SVProgressHUD showWithStatus:@"등록된 카드가 없습니다.\n카드 등록 화면으로 이동합니다."];
+
+                 UIStoryboard *sb = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+                 UINavigationController *creditViewController = [sb instantiateViewControllerWithIdentifier:@"AddCreditVC"];
+
+                 [self presentViewController:creditViewController animated:YES completion:^{[SVProgressHUD dismiss];}];
+             } else{
+
+                 [_paymentMethodLabel setHidden:NO];
+                 NSString *creditInfoString = [NSString stringWithFormat:@"%@\n%@",data[@"cardName"],data[@"authDate"]];
+
+                 [_paymentMethodLabel setText:creditInfoString];
+                 [SVProgressHUD dismiss];
+
+             }
+
+
+
+//             [SVProgressHUD dismiss];
+
+
+         } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                NSLog(@"Error: %@", error);
+                [SVProgressHUD showErrorWithStatus:NSLocalizedString(@"network_error",nil)];
+            }];
+
+
+}
+
+
+
 - (void)priceEstimation{
-    NSLog(@"견적탭");
 
 
+    AppDelegate *delegate = [[UIApplication sharedApplication] delegate];
 
-    UIStoryboard *sb = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
-    UINavigationController *estimationVC = [sb instantiateViewControllerWithIdentifier:@"EstimationVC"];
 
-    [self presentViewController:estimationVC animated:YES completion:nil];
+    [self presentViewController:delegate.estimateVC animated:YES completion:nil];
 
 
 
@@ -292,6 +479,10 @@ CGFloat defaultConst;
 
 
 }
+
+
+
+
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

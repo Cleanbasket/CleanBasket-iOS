@@ -13,12 +13,13 @@
 #import "AuthCheckViewController.h"
 #import "MainTabBarViewController.h"
 #import "ModalViewController.h"
+#import "EstimateViewController.h"
 #import <AFNetworking/AFNetworking.h>
 
 @interface AppDelegate ()
 
 @property AuthCheckViewController *authCheckViewController;
-@property id lastViewController;
+//@property id lastViewController;
 
 @end
 
@@ -33,6 +34,8 @@
     self.window.backgroundColor = CleanBasketMint;
     [self.window makeKeyAndVisible];
 
+    [[UIApplication sharedApplication] setStatusBarHidden:NO];
+    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
 
     [[UITabBarItem appearance] setTitleTextAttributes:@{ NSForegroundColorAttributeName : [UIColor whiteColor] }
                                              forState:UIControlStateNormal];
@@ -40,6 +43,7 @@
                                              forState:UIControlStateSelected];
     [[UITabBar appearance] setTintColor:[UIColor blackColor]];
 
+    [[UITextField appearance] setTintColor:CleanBasketMint];
 
     [[UILabel appearanceWhenContainedIn:[UITableViewHeaderFooterView class], nil] setFont:[UIFont boldSystemFontOfSize:14]];
 
@@ -59,14 +63,14 @@
     _loginVC = (id) [[UINavigationController alloc] initWithRootViewController:loginViewController];
 
 
-    _webVC = (WebViewController *) [sb instantiateViewControllerWithIdentifier:@"WebVC"];
+    _webVC = [sb instantiateViewControllerWithIdentifier:@"WebVC"];
 
 
-    _modalVC =     (ModalViewController *) [sb instantiateViewControllerWithIdentifier:@"ModalVC"];
+    _modalVC = [sb instantiateViewControllerWithIdentifier:@"ModalVC"];
 
-    UIViewController *tempIntroVC =  (ModalViewController *) [sb instantiateViewControllerWithIdentifier:@"TempIntroVC"];
+    _estimateVC = [sb instantiateViewControllerWithIdentifier:@"EstimateVC"];
 
-    [self.window setRootViewController:tempIntroVC];
+    [self.window setRootViewController:_authCheckViewController];
 
     return YES;
 
@@ -81,15 +85,12 @@
 - (void)applicationDidEnterBackground:(UIApplication *)application {
     // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
     // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
-    _lastViewController = self.window.rootViewController;
+//    _lastViewController = self.window.rootViewController;
     
 }
 
 - (void)applicationWillEnterForeground:(UIApplication *)application {
-    // Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
-}
 
-- (void)applicationDidBecomeActive:(UIApplication *)application {
     
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     
@@ -99,11 +100,9 @@
     [manager GET:@"http://www.cleanbasket.co.kr/auth/check"
       parameters:nil
          success:^(AFHTTPRequestOperation *operation, id responseObject) {
-
+             
              if ([responseObject[@"constant"]integerValue] == 17) {
-                 if (_lastViewController) {
-                     [self.window setRootViewController:_lastViewController];
-                 }
+                 
              } else {
                  [self.window setRootViewController:_authCheckViewController];
              }
@@ -116,6 +115,10 @@
              [self.window setRootViewController:_authCheckViewController];
              
          }];
+
+}
+
+- (void)applicationDidBecomeActive:(UIApplication *)application {
 
 }
 

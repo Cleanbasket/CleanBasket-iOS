@@ -8,6 +8,17 @@
 
 #import <UIKit/UIKit.h>
 
+typedef enum CBModalType : NSUInteger {
+    
+    CBModalTypeSignIn = 101,
+    CBModalTypeSignUp = 102,
+    CBModalTypeFindPw = 103
+    
+} CBModalType ;
+
 @interface SignInViewController : UIViewController<UITextFieldDelegate>
+
+
+@property CBModalType *modalType;
 
 @end

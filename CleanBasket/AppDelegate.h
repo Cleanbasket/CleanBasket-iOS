@@ -11,6 +11,7 @@
 @class LoginViewController;
 @class WebViewController;
 @class ModalViewController;
+@class EstimateViewController;
 
 @interface AppDelegate : UIResponder <UIApplicationDelegate>
 
@@ -18,6 +19,7 @@
 @property (strong, nonatomic) LoginViewController *loginVC;
 @property (strong, nonatomic) WebViewController *webVC;
 @property (strong, nonatomic) ModalViewController *modalVC;
+@property (strong, nonatomic) EstimateViewController *estimateVC;
 
 @end
 

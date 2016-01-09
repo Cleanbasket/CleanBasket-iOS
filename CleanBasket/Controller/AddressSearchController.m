@@ -326,7 +326,8 @@ NSMutableArray *searchResult, *allAddress, *supportAddress, *supportAllDongsAddr
 
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
 
-    manager.responseSerializer = [AFJSONResponseSerializer serializer];
+    manager.requestSerializer = [AFHTTPRequestSerializer serializer];
+//    manager.responseSerializer = [AFJSONResponseSerializer serializer];
     manager.responseSerializer.acceptableContentTypes = [manager.responseSerializer.acceptableContentTypes setByAddingObject:@"text/html"];
 
     [manager GET:@"http://www.cleanbasket.co.kr/district"
@@ -367,7 +368,13 @@ NSMutableArray *searchResult, *allAddress, *supportAddress, *supportAllDongsAddr
     
     manager.requestSerializer = [AFJSONRequestSerializer serializer];
     
+    manager.responseSerializer.acceptableContentTypes = [manager.responseSerializer.acceptableContentTypes setByAddingObject:@"text/html"];
+
+
+    
     NSDictionary *parameters = @{@"address":address,@"address_remainder":remainder};
+    
+    NSLog(@"파라미터 : %@", parameters);
     
     [manager POST:@"http://www.cleanbasket.co.kr/member/address/update"
        parameters:parameters

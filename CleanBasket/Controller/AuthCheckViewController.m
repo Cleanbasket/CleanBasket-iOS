@@ -28,12 +28,19 @@
 //    [self init];
     [super viewDidLoad];
 
-    [self authCheck];
+//    [self authCheck];
 
 
     
 
 }
+
+
+- (void)viewDidAppear:(BOOL)animated {
+
+    [self authCheck];
+}
+
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
