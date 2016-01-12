@@ -26,6 +26,8 @@
 @property (weak, nonatomic) IBOutlet UILabel *totalCountLabel;
 @property (weak, nonatomic) IBOutlet UILabel *totalPriceLabel;
 
+
+
 @end
 
 @implementation EstimateViewController
@@ -274,7 +276,7 @@
     NSInteger indexOfname = [_selectedItems indexOfObject:item];
     
     if(indexOfname != NSNotFound){
-        NSLog(@"%ld",[_selectedItems indexOfObject:item]);
+        
 
         [_selectedItems removeObjectAtIndex:[_selectedItems indexOfObject:item]];
     }

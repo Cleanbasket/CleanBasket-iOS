@@ -253,6 +253,8 @@ NSMutableArray *searchResult, *allAddress, *supportAddress, *supportAllDongsAddr
         [[alert textFieldAtIndex:0] setPlaceholder:@"상세 주소 입력"];
         
         [alert show];
+    } else {
+        [SVProgressHUD showErrorWithStatus:NSLocalizedString(@"area_unavailable_error",nil)];
     }
     
     
@@ -395,7 +397,7 @@ NSMutableArray *searchResult, *allAddress, *supportAddress, *supportAllDongsAddr
                   [[NSNotificationCenter defaultCenter] postNotificationName:@"didFinishEditAddress" object:nil];
 
                   [self dismissThisVC:nil];
-                  [SVProgressHUD showSuccessWithStatus:NSLocalizedString(@"success",nil)];
+                  [SVProgressHUD showSuccessWithStatus:NSLocalizedString(@"action_done",nil)];
               }
 
 

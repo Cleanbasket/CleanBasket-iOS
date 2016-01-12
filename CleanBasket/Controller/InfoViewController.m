@@ -24,7 +24,7 @@
 
     [self setTitle:NSLocalizedString(@"menu_label_information", @"내 정보")];
     
-    
+    [self setNeedsStatusBarAppearanceUpdate];
     
 }
 
@@ -65,6 +65,10 @@
     [self presentViewController:delegate.modalVC animated:NO completion:nil];
     
     
+}
+
+- (UIStatusBarStyle)preferredStatusBarStyle{
+    return UIStatusBarStyleDefault;
 }
 
 

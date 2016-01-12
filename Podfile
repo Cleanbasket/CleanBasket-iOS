@@ -9,7 +9,7 @@ pod 'SVProgressHUD'
 pod 'RateView'
 
 pod 'BEMCheckBox'
-
+pod 'GUITabPagerViewController', '~> 0.0.8'
 
 use_frameworks!
 pod 'TTTAttributedLabel'
