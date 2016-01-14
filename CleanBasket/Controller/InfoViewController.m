@@ -11,9 +11,23 @@
 #import "AppDelegate.h"
 #import "NoticeViewController.h"
 #import "BottomBorderButton.h"
+#import <AFNetworking/AFNetworking.h>
+#import <SVProgressHUD/SVProgressHUD.h>
 
-@interface InfoViewController ()
+@interface InfoViewController () {
+    AFHTTPRequestOperationManager *_manager;
+}
 
+@property (weak, nonatomic) IBOutlet UIView *phoneAuthView;
+@property (weak, nonatomic) IBOutlet UIView *memberInfoView;
+@property (weak, nonatomic) IBOutlet UITextField *emailTextField;
+@property (weak, nonatomic) IBOutlet UITextField *phoneTextField;
+@property (weak, nonatomic) IBOutlet UITextField *authCodeTextField;
+@property (weak, nonatomic) IBOutlet UIImageView *classImageView;
+@property (weak, nonatomic) IBOutlet UILabel *emailLabel;
+@property (weak, nonatomic) IBOutlet UILabel *classNameLabel;
+@property (weak, nonatomic) IBOutlet UILabel *classInfoLabel;
+@property (weak, nonatomic) IBOutlet UILabel *mileageLabel;
 
 @end
 
@@ -25,8 +39,187 @@
     [self setTitle:NSLocalizedString(@"menu_label_information", @"내 정보")];
     
     [self setNeedsStatusBarAppearanceUpdate];
+
+    _manager = [AFHTTPRequestOperationManager manager];
+
+    _manager.requestSerializer = [AFJSONRequestSerializer serializer];
+    _manager.responseSerializer = [AFJSONResponseSerializer serializer];
+    _manager.responseSerializer.acceptableContentTypes = [_manager.responseSerializer.acceptableContentTypes setByAddingObject:@"text/html"];
+    
+    [_phoneAuthView setHidden:YES];
+    [_memberInfoView setHidden:YES];
+
+    [self setTopView];
     
 }
+
+
+- (void)setTopView{
+
+    [_manager GET:@"http://www.cleanbasket.co.kr/member/user"
+      parameters:nil
+         success:^(AFHTTPRequestOperation *operation, id responseObject) {
+
+             NSError *jsonError;
+             NSData *objectData = [responseObject[@"data"] dataUsingEncoding:NSUTF8StringEncoding];
+
+             NSDictionary *data = [NSJSONSerialization JSONObjectWithData:objectData
+                                                                  options:NSJSONReadingMutableContainers
+                                                                    error:&jsonError];
+
+
+             NSLog(@"Data : %@",data);
+
+             //인증 데이터 있을 때
+             if (data){
+
+                 switch ([data[@"user_class"] integerValue]) {
+                     case 0:
+                         [_classImageView setImage:[UIImage imageNamed:@"ic_class_clean"]];
+                         [_classNameLabel setText:NSLocalizedString(@"bronze_basket",nil)];
+                         [_classInfoLabel setText:NSLocalizedString(@"bronze_info",nil)];
+                         break;
+                         
+                     case 1:
+                         [_classImageView setImage:[UIImage imageNamed:@"ic_class_silver"]];
+                         [_classNameLabel setText:NSLocalizedString(@"silver_basket",nil)];
+                         [_classInfoLabel setText:NSLocalizedString(@"silver_info",nil)];
+                         break;
+                         
+                     case 2:
+                         [_classImageView setImage:[UIImage imageNamed:@"ic_class_gold"]];
+                         [_classNameLabel setText:NSLocalizedString(@"gold_basket",nil)];
+                         [_classInfoLabel setText:NSLocalizedString(@"gold_info",nil)];
+                         break;
+                         
+                     case 3:
+                         [_classImageView setImage:[UIImage imageNamed:@"ic_class_love"]];
+                         [_classNameLabel setText:NSLocalizedString(@"love_basket",nil)];
+                         [_classInfoLabel setText:NSLocalizedString(@"love_info",nil)];
+                         break;
+                         
+                     default:
+                         break;
+                 }
+                 
+                 [_emailLabel setText:data[@"email"]];
+
+                 NSNumberFormatter *numberFormatter = [NSNumberFormatter new];
+                 [numberFormatter setNumberStyle:NSNumberFormatterDecimalStyle];
+
+                 NSString *mileageString = [numberFormatter stringFromNumber:data[@"mileage"]];
+                 [_mileageLabel setText:[NSString stringWithFormat:@"%@ : %@",NSLocalizedString(@"mileage_available",nil),mileageString]];
+                 
+                 [_memberInfoView setHidden:NO];
+                 [_phoneAuthView setHidden:YES];
+             }
+             else {
+
+                 [_memberInfoView setHidden:YES];
+                 [_phoneAuthView setHidden:NO];
+
+             }
+
+
+
+         } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                NSLog(@"Error: %@", error);
+            }];
+
+
+}
+
+
+
+
+- (IBAction)getAuthCode:(id)sender {
+
+    [self.view endEditing:YES];
+
+
+    if (!_phoneTextField.text.length){
+        [SVProgressHUD showErrorWithStatus:NSLocalizedString(@"phone_empty",nil)];
+        [_phoneTextField becomeFirstResponder];
+        return;
+    }
+
+
+    [_manager POST:@"http://www.cleanbasket.co.kr/code"
+       parameters:@{@"phone":_phoneTextField.text}
+          success:^(AFHTTPRequestOperation *operation, id responseObject) {
+
+
+              NSLog(@"Data : %@",responseObject[@"message"]);
+
+              [SVProgressHUD showSuccessWithStatus:NSLocalizedString(@"authorization_code_sent",nil)];
+
+
+          } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                NSLog(@"Error: %@", error);
+            }];
+
+}
+
+
+- (IBAction)registAuthUser:(id)sender {
+    if (!_emailTextField.text.length){
+        
+        [SVProgressHUD showErrorWithStatus:@"이메일을 입력해주세요"];
+        [_emailTextField becomeFirstResponder];
+        return;
+    }
+    else if (!_phoneTextField.text.length){
+        [SVProgressHUD showErrorWithStatus:NSLocalizedString(@"phone_empty",nil)];
+        [_phoneTextField becomeFirstResponder];
+        return;
+    }
+   
+
+    NSDictionary *parameters = @{
+            @"email":_emailTextField.text,
+            @"phone":_phoneTextField.text,
+            @"code":_authCodeTextField.text,
+            @"agent":@"iOS"
+    };
+
+
+    [_manager POST:@"http://www.cleanbasket.co.kr/member/user"
+        parameters:parameters
+           success:^(AFHTTPRequestOperation *operation, id responseObject) {
+
+//              NSError *jsonError;
+//              NSData *objectData = [responseObject[@"data"] dataUsingEncoding:NSUTF8StringEncoding];
+//
+//              NSDictionary *data = [NSJSONSerialization JSONObjectWithData:objectData
+//                                                                   options:NSJSONReadingMutableContainers
+//                                                                     error:&jsonError];
+
+
+               NSLog(@"Data : %@",responseObject);
+
+
+               if ([responseObject[@"constant"] integerValue] == 1){
+                   [SVProgressHUD showSuccessWithStatus:NSLocalizedString(@"sign_up_success",nil)];
+                   [self setTopView];
+               }
+               else
+                   [SVProgressHUD showErrorWithStatus:responseObject[@"message"]];
+
+
+
+           } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                NSLog(@"Error: %@", error);
+                [SVProgressHUD showErrorWithStatus:NSLocalizedString(@"network_error",nil)];
+            }];
+
+
+}
+
+
+
+
+
+
 
 
 - (IBAction)showNoticeVC:(id)sender {
@@ -72,14 +265,5 @@
 }
 
 
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 @end
