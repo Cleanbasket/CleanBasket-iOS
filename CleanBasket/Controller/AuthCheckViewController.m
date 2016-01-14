@@ -71,62 +71,22 @@
         [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
         
         [manager POST:@"http://www.cleanbasket.co.kr/auth" parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
-            
-            [UIView animateWithDuration:0.5f
-                                  delay:0.3f
-                                options:UIViewAnimationOptionCurveEaseInOut
-                             animations:^{
-                                 [_logoImageView setAlpha:0.0f];
-                                 
-                             }
-                             completion:^(BOOL finished){
-                                 
-                                 [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
 
 
-                                 
-                                 UIStoryboard *sb = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
-                                 UIViewController *mainTBC = [sb instantiateViewControllerWithIdentifier:@"MainTBC"];
-                                 AppDelegate *appDelegate = [[UIApplication sharedApplication] delegate];
-                                 [appDelegate.window setRootViewController:mainTBC];
+            NSLog(@"%@",responseObject);
+            if ([responseObject[@"constant"] integerValue] != 1){
 
-            
-            }];
- 
+                AppDelegate *appDelegate = [[UIApplication sharedApplication] delegate];
+                [appDelegate.window setRootViewController:appDelegate.loginVC];
 
-            [UIView animateWithDuration:0.5f
-                                  delay:0.0f
-                                options:UIViewAnimationOptionCurveEaseInOut
-                             animations:^{
-                                 CGRect frame = _titleLabel.frame;
-                                 frame.origin.y += frame.size.height;
-                                 [_titleLabel setFrame:frame];
-                                 
-                             }
-                             completion:^(BOOL finished){
-                                 
-                                 
-                             }];
 
-            [UIView animateWithDuration:0.5f
-                                  delay:0.15f
-                                options:UIViewAnimationOptionCurveEaseInOut
-                             animations:^{
-                                 
-                                 CGRect frame = _descLabel.frame;
-                                 frame.origin.y = 370.0f;
-                                 [_descLabel setFrame:frame];
-                                 
-                             }
-                             completion:^(BOOL finished){
-                                 
-                                 
-                             }];
-            
-            
-            
-            
-            
+            } else {
+                [self playAnimination];
+            }
+
+
+
+
         } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
             [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
             NSLog(@"Error: %@", error);
@@ -145,6 +105,59 @@
 
 
 
+}
+
+- (void)playAnimination {
+    [UIView animateWithDuration:0.5f
+                                  delay:0.3f
+                                options:UIViewAnimationOptionCurveEaseInOut
+                             animations:^{
+                                 [_logoImageView setAlpha:0.0f];
+
+                             }
+                             completion:^(BOOL finished){
+
+                                 [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
+
+
+
+                                 UIStoryboard *sb = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+                                 UIViewController *mainTBC = [sb instantiateViewControllerWithIdentifier:@"MainTBC"];
+                                 AppDelegate *appDelegate = [[UIApplication sharedApplication] delegate];
+                                 [appDelegate.window setRootViewController:mainTBC];
+
+
+            }];
+
+
+    [UIView animateWithDuration:0.5f
+                                  delay:0.0f
+                                options:UIViewAnimationOptionCurveEaseInOut
+                             animations:^{
+                                 CGRect frame = _titleLabel.frame;
+                                 frame.origin.y += frame.size.height;
+                                 [_titleLabel setFrame:frame];
+
+                             }
+                             completion:^(BOOL finished){
+
+
+                             }];
+
+    [UIView animateWithDuration:0.5f
+                                  delay:0.15f
+                                options:UIViewAnimationOptionCurveEaseInOut
+                             animations:^{
+
+                                 CGRect frame = _descLabel.frame;
+                                 frame.origin.y = 370.0f;
+                                 [_descLabel setFrame:frame];
+
+                             }
+                             completion:^(BOOL finished){
+
+
+                             }];
 }
 
 

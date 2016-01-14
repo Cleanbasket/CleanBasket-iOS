@@ -10,6 +10,7 @@
 #import <Realm/Realm.h>
 #import "User.h"
 #import "AppDelegate.h"
+#import "ChangePasswordViewController.h"
 
 @interface SettingTableViewController ()
 
@@ -77,6 +78,12 @@
         AppDelegate *appDelegate = [[UIApplication sharedApplication]delegate];
         [appDelegate.window setRootViewController:(UIViewController*)appDelegate.loginVC];
         
+    } else if (indexPath.section == 0 && indexPath.row == 0) {
+
+        UIStoryboard *sb = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+        ChangePasswordViewController *changePasswordViewController = [sb instantiateViewControllerWithIdentifier:@"ChangePwVC"];
+        [self presentViewController:changePasswordViewController animated:YES completion:nil];
+
     }
     
 }

@@ -83,20 +83,11 @@
 
 
 
-//    manager.requestSerializer = [AFHTTPRequestSerializer serializer];
-//    manager.responseSerializer = [AFJSONResponseSerializer serializerWithReadingOptions:NSJSONReadingMutableContainers];
-
     manager.responseSerializer = [AFJSONResponseSerializer serializer];
     manager.responseSerializer.acceptableContentTypes = [manager.responseSerializer.acceptableContentTypes setByAddingObject:@"text/html"];
-//    manager.requestSerializer = [AFJSONRequestSerializer serializer];
-////
-//    [manager.requestSerializer setValue:@"application/json" forHTTPHeaderField:@"Accept"];
-//    [manager.requestSerializer setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
-//
+
     NSDictionary *parameters = @{@"email": _emailTextField.text,
                                  @"password": _pwTextField.text};
-
-//    NSString *authUrl = [NSString stringWithFormat:@"%@auth",REAL_SERVER_URL_STRING];
 
     [manager POST:@"http://www.cleanbasket.co.kr/auth" parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
 
