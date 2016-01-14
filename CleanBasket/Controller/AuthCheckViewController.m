@@ -68,8 +68,7 @@
         NSDictionary *parameters = @{@"email": user.email,
                                      @"password": user.password };
         
-        [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
-        
+
         [manager POST:@"http://www.cleanbasket.co.kr/auth" parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
 
 
@@ -116,9 +115,6 @@
 
                              }
                              completion:^(BOOL finished){
-
-                                 [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
-
 
 
                                  UIStoryboard *sb = [UIStoryboard storyboardWithName:@"Main" bundle:nil];

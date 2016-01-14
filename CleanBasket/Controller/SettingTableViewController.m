@@ -11,8 +11,10 @@
 #import "User.h"
 #import "AppDelegate.h"
 #import "ChangePasswordViewController.h"
+#import <AFNetworking/AFNetworking.h>
 
 @interface SettingTableViewController ()
+@property (weak, nonatomic) IBOutlet UILabel *latestVersion;
 
 @end
 
@@ -20,15 +22,39 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
-    // Uncomment the following line to preserve selection between presentations.
-    // self.clearsSelectionOnViewWillAppear = NO;
-    
-    // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-    // self.navigationItem.rightBarButtonItem = self.editButtonItem;
-    
+
     [self setTitle:NSLocalizedString(@"setting", @"설정")];
     self.tableView.tableFooterView = [UIView new];
+    
+    [self getVersion];
+}
+
+- (void)getVersion{
+
+    AFHTTPRequestOperationManager *manager =[AFHTTPRequestOperationManager manager];
+
+    manager.responseSerializer = [AFJSONResponseSerializer serializer];
+    manager.responseSerializer.acceptableContentTypes = [manager.responseSerializer.acceptableContentTypes setByAddingObject:@"text/html"];
+    [manager GET:@"http://www.cleanbasket.co.kr/appinfo"
+      parameters:nil
+            success:^(AFHTTPRequestOperation *operation, id responseObject) {
+
+
+
+                NSError *jsonError;
+                NSData *objectData = [responseObject[@"data"] dataUsingEncoding:NSUTF8StringEncoding];
+
+                NSDictionary *data = [NSJSONSerialization JSONObjectWithData:objectData
+                                                                     options:NSJSONReadingMutableContainers
+                                                                       error:&jsonError];
+
+                [_latestVersion setText:[NSString stringWithFormat:@"%@ %@",NSLocalizedString(@"latest_version",nil),data[@"ios_app_ver"]]];
+
+
+
+            } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                NSLog(@"Error: %@", error);
+            }];
     
 }
 
@@ -36,10 +62,6 @@
     [self.navigationController setNavigationBarHidden:NO animated:YES];
 }
 
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
 
 #pragma mark - Table view data source
 
@@ -83,63 +105,15 @@
         UIStoryboard *sb = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
         ChangePasswordViewController *changePasswordViewController = [sb instantiateViewControllerWithIdentifier:@"ChangePwVC"];
         [self presentViewController:changePasswordViewController animated:YES completion:nil];
-
+    } else if (indexPath.section == 2 && indexPath.row == 2) {
+        NSURL *url = [NSURL URLWithString:@"itms-apps://itunes.apple.com/app/id933165319"];
+        [[UIApplication sharedApplication] openURL:url];
     }
-    
+
+
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+
 }
 
-/*
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:<#@"reuseIdentifier"#> forIndexPath:indexPath];
-    
-    // Configure the cell...
-    
-    return cell;
-}
-*/
-
-/*
-// Override to support conditional editing of the table view.
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
-    // Return NO if you do not want the specified item to be editable.
-    return YES;
-}
-*/
-
-/*
-// Override to support editing the table view.
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (editingStyle == UITableViewCellEditingStyleDelete) {
-        // Delete the row from the data source
-        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-    } else if (editingStyle == UITableViewCellEditingStyleInsert) {
-        // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-    }   
-}
-*/
-
-/*
-// Override to support rearranging the table view.
-- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath {
-}
-*/
-
-/*
-// Override to support conditional rearranging of the table view.
-- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath {
-    // Return NO if you do not want the item to be re-orderable.
-    return YES;
-}
-*/
-
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 @end

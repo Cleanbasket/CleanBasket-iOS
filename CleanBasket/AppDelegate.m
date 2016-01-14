@@ -15,6 +15,7 @@
 #import "ModalViewController.h"
 #import "EstimateViewController.h"
 #import <AFNetworking/AFNetworking.h>
+#import <AFNetworking/AFNetworkActivityIndicatorManager.h>
 
 @interface AppDelegate ()
 
@@ -34,9 +35,8 @@
     self.window.backgroundColor = CleanBasketMint;
     [self.window makeKeyAndVisible];
 
-//    [[UIApplication sharedApplication] setStatusBarHidden:NO];
-//    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
-    [application setStatusBarStyle:UIStatusBarStyleLightContent];
+
+    [AFNetworkActivityIndicatorManager sharedManager].enabled = YES;
 
     [[UITabBarItem appearance] setTitleTextAttributes:@{ NSForegroundColorAttributeName : [UIColor whiteColor] }
                                              forState:UIControlStateNormal];

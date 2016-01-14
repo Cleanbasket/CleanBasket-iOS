@@ -2625,7 +2625,7 @@
                         <sections>
                             <tableViewSection id="Gjs-1H-SME">
                                 <cells>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" textLabel="xZW-Jp-eah" style="IBUITableViewCellStyleDefault" id="tvV-fV-6CF">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="gray" indentationWidth="10" textLabel="xZW-Jp-eah" style="IBUITableViewCellStyleDefault" id="tvV-fV-6CF">
                                         <rect key="frame" x="0.0" y="44" width="600" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="tvV-fV-6CF" id="4Yb-ii-h52">
@@ -2737,7 +2737,7 @@
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="현재 버전 1.6.2" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="jUG-zl-kQc">
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="현재 버전 2.00" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="jUG-zl-kQc">
                                                     <rect key="frame" x="15" y="25" width="69" height="14"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="11"/>
@@ -2761,7 +2761,7 @@
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="최신 버전 1.6.2" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="QU6-f5-uNo">
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="최신 버전 2.00" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="QU6-f5-uNo">
                                                     <rect key="frame" x="15" y="25" width="69" height="14"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="11"/>
@@ -2799,6 +2799,9 @@
                     <navigationItem key="navigationItem" id="Hib-Xg-ZIl"/>
                     <nil key="simulatedStatusBarMetrics"/>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
+                    <connections>
+                        <outlet property="latestVersion" destination="QU6-f5-uNo" id="V3q-pk-HGw"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ZYx-0o-MOO" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
