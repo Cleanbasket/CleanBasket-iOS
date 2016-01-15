@@ -73,6 +73,21 @@
 
     [self.window setRootViewController:_authCheckViewController];
 
+
+    //기존 세팅 있을때
+    if ([[NSUserDefaults standardUserDefaults] objectForKey:@"isGetEventNoti"]){
+              NSLog(@"!!");
+    }
+    //없을때
+    else{
+        [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"isGetEventNoti"];
+        [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"isGetOrderNoti"];
+
+        [[NSUserDefaults standardUserDefaults]synchronize];
+    }
+
+
+
     return YES;
 
 

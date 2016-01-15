@@ -15,6 +15,8 @@
 
 @interface SettingTableViewController ()
 @property (weak, nonatomic) IBOutlet UILabel *latestVersion;
+@property (weak, nonatomic) IBOutlet UISwitch *eventNotiSwitch;
+@property (weak, nonatomic) IBOutlet UISwitch *orderNotiSwitch;
 
 @end
 
@@ -27,6 +29,12 @@
     self.tableView.tableFooterView = [UIView new];
     
     [self getVersion];
+    
+    [_eventNotiSwitch setOn:[[NSUserDefaults standardUserDefaults] boolForKey:@"isGetEventNoti"]];
+    [_orderNotiSwitch setOn:[[NSUserDefaults standardUserDefaults] boolForKey:@"isGetOrderNoti"]];
+    
+    
+    
 }
 
 - (void)getVersion{
@@ -62,6 +70,18 @@
     [self.navigationController setNavigationBarHidden:NO animated:YES];
 }
 
+- (IBAction)switchValueChanged:(id)sender {
+    
+    if (sender == _eventNotiSwitch) {
+        [[NSUserDefaults standardUserDefaults] setBool:_eventNotiSwitch.on forKey:@"isGetEventNoti"];
+    } else if (sender == _orderNotiSwitch){
+        
+        [[NSUserDefaults standardUserDefaults] setBool:_orderNotiSwitch.on forKey:@"isGetOrderNoti"];
+    }
+    
+    [[NSUserDefaults standardUserDefaults]synchronize];
+    
+}
 
 #pragma mark - Table view data source
 
@@ -86,7 +106,7 @@
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    NSLog(@"%@",indexPath);
+
     
     //로그아웃
     if (indexPath.section == 0 && indexPath.row == 1) {
