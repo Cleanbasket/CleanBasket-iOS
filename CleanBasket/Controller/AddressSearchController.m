@@ -206,6 +206,8 @@ NSMutableArray *searchResult, *allAddress, *supportAddress, *supportAllDongsAddr
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     
     [self.view endEditing:YES];
+
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
     NSString *cellString = [tableView cellForRowAtIndexPath:indexPath].textLabel.text;
     
@@ -404,26 +406,6 @@ NSMutableArray *searchResult, *allAddress, *supportAddress, *supportAllDongsAddr
           } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
                 NSLog(@"Error: %@", error);
             }];
-
-//
-//
-//    [manager POST:@"http://www.cleanbasket.co.kr/member/address/update"
-//       parameters:parameters
-//
-//         success:^(AFHTTPRequestOperation *operation, id responseObject) {
-//
-//             NSLog(@"%@",responseObject[@"constant"]);
-//
-//             if ([responseObject[@"constant"] integerValue] == CBServerConstantSuccess) {
-//                 [[NSNotificationCenter defaultCenter] postNotificationName:@"didFinishEditAddress" object:nil];
-//
-//                 [self dismissThisVC:nil];
-//             }
-//
-//
-//         } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-//             NSLog(@"Error: %@", error);
-//         }];
 
 }
 

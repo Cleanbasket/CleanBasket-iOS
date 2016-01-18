@@ -8,10 +8,17 @@
 
 #import <GUITabPagerViewController/GUITabPagerViewController.h>
 
+typedef NS_ENUM(NSUInteger, CBTimeSelectType) {
+    CBTimeSelectTypePickUp = 1,
+    CBTimeSelectTypeDropOff
+};
+
 @interface TimeSelectViewController : GUITabPagerViewController
 
 
 
+@property CBTimeSelectType timeSelectType;
+@property NSInteger defaultInterval;
 
 
 @end

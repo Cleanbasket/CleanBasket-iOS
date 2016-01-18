@@ -5,8 +5,8 @@ pod "AFNetworking", "~> 2.0"
 pod 'ZendeskSDK'
 pod 'Realm'
 pod "ODSAccordionView"
-pod 'SVProgressHUD'
 pod 'RateView'
+pod 'SVProgressHUD'
 
 pod 'BEMCheckBox'
 pod 'GUITabPagerViewController', '~> 0.0.8'

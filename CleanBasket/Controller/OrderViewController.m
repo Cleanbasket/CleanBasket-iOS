@@ -8,6 +8,7 @@
 
 #import "OrderViewController.h"
 #import "AppDelegate.h"
+#import "TimeSelectViewController.h"
 #import <AFNetworking/AFNetworking.h>
 #import <SVProgressHUD/SVProgressHUD.h>
 
@@ -20,7 +21,9 @@ typedef enum : NSUInteger {
 
 @interface OrderViewController () <UIActionSheetDelegate> {
 
-    NSDate *pickUpDate, *dropOffDate;
+    NSDate *_pickUpDate, *_dropOffDate;
+    NSInteger _dropOffInterval;
+    AFHTTPRequestOperationManager *_manager;
 }
 
 
@@ -36,6 +39,7 @@ typedef enum : NSUInteger {
 
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *testConst;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *topConst;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *dropOffLabelWidthConstraint;
 
 @property CBPaymentMethod paymentMethod;
 @property NSNumber *estimatePrice;
@@ -50,11 +54,22 @@ typedef enum : NSUInteger {
 - (void)viewDidLoad {
     [super viewDidLoad];
 
+    [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeGradient];
+
+    _manager = [AFHTTPRequestOperationManager manager];
+
+    _manager.responseSerializer = [AFJSONResponseSerializer serializer];
+    _manager.responseSerializer.acceptableContentTypes = [_manager.responseSerializer.acceptableContentTypes setByAddingObject:@"text/html"];
+
+
+
     UITapGestureRecognizer *addressTGR = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(editAddress)];
     [_addressView addGestureRecognizer:addressTGR];
     
-    UITapGestureRecognizer *timeSelectTGR = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(showTimeSelectVC)];
+    UITapGestureRecognizer *timeSelectTGR = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(showTimeSelectVC:)];
     [_timeSelectView addGestureRecognizer:timeSelectTGR];
+    UITapGestureRecognizer *dropoffTimeSelectTGR = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(showTimeSelectVC:)];
+    [_dropOffTimeLabel addGestureRecognizer:dropoffTimeSelectTGR];
     UITapGestureRecognizer *paymentTGR = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(paymentMethod)];
     [_paymentView addGestureRecognizer:paymentTGR];
     UITapGestureRecognizer *priceTGR = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(priceEstimation)];
@@ -109,14 +124,78 @@ typedef enum : NSUInteger {
     [self setNeedsStatusBarAppearanceUpdate];
 
 
+    [self initOrder];
+
+
+
+
 }
+
+
+- (void)initOrder{
+
+    _pickUpDate = nil;
+    _dropOffDate = nil;
+
+    NSCalendar *calendar = [NSCalendar autoupdatingCurrentCalendar];
+
+    NSDate *today = [NSDate date];
+
+    NSDateComponents *dateComponents= [calendar components:NSCalendarUnitDay|NSCalendarUnitHour|NSCalendarUnitMinute fromDate:today];
+
+//    NSLog(@"%@",dateComponents);
+
+    dateComponents.hour += 2;
+
+    if (dateComponents.minute>0 && dateComponents.minute<30){
+        dateComponents.minute = 30;
+    }
+    else if (dateComponents.minute>30){
+        dateComponents.minute = 0;
+        dateComponents.hour += 1;
+    }
+
+    if (dateComponents.hour<10){
+        dateComponents.hour = 10;
+        dateComponents.minute = 0;
+    }
+//
+//
+//    NSDate *lastNewDate=[calendar dateByAddingComponents:dateComponents toDate:_pickUpDate options:0];
+    _pickUpDate = [calendar dateFromComponents:dateComponents];
+    NSLog(@"pickUpDate = %@",_pickUpDate);
+//
+//
+    [_pickUpTimeLabel setText:[self getStringFromDate:_pickUpDate]];
+    [_dropOffTimeLabel setText:NSLocalizedString(@"time_dropoff_inform_after",nil)];
+
+
+}
+
 
 
 - (void)finishedPickUpDate:(NSNotification *)noti{
 
-    pickUpDate = [noti userInfo][@"date"];
+    _pickUpDate = [noti userInfo][@"date"];
+    NSString *pickUpTimeString = [self getStringFromDate:_pickUpDate];
+    [_pickUpTimeLabel setText:pickUpTimeString];
+
+}
 
 
+- (void)finishedDropOffDate:(NSNotification *)noti{
+
+    _dropOffDate = [noti userInfo][@"date"];
+    NSString *dropOffTimeString = [self getStringFromDate:_dropOffDate];
+
+    NSString *dropOffTimeLabelString = [NSString stringWithFormat:@"%@%@",dropOffTimeString,NSLocalizedString(@"dropoff_datetime_c",nil)];
+
+    [_dropOffTimeLabel setText:dropOffTimeLabelString];
+}
+
+
+
+- (NSString *)getStringFromDate:(NSDate*)date {
     NSDateFormatter *firstDateFormatter = [NSDateFormatter new];
     NSDateFormatter *lastDateFormatter = [NSDateFormatter new];
 
@@ -126,30 +205,50 @@ typedef enum : NSUInteger {
     NSString *lastDateFormat = @"hh:mm";
     [lastDateFormatter setDateFormat:lastDateFormat];
 
+
     NSDateComponents *components= [[NSDateComponents alloc] init];
     NSCalendar *calendar = [NSCalendar currentCalendar];
 
-    [components setHour:1];
-    NSDate *lastNewDate=[calendar dateByAddingComponents:components toDate:pickUpDate options:0];
 
+
+    [components setHour:1];
+    NSDate *lastNewDate=[calendar dateByAddingComponents:components toDate:date options:0];
 
 
     NSDateFormatter *dateFormatter = [NSDateFormatter new];
     [dateFormatter setDateFormat:NSLocalizedString(@"datetime_parse",nil)];
 
 
+    NSString *firstTimeString =   [firstDateFormatter stringFromDate:date];
+    NSString *lastTimeString =   [lastDateFormatter stringFromDate:lastNewDate];
 
-    NSString *pickUpTimeString = [NSString stringWithFormat:@"%@ %@%@",[dateFormatter stringFromDate:pickUpDate],[firstDateFormatter stringFromDate:pickUpDate],[lastDateFormatter stringFromDate:lastNewDate]];
+    NSDate *today = [NSDate date];
+    NSDateComponents *todayDateComponents = [[NSCalendar currentCalendar] components:NSCalendarUnitMonth|NSCalendarUnitDay|NSCalendarUnitHour|NSCalendarUnitMinute fromDate:today];
+    NSDateComponents *dateComponents = [[NSCalendar currentCalendar] components:NSCalendarUnitMonth|NSCalendarUnitDay|NSCalendarUnitHour|NSCalendarUnitMinute fromDate:date];
 
-    [_pickUpTimeLabel setText:pickUpTimeString];
+    NSString *dateString;
 
 
+
+    if (todayDateComponents.day == dateComponents.day){
+
+        dateString = [NSString stringWithFormat:@"%@ %@%@",NSLocalizedString(@"time_today",nil), firstTimeString, lastTimeString];
+    }
+    else if (todayDateComponents.day+1 == dateComponents.day){
+        dateString = [NSString stringWithFormat:@"%@ %@%@",NSLocalizedString(@"time_tomorrow",nil), firstTimeString, lastTimeString];
+    }
+    else
+        dateString = [NSString stringWithFormat:@"%@ %@%@", [dateFormatter stringFromDate:date], firstTimeString, lastTimeString];
+
+    return dateString;
 }
 
-- (void)finishedDropOffDate:(NSNotification *)noti{
 
-    dropOffDate = [noti userInfo][@"date"];
-}
+
+
+
+
+
 
 - (void)finishedEstimate:(NSNotification *)notification {
 
@@ -164,6 +263,14 @@ typedef enum : NSUInteger {
         [_estimatePriceLabel setHidden:YES];
     }
 
+}
+
+- (void)viewWillAppear:(BOOL)animated{
+    
+    _dropOffLabelWidthConstraint.constant = _timeSelectView.frame.size.width-40;
+//    [self.view layoutIfNeeded];
+    
+    NSLog(@"%@",_dropOffLabelWidthConstraint);
 }
 
 - (void)viewDidAppear:(BOOL)animated{
@@ -243,39 +350,41 @@ typedef enum : NSUInteger {
 }
 
 
-- (void)showTimeSelectVC{
+- (void)showTimeSelectVC:(UITapGestureRecognizer *)sender{
     NSLog(@"시간탭!");
-//    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-//
-//    manager.responseSerializer = [AFJSONResponseSerializer serializer];
-//    manager.responseSerializer.acceptableContentTypes = [manager.responseSerializer.acceptableContentTypes setByAddingObject:@"text/html"];
-//
-//
-//
-//    [manager GET:@"http://www.cleanbasket.co.kr/member/pickup"
-//      parameters:nil
-//         success:^(AFHTTPRequestOperation *operation, id responseObject) {
-//
-//
-//
-//             NSError *jsonError;
-//             NSData *objectData = [responseObject[@"data"] dataUsingEncoding:NSUTF8StringEncoding];
-//             NSArray *data = [NSJSONSerialization JSONObjectWithData:objectData
-//                                                             options:NSJSONReadingMutableContainers
-//                                                               error:&jsonError];
-//
-//             NSLog(@"message : %@, data : %@",responseObject[@"message"],data);
-//
-//
-//
-//         } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-//                NSLog(@"Error: %@", error);
-//            }];
 
-    
+    if (!_addressString.length){
+
+        [SVProgressHUD showErrorWithStatus:NSLocalizedString(@"address_empty",nil)];
+        [self presentAddAddressVC];
+
+        return;
+    }
+
+
     UIStoryboard *sb = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
-    [self presentViewController:[sb instantiateViewControllerWithIdentifier:@"TimeSelectNVC"] animated:NO completion:nil];
-    
+
+    UINavigationController *timeSelectNVC = [sb instantiateViewControllerWithIdentifier:@"TimeSelectNVC"];
+
+    if (sender.view == _timeSelectView){
+
+        TimeSelectViewController *timeSelectViewController = [timeSelectNVC.viewControllers firstObject];
+        [timeSelectViewController setTimeSelectType:CBTimeSelectTypePickUp];
+
+
+
+    }
+    else if (sender.view == _dropOffTimeLabel){
+
+
+        TimeSelectViewController *timeSelectViewController = [timeSelectNVC.viewControllers firstObject];
+        [timeSelectViewController setTimeSelectType:CBTimeSelectTypeDropOff];
+        [timeSelectViewController setDefaultInterval:_dropOffInterval];
+    }
+
+
+    [self presentViewController:timeSelectNVC animated:YES completion:nil];
+
     
 }
 
@@ -305,15 +414,7 @@ typedef enum : NSUInteger {
 
 - (void)getAddress{
 
-
-    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-
-    manager.responseSerializer = [AFJSONResponseSerializer serializer];
-    manager.responseSerializer.acceptableContentTypes = [manager.responseSerializer.acceptableContentTypes setByAddingObject:@"text/html"];
-
-
-
-    [manager GET:@"http://www.cleanbasket.co.kr/member/address"
+    [_manager GET:@"http://www.cleanbasket.co.kr/member/address"
       parameters:nil
          success:^(AFHTTPRequestOperation *operation, id responseObject) {
 
@@ -325,18 +426,16 @@ typedef enum : NSUInteger {
                                                              options:NSJSONReadingMutableContainers
                                                                error:&jsonError];
 
-             NSLog(@"message : %@, data : %@",responseObject[@"message"],data);
-
 
              if (!data.count){
                  //주소없을때처리
-
-//                 [self presentAddAddressVC];
+                 [_addressLabel setText:NSLocalizedString(@"address_empty",nil)];
 
              } else {
                  //주소있을때처리
                  _addressString = [NSString stringWithFormat:@"%@ %@",data.firstObject[@"address"],data.firstObject[@"addr_remainder"]];
                  [_addressLabel setText:_addressString];
+                 [self getDropOffInterval];
              }
 
 
@@ -344,6 +443,21 @@ typedef enum : NSUInteger {
                 NSLog(@"Error: %@", error);
             }];
 }
+
+
+- (void)getDropOffInterval{
+    [_manager GET:@"http://www.cleanbasket.co.kr/member/dropoff/dropoff_datetime"
+       parameters:nil
+          success:^(AFHTTPRequestOperation *operation, id responseObject) {
+
+              _dropOffInterval = [responseObject[@"data"] integerValue];
+
+          } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                NSLog(@"Error: %@", error);
+            }];
+}
+
+
 
 - (void)paymentMethod{
     NSLog(@"결제수단탭");
@@ -423,10 +537,9 @@ typedef enum : NSUInteger {
                                                              options:NSJSONReadingMutableContainers
                                                                error:&jsonError];
 
-             NSLog(@"message : %@, data : %@",responseObject[@"message"],data);
 
              if ([data[@"cardName"] isEqualToString:@""]){
-                 [SVProgressHUD showWithStatus:@"등록된 카드가 없습니다.\n카드 등록 화면으로 이동합니다."];
+                 [SVProgressHUD showWithStatus:@"등록된 카드가 없습니다."];
 
                  UIStoryboard *sb = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
                  UINavigationController *creditViewController = [sb instantiateViewControllerWithIdentifier:@"AddCreditVC"];
@@ -445,9 +558,6 @@ typedef enum : NSUInteger {
 
              }
 
-
-
-//             [SVProgressHUD dismiss];
 
 
          } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
@@ -475,37 +585,6 @@ typedef enum : NSUInteger {
     [self presentViewController:delegate.estimateVC animated:YES completion:nil];
 
 
-
-//    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-//
-//    manager.responseSerializer = [AFJSONResponseSerializer serializer];
-//    manager.responseSerializer.acceptableContentTypes = [manager.responseSerializer.acceptableContentTypes setByAddingObject:@"text/html"];
-//
-//
-//
-//    [manager GET:@"http://www.cleanbasket.co.kr/item"
-//      parameters:nil
-//         success:^(AFHTTPRequestOperation *operation, id responseObject) {
-//
-//
-//
-//             NSError *jsonError;
-//             NSData *objectData = [responseObject[@"data"] dataUsingEncoding:NSUTF8StringEncoding];
-//             NSArray *data = [NSJSONSerialization JSONObjectWithData:objectData
-//                                                             options:NSJSONReadingMutableContainers
-//                                                               error:&jsonError];
-//
-//             NSLog(@"message : %@, data : %@",responseObject[@"message"],data);
-//
-//
-//
-//         } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-//                NSLog(@"Error: %@", error);
-//            }];
-
-
-
-
 }
 
 
@@ -518,17 +597,7 @@ typedef enum : NSUInteger {
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
 }
 
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 @end

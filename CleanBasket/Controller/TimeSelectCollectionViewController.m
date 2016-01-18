@@ -9,9 +9,9 @@
 #import "TimeSelectCollectionViewController.h"
 #import "TimeCollectionViewCell.h"
 
-#define CELL_HEIGHT 50.0f;
-
-@interface TimeSelectCollectionViewController()
+@interface TimeSelectCollectionViewController () {
+    CBTimeSelectType _type;
+}
 
 @property CGFloat CELL_WIDTH;
 @property NSDateFormatter *firstDateFormatter;
@@ -35,14 +35,16 @@
     NSString *lastDateFormat = @"hh:mm";
     [_lastDateFormatter setDateFormat:lastDateFormat];
 
+    [self setNeedsStatusBarAppearanceUpdate];
 
 
 
 }
 
 
-- (void)initWithDayInterval:(NSInteger)interval{
+- (void)initWithDayInterval:(NSInteger)interval andType:(CBTimeSelectType)type{
 
+    
     NSDate *today = [NSDate date];
 
     NSCalendar *calendar = [NSCalendar currentCalendar];
@@ -57,14 +59,13 @@
 
     _date = [calendar dateFromComponents:dateComponents];
 
+    _type = type;
+    
 }
 
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath{
     
-    NSLog(@"%@",indexPath);
-
-
 
     NSInteger minute = 30*indexPath.item;
 
@@ -74,7 +75,10 @@
     NSDate *firstNewDate=[calendar dateByAddingComponents:components toDate:_date options:0];
 
 
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"didFinishPickUpDate" object:nil userInfo:@{@"date":firstNewDate}];
+    if (_type == CBTimeSelectTypePickUp)
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"didFinishPickUpDate" object:nil userInfo:@{@"date":firstNewDate}];
+    else if (_type == CBTimeSelectTypeDropOff)
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"didFinishDropOffDate" object:nil userInfo:@{@"date":firstNewDate}];
 
     [self dismissViewControllerAnimated:NO completion:nil];
     
@@ -125,4 +129,7 @@
     return CGSizeMake(_CELL_WIDTH, 50);
 }
 
+- (UIStatusBarStyle)preferredStatusBarStyle {
+    return UIStatusBarStyleLightContent;
+}
 @end

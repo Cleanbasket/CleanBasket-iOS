@@ -353,9 +353,9 @@
 "card_info_title"="카드 등록 안내";
 "card_info"="- 카드를 한번 등록하시면 크린바스켓 서비스를 계속 편리하게 이용하실 수 있습니다<br/><br/>- <b>카드 등록은 필수가 아닙니다.</b> 세탁물 수령 시 카드 및 현금 결제가 가능합니다.<br/><br/>- 결제는 세탁 완료 후 배송이 끝난 후 이뤄집니다.<br/><br/>- 카드 정보는 서버에 저장되지 않습니다. 안전하고 편리하게 크린바스켓 서비스를 이용해보세요.";
 "show_price"="가격보기/견적내기";
-"dropoff_datetime"="세탁물은";
-"dropoff_datetime"="일 후";
-"dropoff_datetime"="에 배달됩니다.";
+"dropoff_datetime_a"="세탁물은";
+"dropoff_datetime_b"="일 후";
+"dropoff_datetime_c"="에 배달됩니다.";
 "order_close"="마감";
 "change_item"="품목 변경";
 "change_time"="수거배달 시간 변경";

@@ -7,9 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "TimeSelectViewController.h"
 
 @interface TimeSelectCollectionViewController : UICollectionViewController<UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout>
 
 
-- (void)initWithDayInterval:(NSInteger)interval;
+- (void)initWithDayInterval:(NSInteger)interval andType:(CBTimeSelectType)type;
+
 @end

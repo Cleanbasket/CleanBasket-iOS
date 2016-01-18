@@ -28,6 +28,7 @@
     [super viewDidLoad];
     self.title = NSLocalizedString(@"notice_title",@"공지사항");
 
+    [self setNeedsStatusBarAppearanceUpdate];
 }
 
 
@@ -106,12 +107,12 @@
 -(void)viewDidAppear:(BOOL)animated {
 
     [SVProgressHUD show];
-//    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         [self loadNotice];
 //        dispatch_async(dispatch_get_main_queue(), ^{
 //            [SVProgressHUD dismiss];
 //        });
-//    });
+    });
 
 }
 
@@ -123,6 +124,9 @@
     [super didReceiveMemoryWarning];
 }
 
+- (UIStatusBarStyle)preferredStatusBarStyle {
+    return UIStatusBarStyleLightContent;
+}
 /*
 #pragma mark - Navigation
 

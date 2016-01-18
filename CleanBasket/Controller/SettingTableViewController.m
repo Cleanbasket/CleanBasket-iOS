@@ -32,8 +32,8 @@
     
     [_eventNotiSwitch setOn:[[NSUserDefaults standardUserDefaults] boolForKey:@"isGetEventNoti"]];
     [_orderNotiSwitch setOn:[[NSUserDefaults standardUserDefaults] boolForKey:@"isGetOrderNoti"]];
-    
-    
+
+    [self setNeedsStatusBarAppearanceUpdate];
     
 }
 
@@ -135,5 +135,9 @@
 
 }
 
+
+- (UIStatusBarStyle)preferredStatusBarStyle {
+    return UIStatusBarStyleLightContent;
+}
 
 @end

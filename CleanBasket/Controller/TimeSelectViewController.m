@@ -28,42 +28,31 @@
 
     _timeSelectCVCs = [NSMutableArray new];
 
+    if (_timeSelectType == CBTimeSelectTypePickUp){
+        [self setTitle:NSLocalizedString(@"pick_up_time_label",nil)];
+    }
+    else if (_timeSelectType == CBTimeSelectTypeDropOff){
+        [self setTitle:NSLocalizedString(@"drop_off_time_label",nil)];
+    }
 
-    [self setTitle:NSLocalizedString(@"time_dropoff_inform",nil)];
 
     UIStoryboard *sb = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
 
-    TimeSelectCollectionViewController *timeSelectCollectionViewController1 = [sb instantiateViewControllerWithIdentifier:@"TimeSelectCVC"];
-    TimeSelectCollectionViewController *timeSelectCollectionViewController2 = [sb instantiateViewControllerWithIdentifier:@"TimeSelectCVC"];
-    TimeSelectCollectionViewController *timeSelectCollectionViewController3 = [sb instantiateViewControllerWithIdentifier:@"TimeSelectCVC"];
-    TimeSelectCollectionViewController *timeSelectCollectionViewController4 = [sb instantiateViewControllerWithIdentifier:@"TimeSelectCVC"];
-    TimeSelectCollectionViewController *timeSelectCollectionViewController5 = [sb instantiateViewControllerWithIdentifier:@"TimeSelectCVC"];
-    
-    
-    [_timeSelectCVCs addObject:timeSelectCollectionViewController1];
-    [_timeSelectCVCs addObject:timeSelectCollectionViewController2];
-    [_timeSelectCVCs addObject:timeSelectCollectionViewController3];
-    [_timeSelectCVCs addObject:timeSelectCollectionViewController4];
-    [_timeSelectCVCs addObject:timeSelectCollectionViewController5];
 
-    
-    for (NSInteger i = 0; i<_timeSelectCVCs.count; i++) {
-        [_timeSelectCVCs[i] initWithDayInterval:i];
+    for (int i = 0; i < 5; ++i) {
+
+        TimeSelectCollectionViewController *timeSelectCollectionViewController = [sb instantiateViewControllerWithIdentifier:@"TimeSelectCVC"];
+
+        [timeSelectCollectionViewController initWithDayInterval:i+_defaultInterval andType:_timeSelectType];
+        [_timeSelectCVCs addObject:timeSelectCollectionViewController];
     }
+
 
     _dateFormatter = [NSDateFormatter new];
     [_dateFormatter setDateFormat:NSLocalizedStringFromTable(@"datetime_parse",@"Localizable",nil)];
 
 
-//    [_dateFormatter setDateFormat:NSLocalizedString(@"datetime_parse",nil)];
-
-//    [timeSelectCollectionViewController1 initWithDayInterval:0];
-//
-//    [timeSelectCVCs addObject:[UIViewController new]];
-//    [timeSelectCVCs addObject:[UIViewController new]];
-//    [timeSelectCVCs addObject:[UIViewController new]];
-
-
+    [self setNeedsStatusBarAppearanceUpdate];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -98,15 +87,9 @@
     NSDate *date = [NSDate date];
 
     NSDateComponents *components= [[NSDateComponents alloc] init];
-    [components setDay:index];
+    [components setDay:index+_defaultInterval];
     NSCalendar *calendar = [NSCalendar currentCalendar];
     NSDate *addedDate=[calendar dateByAddingComponents:components toDate:date options:0];
-
-
-//    NSDateComponents *dateComponents = [NSDateComponents new];
-//    [dateComponents setDay:dateComponents.day+index];
-
-
 
 
 
@@ -116,6 +99,11 @@
 
 - (IBAction)dismissVC:(id)sender {
     [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+
+- (UIStatusBarStyle)preferredStatusBarStyle {
+    return UIStatusBarStyleLightContent;
 }
 
 @end

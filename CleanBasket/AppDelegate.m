@@ -58,7 +58,7 @@
     [[UINavigationBar appearance] setBarTintColor:CleanBasketMint];
     [[UINavigationBar appearance] setTitleTextAttributes:@{NSForegroundColorAttributeName:[UIColor whiteColor]}];
     [[UINavigationBar appearance] setTranslucent:NO];
-
+    [[UINavigationBar appearance] setBarStyle:UIBarStyleBlackTranslucent];
 
     LoginViewController *loginViewController = (LoginViewController *) [sb instantiateViewControllerWithIdentifier:@"LoginVC"];
     _loginVC = (id) [[UINavigationController alloc] initWithRootViewController:loginViewController];
