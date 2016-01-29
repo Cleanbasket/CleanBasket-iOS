@@ -9,6 +9,9 @@
 #import "CBConstants.h"
 #import "SignInViewController.h"
 #import <KakaoOpenSDK/KakaoOpenSDK.h>
+#import "User.h"
+#import <Realm/Realm.h>
+#import <AFNetworking/AFNetworking.h>
 
 @interface LoginViewController()
 
@@ -83,12 +86,29 @@
 }
 
 - (IBAction)loginWithKakao:(id)sender {
-    [[KOSession sharedSession] close];
+    
+    KOSession *session = [KOSession sharedSession];
+    
+    if (session.isOpen) {
+        [session close];
+    }
+    
+    session.presentingViewController = self.navigationController;
+    [session openWithCompletionHandler:^(NSError *error) {
+        session.presentingViewController = nil;
+        NSLog(@"ㅅㅂㄹㅁ!");
+        
+        if (!session.isOpen) {
+            [[[UIAlertView alloc] initWithTitle:@"에러" message:error.description delegate:nil cancelButtonTitle:@"확인" otherButtonTitles:nil, nil] show];
+        }
+    }];
+
+
     
     [[KOSession sharedSession] openWithCompletionHandler:^(NSError *error) {
         if ([[KOSession sharedSession] isOpen]) {
             // login success
-            NSLog(@"login succeeded.");
+            NSLog(@"login succeeded.%@",[KOSession sharedSession]);
             
             UIStoryboard *sb = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
             UIViewController *mainTBC = [sb instantiateViewControllerWithIdentifier:@"MainTBC"];
@@ -102,6 +122,67 @@
             NSLog(@"login failed.");
         }
     }];
+}
+
+
+
+
+//로그인 체크 메서드
+- (void)authCheck{
+    
+    
+    //    RLMRealm *realm = [RLMRealm defaultRealm];
+    
+    RLMResults<User *> *users = [User allObjects];
+    
+    //유저 있으면 바로 로그인, 없으면 loginVC로 이동
+    if (users.count) {
+        
+        User *user = [users firstObject];
+        
+        AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+        
+        manager.responseSerializer = [AFJSONResponseSerializer serializer];
+        manager.responseSerializer.acceptableContentTypes = [manager.responseSerializer.acceptableContentTypes setByAddingObject:@"text/html"];
+        
+        NSDictionary *parameters = @{@"email": user.email,
+                                     @"password": user.password };
+        
+        
+        [manager POST:@"http://www.cleanbasket.co.kr/auth" parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+            
+            
+//            NSLog(@"%@",responseObject);
+            if ([responseObject[@"constant"] integerValue] != 1){
+                
+                AppDelegate *appDelegate = [[UIApplication sharedApplication] delegate];
+                [appDelegate.window setRootViewController:appDelegate.loginVC];
+                
+                
+            } else {
+//                [self playAnimination];
+            }
+            
+            
+            
+            
+        } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+            NSLog(@"Error: %@", error);
+        }];
+    }
+    
+    else {
+        
+        AppDelegate *appDelegate = [[UIApplication sharedApplication] delegate];
+        [appDelegate.window setRootViewController:appDelegate.loginVC];
+        
+        
+        
+    }
+    
+    
+    
+    
 }
 
 

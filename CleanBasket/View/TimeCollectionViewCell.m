@@ -19,37 +19,29 @@
 @implementation TimeCollectionViewCell
 
 
-- (void)awakeFromNib{
-//    NSLog(@"!!");
-}
 
-- (void)setTimeType:(TimeType)type{
-    _timeType = type;
+- (void)setTextWithDate:(NSDate *)date{
     
-    switch (_timeType) {
-        case TimeTypeClose:
-            [_closeLabel setHidden:NO];
-            break;
-        case TimeTypeSale:
-        case TimeTypeSale2:
-//            [_closeLabel setHidden:YES];
-            [_saleWidth setConstant:40.0f];
-            break;
-            
-        default:
-            [_closeLabel setHidden:YES];
-            [_saleWidth setConstant:00.0f];
-//            NSLog(@"bb");
-            break;
-    }
+    NSDateFormatter *firstDateFormatter = [NSDateFormatter new];
+    NSDateFormatter *lastDateFormatter = [NSDateFormatter new];
+    //    NSString *firstDateFormat = [NSString stringWithFormat:@"a %@~",NSLocalizedString(@"time_parse", nil)];
+    NSString *firstDateFormat = @"a hh:mm~";
+    [firstDateFormatter setDateFormat:firstDateFormat];
+    //    NSString *lastDateFormat = [NSString stringWithFormat:@"%@",NSLocalizedString(@"time_parse", nil)];
+    NSString *lastDateFormat = @"hh:mm";
+    [lastDateFormatter setDateFormat:lastDateFormat];
+//    NSDateComponents *components = [NSDateComponents new];
+    NSCalendar *calendar = [NSCalendar currentCalendar];
+    NSDateComponents *components = [calendar components:NSCalendarUnitYear|NSCalendarUnitMonth|NSCalendarUnitDay|NSCalendarUnitHour|NSCalendarUnitMinute fromDate:date];
     
-    [self layoutIfNeeded];
+    [components setMinute:components.minute+60];
+    NSDate *lastNewDate=[calendar dateFromComponents:components];
     
-}
+    
+    [_timeLabel setText:[NSString stringWithFormat:@"%@%@",[firstDateFormatter stringFromDate:date],[lastDateFormatter stringFromDate:lastNewDate]]];
 
 
-- (void)setTimeText:(NSString*)timeText{
-    [_timeLabel setText:timeText];
+    
 }
 
 

@@ -155,7 +155,7 @@
 
 
           } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                NSLog(@"Error: %@", error);
+                NSLog(@"Error: %@,\n response : %@", error,operation.responseString);
             }];
 
 }

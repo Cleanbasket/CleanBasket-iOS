@@ -18,10 +18,13 @@ typedef enum : NSUInteger {
 @interface TimeCollectionViewCell : UICollectionViewCell
 
 
-@property (nonatomic) TimeType timeType;
+//@property (nonatomic) TimeType timeType;
+//@property (nonatomic) NSDate *date;
 
+- (void)setTextWithDate:(NSDate*)date;
 //- (void)setTimeType:(TimeType)type;
-- (void)setTimeText:(NSString*)timeText;
+//- (void)setTimeText:(NSString*)timeText;
+
 
 
 @end

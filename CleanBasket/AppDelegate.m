@@ -16,6 +16,7 @@
 #import "EstimateViewController.h"
 #import <AFNetworking/AFNetworking.h>
 #import <AFNetworking/AFNetworkActivityIndicatorManager.h>
+#import <KakaoOpenSDK/KakaoOpenSDK.h>
 
 @interface AppDelegate ()
 
@@ -71,7 +72,9 @@
 
     _estimateVC = [sb instantiateViewControllerWithIdentifier:@"EstimateVC"];
 
-    [self.window setRootViewController:_authCheckViewController];
+    
+    //sex!
+    [self.window setRootViewController:[sb instantiateViewControllerWithIdentifier:@"LoginNVC"]];
 
 
     //기존 세팅 있을때
@@ -135,8 +138,25 @@
 }
 
 - (void)applicationDidBecomeActive:(UIApplication *)application {
-
+    [KOSession handleDidBecomeActive];
 }
+
+
+- (BOOL)application:(UIApplication *)application handleOpenURL:(NSURL *)url {
+    if ([KOSession isKakaoAccountLoginCallback:url]) {
+        return [KOSession handleOpenURL:url];
+    }
+    return NO;
+}
+
+- (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation {
+    if ([KOSession isKakaoAccountLoginCallback:url]) {
+        return [KOSession handleOpenURL:url];
+    }
+    return NO;
+}
+
+
 
 - (void)applicationWillTerminate:(UIApplication *)application {
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.

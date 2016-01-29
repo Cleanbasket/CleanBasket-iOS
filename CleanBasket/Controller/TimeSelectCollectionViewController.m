@@ -8,15 +8,17 @@
 
 #import "TimeSelectCollectionViewController.h"
 #import "TimeCollectionViewCell.h"
+#import <AFNetworking/AFNetworking.h>
 
 @interface TimeSelectCollectionViewController () {
     CBTimeSelectType _type;
 }
 
 @property CGFloat CELL_WIDTH;
-@property NSDateFormatter *firstDateFormatter;
-@property NSDateFormatter *lastDateFormatter;
+@property NSDateFormatter *stringFromDateFormatter;
+//@property NSDateFormatter *lastDateFormatter;
 @property NSDate *date;
+@property (nonatomic) NSMutableArray *pickupTimes;
 
 @end
 
@@ -26,19 +28,15 @@
     [super viewDidLoad];
     
     _CELL_WIDTH = self.collectionView.frame.size.width/2.0f;
-    _firstDateFormatter = [NSDateFormatter new];
-    _lastDateFormatter = [NSDateFormatter new];
-//    NSString *firstDateFormat = [NSString stringWithFormat:@"a %@~",NSLocalizedString(@"time_parse", nil)];
-    NSString *firstDateFormat = @"a hh:mm~";
-    [_firstDateFormatter setDateFormat:firstDateFormat];
-//    NSString *lastDateFormat = [NSString stringWithFormat:@"%@",NSLocalizedString(@"time_parse", nil)];
-    NSString *lastDateFormat = @"hh:mm";
-    [_lastDateFormatter setDateFormat:lastDateFormat];
 
     [self setNeedsStatusBarAppearanceUpdate];
 
 
+    self.stringFromDateFormatter = [NSDateFormatter new];
+    self.stringFromDateFormatter.dateFormat = @"yyyy-MM-dd HH:mm:ss.ss";
 
+    
+    
 }
 
 
@@ -61,8 +59,115 @@
 
     _type = type;
     
+    
+    
+    _pickupTimes = [NSMutableArray new];
+    
+    if (_type == CBTimeSelectTypePickUp) {
+        [self getPickUpTimeTable];
+    } else {
+        [self initDefaultTimeData];
+    }
+    
 }
 
+
+- (void)getPickUpTimeTable{
+    
+    
+    AFHTTPRequestOperationManager *manager =[AFHTTPRequestOperationManager manager];
+    
+    manager.responseSerializer = [AFJSONResponseSerializer serializer];
+    manager.responseSerializer.acceptableContentTypes = [manager.responseSerializer.acceptableContentTypes setByAddingObject:@"text/html"];
+    [manager GET:@"http://www.cleanbasket.co.kr/member/pickup"
+      parameters:nil
+         success:^(AFHTTPRequestOperation *operation, id responseObject) {
+             
+             if ([responseObject[@"constant"]  isEqual: @1]) {
+                 
+                 NSError *jsonError;
+                 NSData *objectData = [responseObject[@"data"] dataUsingEncoding:NSUTF8StringEncoding];
+                 NSArray *datas = [NSJSONSerialization JSONObjectWithData:objectData
+                                                                  options:NSJSONReadingMutableContainers
+                                                                    error:&jsonError];
+                 
+//                 self.pickupTimes = datas;
+                 
+
+                 
+                 for (int i = 0; i< 28; i++) {
+                     
+                     NSMutableDictionary *pickupTime = [NSMutableDictionary new];
+                     
+                     NSInteger minute = 30*i;
+                     
+                     NSDateComponents *components= [[NSDateComponents alloc] init];
+                     [components setMinute:minute];
+                     NSCalendar *calendar = [NSCalendar currentCalendar];
+                     NSDate *newDate=[calendar dateByAddingComponents:components toDate:_date options:0];
+                     
+                     [pickupTime setObject:newDate forKey:@"datetime"];
+                     
+                     for (NSDictionary *data in datas) {
+                         NSDate *typeDate = [self.stringFromDateFormatter dateFromString:data[@"datetime"]];
+                         if ([newDate isEqualToDate:typeDate]) {
+                             NSLog(@"뚫 :%@",typeDate);
+                             [pickupTime setObject:data[@"type"] forKey:@"type"];
+                             break;
+                         }
+                         else
+                             [pickupTime setObject:@(TimeTypeNone) forKey:@"type"];
+                     }
+                   
+                     
+                     [self.pickupTimes addObject:pickupTime];
+                     [self.collectionView reloadData];
+                  
+                     
+                 }
+                 
+                 
+                 
+
+             }
+             
+             
+             
+             
+         } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+             NSLog(@"Error: %@", error);
+         }];
+
+}
+
+- (void)initDefaultTimeData{
+    for (int i = 0; i< 28; i++) {
+        
+        NSMutableDictionary *time = [NSMutableDictionary new];
+        
+        NSInteger minute = 30*i;
+        
+        NSDateComponents *components= [[NSDateComponents alloc] init];
+        [components setMinute:minute];
+        NSCalendar *calendar = [NSCalendar currentCalendar];
+        NSDate *newDate=[calendar dateByAddingComponents:components toDate:_date options:0];
+        
+        [time setObject:newDate forKey:@"datetime"];
+        
+        [time setObject:@(TimeTypeNone) forKey:@"type"];
+        
+        
+        [self.pickupTimes addObject:time];
+        [self.collectionView reloadData];
+        
+        
+        if (i==25) {
+            NSLog(@"%@",self.pickupTimes);
+        }
+        
+    }
+
+}
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath{
     
@@ -86,40 +191,42 @@
 
 - (UICollectionViewCell*)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath{
 
-    TimeCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"TimeCell" forIndexPath:indexPath];
-
-
-    NSInteger minute = 30*indexPath.item;
-
-    NSDateComponents *components= [[NSDateComponents alloc] init];
-    [components setMinute:minute];
-    NSCalendar *calendar = [NSCalendar currentCalendar];
-    NSDate *firstNewDate=[calendar dateByAddingComponents:components toDate:_date options:0];
-
-    [components setMinute:minute+60];
-    NSDate *lastNewDate=[calendar dateByAddingComponents:components toDate:_date options:0];
-
-
-    [cell setTimeText:[NSString stringWithFormat:@"%@%@",[_firstDateFormatter stringFromDate:firstNewDate],[_lastDateFormatter stringFromDate:lastNewDate]]];
-
-//    arc4random();
-
-    [cell setTimeType:arc4random()%4];
+    TimeCollectionViewCell *cell;
+    
+    switch ([self.pickupTimes[indexPath.row][@"type"] integerValue]) {
+        case TimeTypeNone:
+            cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"TimeCell" forIndexPath:indexPath];
+            [cell setTextWithDate:self.pickupTimes[indexPath.row][@"datetime"]];
+            break;
+        case TimeTypeSale:
+        case TimeTypeSale2:
+            cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"SaleCell" forIndexPath:indexPath];
+            [cell setTextWithDate:self.pickupTimes[indexPath.row][@"datetime"]];
+            break;
+        case TimeTypeClose:
+            cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"CloseCell" forIndexPath:indexPath];
+            [cell setTextWithDate:self.pickupTimes[indexPath.row][@"datetime"]];
+            break;
+            
+        default:
+            break;
+    }
+    
 
     return cell;
 }
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section{
-    return 26;
+    return self.pickupTimes.count;
 }
 
 
 - (BOOL)collectionView:(UICollectionView *)collectionView shouldSelectItemAtIndexPath:(NSIndexPath *)indexPath {
 
-    TimeCollectionViewCell *cell = [collectionView cellForItemAtIndexPath:indexPath];
+//    TimeCollectionViewCell *cell = (TimeCollectionViewCell*)[collectionView cellForItemAtIndexPath:indexPath];
 
 
-    if (cell.timeType==TimeTypeClose)
+    if ([self.pickupTimes[indexPath.row][@"type"] integerValue] == TimeTypeClose)
         return NO;
     return YES;
 

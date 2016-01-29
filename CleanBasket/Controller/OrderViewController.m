@@ -123,11 +123,7 @@ typedef enum : NSUInteger {
 
     [self setNeedsStatusBarAppearanceUpdate];
 
-
     [self initOrder];
-
-
-
 
 }
 
@@ -156,6 +152,11 @@ typedef enum : NSUInteger {
     }
 
     if (dateComponents.hour<10){
+        dateComponents.hour = 10;
+        dateComponents.minute = 0;
+    }
+    else if(dateComponents.hour>=22 && dateComponents.month > 30){
+        dateComponents.day += 1;
         dateComponents.hour = 10;
         dateComponents.minute = 0;
     }
@@ -268,9 +269,6 @@ typedef enum : NSUInteger {
 - (void)viewWillAppear:(BOOL)animated{
     
     _dropOffLabelWidthConstraint.constant = _timeSelectView.frame.size.width-40;
-//    [self.view layoutIfNeeded];
-    
-    NSLog(@"%@",_dropOffLabelWidthConstraint);
 }
 
 - (void)viewDidAppear:(BOOL)animated{

@@ -111,14 +111,33 @@
     //로그아웃
     if (indexPath.section == 0 && indexPath.row == 1) {
         
-        RLMRealm *realm = [RLMRealm defaultRealm];
+        AFHTTPRequestOperationManager *manager =[AFHTTPRequestOperationManager manager];
         
-        [realm beginWriteTransaction];
-        [realm deleteObjects:[User allObjects]];
-        [realm commitWriteTransaction];
+        manager.responseSerializer = [AFJSONResponseSerializer serializer];
+        manager.responseSerializer.acceptableContentTypes = [manager.responseSerializer.acceptableContentTypes setByAddingObject:@"text/html"];
+        [manager GET:@"http://www.cleanbasket.co.kr/logout/success"
+          parameters:nil
+             success:^(AFHTTPRequestOperation *operation, id responseObject) {
+                 
+                 if ([responseObject[@"constant"]  isEqual: @1]) {
+                     RLMRealm *realm = [RLMRealm defaultRealm];
+                     
+                     [realm beginWriteTransaction];
+                     [realm deleteObjects:[User allObjects]];
+                     [realm commitWriteTransaction];
+                     
+                     AppDelegate *appDelegate = [[UIApplication sharedApplication]delegate];
+                     [appDelegate.window setRootViewController:(UIViewController*)appDelegate.loginVC];
+
+                 }
+                 
+                 
+                 
+                 
+             } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                 NSLog(@"Error: %@", error);
+             }];
         
-        AppDelegate *appDelegate = [[UIApplication sharedApplication]delegate];
-        [appDelegate.window setRootViewController:(UIViewController*)appDelegate.loginVC];
         
     } else if (indexPath.section == 0 && indexPath.row == 0) {
 

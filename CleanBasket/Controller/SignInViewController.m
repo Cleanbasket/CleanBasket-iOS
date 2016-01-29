@@ -56,8 +56,6 @@
     _scrollViewContentSize = self.view.frame.size;
 
     _scrollView.contentSize = _scrollViewContentSize;
-    
-    NSLog(@"첨 시작 %f,%f",_scrollView.contentSize.width,_scrollView.contentSize.height);
 
     
     _emailTextField.delegate = self;
@@ -79,6 +77,8 @@
 }
 
 - (IBAction)login:(id)sender {
+  
+    
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
 
 
@@ -109,7 +109,7 @@
                                                                      error:&jsonError];
 
 
-                NSLog(@"%@",data);
+                NSLog(@"로긘 : %@",data);
 
                 RLMRealm *realm = [RLMRealm defaultRealm];
                 User *user = [[User alloc] initWithValue:@{@"email": _emailTextField.text,
