@@ -25,19 +25,11 @@
 
 
 - (void)viewDidLoad {
-//    [self init];
     [super viewDidLoad];
-
-//    [self authCheck];
-
-
-    
-
 }
 
 
 - (void)viewDidAppear:(BOOL)animated {
-
     [self authCheck];
 }
 
@@ -49,7 +41,6 @@
 
 //로그인 체크 메서드
 - (void)authCheck{
-
     
 //    RLMRealm *realm = [RLMRealm defaultRealm];
     
@@ -69,7 +60,7 @@
                                      @"password": user.password };
         
 
-        [manager POST:@"http://www.cleanbasket.co.kr/auth" parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        [manager POST:@"http://52.79.39.100:8080/auth" parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
 
 
             NSLog(@"%@",responseObject);
@@ -93,20 +84,14 @@
     }
     
     else {
-        
         AppDelegate *appDelegate = [[UIApplication sharedApplication] delegate];
         [appDelegate.window setRootViewController:appDelegate.loginVC];
-
-        
         
     }
-
-
-
-
 }
 
 - (void)playAnimination {
+    
     [UIView animateWithDuration:0.5f
                                   delay:0.3f
                                 options:UIViewAnimationOptionCurveEaseInOut

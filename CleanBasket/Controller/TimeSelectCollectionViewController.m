@@ -79,7 +79,7 @@
     
     manager.responseSerializer = [AFJSONResponseSerializer serializer];
     manager.responseSerializer.acceptableContentTypes = [manager.responseSerializer.acceptableContentTypes setByAddingObject:@"text/html"];
-    [manager GET:@"http://www.cleanbasket.co.kr/member/pickup"
+    [manager GET:@"http://52.79.39.100:8080/member/pickup"
       parameters:nil
          success:^(AFHTTPRequestOperation *operation, id responseObject) {
              
@@ -93,7 +93,6 @@
                  
 //                 self.pickupTimes = datas;
                  
-
                  
                  for (int i = 0; i< 28; i++) {
                      
@@ -108,16 +107,19 @@
                      
                      [pickupTime setObject:newDate forKey:@"datetime"];
                      
-                     for (NSDictionary *data in datas) {
-                         NSDate *typeDate = [self.stringFromDateFormatter dateFromString:data[@"datetime"]];
-                         if ([newDate isEqualToDate:typeDate]) {
-                             NSLog(@"뚫 :%@",typeDate);
-                             [pickupTime setObject:data[@"type"] forKey:@"type"];
-                             break;
+                     if (datas.count) {
+                         for (NSDictionary *data in datas) {
+                             NSDate *typeDate = [self.stringFromDateFormatter dateFromString:data[@"datetime"]];
+                             if ([newDate isEqualToDate:typeDate]) {
+                                 [pickupTime setObject:data[@"type"] forKey:@"type"];
+                                 break;
+                             }
+                             else
+                                 [pickupTime setObject:@(TimeTypeNone) forKey:@"type"];
                          }
-                         else
-                             [pickupTime setObject:@(TimeTypeNone) forKey:@"type"];
                      }
+                     else
+                         [pickupTime setObject:@(TimeTypeNone) forKey:@"type"];
                    
                      
                      [self.pickupTimes addObject:pickupTime];

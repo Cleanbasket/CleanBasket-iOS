@@ -30,19 +30,19 @@
 			<string>Editor</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>kakao19f09ac8ea028d946a0608f5a34ed2c3</string>
+				<string>kakao4d887b7557045f681b37433a0bf0daeb</string>
 			</array>
 		</dict>
 	</array>
 	<key>CFBundleVersion</key>
 	<string>1</string>
 	<key>KAKAO_APP_KEY</key>
-	<string>19f09ac8ea028d946a0608f5a34ed2c3</string>
+	<string>4d887b7557045f681b37433a0bf0daeb</string>
 	<key>LSApplicationCategoryType</key>
 	<string></string>
 	<key>LSApplicationQueriesSchemes</key>
 	<array>
-		<string>kakao19f09ac8ea028d946a0608f5a34ed2c3</string>
+		<string>kakao4d887b7557045f681b37433a0bf0daeb</string>
 		<string>kakaokompassauth</string>
 		<string>storykompassauth</string>
 		<string>kakaolink</string>
@@ -55,6 +55,15 @@
 	<dict>
 		<key>NSExceptionDomains</key>
 		<dict>
+			<key>52.79.39.100</key>
+            <dict>
+                <key>NSIncludesSubdomains</key>
+                <true/>
+                <key>NSTemporaryExceptionAllowsInsecureHTTPLoads</key>
+                <true/>
+                <key>NSTemporaryExceptionMinimumTLSVersion</key>
+                <string>TLSv1.1</string>
+            </dict>
 			<key>cleanbasket.co.kr</key>
 			<dict>
 				<key>NSIncludesSubdomains</key>
@@ -129,5 +138,10 @@
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<true/>
+    <key>NSAppTransportSecurity</key>
+    <dict>
+        <key>NSAllowsArbitraryLoads</key>
+        <true/>
+    </dict>
 </dict>
 </plist>

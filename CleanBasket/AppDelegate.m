@@ -72,9 +72,7 @@
 
     _estimateVC = [sb instantiateViewControllerWithIdentifier:@"EstimateVC"];
 
-    
-    //sex!
-    [self.window setRootViewController:[sb instantiateViewControllerWithIdentifier:@"LoginNVC"]];
+    [self.window setRootViewController:_authCheckViewController];
 
 
     //기존 세팅 있을때

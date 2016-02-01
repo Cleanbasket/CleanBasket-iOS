@@ -89,7 +89,7 @@
     NSDictionary *parameters = @{@"email": _emailTextField.text,
                                  @"password": _pwTextField.text};
 
-    [manager POST:@"http://www.cleanbasket.co.kr/auth" parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    [manager POST:@"http://52.79.39.100:8080/auth" parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
 
         [self.view endEditing:YES];
 
@@ -183,7 +183,7 @@
 
     NSDictionary *parameters = @{@"email":_signUpEmailTF.text,@"password":_signUpPwTF.text};
 
-    [manager POST:@"http://www.cleanbasket.co.kr/member/register" parameters:parameters
+    [manager POST:@"http://52.79.39.100:8080/member/register" parameters:parameters
           success:^(AFHTTPRequestOperation *operation, id responseObject) {
 
               NSLog(@"res : %@",responseObject);

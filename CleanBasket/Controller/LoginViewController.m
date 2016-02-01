@@ -12,6 +12,8 @@
 #import "User.h"
 #import <Realm/Realm.h>
 #import <AFNetworking/AFNetworking.h>
+#import <SVProgressHUD/SVProgressHUD.h>
+#import "NSString+sha1.h"
 
 @interface LoginViewController()
 
@@ -96,94 +98,178 @@
     session.presentingViewController = self.navigationController;
     [session openWithCompletionHandler:^(NSError *error) {
         session.presentingViewController = nil;
-        NSLog(@"ㅅㅂㄹㅁ!");
         
         if (!session.isOpen) {
             [[[UIAlertView alloc] initWithTitle:@"에러" message:error.description delegate:nil cancelButtonTitle:@"확인" otherButtonTitles:nil, nil] show];
         }
-    }];
-
-
-    
-    [[KOSession sharedSession] openWithCompletionHandler:^(NSError *error) {
-        if ([[KOSession sharedSession] isOpen]) {
-            // login success
+        else {
             NSLog(@"login succeeded.%@",[KOSession sharedSession]);
-            
-            UIStoryboard *sb = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
-            UIViewController *mainTBC = [sb instantiateViewControllerWithIdentifier:@"MainTBC"];
-            
-            AppDelegate *appDelegate = [[UIApplication sharedApplication] delegate];
-            
-            [appDelegate.window setRootViewController:mainTBC];
-            
-        } else {
-            // failed
-            NSLog(@"login failed.");
+            [KOSessionTask meTaskWithCompletionHandler:^(KOUser* result, NSError *error) {
+                if (result) {
+                    // success
+                    NSString *userIdString = [result.ID stringValue];
+                    [SVProgressHUD show];
+                    [self login:userIdString password:[userIdString sha1]];
+                    
+                    
+                    
+                } else {
+                    // failed
+                }
+            }];
+
         }
     }];
+    
+
+    
+}
+
+- (void)goToMainTBC{
+    
+    UIStoryboard *sb = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+    UIViewController *mainTBC = [sb instantiateViewControllerWithIdentifier:@"MainTBC"];
+    
+    AppDelegate *appDelegate = [[UIApplication sharedApplication] delegate];
+    
+    [appDelegate.window setRootViewController:mainTBC];
+
 }
 
 
 
 
-//로그인 체크 메서드
-- (void)authCheck{
+
+
+#pragma mark - Sign!
+- (IBAction)login:(NSString*)userId password:(NSString*)pw {
     
     
-    //    RLMRealm *realm = [RLMRealm defaultRealm];
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     
-    RLMResults<User *> *users = [User allObjects];
     
-    //유저 있으면 바로 로그인, 없으면 loginVC로 이동
-    if (users.count) {
-        
-        User *user = [users firstObject];
-        
-        AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-        
-        manager.responseSerializer = [AFJSONResponseSerializer serializer];
-        manager.responseSerializer.acceptableContentTypes = [manager.responseSerializer.acceptableContentTypes setByAddingObject:@"text/html"];
-        
-        NSDictionary *parameters = @{@"email": user.email,
-                                     @"password": user.password };
+    
+    manager.responseSerializer = [AFJSONResponseSerializer serializer];
+    manager.responseSerializer.acceptableContentTypes = [manager.responseSerializer.acceptableContentTypes setByAddingObject:@"text/html"];
+    
+    NSDictionary *parameters = @{@"email": userId,
+                                 @"password": pw};
+    
+    [manager POST:@"http://52.79.39.100:8080/auth"
+       parameters:parameters
+          success:^(AFHTTPRequestOperation *operation, id responseObject) {
         
         
-        [manager POST:@"http://www.cleanbasket.co.kr/auth" parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
-            
-            
-//            NSLog(@"%@",responseObject);
-            if ([responseObject[@"constant"] integerValue] != 1){
+        NSNumber *value = responseObject[@"constant"];
+        switch ([value integerValue]) {
+                // 회원정보 일치: 로그인 성공
+            case CBServerConstantSuccess:
+            {
                 
+                
+                NSError *jsonError;
+                NSData *objectData = [responseObject[@"data"] dataUsingEncoding:NSUTF8StringEncoding];
+                NSDictionary *data = [NSJSONSerialization JSONObjectWithData:objectData
+                                                                     options:NSJSONReadingMutableContainers
+                                                                       error:&jsonError];
+                
+                
+                
+                RLMRealm *realm = [RLMRealm defaultRealm];
+                User *user = [[User alloc] initWithValue:@{@"email": userId,
+                                                           @"password": pw,
+                                                           @"uid":data[@"uid"]}];
+                
+                [realm beginWriteTransaction];
+                [realm deleteObjects:[User allObjects]];
+                [realm addObject:user];
+                [realm commitWriteTransaction];
+                
+                
+                UIStoryboard *sb = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+                UIViewController *mainTBC = [sb instantiateViewControllerWithIdentifier:@"MainTBC"];
                 AppDelegate *appDelegate = [[UIApplication sharedApplication] delegate];
-                [appDelegate.window setRootViewController:appDelegate.loginVC];
+                [appDelegate.window setRootViewController:mainTBC];
                 
-                
-            } else {
-//                [self playAnimination];
+                break;
             }
-            
-            
-            
-            
-        } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-            NSLog(@"Error: %@", error);
-        }];
-    }
-    
-    else {
+                // 이메일 주소 없음
+            case CBServerConstantEmailError:
+            {
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    [self signUp:userId password:pw];
+                });
+                break;
+            }
+                // 이메일 주소에 대한 비밀번호 다름
+            case CBServerConstantPasswordError:
+            {
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    [self signUp:userId password:pw];
+                });
+                break;
+            }
+                // 정지 계정
+            case CBServerConstantAccountDisabled :
+            {
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    
+                    [SVProgressHUD showErrorWithStatus:@"해당 계정은 사용하실 수 없습니다."];
+                });
+                break;
+            }
+        }
         
-        AppDelegate *appDelegate = [[UIApplication sharedApplication] delegate];
-        [appDelegate.window setRootViewController:appDelegate.loginVC];
         
         
         
-    }
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"Error: %@", error);
+    }];
+}
+
+
+- (IBAction)signUp:(NSString*)userId password:(NSString*)pw {
+    
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    
+    manager.requestSerializer = [AFJSONRequestSerializer serializer];
+    
+    manager.responseSerializer = [AFJSONResponseSerializer serializer];
+    manager.responseSerializer.acceptableContentTypes = [manager.responseSerializer.acceptableContentTypes setByAddingObject:@"text/html"];
     
     
+    NSDictionary *parameters = @{@"email":userId ,@"password":pw};
     
+    [manager POST:@"http://52.79.39.100:8080/member/register" parameters:parameters
+          success:^(AFHTTPRequestOperation *operation, id responseObject) {
+              
+              
+              NSNumber *value = responseObject[@"constant"];
+              switch ([value integerValue]) {
+                  case CBServerConstantSuccess:
+                  {
+                      
+                      [SVProgressHUD showSuccessWithStatus:NSLocalizedString(@"sign_up_success",nil)];
+                      
+                      [self login:userId password:pw];
+                      
+                  }
+                      break;
+                  case CBServerConstantsAccountDuplication:
+                  {
+                      [SVProgressHUD showErrorWithStatus:NSLocalizedString(@"email_duplication",nil)];
+                      break;
+                  }
+              }
+          } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+              [SVProgressHUD showErrorWithStatus:NSLocalizedString(@"network_error",nil)];
+              NSLog(@"%@",error);
+          }];
     
 }
+
 
 
 
@@ -220,7 +306,6 @@
 
 - (void)didReceiveMemoryWarning{
     [super didReceiveMemoryWarning];
-    
 }
 
 

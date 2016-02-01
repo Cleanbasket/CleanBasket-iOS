@@ -941,6 +941,7 @@
                                             <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
                                         <connections>
+                                            <action selector="addOrder:" destination="103-zA-C0X" eventType="touchUpInside" id="4VZ-MI-5ie"/>
                                             <action selector="confirm:" destination="gbI-EM-T9K" eventType="touchUpInside" id="Xdj-xd-HZK"/>
                                         </connections>
                                     </button>
@@ -1118,7 +1119,7 @@
                                     </view>
                                 </subviews>
                                 <constraints>
-                                    <constraint firstItem="4g6-jb-nBN" firstAttribute="top" secondItem="8W3-pI-DnF" secondAttribute="bottom" constant="20" id="1gM-c0-T41"/>
+                                    <constraint firstItem="4g6-jb-nBN" firstAttribute="top" secondItem="8W3-pI-DnF" secondAttribute="bottom" constant="10" id="1gM-c0-T41"/>
                                     <constraint firstAttribute="trailing" secondItem="8W3-pI-DnF" secondAttribute="trailing" id="AKr-3n-Aqz"/>
                                     <constraint firstItem="4g6-jb-nBN" firstAttribute="leading" secondItem="eaZ-Rv-9RG" secondAttribute="leading" constant="20" id="QGF-Sl-xBM"/>
                                     <constraint firstAttribute="bottom" secondItem="B2z-La-q3z" secondAttribute="bottom" id="Rq8-JK-1i6"/>
@@ -1666,7 +1667,7 @@
                                     <rect key="frame" x="0.0" y="0.0" width="160" height="50"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="오전 10:00~11:00" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="blI-M1-L6i">
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="오전 10:00~11:00" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="blI-M1-L6i">
                                             <rect key="frame" x="-42" y="-21" width="42" height="21"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                             <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
@@ -1708,7 +1709,7 @@
                                 </connections>
                             </collectionViewCell>
                             <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="SaleCell" id="LgP-DN-Isd" customClass="TimeCollectionViewCell">
-                                <rect key="frame" x="0.0" y="0.0" width="160" height="50"/>
+                                <rect key="frame" x="220" y="0.0" width="160" height="50"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                     <rect key="frame" x="0.0" y="0.0" width="160" height="50"/>
@@ -1758,12 +1759,12 @@
                                     </mask>
                                     <mask key="constraints">
                                         <exclude reference="Jp9-yW-h94"/>
-                                        <exclude reference="pJK-F8-3sZ"/>
                                         <exclude reference="iMc-2T-efa"/>
+                                        <exclude reference="pJK-F8-3sZ"/>
                                         <exclude reference="UAx-7f-nGq"/>
+                                        <exclude reference="eQ7-BE-0Xu"/>
                                         <exclude reference="h0I-oU-X4w"/>
                                         <exclude reference="kni-T5-q9G"/>
-                                        <exclude reference="eQ7-BE-0Xu"/>
                                     </mask>
                                 </variation>
                                 <variation key="widthClass=compact">
@@ -1773,12 +1774,12 @@
                                     </mask>
                                     <mask key="constraints">
                                         <include reference="Jp9-yW-h94"/>
-                                        <include reference="pJK-F8-3sZ"/>
                                         <include reference="iMc-2T-efa"/>
+                                        <include reference="pJK-F8-3sZ"/>
                                         <include reference="UAx-7f-nGq"/>
+                                        <include reference="eQ7-BE-0Xu"/>
                                         <include reference="h0I-oU-X4w"/>
                                         <include reference="kni-T5-q9G"/>
-                                        <include reference="eQ7-BE-0Xu"/>
                                     </mask>
                                 </variation>
                                 <connections>
@@ -1786,20 +1787,20 @@
                                     <outlet property="timeLabel" destination="a9K-V8-OmQ" id="hTd-O9-qu9"/>
                                 </connections>
                             </collectionViewCell>
-                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="ColseCell" id="bdc-v2-TeH" customClass="TimeCollectionViewCell">
-                                <rect key="frame" x="0.0" y="0.0" width="160" height="50"/>
+                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="CloseCell" id="bdc-v2-TeH" customClass="TimeCollectionViewCell">
+                                <rect key="frame" x="440" y="0.0" width="160" height="50"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                     <rect key="frame" x="0.0" y="0.0" width="160" height="50"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="오전 10:00~11:00" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="BFu-RW-chV">
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="오전 10:00~11:00" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="BFu-RW-chV">
                                             <rect key="frame" x="-42" y="-21" width="42" height="21"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                             <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <label hidden="YES" opaque="NO" userInteractionEnabled="NO" alpha="0.85000002384185791" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="마감" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5ph-qe-vX5">
+                                        <label opaque="NO" userInteractionEnabled="NO" alpha="0.85000002384185791" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="마감" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5ph-qe-vX5">
                                             <rect key="frame" x="-42" y="-21" width="42" height="21"/>
                                             <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
@@ -2008,7 +2009,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="fyQ-Tb-Hzw" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3705" y="1115.4929577464789"/>
+            <point key="canvasLocation" x="3777" y="909"/>
         </scene>
         <!--내 정보-->
         <scene sceneID="zq2-Sf-MCv">

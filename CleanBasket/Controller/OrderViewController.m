@@ -44,7 +44,8 @@ typedef enum : NSUInteger {
 @property CBPaymentMethod paymentMethod;
 @property NSNumber *estimatePrice;
 @property NSNumberFormatter *numberFormatter;
-@property NSString *addressString;
+@property NSString *addressString, *addr_building, *address;
+@property NSDateFormatter *stringFromDateFormatter;
 
 @end
 
@@ -124,7 +125,9 @@ typedef enum : NSUInteger {
     [self setNeedsStatusBarAppearanceUpdate];
 
     [self initOrder];
-
+    
+    self.stringFromDateFormatter = [NSDateFormatter new];
+    self.stringFromDateFormatter.dateFormat = @"yyyy-MM-dd HH:mm:ss.s";
 }
 
 
@@ -412,7 +415,7 @@ typedef enum : NSUInteger {
 
 - (void)getAddress{
 
-    [_manager GET:@"http://www.cleanbasket.co.kr/member/address"
+    [_manager GET:@"http://52.79.39.100:8080/member/address"
       parameters:nil
          success:^(AFHTTPRequestOperation *operation, id responseObject) {
 
@@ -431,7 +434,11 @@ typedef enum : NSUInteger {
 
              } else {
                  //주소있을때처리
-                 _addressString = [NSString stringWithFormat:@"%@ %@",data.firstObject[@"address"],data.firstObject[@"addr_remainder"]];
+                 
+                 _address = data.firstObject[@"address"];
+                 _addr_building = data.firstObject[@"addr_ramainder"];
+                 _addressString = [NSString stringWithFormat:@"%@ %@",_address,_addr_building];
+                 NSLog(@"주소 : %@",data.firstObject);
                  [_addressLabel setText:_addressString];
                  [self getDropOffInterval];
              }
@@ -444,7 +451,7 @@ typedef enum : NSUInteger {
 
 
 - (void)getDropOffInterval{
-    [_manager GET:@"http://www.cleanbasket.co.kr/member/dropoff/dropoff_datetime"
+    [_manager GET:@"http://52.79.39.100:8080/member/dropoff/dropoff_datetime"
        parameters:nil
           success:^(AFHTTPRequestOperation *operation, id responseObject) {
 
@@ -523,7 +530,7 @@ typedef enum : NSUInteger {
     manager.responseSerializer.acceptableContentTypes = [manager.responseSerializer.acceptableContentTypes setByAddingObject:@"text/html"];
 
 
-    [manager GET:@"http://www.cleanbasket.co.kr/member/payment"
+    [manager GET:@"http://52.79.39.100:8080/member/payment"
       parameters:nil
          success:^(AFHTTPRequestOperation *operation, id responseObject) {
 
@@ -562,7 +569,45 @@ typedef enum : NSUInteger {
                 NSLog(@"Error: %@", error);
                 [SVProgressHUD showErrorWithStatus:NSLocalizedString(@"network_error",nil)];
             }];
+    
+    
 
+
+}
+
+
+
+-(IBAction)addOrder:(id)sender{
+    
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    AFJSONResponseSerializer *responseSerializer = [AFJSONResponseSerializer serializerWithReadingOptions:NSJSONReadingAllowFragments];
+//    manager.responseSerializer = [AFJSONResponseSerializer serializer];
+//    manager.responseSerializer.acceptableContentTypes = [manager.responseSerializer.acceptableContentTypes setByAddingObject:@"text/html"];
+    
+    manager.responseSerializer = responseSerializer;
+    
+//    NSLog(@"시간들 : %@,%@",_pickUpDate,_dropOffDate);
+//    NSLog(@"수거 :%@, 배달 : %@",[self.stringFromDateFormatter stringFromDate:_pickUpDate],[self.stringFromDateFormatter stringFromDate:_dropOffDate]);
+    
+    NSDictionary *parameters = @{@"address":@"서울 마포구 도화동",
+                                 @"addr_building": @"555 한화오벨리스크 아파트 2109호",
+                                 @"pickup_date":[self.stringFromDateFormatter stringFromDate:_pickUpDate],
+                                 @"dropoff_date":[self.stringFromDateFormatter stringFromDate:_dropOffDate]
+                                 };
+    
+//    NSLog(@"파라팔 :%@",parameters);
+    
+    [manager POST:@"http://52.79.39.100:8080/member/order/add/new"
+      parameters:parameters
+         success:^(AFHTTPRequestOperation *operation, id responseObject) {
+             
+             NSLog(@"%@",responseObject);
+             
+         } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+             NSLog(@"Error: %@, %@", error,operation.responseObject);
+             [SVProgressHUD showErrorWithStatus:NSLocalizedString(@"network_error",nil)];
+         }];
+    
 
 }
 
@@ -580,7 +625,7 @@ typedef enum : NSUInteger {
     AppDelegate *delegate = [[UIApplication sharedApplication] delegate];
 
 
-    [self presentViewController:delegate.estimateVC animated:YES completion:nil];
+    [self presentViewController:(UIViewController*)delegate.estimateVC animated:YES completion:nil];
 
 
 }
