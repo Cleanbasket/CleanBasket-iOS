@@ -43,7 +43,7 @@
 
     manager.responseSerializer = [AFJSONResponseSerializer serializer];
     manager.responseSerializer.acceptableContentTypes = [manager.responseSerializer.acceptableContentTypes setByAddingObject:@"text/html"];
-    [manager GET:@"http://www.cleanbasket.co.kr/appinfo"
+    [manager GET:@"http://52.79.39.100:8080/appinfo"
       parameters:nil
             success:^(AFHTTPRequestOperation *operation, id responseObject) {
 
@@ -115,7 +115,7 @@
         
         manager.responseSerializer = [AFJSONResponseSerializer serializer];
         manager.responseSerializer.acceptableContentTypes = [manager.responseSerializer.acceptableContentTypes setByAddingObject:@"text/html"];
-        [manager GET:@"http://www.cleanbasket.co.kr/logout/success"
+        [manager GET:@"http://52.79.39.100:8080/logout/success"
           parameters:nil
              success:^(AFHTTPRequestOperation *operation, id responseObject) {
                  

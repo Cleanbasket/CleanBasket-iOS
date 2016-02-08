@@ -163,9 +163,6 @@
         [self.collectionView reloadData];
         
         
-        if (i==25) {
-            NSLog(@"%@",self.pickupTimes);
-        }
         
     }
 
@@ -194,26 +191,38 @@
 - (UICollectionViewCell*)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath{
 
     TimeCollectionViewCell *cell;
+    NSDate *cellDate = self.pickupTimes[indexPath.row][@"datetime"];
     
     switch ([self.pickupTimes[indexPath.row][@"type"] integerValue]) {
         case TimeTypeNone:
             cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"TimeCell" forIndexPath:indexPath];
-            [cell setTextWithDate:self.pickupTimes[indexPath.row][@"datetime"]];
+//            [cell setTextWithDate:self.pickupTimes[indexPath.row][@"datetime"]];
             break;
         case TimeTypeSale:
         case TimeTypeSale2:
             cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"SaleCell" forIndexPath:indexPath];
-            [cell setTextWithDate:self.pickupTimes[indexPath.row][@"datetime"]];
+//            [cell setTextWithDate:self.pickupTimes[indexPath.row][@"datetime"]];
             break;
         case TimeTypeClose:
             cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"CloseCell" forIndexPath:indexPath];
-            [cell setTextWithDate:self.pickupTimes[indexPath.row][@"datetime"]];
+//            [cell setTextWithDate:self.pickupTimes[indexPath.row][@"datetime"]];
             break;
             
         default:
             break;
     }
     
+    if (self.startDate != nil) {
+        
+        NSLog(@"%@,%@",self.startDate,cellDate);
+        if ([cellDate compare:_startDate] == NSOrderedAscending) {
+            cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"CloseCell" forIndexPath:indexPath];
+            NSLog(@"오래오?");
+        }
+        
+    
+    }
+    [cell setTextWithDate:cellDate];
 
     return cell;
 }

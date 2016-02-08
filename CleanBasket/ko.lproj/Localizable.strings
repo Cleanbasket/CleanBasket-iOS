@@ -284,7 +284,7 @@
 "notice_login_email"="이메일 로그인";
 "order_list_title"="주문 항목";
 "no_order"="현재 진행 중인 주문이 없습니다";
-"no_history"="아직 주문 내역이 없으세요! 한번 주문해보세요";
+"no_history"="아직 주문 내역이 없으세요!\n한번 주문해보세요";
 "no_notification"="비어있습니다";
 "finish_order"="이미 완료된 주문입니다";
 "need_agree"="서비스약관과 개인정보취급방침에 동의해주셔야 합니다";

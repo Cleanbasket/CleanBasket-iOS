@@ -12,6 +12,8 @@
 @interface TimeSelectCollectionViewController : UICollectionViewController<UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout>
 
 
+@property (nonatomic) NSDate *startDate;
+
 - (void)initWithDayInterval:(NSInteger)interval andType:(CBTimeSelectType)type;
 
 @end

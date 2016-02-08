@@ -114,7 +114,7 @@
     
     
     
-    [manager POST:@"http://www.cleanbasket.co.kr/member/payment"
+    [manager POST:@"http://52.79.39.100:8080/member/payment"
       parameters:parameters
          success:^(AFHTTPRequestOperation *operation, id responseObject) {
 

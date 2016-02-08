@@ -45,8 +45,10 @@
 
         [timeSelectCollectionViewController initWithDayInterval:i+_defaultInterval andType:_timeSelectType];
         [_timeSelectCVCs addObject:timeSelectCollectionViewController];
+        
     }
 
+    [_timeSelectCVCs[0] setStartDate:_startDate];
 
     _dateFormatter = [NSDateFormatter new];
     [_dateFormatter setDateFormat:NSLocalizedStringFromTable(@"datetime_parse",@"Localizable",nil)];

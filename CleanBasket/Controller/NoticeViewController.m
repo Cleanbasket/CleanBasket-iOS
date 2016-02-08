@@ -29,12 +29,14 @@
     self.title = NSLocalizedString(@"notice_title",@"공지사항");
 
     [self setNeedsStatusBarAppearanceUpdate];
+    
+    [self.view setBackgroundColor:[UIColor whiteColor]];
+    
 }
 
 
 
 - (void)viewWillAppear:(BOOL)animated {
-    [self.navigationController setNavigationBarHidden:NO animated:NO];
 }
 
 
@@ -56,7 +58,7 @@
     manager.responseSerializer = [AFJSONResponseSerializer serializer];
     manager.responseSerializer.acceptableContentTypes = [manager.responseSerializer.acceptableContentTypes setByAddingObject:@"text/html"];
 
-    [manager GET:@"http://www.cleanbasket.co.kr/notice"
+    [manager GET:@"http://52.79.39.100:8080/notice"
       parameters:nil
          success:^(AFHTTPRequestOperation *operation, id responseObject) {
 
@@ -105,7 +107,10 @@
 
 
 -(void)viewDidAppear:(BOOL)animated {
-
+    
+    [self.navigationController setNavigationBarHidden:NO animated:NO];
+    
+    [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeBlack];
     [SVProgressHUD show];
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         [self loadNotice];

@@ -42,9 +42,9 @@
 
     _manager = [AFHTTPRequestOperationManager manager];
 
-    _manager.requestSerializer = [AFJSONRequestSerializer serializer];
-    _manager.responseSerializer = [AFJSONResponseSerializer serializer];
-    _manager.responseSerializer.acceptableContentTypes = [_manager.responseSerializer.acceptableContentTypes setByAddingObject:@"text/html"];
+//    _manager.requestSerializer = [AFJSONRequestSerializer serializer];
+//    _manager.responseSerializer = [AFJSONResponseSerializer serializer];
+//    _manager.responseSerializer.acceptableContentTypes = [_manager.responseSerializer.acceptableContentTypes setByAddingObject:@"text/html"];
     
     [_phoneAuthView setHidden:YES];
     [_memberInfoView setHidden:YES];
@@ -55,8 +55,11 @@
 
 
 - (void)setTopView{
-
-    [_manager GET:@"http://www.cleanbasket.co.kr/member/user"
+    
+    _manager.responseSerializer = [AFJSONResponseSerializer serializer];
+    _manager.responseSerializer.acceptableContentTypes = [_manager.responseSerializer.acceptableContentTypes setByAddingObject:@"text/html"];
+    
+    [_manager GET:@"http://52.79.39.100:8080/member/user"
       parameters:nil
          success:^(AFHTTPRequestOperation *operation, id responseObject) {
 
@@ -144,7 +147,7 @@
     }
 
 
-    [_manager POST:@"http://www.cleanbasket.co.kr/code"
+    [_manager POST:@"http://52.79.39.100:8080/code"
        parameters:@{@"phone":_phoneTextField.text}
           success:^(AFHTTPRequestOperation *operation, id responseObject) {
 
@@ -183,7 +186,7 @@
     };
 
 
-    [_manager POST:@"http://www.cleanbasket.co.kr/member/user"
+    [_manager POST:@"http://52.79.39.100:8080/member/user"
         parameters:parameters
            success:^(AFHTTPRequestOperation *operation, id responseObject) {
 

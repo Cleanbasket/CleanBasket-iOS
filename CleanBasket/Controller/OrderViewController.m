@@ -11,6 +11,9 @@
 #import "TimeSelectViewController.h"
 #import <AFNetworking/AFNetworking.h>
 #import <SVProgressHUD/SVProgressHUD.h>
+#import <Realm/Realm.h>
+#import "User.h"
+#import "CBConstants.h"
 
 typedef enum : NSUInteger {
     CBPaymentMethodCard=0,
@@ -21,7 +24,7 @@ typedef enum : NSUInteger {
 
 @interface OrderViewController () <UIActionSheetDelegate> {
 
-    NSDate *_pickUpDate, *_dropOffDate;
+    NSDate *_pickUpDate, *_dropOffDate, *_startPickupDate;
     NSInteger _dropOffInterval;
     AFHTTPRequestOperationManager *_manager;
 }
@@ -41,7 +44,7 @@ typedef enum : NSUInteger {
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *topConst;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *dropOffLabelWidthConstraint;
 
-@property CBPaymentMethod paymentMethod;
+@property (nonatomic)  CBPaymentMethod paymentMethod;
 @property NSNumber *estimatePrice;
 @property NSNumberFormatter *numberFormatter;
 @property NSString *addressString, *addr_building, *address;
@@ -71,7 +74,7 @@ typedef enum : NSUInteger {
     [_timeSelectView addGestureRecognizer:timeSelectTGR];
     UITapGestureRecognizer *dropoffTimeSelectTGR = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(showTimeSelectVC:)];
     [_dropOffTimeLabel addGestureRecognizer:dropoffTimeSelectTGR];
-    UITapGestureRecognizer *paymentTGR = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(paymentMethod)];
+    UITapGestureRecognizer *paymentTGR = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(paymentMethodTap)];
     [_paymentView addGestureRecognizer:paymentTGR];
     UITapGestureRecognizer *priceTGR = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(priceEstimation)];
     [_priceView addGestureRecognizer:priceTGR];
@@ -140,33 +143,38 @@ typedef enum : NSUInteger {
 
     NSDate *today = [NSDate date];
 
-    NSDateComponents *dateComponents= [calendar components:NSCalendarUnitDay|NSCalendarUnitHour|NSCalendarUnitMinute fromDate:today];
+    NSDateComponents *dateComponents= [calendar components:NSCalendarUnitYear|NSCalendarUnitMonth|NSCalendarUnitDay|NSCalendarUnitHour|NSCalendarUnitMinute fromDate:today];
 
 //    NSLog(@"%@",dateComponents);
 
     dateComponents.hour += 2;
 
-    if (dateComponents.minute>0 && dateComponents.minute<30){
+    //분처리
+    if (dateComponents.minute>=0 && dateComponents.minute<30){
         dateComponents.minute = 30;
     }
-    else if (dateComponents.minute>30){
+    else if (dateComponents.minute>=30){
         dateComponents.minute = 0;
         dateComponents.hour += 1;
     }
-
+    //시처리
+    //오전 10시 이전
     if (dateComponents.hour<10){
         dateComponents.hour = 10;
         dateComponents.minute = 0;
     }
-    else if(dateComponents.hour>=22 && dateComponents.month > 30){
+    //오후 11시 30분 이후
+    else if(dateComponents.hour>=23 && dateComponents.month >= 30){
         dateComponents.day += 1;
         dateComponents.hour = 10;
         dateComponents.minute = 0;
     }
+    
 //
 //
 //    NSDate *lastNewDate=[calendar dateByAddingComponents:dateComponents toDate:_pickUpDate options:0];
     _pickUpDate = [calendar dateFromComponents:dateComponents];
+    _startPickupDate = _pickUpDate;
     NSLog(@"pickUpDate = %@",_pickUpDate);
 //
 //
@@ -371,6 +379,7 @@ typedef enum : NSUInteger {
 
         TimeSelectViewController *timeSelectViewController = [timeSelectNVC.viewControllers firstObject];
         [timeSelectViewController setTimeSelectType:CBTimeSelectTypePickUp];
+        [timeSelectViewController setStartDate:_startPickupDate];
 
 
 
@@ -436,9 +445,14 @@ typedef enum : NSUInteger {
                  //주소있을때처리
                  
                  _address = data.firstObject[@"address"];
-                 _addr_building = data.firstObject[@"addr_ramainder"];
+                 
+                 if (data.firstObject[@"addr_remainder"]) {
+                     self.addr_building = data.firstObject[@"addr_remainder"];
+                 }
+                 
+//                 _addr_building = data.firstObject[@"addr_ramainder"];
                  _addressString = [NSString stringWithFormat:@"%@ %@",_address,_addr_building];
-                 NSLog(@"주소 : %@",data.firstObject);
+                 NSLog(@"주소 : %@",self.addr_building);
                  [_addressLabel setText:_addressString];
                  [self getDropOffInterval];
              }
@@ -464,7 +478,7 @@ typedef enum : NSUInteger {
 
 
 
-- (void)paymentMethod{
+- (void)paymentMethodTap{
     NSLog(@"결제수단탭");
 
 
@@ -580,34 +594,129 @@ typedef enum : NSUInteger {
 -(IBAction)addOrder:(id)sender{
     
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-    AFJSONResponseSerializer *responseSerializer = [AFJSONResponseSerializer serializerWithReadingOptions:NSJSONReadingAllowFragments];
-//    manager.responseSerializer = [AFJSONResponseSerializer serializer];
-//    manager.responseSerializer.acceptableContentTypes = [manager.responseSerializer.acceptableContentTypes setByAddingObject:@"text/html"];
+//
     
-    manager.responseSerializer = responseSerializer;
+    manager.responseSerializer = [AFJSONResponseSerializer serializer];
+    manager.responseSerializer.acceptableContentTypes = [manager.responseSerializer.acceptableContentTypes setByAddingObject:@"text/html"];
+
     
-//    NSLog(@"시간들 : %@,%@",_pickUpDate,_dropOffDate);
+
+    //    NSLog(@"시간들 : %@,%@",_pickUpDate,_dropOffDate);
 //    NSLog(@"수거 :%@, 배달 : %@",[self.stringFromDateFormatter stringFromDate:_pickUpDate],[self.stringFromDateFormatter stringFromDate:_dropOffDate]);
     
-    NSDictionary *parameters = @{@"address":@"서울 마포구 도화동",
-                                 @"addr_building": @"555 한화오벨리스크 아파트 2109호",
+    RLMResults<User *> *users = [User allObjects];
+    User *user = [users firstObject];
+    
+//    NSLog(@"uid : %i",user.uid);
+    
+    NSDictionary *parameters = @{@"address":self.address,
+                                 @"addr_building": self.addr_building,
                                  @"pickup_date":[self.stringFromDateFormatter stringFromDate:_pickUpDate],
-                                 @"dropoff_date":[self.stringFromDateFormatter stringFromDate:_dropOffDate]
+                                 @"dropoff_date":[self.stringFromDateFormatter stringFromDate:_dropOffDate],
+                                 @"uid":[NSString stringWithFormat:@"%i",user.uid],
+                                 @"memo":@"테스트",
+                                 @"price":@2000,
+                                 @"dropoff_price":@2000,
+                                 @"payment_method":@0,
+                                 @"item":[NSMutableArray new],
+                                 @"coupon":[NSMutableArray new]
                                  };
     
+    //    AFJSONRequestSerializer *req = [AFJSONRequestSerializer serializerWithWritingOptions:NSJSONWritingPrettyPrinted];
+        AFHTTPRequestSerializer *req = [AFHTTPRequestSerializer serializer];
+    
+//    manager.requestSerializer = [AFJSONRequestSerializer serializer];
+    manager.requestSerializer = req;
+    
+    NSString *jsonString = [[NSString alloc] initWithData:[NSJSONSerialization dataWithJSONObject:parameters options:NSJSONWritingPrettyPrinted error:nil] encoding:NSUTF8StringEncoding];
 //    NSLog(@"파라팔 :%@",parameters);
     
-    [manager POST:@"http://52.79.39.100:8080/member/order/add/new"
-      parameters:parameters
-         success:^(AFHTTPRequestOperation *operation, id responseObject) {
-             
-             NSLog(@"%@",responseObject);
-             
-         } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-             NSLog(@"Error: %@, %@", error,operation.responseObject);
-             [SVProgressHUD showErrorWithStatus:NSLocalizedString(@"network_error",nil)];
-         }];
+//    [manager POST:@"http://52.79.39.100:8080/member/order/add/new"
+//      parameters:jsonString
+//         success:^(AFHTTPRequestOperation *operation, id responseObject) {
+////             operation.request
+////             NSString *resString = [[NSString alloc]initWithData:responseObject encoding:NSUTF8StringEncoding];
+//             NSLog(@"리스폰스 :​%@",responseObject);
+//             
+//         } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+//             NSLog(@"Error: %@, %@", error,error.localizedDescription);
+//             [SVProgressHUD showErrorWithStatus:NSLocalizedString(@"network_error",nil)];
+//         }];
     
+//    
+//    NSString *jsonString = [[NSString alloc] initWithData:[NSJSONSerialization dataWithJSONObject:parameters options:NSJSONWritingPrettyPrinted error:nil] encoding:NSUTF8StringEncoding];
+//    
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:@"http://52.79.39.100:8080/member/order/add/new"]
+                                                           cachePolicy:NSURLRequestReloadIgnoringCacheData  timeoutInterval:10];
+//
+    [request setHTTPMethod:@"POST"];
+    [request setValue: @"application/json" forHTTPHeaderField:@"Content-Type"];
+    [request setHTTPBody: [jsonString dataUsingEncoding:NSUTF8StringEncoding]];
+
+    
+    NSLog(@"[JSON STRING]\r%@", jsonString);
+//
+    AFHTTPRequestOperation *op = [[AFHTTPRequestOperation alloc] initWithRequest:request];
+    op.responseSerializer = [AFJSONResponseSerializer serializerWithReadingOptions:NSJSONReadingAllowFragments];
+    op.responseSerializer.acceptableContentTypes = [manager.responseSerializer.acceptableContentTypes setByAddingObject:@"text/html"];
+//
+//    
+    [op setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
+
+        NSLog(@"JSON responseObject: %@ ",responseObject);
+        NSLog(@"%@", [responseObject valueForKey:@"message"]);
+        int constant = [[responseObject valueForKey:@"constant"] intValue];
+
+        switch (constant) {
+            case CBServerConstantSuccess: {
+                NSLog(@"성공!");
+//                [self showHudMessage:@"주문이 정상적으로 접수되었습니다."];
+//                [self resetItemsCount];
+//                
+//          
+//                
+//                
+//                //AppDelegate로 하여금 현재 선택된 TabBarViewController를 OrderStatusViewController로 변경
+//                [[NSNotificationCenter defaultCenter] postNotificationName:@"orderComplete" object:self];
+//                
+//                // 2초 후 현재 화면 pop
+//                [self performSelector:@selector(cancelButtonDidTouched) withObject:self afterDelay:2];
+            }
+                break;
+            case CBServerConstantError: {
+                NSLog(@"에러!");
+//                [self showHudMessage:@"주문 정보 접수에 실패했습니다."];
+            }
+                break;
+                
+            case CBServerConstantsAreaUnavailable: {
+//                [self showHudMessage:@"서비스 가능 지역이 아닙니다"];
+            }
+                break;
+                
+            case CBServerConstantsDateUnavailable: {
+//                [self showHudMessage:@"죄송합니다. 해당 수거/배달일은 휴무입니다"];
+            }
+                break;
+                
+            case CBServerConstantSessionExpired: {
+//                [self showHudMessage:@"세션이 만료되었습니다. 로그인화면으로 돌아갑니다."];
+//                [self resetItemsCount];
+//                [memoTextField setText:@""];
+                //AppDelegate에 세션이 만료됨을 알림
+                [[NSNotificationCenter defaultCenter] postNotificationName:@"sessionExpired" object:self];
+            }
+                break;
+        }
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        dispatch_async(dispatch_get_main_queue(), ^{
+//            [self showHudMessage:@"네트워크 상태를 확인해주세요"];
+            NSLog(@"Error: %@", error);
+        });
+        
+    }];
+
+    [op start];
 
 }
 

@@ -61,7 +61,7 @@
     manager.responseSerializer = [AFJSONResponseSerializer serializer];
     manager.responseSerializer.acceptableContentTypes = [manager.responseSerializer.acceptableContentTypes setByAddingObject:@"text/html"];
 
-    [manager GET:@"http://www.cleanbasket.co.kr/item"
+    [manager GET:@"http://52.79.39.100:8080/item"
       parameters:nil
          success:^(AFHTTPRequestOperation *operation, id responseObject) {
 
@@ -75,6 +75,7 @@
              
              _categories = data[@"categories"];
 //             _items = data[@"orderItems"];
+             
              
              for (int i = 0 ; i<_categories.count ; i++) {
                  NSMutableArray *array = [NSMutableArray new];
@@ -136,6 +137,8 @@
 
     NSDictionary *item = _items[indexPath.section][indexPath.row];
 
+    NSLog(@"item : %@",item);
+    
     NSString *itemNameString = NSLocalizedString(item[@"descr"],@"아이템 이름");
     NSString *itemPriceString =  [NSString stringWithFormat:@"%@%@",[_numberFormatter stringFromNumber:item[@"price"]],NSLocalizedString(@"monetary_unit",@"원")];
 //    NSLocalizedString(_items[indexPath.section][indexPath.row][@"price"],@"아이템 가격");

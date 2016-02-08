@@ -59,5 +59,5 @@ typedef enum serverConstant : NSUInteger {
 #define iPhone5 ([[UIScreen mainScreen] bounds].size.height == 568)
 #define COUPON_HEIGHT 162
 #define APP_NAME_STRING @"CleanBasket"
-#define TEST_SERVER_URL_STRING @"http://54.183.212.215:8080/"
-#define REAL_SERVER_URL_STRING @"http://www.cleanbasket.co.kr/"
+#define TEST_SERVER_URL_STRING @"http://www.cleanbasket.co.kr/"
+#define REAL_SERVER_URL_STRING @"http://52.79.39.100:8080/"
