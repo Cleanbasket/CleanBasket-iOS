@@ -371,7 +371,7 @@ NSMutableArray *searchResult, *allAddress, *supportAddress, *supportAllDongsAddr
 - (void)updateAddress:(NSString*)address remainder:(NSString*)remainder{
 
 
-        AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
 
 
     manager.requestSerializer = [AFJSONRequestSerializer serializer];
@@ -384,6 +384,7 @@ NSMutableArray *searchResult, *allAddress, *supportAddress, *supportAllDongsAddr
     NSDictionary *parameters = @{@"address":address,
                                  @"addr_remainder":remainder
     };
+    NSLog(@"remainder : %@",remainder);
 
 
     [manager POST:@"http://52.79.39.100:8080/member/address/update"

@@ -77,7 +77,7 @@
 
     //기존 세팅 있을때
     if ([[NSUserDefaults standardUserDefaults] objectForKey:@"isGetEventNoti"]){
-              NSLog(@"!!");
+              NSLog(@"세팅있!");
     }
     //없을때
     else{
