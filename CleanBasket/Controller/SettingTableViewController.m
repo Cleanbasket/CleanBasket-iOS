@@ -12,6 +12,7 @@
 #import "AppDelegate.h"
 #import "ChangePasswordViewController.h"
 #import <AFNetworking/AFNetworking.h>
+#import "UIAlertView+Blocks.h"
 
 @interface SettingTableViewController ()
 @property (weak, nonatomic) IBOutlet UILabel *latestVersion;
@@ -111,32 +112,16 @@
     //로그아웃
     if (indexPath.section == 0 && indexPath.row == 1) {
         
-        AFHTTPRequestOperationManager *manager =[AFHTTPRequestOperationManager manager];
-        
-        manager.responseSerializer = [AFJSONResponseSerializer serializer];
-        manager.responseSerializer.acceptableContentTypes = [manager.responseSerializer.acceptableContentTypes setByAddingObject:@"text/html"];
-        [manager GET:@"http://52.79.39.100:8080/logout/success"
-          parameters:nil
-             success:^(AFHTTPRequestOperation *operation, id responseObject) {
-                 
-                 if ([responseObject[@"constant"]  isEqual: @1]) {
-                     RLMRealm *realm = [RLMRealm defaultRealm];
-                     
-                     [realm beginWriteTransaction];
-                     [realm deleteObjects:[User allObjects]];
-                     [realm commitWriteTransaction];
-                     
-                     AppDelegate *appDelegate = [[UIApplication sharedApplication]delegate];
-                     [appDelegate.window setRootViewController:(UIViewController*)appDelegate.loginVC];
-
-                 }
-                 
-                 
-                 
-                 
-             } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                 NSLog(@"Error: %@", error);
-             }];
+        [UIAlertView showWithTitle:NSLocalizedString(@"logout_confirm", nil)
+                           message:nil
+                 cancelButtonTitle:NSLocalizedString(@"label_cancel", nil)
+                 otherButtonTitles:@[NSLocalizedString(@"logout", nil)]
+                          tapBlock:^(UIAlertView *alertView, NSInteger buttonIndex){
+                              if (buttonIndex == 1) {
+                                  [self logout];
+                              }
+                              
+                          }];
         
         
     } else if (indexPath.section == 0 && indexPath.row == 0) {
@@ -154,7 +139,40 @@
 
 }
 
+- (void)logout{
+    
+    
+    AFHTTPRequestOperationManager *manager =[AFHTTPRequestOperationManager manager];
+    
+    manager.responseSerializer = [AFJSONResponseSerializer serializer];
+    manager.responseSerializer.acceptableContentTypes = [manager.responseSerializer.acceptableContentTypes setByAddingObject:@"text/html"];
+    [manager GET:@"http://52.79.39.100:8080/logout/success"
+      parameters:nil
+         success:^(AFHTTPRequestOperation *operation, id responseObject) {
+             
+             if ([responseObject[@"constant"]  isEqual: @1]) {
+                 RLMRealm *realm = [RLMRealm defaultRealm];
+                 
+                 [realm beginWriteTransaction];
+                 [realm deleteObjects:[User allObjects]];
+                 [realm commitWriteTransaction];
+                 
+                 AppDelegate *appDelegate = [[UIApplication sharedApplication]delegate];
+                 [appDelegate.window setRootViewController:(UIViewController*)appDelegate.loginVC];
+                 
+             }
+             
+             
+             
+             
+         } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+             NSLog(@"Error: %@", error);
+         }];
 
+}
+
+
+#pragma mark -
 - (UIStatusBarStyle)preferredStatusBarStyle {
     return UIStatusBarStyleLightContent;
 }

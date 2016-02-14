@@ -16,7 +16,7 @@
 #import "CBConstants.h"
 
 typedef enum : NSUInteger {
-    CBPaymentMethodCard=0,
+    CBPaymentMethodCard=1,
     CBPaymentMethodCash,
     CBPaymentMethodInApp,
     CBPaymentMethodNone = 10,
@@ -46,6 +46,7 @@ typedef enum : NSUInteger {
 
 @property (nonatomic)  CBPaymentMethod paymentMethod;
 @property NSNumber *estimatePrice;
+@property (nonatomic) NSDictionary *itemIdAndCountDict;
 @property NSNumberFormatter *numberFormatter;
 @property NSString *addressString, *addr_building, *address;
 @property NSDateFormatter *stringFromDateFormatter;
@@ -169,6 +170,12 @@ typedef enum : NSUInteger {
         dateComponents.hour = 10;
         dateComponents.minute = 0;
     }
+    //밤 12시 이후
+    else if(dateComponents.hour>=24){
+        dateComponents.day += 1;
+        dateComponents.hour = 10;
+        dateComponents.minute = 0;
+    }
     
 //
 //
@@ -265,7 +272,9 @@ typedef enum : NSUInteger {
 - (void)finishedEstimate:(NSNotification *)notification {
 
     NSNumber *totalPrice = notification.userInfo[@"totalPrice"];
+    
     if ([totalPrice integerValue]){
+        _itemIdAndCountDict = notification.userInfo[@"items"];
         _estimatePrice = totalPrice;
         [_estimatePriceLabel setHidden:NO];
         NSString *totalPriceString = [NSString stringWithFormat:@"%@%@",[_numberFormatter stringFromNumber:_estimatePrice],NSLocalizedString(@"monetary_unit",@"원")];
@@ -495,7 +504,7 @@ typedef enum : NSUInteger {
 
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
 
-    switch (buttonIndex){
+    switch (buttonIndex+1){
         case CBPaymentMethodCard:{
             _paymentMethod = CBPaymentMethodCard;
             [_paymentMethodLabel setHidden:NO];
@@ -593,131 +602,148 @@ typedef enum : NSUInteger {
 
 -(IBAction)addOrder:(id)sender{
     
+    if (_pickUpDate == nil) {
+        [SVProgressHUD showErrorWithStatus:NSLocalizedString(@"time_dropoff_inform", nil)];
+        return;
+    } else if (_dropOffDate == nil) {
+        [SVProgressHUD showErrorWithStatus:NSLocalizedString(@"time_dropoff_inform_after", nil)];
+        return;
+    } else if (_address == nil) {
+        [SVProgressHUD showErrorWithStatus:NSLocalizedString(@"address_empty", nil)];
+        [self editAddress];
+        return;
+    }
+    
+    [self addNewOrder];
+    
+
+}
+
+
+- (void)addNewOrder{
+    
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-//
     
     manager.responseSerializer = [AFJSONResponseSerializer serializer];
     manager.responseSerializer.acceptableContentTypes = [manager.responseSerializer.acceptableContentTypes setByAddingObject:@"text/html"];
-
     
-
-    //    NSLog(@"시간들 : %@,%@",_pickUpDate,_dropOffDate);
-//    NSLog(@"수거 :%@, 배달 : %@",[self.stringFromDateFormatter stringFromDate:_pickUpDate],[self.stringFromDateFormatter stringFromDate:_dropOffDate]);
     
-    RLMResults<User *> *users = [User allObjects];
-    User *user = [users firstObject];
+    //    RLMResults<User *> *users = [User allObjects];
+    //    User *user = [users firstObject];
     
-//    NSLog(@"uid : %i",user.uid);
+    //가격 로직
+    NSNumber *price;
+    NSNumber *dropoffPrice;
+    
+    if (self.estimatePrice.integerValue >= 20000) {
+        price = self.estimatePrice;
+        dropoffPrice = @0;
+    }
+    else{
+        dropoffPrice = @2000;
+        price = @(self.estimatePrice.integerValue + dropoffPrice.integerValue);
+    }
+    
+    
+    
+    //결제수단 로직
+    NSNumber *paymentMethod;
+    
+    if (self.paymentMethod == CBPaymentMethodInApp)
+        paymentMethod = @3;
+    else
+        paymentMethod = @0;
+    
+    
+    //아이템
+    NSMutableArray *items = [NSMutableArray new];
+    for (NSString *itemCodeString in self.itemIdAndCountDict.allKeys) {
+        [items addObject:@{@"item_code":@([itemCodeString integerValue]),
+                           @"count": self.itemIdAndCountDict[itemCodeString]
+                           }];
+    }
+    
+    
     
     NSDictionary *parameters = @{@"address":self.address,
                                  @"addr_building": self.addr_building,
                                  @"pickup_date":[self.stringFromDateFormatter stringFromDate:_pickUpDate],
                                  @"dropoff_date":[self.stringFromDateFormatter stringFromDate:_dropOffDate],
-                                 @"uid":[NSString stringWithFormat:@"%i",user.uid],
-                                 @"memo":@"테스트",
-                                 @"price":@2000,
-                                 @"dropoff_price":@2000,
-                                 @"payment_method":@0,
-                                 @"item":[NSMutableArray new],
-                                 @"coupon":[NSMutableArray new]
+//                                 @"memo":@"테스트",
+                                 @"price":price,
+                                 @"dropoff_price":dropoffPrice,
+                                 @"payment_method":paymentMethod,
+                                 @"item":items,
+                                 @"coupon":@[]
                                  };
     
-    //    AFJSONRequestSerializer *req = [AFJSONRequestSerializer serializerWithWritingOptions:NSJSONWritingPrettyPrinted];
-        AFHTTPRequestSerializer *req = [AFHTTPRequestSerializer serializer];
     
-//    manager.requestSerializer = [AFJSONRequestSerializer serializer];
+    AFHTTPRequestSerializer *req = [AFHTTPRequestSerializer serializer];
+    
     manager.requestSerializer = req;
     
     NSString *jsonString = [[NSString alloc] initWithData:[NSJSONSerialization dataWithJSONObject:parameters options:NSJSONWritingPrettyPrinted error:nil] encoding:NSUTF8StringEncoding];
-//    NSLog(@"파라팔 :%@",parameters);
-    
-//    [manager POST:@"http://52.79.39.100:8080/member/order/add/new"
-//      parameters:jsonString
-//         success:^(AFHTTPRequestOperation *operation, id responseObject) {
-////             operation.request
-////             NSString *resString = [[NSString alloc]initWithData:responseObject encoding:NSUTF8StringEncoding];
-//             NSLog(@"리스폰스 :​%@",responseObject);
-//             
-//         } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-//             NSLog(@"Error: %@, %@", error,error.localizedDescription);
-//             [SVProgressHUD showErrorWithStatus:NSLocalizedString(@"network_error",nil)];
-//         }];
-    
-//    
-//    NSString *jsonString = [[NSString alloc] initWithData:[NSJSONSerialization dataWithJSONObject:parameters options:NSJSONWritingPrettyPrinted error:nil] encoding:NSUTF8StringEncoding];
-//    
+    NSLog(@"제이슨 : %@",jsonString);
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:@"http://52.79.39.100:8080/member/order/add/new"]
                                                            cachePolicy:NSURLRequestReloadIgnoringCacheData  timeoutInterval:10];
-//
+    
     [request setHTTPMethod:@"POST"];
     [request setValue: @"application/json" forHTTPHeaderField:@"Content-Type"];
     [request setHTTPBody: [jsonString dataUsingEncoding:NSUTF8StringEncoding]];
-
     
-    NSLog(@"[JSON STRING]\r%@", jsonString);
-//
+    
     AFHTTPRequestOperation *op = [[AFHTTPRequestOperation alloc] initWithRequest:request];
     op.responseSerializer = [AFJSONResponseSerializer serializerWithReadingOptions:NSJSONReadingAllowFragments];
     op.responseSerializer.acceptableContentTypes = [manager.responseSerializer.acceptableContentTypes setByAddingObject:@"text/html"];
-//
-//    
+    
+    
     [op setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
-
+        
         NSLog(@"JSON responseObject: %@ ",responseObject);
         NSLog(@"%@", [responseObject valueForKey:@"message"]);
         int constant = [[responseObject valueForKey:@"constant"] intValue];
-
+        
         switch (constant) {
             case CBServerConstantSuccess: {
                 NSLog(@"성공!");
-//                [self showHudMessage:@"주문이 정상적으로 접수되었습니다."];
-//                [self resetItemsCount];
-//                
-//          
-//                
-//                
-//                //AppDelegate로 하여금 현재 선택된 TabBarViewController를 OrderStatusViewController로 변경
-//                [[NSNotificationCenter defaultCenter] postNotificationName:@"orderComplete" object:self];
-//                
-//                // 2초 후 현재 화면 pop
-//                [self performSelector:@selector(cancelButtonDidTouched) withObject:self afterDelay:2];
+                [SVProgressHUD showSuccessWithStatus:NSLocalizedString(@"order_success", nil)];
+                [self initOrder];
+                
             }
                 break;
             case CBServerConstantError: {
-                NSLog(@"에러!");
-//                [self showHudMessage:@"주문 정보 접수에 실패했습니다."];
+                [SVProgressHUD showErrorWithStatus:NSLocalizedString(@"general_error", nil)];
             }
                 break;
                 
             case CBServerConstantsAreaUnavailable: {
-//                [self showHudMessage:@"서비스 가능 지역이 아닙니다"];
+                [SVProgressHUD showErrorWithStatus:NSLocalizedString(@"area_unavailable_error", nil)];
             }
                 break;
                 
             case CBServerConstantsDateUnavailable: {
-//                [self showHudMessage:@"죄송합니다. 해당 수거/배달일은 휴무입니다"];
+                [SVProgressHUD showErrorWithStatus:NSLocalizedString(@"date_unavailable_error", nil)];
             }
                 break;
                 
             case CBServerConstantSessionExpired: {
-//                [self showHudMessage:@"세션이 만료되었습니다. 로그인화면으로 돌아갑니다."];
-//                [self resetItemsCount];
-//                [memoTextField setText:@""];
+                //                [self showHudMessage:@"세션이 만료되었습니다. 로그인화면으로 돌아갑니다."];
+                //                [self resetItemsCount];
+                //                [memoTextField setText:@""];
                 //AppDelegate에 세션이 만료됨을 알림
-                [[NSNotificationCenter defaultCenter] postNotificationName:@"sessionExpired" object:self];
+                //                [[NSNotificationCenter defaultCenter] postNotificationName:@"sessionExpired" object:self];
             }
                 break;
         }
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         dispatch_async(dispatch_get_main_queue(), ^{
-//            [self showHudMessage:@"네트워크 상태를 확인해주세요"];
+            //            [self showHudMessage:@"네트워크 상태를 확인해주세요"];
             NSLog(@"Error: %@", error);
         });
         
     }];
-
+    
     [op start];
-
 }
 
 

@@ -168,9 +168,11 @@
 
 }
 
-- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath{
-    
 
+- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath{
+   
+    
+    
     NSInteger minute = 30*indexPath.item;
 
     NSDateComponents *components= [[NSDateComponents alloc] init];
@@ -224,6 +226,9 @@
     }
     [cell setTextWithDate:cellDate];
 
+    [cell setNeedsLayout];
+    [cell layoutIfNeeded];
+    
     return cell;
 }
 

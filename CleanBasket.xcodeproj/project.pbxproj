@@ -295,8 +295,8 @@
 		1FE613441C1E24FD009B4EA5 /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				ED0890A88338423ED595A4BD /* User.m */,
 				ED089CA64025D13384136205 /* User.h */,
+				ED0890A88338423ED595A4BD /* User.m */,
 			);
 			name = Model;
 			sourceTree = "<group>";

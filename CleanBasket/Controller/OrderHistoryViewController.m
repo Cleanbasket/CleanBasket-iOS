@@ -68,7 +68,14 @@
     cell.pickUpTimeLabel.text = self.orders[indexPath.row][@"pickup_date"];
     cell.dropOffTimeLabel.text = self.orders[indexPath.row][@"dropoff_date"];
     cell.priceLabel.text = [NSString stringWithFormat:@"총계 %@원",[self.orders[indexPath.row][@"price"] stringValue]];
-    cell.itemLabel.text = [NSString stringWithFormat:@"품목 %i개",[self.orders[indexPath.row][@"item"] count]];
+    
+    NSInteger itemCount = 0;
+    
+    for (NSDictionary *item in self.orders[indexPath.row][@"item"]) {
+        itemCount += [item[@"count"] integerValue];
+    }
+    
+    cell.itemLabel.text = [NSString stringWithFormat:@"품목 %zd개",itemCount];
     
     cell.paymentMethodLabel.text = [NSString stringWithFormat:@"%@",self.orders[indexPath.row][@"payment_method"] ? @"카드결제":@"등록카드"];
     
@@ -83,6 +90,7 @@
     if (self.orders.count) {
         
         self.tableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
+        self.tableView.backgroundView = [UIView new];
         return 1;
         
     } else {

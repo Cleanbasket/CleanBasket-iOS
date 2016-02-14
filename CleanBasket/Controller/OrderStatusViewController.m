@@ -208,7 +208,12 @@
                      self.pickUpDateLabel.text = [self formatedStringFromDate:pickUpDate];
                      self.dropOffDateLabel.text = [self formatedStringFromDate:dropOffDate];
                      
-                     [self.itemButton setTitle:[NSString stringWithFormat:@"%@ %zi%@",NSLocalizedString(@"label_item", @"품목"),[orderInfo[@"item"] count],NSLocalizedString(@"item_unit", @"개")] forState:UIControlStateNormal];
+                     NSInteger itemCount = 0;
+                     for (NSDictionary *item in orderInfo[@"item"]) {
+                         itemCount += [item[@"count"] integerValue];
+                     }
+                     
+                     [self.itemButton setTitle:[NSString stringWithFormat:@"%@ %zi%@",NSLocalizedString(@"label_item", @"품목"),itemCount,NSLocalizedString(@"item_unit", @"개")] forState:UIControlStateNormal];
                      
                      [self.priceLabel setTitle:[NSString stringWithFormat:@"%@ %zi%@",NSLocalizedString(@"label_total", @"총계"),[orderInfo[@"price"] integerValue],NSLocalizedString(@"monetary_unit", @"원")] forState:UIControlStateNormal];
                      

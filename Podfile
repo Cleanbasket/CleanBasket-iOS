@@ -15,3 +15,5 @@ use_frameworks!
 pod 'TTTAttributedLabel'
 
 pod 'MMPopupView', :head
+
+pod 'UIAlertView+Blocks'
