@@ -12,6 +12,7 @@
 @property NSString *email;
 @property NSString *password;
 @property NSString *phone;
+
 @end
 
 //RLMArray<User>

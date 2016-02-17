@@ -17,6 +17,8 @@
 #import <AFNetworking/AFNetworking.h>
 #import <AFNetworking/AFNetworkActivityIndicatorManager.h>
 #import <KakaoOpenSDK/KakaoOpenSDK.h>
+#import <Realm/Realm.h>
+#import "User.h"
 
 @interface AppDelegate ()
 
@@ -29,7 +31,24 @@
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-
+    
+    //이전 버전에 쓰이던 유저 정보 마이그레이션
+    [self realmMigration];
+    
+    //기존 세팅 있을때
+    if ([[NSUserDefaults standardUserDefaults] objectForKey:@"isGetEventNoti"]){
+        NSLog(@"세팅있!");
+    }
+    //없을때(처음 실행)
+    else{
+        
+        [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"isGetEventNoti"];
+        [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"isGetOrderNoti"];
+        
+        [[NSUserDefaults standardUserDefaults]synchronize];
+    }
+    
+    
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
 
     // Override point for customization after application launch.
@@ -73,21 +92,6 @@
     _estimateVC = [sb instantiateViewControllerWithIdentifier:@"EstimateVC"];
 
     [self.window setRootViewController:_authCheckViewController];
-
-
-    //기존 세팅 있을때
-    if ([[NSUserDefaults standardUserDefaults] objectForKey:@"isGetEventNoti"]){
-              NSLog(@"세팅있!");
-    }
-    //없을때
-    else{
-        [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"isGetEventNoti"];
-        [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"isGetOrderNoti"];
-
-        [[NSUserDefaults standardUserDefaults]synchronize];
-    }
-
-
 
     return YES;
 
@@ -159,5 +163,28 @@
 - (void)applicationWillTerminate:(UIApplication *)application {
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
 }
+
+
+
+- (void)realmMigration {
+    NSLog(@"?!?!");
+    RLMRealmConfiguration *config = [RLMRealmConfiguration defaultConfiguration];
+    config.schemaVersion = 1;
+    config.migrationBlock = ^(RLMMigration *migration, uint64_t oldSchemaVersion) {
+        if (oldSchemaVersion < 1) {
+            [migration enumerateObjects:User.className
+                                  block:^(RLMObject *oldObject, RLMObject *newObject) {
+                                      
+                                      // combine name fields into a single field
+                                      newObject[@"email"] = oldObject[@"email"];
+                                      newObject[@"password"] = oldObject[@"email"];
+                                      newObject[@"phone"] = oldObject[@"phone"];
+                                  }];
+        }
+    };
+    [RLMRealmConfiguration setDefaultConfiguration:config];
+}
+
+
 
 @end
