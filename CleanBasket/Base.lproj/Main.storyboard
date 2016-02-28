@@ -979,7 +979,9 @@
                                         <rect key="frame" x="0.0" y="159" width="600" height="40"/>
                                         <color key="backgroundColor" red="0.51372549020000002" green="0.85882352939999995" blue="0.81960784310000001" alpha="1" colorSpace="calibratedRGB"/>
                                         <constraints>
-                                            <constraint firstAttribute="height" constant="40" id="nXQ-bD-oqc"/>
+                                            <constraint firstAttribute="height" constant="40" id="nXQ-bD-oqc">
+                                                <variation key="widthClass=compact" constant="50"/>
+                                            </constraint>
                                         </constraints>
                                         <fontDescription key="fontDescription" type="system" pointSize="19"/>
                                         <state key="normal" title="주문하기">

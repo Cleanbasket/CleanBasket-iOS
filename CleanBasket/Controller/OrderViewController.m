@@ -14,6 +14,7 @@
 #import <Realm/Realm.h>
 #import "User.h"
 #import "CBConstants.h"
+#import "UIAlertView+Blocks.h"
 
 typedef enum : NSUInteger {
     CBPaymentMethodCard=1,
@@ -194,11 +195,16 @@ typedef enum : NSUInteger {
 
 
 - (void)finishedPickUpDate:(NSNotification *)noti{
-
     _pickUpDate = [noti userInfo][@"date"];
     NSString *pickUpTimeString = [self getStringFromDate:_pickUpDate];
     [_pickUpTimeLabel setText:pickUpTimeString];
 
+    
+    //배달시간 3일 이후로 설정.
+    _dropOffDate = [_pickUpDate dateByAddingTimeInterval:60*60*24*3];
+    NSString *dropOffTimeString = [self getStringFromDate:_dropOffDate];
+    NSString *dropOffTimeLabelString = [NSString stringWithFormat:@"%@%@",dropOffTimeString,NSLocalizedString(@"dropoff_datetime_c",nil)];
+    [_dropOffTimeLabel setText:dropOffTimeLabelString];
 }
 
 
@@ -488,9 +494,6 @@ typedef enum : NSUInteger {
 
 
 - (void)paymentMethodTap{
-    NSLog(@"결제수단탭");
-
-
     UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:NSLocalizedString(@"payment_method",@"결제수단")
                                                              delegate:self
                                                     cancelButtonTitle:NSLocalizedString(@"label_cancel",@"취소")
@@ -608,19 +611,54 @@ typedef enum : NSUInteger {
     } else if (_dropOffDate == nil) {
         [SVProgressHUD showErrorWithStatus:NSLocalizedString(@"time_dropoff_inform_after", nil)];
         return;
-    } else if (_address == nil) {
+    } else if ( (_address == nil) || (_addr_building == nil) ){
         [SVProgressHUD showErrorWithStatus:NSLocalizedString(@"address_empty", nil)];
         [self editAddress];
         return;
     }
     
-    [self addNewOrder];
+    [self showCheckAlert];
     
-
 }
 
 
+- (void)showCheckAlert{
+    
+    
+    NSString *messageString = [NSString stringWithFormat:@"%@ : %@ %@\n%@ : %@\n%@ : %@",
+                               NSLocalizedString(@"address", @"주소"), _address, _addr_building,
+                               NSLocalizedString(@"수거일", @"수거일"), [self getStringFromDate:_pickUpDate],
+                               NSLocalizedString(@"배달일", @"배달일"), [self getStringFromDate:_dropOffDate]
+                               ];
+    
+    [UIAlertView showWithTitle:NSLocalizedString(@"CONFIRM", nil)
+                       message:messageString
+             cancelButtonTitle:NSLocalizedString(@"label_cancel", @"취소")
+             otherButtonTitles:@[NSLocalizedString(@"button_order", @"주문하기")]
+                      tapBlock:^(UIAlertView *alertView, NSInteger buttonIndex){
+                          if (buttonIndex == alertView.cancelButtonIndex) {
+                              return;
+                          }
+                          else if (buttonIndex == [[alertView buttonTitleAtIndex:buttonIndex] isEqualToString:NSLocalizedString(@"button_order", @"주문하기")]){
+                              [self addNewOrder];
+                          }
+                          
+                      }];
+    
+}
+
 - (void)addNewOrder{
+    
+    NSDate *twoDaysAfterDate = [_pickUpDate dateByAddingTimeInterval:60*60*24*2];
+    if ([_dropOffDate compare:twoDaysAfterDate] == NSOrderedAscending) {
+        [UIAlertView showWithTitle:NSLocalizedString(@"toast_error", @"에러")
+                           message:@"배달일은 수거일 2일 이후에 가능합니다."
+                 cancelButtonTitle:NSLocalizedString(@"label_confirm", @"확인")
+                 otherButtonTitles:nil
+                          tapBlock:nil];
+
+        return;
+    }
     
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     
