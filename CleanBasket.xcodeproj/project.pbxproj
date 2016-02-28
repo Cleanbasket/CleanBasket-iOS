@@ -15,18 +15,19 @@
 		1F317AEE1C294EAD00F0168C /* MainTabBarViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F317AED1C294EAD00F0168C /* MainTabBarViewController.m */; };
 		1F317AF41C295D6500F0168C /* BottomBorderButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F317AF31C295D6500F0168C /* BottomBorderButton.m */; };
 		1F317AF71C296D8400F0168C /* ModalViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F317AF61C296D8400F0168C /* ModalViewController.m */; };
-		1F317AFC1C2AD13A00F0168C /* CouponView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1F317AFB1C2AD13A00F0168C /* CouponView.xib */; };
 		1F317B001C2AD7A200F0168C /* NotiTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F317AFE1C2AD7A200F0168C /* NotiTableViewCell.m */; };
 		1F317B011C2AD7A200F0168C /* NotiTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1F317AFF1C2AD7A200F0168C /* NotiTableViewCell.xib */; };
 		1F317B041C2AE52000F0168C /* SettingTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F317B031C2AE52000F0168C /* SettingTableViewController.m */; };
 		1F317B071C2D932A00F0168C /* NoticeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F317B061C2D932A00F0168C /* NoticeViewController.m */; };
 		1F317B0B1C2DB22A00F0168C /* CouponTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F317B091C2DB22A00F0168C /* CouponTableViewCell.m */; };
-		1F317B0C1C2DB22A00F0168C /* CouponTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1F317B0A1C2DB22A00F0168C /* CouponTableViewCell.xib */; };
 		1F610ADD1C3F78A200B4585C /* UITextField+maxLength.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F610ADC1C3F78A200B4585C /* UITextField+maxLength.m */; };
 		1F610AE01C43897E00B4585C /* TimeSelectCollectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F610ADF1C43897E00B4585C /* TimeSelectCollectionViewController.m */; };
 		1F610AE31C4395A800B4585C /* TimeCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F610AE21C4395A800B4585C /* TimeCollectionViewCell.m */; };
 		1F610AE61C44F39800B4585C /* TimeSelectViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F610AE51C44F39800B4585C /* TimeSelectViewController.m */; };
 		1F610AE91C48344100B4585C /* ChangePasswordViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F610AE81C48344100B4585C /* ChangePasswordViewController.m */; };
+		1F6120741C83243200E04BFC /* CouponTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F6120731C83243200E04BFC /* CouponTableViewController.m */; };
+		1F6120771C83292600E04BFC /* Notification.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F6120761C83292600E04BFC /* Notification.m */; };
+		1F61207C1C8329ED00E04BFC /* AlarmTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F61207B1C8329ED00E04BFC /* AlarmTableViewController.m */; };
 		1FA092ED1C322F0500477A7F /* AddCreditViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FA092EC1C322F0500477A7F /* AddCreditViewController.m */; };
 		1FE23AF11C157C0600B37752 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FE23AF01C157C0600B37752 /* main.m */; };
 		1FE23AF41C157C0600B37752 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FE23AF31C157C0600B37752 /* AppDelegate.m */; };
@@ -74,7 +75,6 @@
 		1F317AF31C295D6500F0168C /* BottomBorderButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BottomBorderButton.m; path = View/BottomBorderButton.m; sourceTree = "<group>"; };
 		1F317AF51C296D8400F0168C /* ModalViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ModalViewController.h; path = Controller/ModalViewController.h; sourceTree = "<group>"; };
 		1F317AF61C296D8400F0168C /* ModalViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ModalViewController.m; path = Controller/ModalViewController.m; sourceTree = "<group>"; };
-		1F317AFB1C2AD13A00F0168C /* CouponView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = CouponView.xib; path = View/CouponView.xib; sourceTree = "<group>"; };
 		1F317AFD1C2AD7A200F0168C /* NotiTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NotiTableViewCell.h; path = View/NotiTableViewCell.h; sourceTree = "<group>"; };
 		1F317AFE1C2AD7A200F0168C /* NotiTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NotiTableViewCell.m; path = View/NotiTableViewCell.m; sourceTree = "<group>"; };
 		1F317AFF1C2AD7A200F0168C /* NotiTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = NotiTableViewCell.xib; path = View/NotiTableViewCell.xib; sourceTree = "<group>"; };
@@ -84,7 +84,6 @@
 		1F317B061C2D932A00F0168C /* NoticeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; name = NoticeViewController.m; path = Controller/NoticeViewController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		1F317B081C2DB22A00F0168C /* CouponTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CouponTableViewCell.h; path = View/CouponTableViewCell.h; sourceTree = "<group>"; };
 		1F317B091C2DB22A00F0168C /* CouponTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CouponTableViewCell.m; path = View/CouponTableViewCell.m; sourceTree = "<group>"; };
-		1F317B0A1C2DB22A00F0168C /* CouponTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = CouponTableViewCell.xib; path = View/CouponTableViewCell.xib; sourceTree = "<group>"; };
 		1F610ADB1C3F78A200B4585C /* UITextField+maxLength.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UITextField+maxLength.h"; path = "View/UITextField+maxLength.h"; sourceTree = "<group>"; };
 		1F610ADC1C3F78A200B4585C /* UITextField+maxLength.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UITextField+maxLength.m"; path = "View/UITextField+maxLength.m"; sourceTree = "<group>"; };
 		1F610ADE1C43897E00B4585C /* TimeSelectCollectionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TimeSelectCollectionViewController.h; path = Controller/TimeSelectCollectionViewController.h; sourceTree = "<group>"; };
@@ -95,6 +94,12 @@
 		1F610AE51C44F39800B4585C /* TimeSelectViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TimeSelectViewController.m; path = Controller/TimeSelectViewController.m; sourceTree = "<group>"; };
 		1F610AE71C48344100B4585C /* ChangePasswordViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ChangePasswordViewController.h; path = Controller/ChangePasswordViewController.h; sourceTree = "<group>"; };
 		1F610AE81C48344100B4585C /* ChangePasswordViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; name = ChangePasswordViewController.m; path = Controller/ChangePasswordViewController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
+		1F6120721C83243200E04BFC /* CouponTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CouponTableViewController.h; path = Controller/CouponTableViewController.h; sourceTree = "<group>"; };
+		1F6120731C83243200E04BFC /* CouponTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; name = CouponTableViewController.m; path = Controller/CouponTableViewController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
+		1F6120751C83292600E04BFC /* Notification.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Notification.h; path = Model/Notification.h; sourceTree = "<group>"; };
+		1F6120761C83292600E04BFC /* Notification.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Notification.m; path = Model/Notification.m; sourceTree = "<group>"; };
+		1F61207A1C8329ED00E04BFC /* AlarmTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AlarmTableViewController.h; path = Controller/AlarmTableViewController.h; sourceTree = "<group>"; };
+		1F61207B1C8329ED00E04BFC /* AlarmTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AlarmTableViewController.m; path = Controller/AlarmTableViewController.m; sourceTree = "<group>"; };
 		1FA092EB1C322F0500477A7F /* AddCreditViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AddCreditViewController.h; path = Controller/AddCreditViewController.h; sourceTree = "<group>"; };
 		1FA092EC1C322F0500477A7F /* AddCreditViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; name = AddCreditViewController.m; path = Controller/AddCreditViewController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		1FE23AEC1C157C0600B37752 /* CleanBasket.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CleanBasket.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -195,8 +200,6 @@
 		1F0D3AC41C60137A00CA9999 /* Setting */ = {
 			isa = PBXGroup;
 			children = (
-				1F317B051C2D932A00F0168C /* NoticeViewController.h */,
-				1F317B061C2D932A00F0168C /* NoticeViewController.m */,
 				1F317B021C2AE52000F0168C /* SettingTableViewController.h */,
 				1F317B031C2AE52000F0168C /* SettingTableViewController.m */,
 				1F610AE71C48344100B4585C /* ChangePasswordViewController.h */,
@@ -208,6 +211,9 @@
 		1F0D3AC51C60140000CA9999 /* Info */ = {
 			isa = PBXGroup;
 			children = (
+				1F6120791C83299D00E04BFC /* Alarm */,
+				1F6120781C83296900E04BFC /* Notice */,
+				1F6120711C83236D00E04BFC /* Coupon */,
 				1F0D3AC41C60137A00CA9999 /* Setting */,
 				ED08904F74DFC3B77570FEC2 /* InfoViewController.h */,
 				ED0898F1244206E5BCDA0FC5 /* InfoViewController.m */,
@@ -241,6 +247,33 @@
 				1F0D3ACB1C60189200CA9999 /* OrderStatusViewController.m */,
 			);
 			name = OrderList;
+			sourceTree = "<group>";
+		};
+		1F6120711C83236D00E04BFC /* Coupon */ = {
+			isa = PBXGroup;
+			children = (
+				1F6120721C83243200E04BFC /* CouponTableViewController.h */,
+				1F6120731C83243200E04BFC /* CouponTableViewController.m */,
+			);
+			name = Coupon;
+			sourceTree = "<group>";
+		};
+		1F6120781C83296900E04BFC /* Notice */ = {
+			isa = PBXGroup;
+			children = (
+				1F317B051C2D932A00F0168C /* NoticeViewController.h */,
+				1F317B061C2D932A00F0168C /* NoticeViewController.m */,
+			);
+			name = Notice;
+			sourceTree = "<group>";
+		};
+		1F6120791C83299D00E04BFC /* Alarm */ = {
+			isa = PBXGroup;
+			children = (
+				1F61207A1C8329ED00E04BFC /* AlarmTableViewController.h */,
+				1F61207B1C8329ED00E04BFC /* AlarmTableViewController.m */,
+			);
+			name = Alarm;
 			sourceTree = "<group>";
 		};
 		1FE23AE31C157C0600B37752 = {
@@ -297,6 +330,8 @@
 			children = (
 				ED089CA64025D13384136205 /* User.h */,
 				ED0890A88338423ED595A4BD /* User.m */,
+				1F6120751C83292600E04BFC /* Notification.h */,
+				1F6120761C83292600E04BFC /* Notification.m */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -345,7 +380,6 @@
 			isa = PBXGroup;
 			children = (
 				1FE23AFB1C157C0600B37752 /* Main.storyboard */,
-				1F317AFB1C2AD13A00F0168C /* CouponView.xib */,
 				ED08992DB727FF27CC23DE8F /* SignTextField.h */,
 				ED089AFD2B10155B7A19070D /* SignTextField.m */,
 				ED08929DEB36FAD345559B65 /* RoundedButton.h */,
@@ -357,7 +391,6 @@
 				1F317AFF1C2AD7A200F0168C /* NotiTableViewCell.xib */,
 				1F317B081C2DB22A00F0168C /* CouponTableViewCell.h */,
 				1F317B091C2DB22A00F0168C /* CouponTableViewCell.m */,
-				1F317B0A1C2DB22A00F0168C /* CouponTableViewCell.xib */,
 				1FFB85831C3DF4AA0045C751 /* ItemTableViewCell.h */,
 				1FFB85841C3DF4AA0045C751 /* ItemTableViewCell.m */,
 				1FFB858B1C3E0BEB0045C751 /* ItemCategoryCollectionViewCell.h */,
@@ -455,14 +488,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				1FE23B021C157C0600B37752 /* LaunchScreen.storyboard in Resources */,
-				1F317B0C1C2DB22A00F0168C /* CouponTableViewCell.xib in Resources */,
 				1FF756341C28394B003A4D54 /* InfoPlist.strings in Resources */,
 				1FF756211C282782003A4D54 /* Localizable.strings in Resources */,
 				1FF756311C283922003A4D54 /* Info.plist in Resources */,
 				1FE23AFF1C157C0600B37752 /* Assets.xcassets in Resources */,
 				1F317B011C2AD7A200F0168C /* NotiTableViewCell.xib in Resources */,
 				1FF7562A1C28362C003A4D54 /* ic_nice.png in Resources */,
-				1F317AFC1C2AD13A00F0168C /* CouponView.xib in Resources */,
 				1FE23AFD1C157C0600B37752 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -522,6 +553,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1F6120771C83292600E04BFC /* Notification.m in Sources */,
 				1FE23AF41C157C0600B37752 /* AppDelegate.m in Sources */,
 				1FE23B1E1C17127D00B37752 /* WebViewController.m in Sources */,
 				1F317AF71C296D8400F0168C /* ModalViewController.m in Sources */,
@@ -545,12 +577,14 @@
 				ED0896BBCA0717E9680235A0 /* AuthCheckViewController.m in Sources */,
 				1F317B001C2AD7A200F0168C /* NotiTableViewCell.m in Sources */,
 				1F0D3AC91C6017F100CA9999 /* OrderHistoryViewController.m in Sources */,
+				1F61207C1C8329ED00E04BFC /* AlarmTableViewController.m in Sources */,
 				ED089D43FCADED63B1C31F1F /* LoginViewController.m in Sources */,
 				1F0D3ACC1C60189200CA9999 /* OrderStatusViewController.m in Sources */,
 				1FE23B181C16EE5200B37752 /* TTTAttributedLabel.m in Sources */,
 				1FE613531C1E79EB009B4EA5 /* HelpViewController.m in Sources */,
 				ED0895839E26FE3B3930F1FA /* SignTextField.m in Sources */,
 				1F0D3AD01C60376F00CA9999 /* RoundedLabel.m in Sources */,
+				1F6120741C83243200E04BFC /* CouponTableViewController.m in Sources */,
 				1F00408E1C5BF47F00A436CC /* NSString+sha1.m in Sources */,
 				ED0895EE927CF23DFB2E06D2 /* RoundedButton.m in Sources */,
 				1F317B071C2D932A00F0168C /* NoticeViewController.m in Sources */,

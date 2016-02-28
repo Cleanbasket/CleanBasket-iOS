@@ -137,17 +137,13 @@ typedef enum : NSUInteger {
 
 
 - (void)initOrder{
-
     _pickUpDate = nil;
     _dropOffDate = nil;
 
     NSCalendar *calendar = [NSCalendar autoupdatingCurrentCalendar];
-
     NSDate *today = [NSDate date];
-
     NSDateComponents *dateComponents= [calendar components:NSCalendarUnitYear|NSCalendarUnitMonth|NSCalendarUnitDay|NSCalendarUnitHour|NSCalendarUnitMinute fromDate:today];
 
-//    NSLog(@"%@",dateComponents);
 
     dateComponents.hour += 2;
 
@@ -178,18 +174,16 @@ typedef enum : NSUInteger {
         dateComponents.minute = 0;
     }
     
-//
-//
-//    NSDate *lastNewDate=[calendar dateByAddingComponents:dateComponents toDate:_pickUpDate options:0];
+    
     _pickUpDate = [calendar dateFromComponents:dateComponents];
     _startPickupDate = _pickUpDate;
-    NSLog(@"pickUpDate = %@",_pickUpDate);
-//
-//
+
     [_pickUpTimeLabel setText:[self getStringFromDate:_pickUpDate]];
     [_dropOffTimeLabel setText:NSLocalizedString(@"time_dropoff_inform_after",nil)];
 
 
+    self.itemIdAndCountDict = [NSDictionary new];
+    
 }
 
 
@@ -787,29 +781,17 @@ typedef enum : NSUInteger {
 
 
 - (void)dismissHUD{
-
     [SVProgressHUD dismiss];
-
 }
 
 - (void)priceEstimation{
-
-
     AppDelegate *delegate = [[UIApplication sharedApplication] delegate];
-
-
     [self presentViewController:(UIViewController*)delegate.estimateVC animated:YES completion:nil];
-
-
 }
-
-
-
 
 - (UIStatusBarStyle)preferredStatusBarStyle {
     return UIStatusBarStyleLightContent;
 }
-
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
