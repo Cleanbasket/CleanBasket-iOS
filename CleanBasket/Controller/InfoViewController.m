@@ -71,8 +71,6 @@
                                                                     error:&jsonError];
 
 
-             NSLog(@"Data : %@",data);
-
              //인증 데이터 있을 때
              if (data){
 
@@ -151,9 +149,6 @@
        parameters:@{@"phone":_phoneTextField.text}
           success:^(AFHTTPRequestOperation *operation, id responseObject) {
 
-
-              NSLog(@"Data : %@",responseObject[@"message"]);
-
               [SVProgressHUD showSuccessWithStatus:NSLocalizedString(@"authorization_code_sent",nil)];
 
 
@@ -189,16 +184,6 @@
     [_manager POST:@"http://52.79.39.100:8080/member/user"
         parameters:parameters
            success:^(AFHTTPRequestOperation *operation, id responseObject) {
-
-//              NSError *jsonError;
-//              NSData *objectData = [responseObject[@"data"] dataUsingEncoding:NSUTF8StringEncoding];
-//
-//              NSDictionary *data = [NSJSONSerialization JSONObjectWithData:objectData
-//                                                                   options:NSJSONReadingMutableContainers
-//                                                                     error:&jsonError];
-
-
-               NSLog(@"Data : %@",responseObject);
 
 
                if ([responseObject[@"constant"] integerValue] == 1){

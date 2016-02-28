@@ -505,21 +505,16 @@ typedef enum : NSUInteger {
             _paymentMethod = CBPaymentMethodCard;
             [_paymentMethodLabel setHidden:NO];
             [_paymentMethodLabel setText:[actionSheet buttonTitleAtIndex:buttonIndex]];
-            NSLog(@"카드결제");
             break;
         }
         case CBPaymentMethodCash:{
             _paymentMethod = CBPaymentMethodCash;
             [_paymentMethodLabel setHidden:NO];
             [_paymentMethodLabel setText:[actionSheet buttonTitleAtIndex:buttonIndex]];
-            NSLog(@"현금결제");
             break;
         }
         case CBPaymentMethodInApp:{
             _paymentMethod = CBPaymentMethodInApp;
-//            [_paymentMethodLabel setHidden:NO];
-//            [_paymentMethodLabel setText:[actionSheet buttonTitleAtIndex:buttonIndex]];
-            NSLog(@"인앱결제");
             [self checkCreditCard];
             break;
         }
@@ -604,7 +599,7 @@ typedef enum : NSUInteger {
     } else if (_dropOffDate == nil) {
         [SVProgressHUD showErrorWithStatus:NSLocalizedString(@"time_dropoff_inform_after", nil)];
         return;
-    } else if ( (_address == nil) || (_addr_building == nil) ){
+    } else if ( (_address == nil) || ([_addr_building isEqualToString:@""]) ){
         [SVProgressHUD showErrorWithStatus:NSLocalizedString(@"address_empty", nil)];
         [self editAddress];
         return;
@@ -714,7 +709,7 @@ typedef enum : NSUInteger {
     manager.requestSerializer = req;
     
     NSString *jsonString = [[NSString alloc] initWithData:[NSJSONSerialization dataWithJSONObject:parameters options:NSJSONWritingPrettyPrinted error:nil] encoding:NSUTF8StringEncoding];
-    NSLog(@"제이슨 : %@",jsonString);
+    
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:@"http://52.79.39.100:8080/member/order/add/new"]
                                                            cachePolicy:NSURLRequestReloadIgnoringCacheData  timeoutInterval:10];
     
@@ -730,13 +725,10 @@ typedef enum : NSUInteger {
     
     [op setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
         
-        NSLog(@"JSON responseObject: %@ ",responseObject);
-        NSLog(@"%@", [responseObject valueForKey:@"message"]);
         int constant = [[responseObject valueForKey:@"constant"] intValue];
         
         switch (constant) {
             case CBServerConstantSuccess: {
-                NSLog(@"성공!");
                 [SVProgressHUD showSuccessWithStatus:NSLocalizedString(@"order_success", nil)];
                 [[CBNotificationManager sharedManager] addDropOffNoti:_dropOffDate oid:responseObject[@"data"]];
                 [[CBNotificationManager sharedManager] addPickUpNoti:_pickUpDate oid:responseObject[@"data"]];

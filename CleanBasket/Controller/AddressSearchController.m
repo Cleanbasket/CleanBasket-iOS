@@ -243,9 +243,6 @@ NSMutableArray *searchResult, *allAddress, *supportAddress, *supportAllDongsAddr
     }
     
     
-    
-    NSLog(@"%@",isSupportAddress?@"Y":@"N");
-    
     if (isSupportAddress) {
         
         NSString *alertMessgae = [NSString stringWithFormat:@"%@",cellString];
@@ -392,7 +389,6 @@ NSMutableArray *searchResult, *allAddress, *supportAddress, *supportAllDongsAddr
 
           success:^(AFHTTPRequestOperation *operation, id responseObject) {
 
-              NSLog(@"%@",responseObject);
 
               NSLog(@"결과: %@", [NSString stringWithUTF8String:[responseObject[@"message"] UTF8String]]);
 

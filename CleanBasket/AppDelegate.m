@@ -37,7 +37,7 @@
     
     //기존 세팅 있을때
     if ([[NSUserDefaults standardUserDefaults] objectForKey:@"isGetEventNoti"]){
-        NSLog(@"세팅있!");
+        
     }
     //없을때(처음 실행)
     else{

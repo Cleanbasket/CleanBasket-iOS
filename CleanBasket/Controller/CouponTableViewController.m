@@ -54,7 +54,6 @@
                                                                       error:&jsonError];
                
                
-               NSLog(@"Data : %@",data);
                
                self.coupons = data;
                [self.tableView reloadData];

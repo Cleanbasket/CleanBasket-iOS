@@ -29,7 +29,7 @@
     // Do any additional setup after loading the view.
 }
 - (IBAction)confirm:(id)sender {
-    NSLog(@"%f",_rateView.rating);
+    
     [self dismissViewControllerAnimated:YES completion:nil];
     
 }

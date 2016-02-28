@@ -216,10 +216,8 @@
     
     if (self.startDate != nil) {
         
-        NSLog(@"%@,%@",self.startDate,cellDate);
         if ([cellDate compare:_startDate] == NSOrderedAscending) {
             cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"CloseCell" forIndexPath:indexPath];
-            NSLog(@"오래오?");
         }
         
     

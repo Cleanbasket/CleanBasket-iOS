@@ -16,7 +16,7 @@
 SHARED_SINGLETON(CBNotificationManager);
 
 - (void)configure {
-    NSLog(@"컨피!!");
+    
     RLMRealm *realm = [RLMRealm defaultRealm];
     [realm beginWriteTransaction];
     [realm deleteObjects:[Notification allObjects]];
@@ -38,7 +38,6 @@ SHARED_SINGLETON(CBNotificationManager);
     localNoti.fireDate = [pickUpDate dateByAddingTimeInterval:-(60*60)];
     localNoti.timeZone = [NSTimeZone systemTimeZone];
     
-    NSLog(@"localNoti : %@",localNoti);
     
     //알림 메시지
     NSString *messageString =[NSString stringWithFormat:@"%@ %@%@",NSLocalizedString(@"today", @"오늘"),[dateFormatter stringFromDate:pickUpDate],NSLocalizedString(@"pick_up_notification", @"에 수거가 있습니다.")];

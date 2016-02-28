@@ -118,16 +118,6 @@
       parameters:parameters
          success:^(AFHTTPRequestOperation *operation, id responseObject) {
 
-
-             NSLog(@"%@",responseObject);
-
-             NSError *jsonError;
-             NSData *objectData = [responseObject[@"data"] dataUsingEncoding:NSUTF8StringEncoding];
-             NSArray *data = [NSJSONSerialization JSONObjectWithData:objectData
-                                                             options:NSJSONReadingMutableContainers
-                                                               error:&jsonError];
-
-
              if ([responseObject[@"constant"] isEqualToNumber:@1]){
 
                  [SVProgressHUD showSuccessWithStatus:@"카드등록 성공"];
@@ -144,7 +134,6 @@
 
          } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
                 [SVProgressHUD showErrorWithStatus:@"카드등록 실패\n입력하신 정보를 확인해보세요"];
-                NSLog(@"Error: %@", error);
             }];;
 }
 

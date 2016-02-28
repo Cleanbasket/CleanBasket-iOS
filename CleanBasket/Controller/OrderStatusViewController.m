@@ -106,12 +106,6 @@
     };
     
 
-
-    
-    
-//    MMPopupCompletionBlock completeBlock = ^(MMPopupView *popupView, BOOL finish){
-//        NSLog(@"animation complete");
-//    };
     
     NSArray *items = @[MMItemMake(NSLocalizedString(@"change_item", nil), MMItemTypeHighlight, block),
                        MMItemMake(NSLocalizedString(@"change_time", nil), MMItemTypeHighlight, block),

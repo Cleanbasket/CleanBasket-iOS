@@ -109,8 +109,6 @@
                                                                      error:&jsonError];
 
 
-                NSLog(@"로긘 : %@",data);
-
                 RLMRealm *realm = [RLMRealm defaultRealm];
                 User *user = [[User alloc] initWithValue:@{@"email": _emailTextField.text,
                                                            @"password": _pwTextField.text,
@@ -185,8 +183,6 @@
 
     [manager POST:@"http://52.79.39.100:8080/member/register" parameters:parameters
           success:^(AFHTTPRequestOperation *operation, id responseObject) {
-
-              NSLog(@"res : %@",responseObject);
 
               NSNumber *value = responseObject[@"constant"];
               switch ([value integerValue]) {

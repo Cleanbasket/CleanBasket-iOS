@@ -357,62 +357,15 @@
         
         //아이템코드 스트링
         NSString *itemCode = [item[@"item_code"] stringValue];
-//        NSLog(@"아코 : %@",items[itemCode]);
+        
         
         if (items[itemCode] != nil) {
-            NSLog(@"닐아!");
             items[itemCode] = @([items[itemCode] integerValue] +1);
         }
         else
             [items setValue:@1 forKey:[item[@"item_code"] stringValue]];
     }
     
-    
-//    for (NSDictionary *item in self.selectedItems) {
-//                //추가
-//        if (items.count) {
-//            for (int i = 0; i<items.count; i++) {
-//                NSMutableDictionary *alreadyItem = items[i];
-//                
-//                if (alreadyItem[@"item_code"] == item[@"item_code"]) {
-////                    NSLog(@"같다 : %@",alreadyItem[@""]);
-//                    alreadyItem[@"count"] = @([alreadyItem[@"count"] integerValue]+1);
-//                    
-//                    continue;
-//                }
-//                
-//                
-//                if (i==items.count-1) {
-//                    
-//                    //일치하는거 없으면 신규
-//                    NSLog(@"일없!");
-//                    NSMutableDictionary *newItem = [NSMutableDictionary new];
-//                    [newItem setValue:item[@"item_code"] forKey:@"item_code"];
-//                    [newItem setValue:item[@"category"] forKey:@"category"];
-//                    [newItem setValue:@1 forKey:@"count"];
-//                    
-//                    [items addObject:newItem];
-//                }
-//                
-//            }
-//            
-//            
-//        }
-//        //비었으면 신규
-//        else {
-//            NSLog(@"비었!");
-//            NSMutableDictionary *newItem = [NSMutableDictionary new];
-//            [newItem setValue:item[@"item_code"] forKey:@"item_code"];
-//            [newItem setValue:item[@"category"] forKey:@"category"];
-//            [newItem setValue:@1 forKey:@"count"];
-//            
-//            [items addObject:newItem];
-//        }
-//
-//    }
-    
-    
-    NSLog(@"담긴거 : %@",items);
     
     
     [[NSNotificationCenter defaultCenter] postNotificationName:@"didFinishEstimate"
