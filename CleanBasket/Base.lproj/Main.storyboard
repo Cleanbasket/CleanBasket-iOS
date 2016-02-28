@@ -2090,6 +2090,9 @@
                                 <state key="normal" title="알람" image="ic_information_alarm">
                                     <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
+                                <connections>
+                                    <segue destination="QEq-nX-k92" kind="show" id="5sc-yn-X4A"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1Qe-mO-Ur6" customClass="BottomBorderButton">
                                 <rect key="frame" x="0.0" y="360" width="600" height="64"/>
@@ -2786,6 +2789,34 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="VUx-AT-833" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="5989.5" y="952"/>
+        </scene>
+        <!--Alarm Table View Controller-->
+        <scene sceneID="fCt-PE-wYA">
+            <objects>
+                <tableViewController id="QEq-nX-k92" customClass="AlarmTableViewController" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="80" sectionHeaderHeight="28" sectionFooterHeight="28" id="iD4-og-Rhb">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="551"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <prototypes>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="kEq-Ot-JvR">
+                                <rect key="frame" x="0.0" y="28" width="600" height="44"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="kEq-Ot-JvR" id="raQ-6F-pZG">
+                                    <rect key="frame" x="0.0" y="0.0" width="600" height="43"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                </tableViewCellContentView>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="QEq-nX-k92" id="9mI-P5-fbR"/>
+                            <outlet property="delegate" destination="QEq-nX-k92" id="Yn0-xQ-5nw"/>
+                        </connections>
+                    </tableView>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="1tw-3Y-yCm" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="6624" y="952"/>
         </scene>
         <!--Setting Table View Controller-->
         <scene sceneID="Rah-p1-AbM">

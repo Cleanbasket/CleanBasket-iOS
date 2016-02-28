@@ -10,7 +10,10 @@
 
 @interface Notification : RLMObject
 
-@property NSString *title;
+@property NSString *message;
+@property NSString *oid;
+@property NSString *imageName;
+@property NSDate *date;
 
 @end
 

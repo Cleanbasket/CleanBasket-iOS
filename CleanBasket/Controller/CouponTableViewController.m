@@ -74,7 +74,7 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     
-    CouponTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"CouponCell"];
+    CouponTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"CouponCell" forIndexPath:indexPath];
     NSDictionary *coupon = _coupons[indexPath.row];
     cell.nameLabel.text = coupon[@"name"];
     

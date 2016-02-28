@@ -15,6 +15,7 @@
 #import "User.h"
 #import "CBConstants.h"
 #import "UIAlertView+Blocks.h"
+#import "CBNotificationManager.h"
 
 typedef enum : NSUInteger {
     CBPaymentMethodCard=1,
@@ -369,8 +370,6 @@ typedef enum : NSUInteger {
 
 
 - (void)showTimeSelectVC:(UITapGestureRecognizer *)sender{
-    NSLog(@"시간탭!");
-
     if (!_addressString.length){
 
         [SVProgressHUD showErrorWithStatus:NSLocalizedString(@"address_empty",nil)];
@@ -739,6 +738,8 @@ typedef enum : NSUInteger {
             case CBServerConstantSuccess: {
                 NSLog(@"성공!");
                 [SVProgressHUD showSuccessWithStatus:NSLocalizedString(@"order_success", nil)];
+                [[CBNotificationManager sharedManager] addDropOffNoti:_dropOffDate oid:responseObject[@"data"]];
+                [[CBNotificationManager sharedManager] addPickUpNoti:_pickUpDate oid:responseObject[@"data"]];
                 [self initOrder];
                 
             }

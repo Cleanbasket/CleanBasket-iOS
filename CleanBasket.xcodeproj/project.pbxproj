@@ -12,6 +12,7 @@
 		1F0D3ACC1C60189200CA9999 /* OrderStatusViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F0D3ACB1C60189200CA9999 /* OrderStatusViewController.m */; };
 		1F0D3AD01C60376F00CA9999 /* RoundedLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F0D3ACF1C60376F00CA9999 /* RoundedLabel.m */; };
 		1F0D3AD31C60399F00CA9999 /* OrderHistoryCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F0D3AD21C60399F00CA9999 /* OrderHistoryCell.m */; };
+		1F19052B1C8338D600CE07CE /* CBNotificationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F19052A1C8338D600CE07CE /* CBNotificationManager.m */; };
 		1F317AEE1C294EAD00F0168C /* MainTabBarViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F317AED1C294EAD00F0168C /* MainTabBarViewController.m */; };
 		1F317AF41C295D6500F0168C /* BottomBorderButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F317AF31C295D6500F0168C /* BottomBorderButton.m */; };
 		1F317AF71C296D8400F0168C /* ModalViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F317AF61C296D8400F0168C /* ModalViewController.m */; };
@@ -69,6 +70,8 @@
 		1F0D3ACF1C60376F00CA9999 /* RoundedLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RoundedLabel.m; path = View/RoundedLabel.m; sourceTree = "<group>"; };
 		1F0D3AD11C60399F00CA9999 /* OrderHistoryCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OrderHistoryCell.h; path = View/OrderHistoryCell.h; sourceTree = "<group>"; };
 		1F0D3AD21C60399F00CA9999 /* OrderHistoryCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = OrderHistoryCell.m; path = View/OrderHistoryCell.m; sourceTree = "<group>"; };
+		1F1905291C8338D600CE07CE /* CBNotificationManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CBNotificationManager.h; path = Util/CBNotificationManager.h; sourceTree = "<group>"; };
+		1F19052A1C8338D600CE07CE /* CBNotificationManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CBNotificationManager.m; path = Util/CBNotificationManager.m; sourceTree = "<group>"; };
 		1F317AEC1C294EAD00F0168C /* MainTabBarViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MainTabBarViewController.h; path = Controller/MainTabBarViewController.h; sourceTree = "<group>"; };
 		1F317AED1C294EAD00F0168C /* MainTabBarViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MainTabBarViewController.m; path = Controller/MainTabBarViewController.m; sourceTree = "<group>"; };
 		1F317AF21C295D6500F0168C /* BottomBorderButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BottomBorderButton.h; path = View/BottomBorderButton.h; sourceTree = "<group>"; };
@@ -356,6 +359,8 @@
 				ED0891FC4514556676A5173E /* CBConstants.h */,
 				1F00408C1C5BF47F00A436CC /* NSString+sha1.h */,
 				1F00408D1C5BF47F00A436CC /* NSString+sha1.m */,
+				1F1905291C8338D600CE07CE /* CBNotificationManager.h */,
+				1F19052A1C8338D600CE07CE /* CBNotificationManager.m */,
 			);
 			name = Util;
 			sourceTree = "<group>";
@@ -562,6 +567,7 @@
 				1F317B0B1C2DB22A00F0168C /* CouponTableViewCell.m in Sources */,
 				1FFB85821C3B51270045C751 /* EstimateViewController.m in Sources */,
 				1FFB85561C3B0A6C0045C751 /* AddressSearchController.m in Sources */,
+				1F19052B1C8338D600CE07CE /* CBNotificationManager.m in Sources */,
 				1FA092ED1C322F0500477A7F /* AddCreditViewController.m in Sources */,
 				1FE23AF11C157C0600B37752 /* main.m in Sources */,
 				1F317B041C2AE52000F0168C /* SettingTableViewController.m in Sources */,

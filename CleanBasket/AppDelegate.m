@@ -93,6 +93,10 @@
 
     [self.window setRootViewController:_authCheckViewController];
 
+    
+    [[UIApplication sharedApplication]registerUserNotificationSettings:[UIUserNotificationSettings settingsForTypes:UIUserNotificationTypeAlert categories:nil]];
+    
+    
     return YES;
 
 
@@ -167,9 +171,8 @@
 
 
 - (void)realmMigration {
-    NSLog(@"?!?!");
     RLMRealmConfiguration *config = [RLMRealmConfiguration defaultConfiguration];
-    config.schemaVersion = 1;
+    config.schemaVersion = 2;
     config.migrationBlock = ^(RLMMigration *migration, uint64_t oldSchemaVersion) {
         if (oldSchemaVersion < 1) {
             [migration enumerateObjects:User.className
