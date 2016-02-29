@@ -19,6 +19,8 @@
 #import <KakaoOpenSDK/KakaoOpenSDK.h>
 #import <Realm/Realm.h>
 #import "User.h"
+#import <ZDCChat/ZDCChat.h>
+
 
 @interface AppDelegate ()
 
@@ -95,6 +97,13 @@
 
     
     [[UIApplication sharedApplication]registerUserNotificationSettings:[UIUserNotificationSettings settingsForTypes:UIUserNotificationTypeAlert categories:nil]];
+    
+    
+    //zopim
+    [ZDCChat configure:^(ZDCConfig *defaults) {
+        
+        defaults.accountKey = @"3IvIR4PxJLUypCdpgbBmJLBjYby32CVD";
+    }];
     
     
     return YES;

@@ -7,6 +7,7 @@
 //
 
 #import "HelpViewController.h"
+#import <ZDCChat/ZDCChat.h>
 
 @interface HelpViewController ()
 
@@ -29,6 +30,11 @@
     _callLabel.userInteractionEnabled = YES;
     UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(labelTap)];
     [_callLabel addGestureRecognizer:tapGesture];
+}
+
+- (IBAction)tapLiveChat:(id)sender {
+    
+    [ZDCChat startChatIn:self.navigationController withConfig:nil];
 }
 
 - (void)didReceiveMemoryWarning {

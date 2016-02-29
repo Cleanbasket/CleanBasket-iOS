@@ -1625,7 +1625,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="fcy-vs-b7b" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="8283" y="489"/>
+            <point key="canvasLocation" x="9201" y="489"/>
         </scene>
         <!--주소-->
         <scene sceneID="k4S-TM-gKb">
@@ -1961,7 +1961,7 @@
                         <segue destination="103-zA-C0X" kind="relationship" relationship="viewControllers" id="Acz-65-hbS"/>
                         <segue destination="VVW-zD-GJi" kind="relationship" relationship="viewControllers" id="9Pf-tN-wUW"/>
                         <segue destination="oMV-7b-Pah" kind="relationship" relationship="viewControllers" id="sVF-PK-loj"/>
-                        <segue destination="iWH-oX-Ujy" kind="relationship" relationship="viewControllers" id="gde-d5-ofE"/>
+                        <segue destination="o3b-QP-eJd" kind="relationship" relationship="viewControllers" id="gde-d5-ofE"/>
                     </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="KFg-Dp-B6U" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1983,9 +1983,9 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="cGW-iC-I3r" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4623" y="952"/>
+            <point key="canvasLocation" x="5541" y="952"/>
         </scene>
-        <!--1:1 문의-->
+        <!--Help View Controller-->
         <scene sceneID="fgn-4j-wbP">
             <objects>
                 <viewController id="iWH-oX-Ujy" customClass="HelpViewController" sceneMemberID="viewController">
@@ -2026,6 +2026,9 @@
                                         <state key="normal" title="실시간 상담">
                                             <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                         </state>
+                                        <connections>
+                                            <action selector="tapLiveChat:" destination="iWH-oX-Ujy" eventType="touchUpInside" id="yEJ-da-UHx"/>
+                                        </connections>
                                     </button>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="고객센터와 실시간 채팅이 가능합니다(운영시간 : 오전 10시 ~ 오후 6시)" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" minimumFontSize="5" preferredMaxLayoutWidth="260" translatesAutoresizingMaskIntoConstraints="NO" id="tom-P3-tZw">
                                         <rect key="frame" x="5" y="270" width="262" height="50"/>
@@ -2049,14 +2052,14 @@
                             <constraint firstItem="cOx-Qk-xXK" firstAttribute="centerY" secondItem="s33-Zs-A6t" secondAttribute="centerY" id="gaO-FQ-sCW"/>
                         </constraints>
                     </view>
-                    <tabBarItem key="tabBarItem" title="1:1 문의" image="ic_menu_4alarm" id="56X-8A-Qxz"/>
+                    <navigationItem key="navigationItem" id="hts-Kv-6za"/>
                     <connections>
                         <outlet property="callLabel" destination="bH6-bZ-tTB" id="kFt-hG-I62"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="fyQ-Tb-Hzw" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3777" y="909"/>
+            <point key="canvasLocation" x="4090.5" y="926"/>
         </scene>
         <!--내 정보-->
         <scene sceneID="zq2-Sf-MCv">
@@ -2620,7 +2623,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="rJK-dx-k7p" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="5286" y="952"/>
+            <point key="canvasLocation" x="6204" y="952"/>
         </scene>
         <!--Coupon Table View Controller-->
         <scene sceneID="SOI-hY-JQ4">
@@ -2788,7 +2791,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="VUx-AT-833" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="5989.5" y="952"/>
+            <point key="canvasLocation" x="6907.5" y="952"/>
         </scene>
         <!--Alarm Table View Controller-->
         <scene sceneID="fCt-PE-wYA">
@@ -2816,7 +2819,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="1tw-3Y-yCm" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="6624" y="952"/>
+            <point key="canvasLocation" x="7542" y="952"/>
         </scene>
         <!--Setting Table View Controller-->
         <scene sceneID="Rah-p1-AbM">
@@ -3537,7 +3540,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="BaL-fk-ARs" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4653" y="658"/>
+            <point key="canvasLocation" x="5571" y="658"/>
         </scene>
         <!--주문현황-->
         <scene sceneID="o2b-6e-zCZ">
@@ -4199,7 +4202,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="y7x-Fv-Nz0" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="5931" y="274"/>
+            <point key="canvasLocation" x="6849" y="274"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="70f-PO-qcg">
@@ -4661,6 +4664,25 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Co0-S4-tSB" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="4623" y="-156"/>
+        </scene>
+        <!--1:1 문의-->
+        <scene sceneID="iHI-iq-3L2">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" navigationBarHidden="YES" id="o3b-QP-eJd" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="1:1 문의" image="ic_menu_4alarm" id="56X-8A-Qxz"/>
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="Os7-7e-roS">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="iWH-oX-Ujy" kind="relationship" relationship="rootViewController" id="8pK-xV-w6d"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="LfF-vZ-Dco" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3384" y="926"/>
         </scene>
     </scenes>
     <resources>

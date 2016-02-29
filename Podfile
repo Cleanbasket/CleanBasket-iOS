@@ -4,10 +4,11 @@ use_frameworks!
 # ignore all warnings from all pods
 inhibit_all_warnings!
 
-pod "AFNetworking", "~> 2.0"
+pod 'AFNetworking', '~> 2.0'
 pod 'ZendeskSDK'
+pod 'ZDCChat'
 pod 'Realm'
-pod "ODSAccordionView"
+pod 'ODSAccordionView'
 pod 'RateView'
 pod 'SVProgressHUD'
 
