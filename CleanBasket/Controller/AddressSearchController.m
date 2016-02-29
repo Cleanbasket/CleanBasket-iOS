@@ -379,7 +379,7 @@ NSMutableArray *searchResult, *allAddress, *supportAddress, *supportAllDongsAddr
 
 
     NSDictionary *parameters = @{@"address":address,
-                                 @"addr_remainder":remainder
+                                 @"addr_building":remainder
     };
     NSLog(@"remainder : %@",remainder);
 

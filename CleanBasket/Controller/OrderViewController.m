@@ -454,8 +454,8 @@ typedef enum : NSUInteger {
                  
                  _address = data.firstObject[@"address"];
                  
-                 if (data.firstObject[@"addr_remainder"]) {
-                     self.addr_building = data.firstObject[@"addr_remainder"];
+                 if (data.firstObject[@"addr_building"]) {
+                     self.addr_building = data.firstObject[@"addr_building"];
                  }
                  
 //                 _addr_building = data.firstObject[@"addr_ramainder"];
