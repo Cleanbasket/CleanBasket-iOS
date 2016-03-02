@@ -7,10 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		143730A11BEDE5930025189A /* libc++.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 143730A01BEDE5930025189A /* libc++.dylib */; };
 		143730A31BEDED190025189A /* Realm.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 143730A21BEDED190025189A /* Realm.framework */; };
 		147B48391BEE07080081F446 /* KakaoOpenSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 147B48381BEE07080081F446 /* KakaoOpenSDK.framework */; };
 		14B892AB1BEF07BD0001DF52 /* FacebookSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 14B892AA1BEF07BD0001DF52 /* FacebookSDK.framework */; };
+		AC6240B81C867A1B0089C529 /* libc++.1.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = AC6240B71C867A1B0089C529 /* libc++.1.dylib */; };
 		F104DB7D19FA0DA300C964B3 /* CBConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = F104DB7C19FA0DA300C964B3 /* CBConstants.m */; };
 		F104DB8019FA2DA800C964B3 /* Item_code.m in Sources */ = {isa = PBXBuildFile; fileRef = F104DB7F19FA2DA800C964B3 /* Item_code.m */; };
 		F111445319EEDD7A00C637AB /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = F111445219EEDD7A00C637AB /* User.m */; };
@@ -137,10 +137,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		143730A01BEDE5930025189A /* libc++.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libc++.dylib"; path = "../../sdk/build-tools/22.0.1/libc++.dylib"; sourceTree = "<group>"; };
 		143730A21BEDED190025189A /* Realm.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Realm.framework; sourceTree = "<group>"; };
 		147B48381BEE07080081F446 /* KakaoOpenSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = KakaoOpenSDK.framework; sourceTree = "<group>"; };
 		14B892AA1BEF07BD0001DF52 /* FacebookSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FacebookSDK.framework; sourceTree = "<group>"; };
+		AC6240B71C867A1B0089C529 /* libc++.1.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libc++.1.dylib"; path = "../../../../usr/lib/libc++.1.dylib"; sourceTree = "<group>"; };
 		F104DB7C19FA0DA300C964B3 /* CBConstants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CBConstants.m; sourceTree = "<group>"; };
 		F104DB7E19FA2DA800C964B3 /* Item_code.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Item_code.h; sourceTree = "<group>"; };
 		F104DB7F19FA2DA800C964B3 /* Item_code.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Item_code.m; sourceTree = "<group>"; };
@@ -325,7 +325,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				143730A11BEDE5930025189A /* libc++.dylib in Frameworks */,
+				AC6240B81C867A1B0089C529 /* libc++.1.dylib in Frameworks */,
 				14B892AB1BEF07BD0001DF52 /* FacebookSDK.framework in Frameworks */,
 				F113748C19F7FB4500E9A27F /* Security.framework in Frameworks */,
 				147B48391BEE07080081F446 /* KakaoOpenSDK.framework in Frameworks */,
@@ -692,7 +692,7 @@
 		F182375319F951F0008E6510 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				143730A01BEDE5930025189A /* libc++.dylib */,
+				AC6240B71C867A1B0089C529 /* libc++.1.dylib */,
 				14B892AA1BEF07BD0001DF52 /* FacebookSDK.framework */,
 				147B48381BEE07080081F446 /* KakaoOpenSDK.framework */,
 				143730A21BEDED190025189A /* Realm.framework */,
