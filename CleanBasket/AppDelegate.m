@@ -19,6 +19,7 @@
 #import <KakaoOpenSDK/KakaoOpenSDK.h>
 #import <Realm/Realm.h>
 #import "User.h"
+#import "Notification.h"
 #import <ZDCChat/ZDCChat.h>
 
 
@@ -33,6 +34,7 @@
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
+    
     
     //이전 버전에 쓰이던 유저 정보 마이그레이션
     [self realmMigration];
@@ -91,7 +93,7 @@
 
     _modalVC = [sb instantiateViewControllerWithIdentifier:@"ModalVC"];
 
-    _estimateVC = [sb instantiateViewControllerWithIdentifier:@"EstimateVC"];
+//    _estimateVC = [sb instantiateViewControllerWithIdentifier:@"EstimateVC"];
 
     [self.window setRootViewController:_authCheckViewController];
 
@@ -104,8 +106,13 @@
         
         defaults.accountKey = @"3IvIR4PxJLUypCdpgbBmJLBjYby32CVD";
     }];
-    
-    
+//    
+//    [[RLMRealm defaultRealm] transactionWithBlock:^{
+//        
+//        [[RLMRealm defaultRealm] deleteObjects:[Notification allObjects]];
+//        [[UIApplication sharedApplication] cancelAllLocalNotifications];
+//    }];
+//    
     return YES;
 
 
@@ -123,6 +130,32 @@
     
 }
 
+- (void)application:(UIApplication *)application didReceiveLocalNotification:(UILocalNotification *)notification{
+    
+    NSLog(@"받아부러!");
+    
+    //local db에 저장.
+    Notification *noti = [Notification new];
+    noti.message = notification.alertBody;
+    noti.oid = notification.userInfo[@"oid"];
+    
+
+    if ([notification.alertAction isEqualToString:@"PICKUP_NOTI"]) {
+        noti.imageName = @"ic_alarm_pickup";
+        noti.date = notification.userInfo[@"dropOffDate"];
+    }
+    else if ([notification.alertAction isEqualToString:@"DROPOFF_NOTI"]){
+        noti.imageName = @"ic_alarm_delivery";
+        noti.date = notification.userInfo[@"dropOffDate"];
+    }
+    
+    RLMRealm *realm = [RLMRealm defaultRealm];
+    [realm beginWriteTransaction];
+    [realm addObject:noti];
+    [realm commitWriteTransaction];
+}
+
+
 - (void)applicationWillEnterForeground:(UIApplication *)application {
 
     
@@ -131,7 +164,7 @@
     manager.responseSerializer = [AFJSONResponseSerializer serializer];
     manager.responseSerializer.acceptableContentTypes = [manager.responseSerializer.acceptableContentTypes setByAddingObject:@"text/html"];
     
-    [manager GET:@"http://52.79.39.100:8080/auth/check"
+    [manager GET:@"http://www.cleanbasket.co.kr/auth/check"
       parameters:nil
          success:^(AFHTTPRequestOperation *operation, id responseObject) {
              

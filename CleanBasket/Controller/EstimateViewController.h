@@ -10,4 +10,6 @@
 
 @interface EstimateViewController : UIViewController<UITableViewDelegate,UITableViewDataSource,UICollectionViewDataSource,UICollectionViewDelegate,UIScrollViewDelegate>
 
+@property (nonatomic) BOOL isEditMode;
+
 @end

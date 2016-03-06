@@ -9,10 +9,13 @@
 #import <UIKit/UIKit.h>
 #import "TimeSelectViewController.h"
 
+@class OrderStatusViewController;
+
 @interface TimeSelectCollectionViewController : UICollectionViewController<UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout>
 
 
 @property (nonatomic) NSDate *startDate;
+@property (nonatomic) OrderStatusViewController *orderStatusViewController;
 
 - (void)initWithDayInterval:(NSInteger)interval andType:(CBTimeSelectType)type;
 

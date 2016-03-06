@@ -40,13 +40,13 @@
     _privacyLinkLabel.inactiveLinkAttributes = [NSDictionary dictionaryWithDictionary:mutableActiveLinkAttributes];
 
 
-    NSURL *privacyUrl = [NSURL URLWithString:@"http://52.79.39.100:8080/privacy"];
+    NSURL *privacyUrl = [NSURL URLWithString:@"http://www.cleanbasket.co.kr/privacy"];
     NSString *privacyString = _privacyLinkLabel.text;
     NSRange privacyRange = [privacyString rangeOfString:@"개인정보 수집 및 이용에 대한 안내"];
     [_privacyLinkLabel addLinkToURL:privacyUrl withRange:privacyRange];
 
 
-    NSURL *termUrl = [NSURL URLWithString:@"http://52.79.39.100:8080/term-of-use"];
+    NSURL *termUrl = [NSURL URLWithString:@"http://www.cleanbasket.co.kr/term-of-use"];
     NSString *termString = _privacyLinkLabel.text;
     NSRange termRange = [termString rangeOfString:@"이용약관"];
     [_privacyLinkLabel addLinkToURL:termUrl withRange:termRange];
@@ -155,7 +155,7 @@
     NSDictionary *parameters = @{@"email": userId,
                                  @"password": pw};
     
-    [manager POST:@"http://52.79.39.100:8080/auth"
+    [manager POST:@"http://www.cleanbasket.co.kr/auth"
        parameters:parameters
           success:^(AFHTTPRequestOperation *operation, id responseObject) {
         
@@ -242,7 +242,7 @@
     
     NSDictionary *parameters = @{@"email":userId ,@"password":pw};
     
-    [manager POST:@"http://52.79.39.100:8080/member/register" parameters:parameters
+    [manager POST:@"http://www.cleanbasket.co.kr/member/register" parameters:parameters
           success:^(AFHTTPRequestOperation *operation, id responseObject) {
               
               

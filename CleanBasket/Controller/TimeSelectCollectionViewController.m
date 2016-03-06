@@ -79,7 +79,7 @@
     
     manager.responseSerializer = [AFJSONResponseSerializer serializer];
     manager.responseSerializer.acceptableContentTypes = [manager.responseSerializer.acceptableContentTypes setByAddingObject:@"text/html"];
-    [manager GET:@"http://52.79.39.100:8080/member/pickup"
+    [manager GET:@"http://www.cleanbasket.co.kr/member/pickup"
       parameters:nil
          success:^(AFHTTPRequestOperation *operation, id responseObject) {
              
@@ -181,10 +181,21 @@
     NSDate *firstNewDate=[calendar dateByAddingComponents:components toDate:_date options:0];
 
 
-    if (_type == CBTimeSelectTypePickUp)
-        [[NSNotificationCenter defaultCenter] postNotificationName:@"didFinishPickUpDate" object:nil userInfo:@{@"date":firstNewDate}];
-    else if (_type == CBTimeSelectTypeDropOff)
-        [[NSNotificationCenter defaultCenter] postNotificationName:@"didFinishDropOffDate" object:nil userInfo:@{@"date":firstNewDate}];
+    if (_orderStatusViewController == nil) {
+        NSLog(@"오리지날");
+        if (_type == CBTimeSelectTypePickUp)
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"didFinishPickUpDate" object:nil userInfo:@{@"date":firstNewDate}];
+        else if (_type == CBTimeSelectTypeDropOff)
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"didFinishDropOffDate" object:nil userInfo:@{@"date":firstNewDate}];
+    }
+    else {
+        
+        if (_type == CBTimeSelectTypePickUp)
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"didFinishPickUpDateChange" object:nil userInfo:@{@"date":firstNewDate}];
+        else if (_type == CBTimeSelectTypeDropOff)
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"didFinishDropOffDateChange" object:nil userInfo:@{@"date":firstNewDate}];
+    }
+        
 
     [self dismissViewControllerAnimated:NO completion:nil];
     

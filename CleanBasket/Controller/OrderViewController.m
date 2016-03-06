@@ -13,9 +13,11 @@
 #import <SVProgressHUD/SVProgressHUD.h>
 #import <Realm/Realm.h>
 #import "User.h"
+#import "AddedItem.h"
 #import "CBConstants.h"
 #import "UIAlertView+Blocks.h"
 #import "CBNotificationManager.h"
+#import "EstimateViewController.h"
 
 typedef enum : NSUInteger {
     CBPaymentMethodCard=1,
@@ -48,10 +50,13 @@ typedef enum : NSUInteger {
 
 @property (nonatomic)  CBPaymentMethod paymentMethod;
 @property NSNumber *estimatePrice;
-@property (nonatomic) NSDictionary *itemIdAndCountDict;
 @property NSNumberFormatter *numberFormatter;
 @property NSString *addressString, *addr_building, *address;
 @property NSDateFormatter *stringFromDateFormatter;
+
+
+@property (strong, nonatomic) RLMRealm *realm;
+@property (strong, nonatomic) RLMResults *items;
 
 @end
 
@@ -60,7 +65,15 @@ typedef enum : NSUInteger {
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    [self addNotification];
+    
+    _numberFormatter = [NSNumberFormatter new];
+    [_numberFormatter setNumberStyle:NSNumberFormatterDecimalStyle];
+    
+    _realm = [RLMRealm defaultRealm];
 
+    
     [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeGradient];
 
     _manager = [AFHTTPRequestOperationManager manager];
@@ -96,30 +109,8 @@ typedef enum : NSUInteger {
 
 
 
-    _numberFormatter = [NSNumberFormatter new];
-    [_numberFormatter setNumberStyle:NSNumberFormatterDecimalStyle];
-
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(finishedEstimate:)
-                                                 name:@"didFinishEstimate" object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(checkCreditCard)
-                                                 name:@"didFinishAddCredit" object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(getAddress)
-                                                 name:@"didFinishEditAddress" object:nil];
 
 
-
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(finishedPickUpDate:)
-                                                 name:@"didFinishPickUpDate"
-                                               object:nil];
-
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(finishedDropOffDate:)
-                                                 name:@"didFinishDropOffDate"
-                                               object:nil];
 
 
     _addressString = [NSString string];
@@ -138,6 +129,8 @@ typedef enum : NSUInteger {
 
 
 - (void)initOrder{
+    
+    //시간들 초기화
     _pickUpDate = nil;
     _dropOffDate = nil;
 
@@ -183,7 +176,15 @@ typedef enum : NSUInteger {
     [_dropOffTimeLabel setText:NSLocalizedString(@"time_dropoff_inform_after",nil)];
 
 
-    self.itemIdAndCountDict = [NSDictionary new];
+    //결제수단 초기화
+    _paymentMethod = CBPaymentMethodNone;
+    [_paymentMethodLabel setHidden:YES];
+    
+    
+    //아이템 초기화
+    [_realm transactionWithBlock:^{
+        [_realm deleteObjects:[AddedItem allObjects]];
+    }];
     
 }
 
@@ -204,6 +205,7 @@ typedef enum : NSUInteger {
 
 
 - (void)finishedDropOffDate:(NSNotification *)noti{
+
 
     _dropOffDate = [noti userInfo][@"date"];
     NSString *dropOffTimeString = [self getStringFromDate:_dropOffDate];
@@ -267,96 +269,40 @@ typedef enum : NSUInteger {
 
 
 
-
-
-
-- (void)finishedEstimate:(NSNotification *)notification {
-
-    NSNumber *totalPrice = notification.userInfo[@"totalPrice"];
+- (void)configureEstimateLabel {
     
-    if ([totalPrice integerValue]){
-        _itemIdAndCountDict = notification.userInfo[@"items"];
-        _estimatePrice = totalPrice;
+    if (_estimatePrice.integerValue){
         [_estimatePriceLabel setHidden:NO];
+        NSLog(@"[estimate] %@",_estimatePrice);
         NSString *totalPriceString = [NSString stringWithFormat:@"%@%@",[_numberFormatter stringFromNumber:_estimatePrice],NSLocalizedString(@"monetary_unit",@"원")];
-        [_estimatePriceLabel setText:totalPriceString];
+        _estimatePriceLabel.text = totalPriceString;
     }
     else {
         [_estimatePriceLabel setHidden:YES];
     }
-
 }
 
+
 - (void)viewWillAppear:(BOOL)animated{
-    
     _dropOffLabelWidthConstraint.constant = _timeSelectView.frame.size.width-40;
 }
 
 - (void)viewDidAppear:(BOOL)animated{
     
-
-    [UIView animateWithDuration:0.2f
-                          delay:0.0f options:UIViewAnimationOptionCurveEaseInOut
-                     animations:^{
-
-                         _addressView.alpha = 1.0f;
-                         _topConst.constant = 0.0f;
-                         [self.view layoutSubviews];
-                     }
-                     completion:^(BOOL finished){
-                         
-                     }];
-    
-    [UIView animateWithDuration:0.2f
-                          delay:0.1f options:UIViewAnimationOptionCurveEaseInOut
-                     animations:^{
-                         
-                         [_timeSelectView setAlpha:1.0f];
-                     }
-                     completion:^(BOOL finished){
-                         
-                     }];
-    
-
-    [UIView animateWithDuration:0.2f
-                          delay:0.15f options:UIViewAnimationOptionCurveEaseInOut
-                     animations:^{
-
-                         [_paymentView setAlpha:1.0f];
-                     }
-                     completion:^(BOOL finished){
-
-                     }];
-
-    [UIView animateWithDuration:0.2f
-                          delay:0.2f options:UIViewAnimationOptionCurveEaseInOut
-                     animations:^{
-
-                         [_priceView setAlpha:1.0f];
-                     }
-                     completion:^(BOOL finished){
-
-                     }];
-    
-    [UIView animateWithDuration:0.2f
-                          delay:0.25f
-         usingSpringWithDamping:0.7f
-          initialSpringVelocity:0.7f
-                        options:UIViewAnimationOptionCurveEaseIn animations:^{
-                            
-                            _testConst.constant += 100;
-                            [self.view layoutIfNeeded];
-            }
-                     completion:^(BOOL finished) {
-                         //Completion Block
-                     }];
-
-
+    [super viewDidAppear:animated];
+    [self beginAnimation];
+    _items = [AddedItem allObjects];
+    NSInteger estimatePrice = 0;
+    for (AddedItem *item in _items) {
+        estimatePrice += item.itemPrice.integerValue*item.addedCount.integerValue;
+    }
+    _estimatePrice = @(estimatePrice);
+    [self configureEstimateLabel];
+ 
 }
 
 
 - (void)viewWillDisappear:(BOOL)animated {
-
     [_timeSelectView setAlpha:0.0f];
     [_paymentView setAlpha:0.0f];
     [_priceView setAlpha:0.0f];
@@ -432,7 +378,7 @@ typedef enum : NSUInteger {
 
 - (void)getAddress{
 
-    [_manager GET:@"http://52.79.39.100:8080/member/address"
+    [_manager GET:@"http://www.cleanbasket.co.kr/member/address"
       parameters:nil
          success:^(AFHTTPRequestOperation *operation, id responseObject) {
 
@@ -473,7 +419,7 @@ typedef enum : NSUInteger {
 
 
 - (void)getDropOffInterval{
-    [_manager GET:@"http://52.79.39.100:8080/member/dropoff/dropoff_datetime"
+    [_manager GET:@"http://www.cleanbasket.co.kr/member/dropoff/dropoff_datetime"
        parameters:nil
           success:^(AFHTTPRequestOperation *operation, id responseObject) {
 
@@ -544,7 +490,7 @@ typedef enum : NSUInteger {
     manager.responseSerializer.acceptableContentTypes = [manager.responseSerializer.acceptableContentTypes setByAddingObject:@"text/html"];
 
 
-    [manager GET:@"http://52.79.39.100:8080/member/payment"
+    [manager GET:@"http://www.cleanbasket.co.kr/member/payment"
       parameters:nil
          success:^(AFHTTPRequestOperation *operation, id responseObject) {
 
@@ -615,11 +561,11 @@ typedef enum : NSUInteger {
     
     NSString *messageString = [NSString stringWithFormat:@"%@ : %@ %@\n%@ : %@\n%@ : %@",
                                NSLocalizedString(@"address", @"주소"), _address, _addr_building,
-                               NSLocalizedString(@"수거일", @"수거일"), [self getStringFromDate:_pickUpDate],
-                               NSLocalizedString(@"배달일", @"배달일"), [self getStringFromDate:_dropOffDate]
+                               NSLocalizedString(@"pick_up_time_label", @"수거 시간"), [self getStringFromDate:_pickUpDate],
+                               NSLocalizedString(@"drop_off_time_label", @"배달 시간"), [self getStringFromDate:_dropOffDate]
                                ];
     
-    [UIAlertView showWithTitle:NSLocalizedString(@"CONFIRM", nil)
+    [UIAlertView showWithTitle:NSLocalizedString(@"주문 확인", @"주문 정보 확인")
                        message:messageString
              cancelButtonTitle:NSLocalizedString(@"label_cancel", @"취소")
              otherButtonTitles:@[NSLocalizedString(@"button_order", @"주문하기")]
@@ -683,9 +629,11 @@ typedef enum : NSUInteger {
     
     //아이템
     NSMutableArray *items = [NSMutableArray new];
-    for (NSString *itemCodeString in self.itemIdAndCountDict.allKeys) {
-        [items addObject:@{@"item_code":@([itemCodeString integerValue]),
-                           @"count": self.itemIdAndCountDict[itemCodeString]
+
+    
+    for (AddedItem *item in _items) {
+        [items addObject:@{@"item_code":item.itemCode,
+                           @"count":item.addedCount
                            }];
     }
     
@@ -710,7 +658,7 @@ typedef enum : NSUInteger {
     
     NSString *jsonString = [[NSString alloc] initWithData:[NSJSONSerialization dataWithJSONObject:parameters options:NSJSONWritingPrettyPrinted error:nil] encoding:NSUTF8StringEncoding];
     
-    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:@"http://52.79.39.100:8080/member/order/add/new"]
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:@"http://www.cleanbasket.co.kr/member/order/add/new"]
                                                            cachePolicy:NSURLRequestReloadIgnoringCacheData  timeoutInterval:10];
     
     [request setHTTPMethod:@"POST"];
@@ -778,10 +726,116 @@ typedef enum : NSUInteger {
 }
 
 - (void)priceEstimation{
-    AppDelegate *delegate = [[UIApplication sharedApplication] delegate];
-    [self presentViewController:(UIViewController*)delegate.estimateVC animated:YES completion:nil];
+    
+    UIStoryboard *sb = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+    
+    UINavigationController *estimateVC = [sb instantiateViewControllerWithIdentifier:@"EstimateVC"];
+    
+    [self presentViewController:estimateVC animated:YES completion:nil];
 }
 
+
+#pragma mark - Animation
+- (void)beginAnimation{
+    [UIView animateWithDuration:0.2f
+                          delay:0.0f options:UIViewAnimationOptionCurveEaseInOut
+                     animations:^{
+                         
+                         _addressView.alpha = 1.0f;
+                         _topConst.constant = 0.0f;
+                         [self.view layoutSubviews];
+                     }
+                     completion:^(BOOL finished){
+                         
+                     }];
+    
+    [UIView animateWithDuration:0.2f
+                          delay:0.1f options:UIViewAnimationOptionCurveEaseInOut
+                     animations:^{
+                         
+                         [_timeSelectView setAlpha:1.0f];
+                     }
+                     completion:^(BOOL finished){
+                         
+                     }];
+    
+    
+    [UIView animateWithDuration:0.2f
+                          delay:0.15f options:UIViewAnimationOptionCurveEaseInOut
+                     animations:^{
+                         
+                         [_paymentView setAlpha:1.0f];
+                     }
+                     completion:^(BOOL finished){
+                         
+                     }];
+    
+    [UIView animateWithDuration:0.2f
+                          delay:0.2f options:UIViewAnimationOptionCurveEaseInOut
+                     animations:^{
+                         
+                         [_priceView setAlpha:1.0f];
+                     }
+                     completion:^(BOOL finished){
+                         
+                     }];
+    
+    [UIView animateWithDuration:0.2f
+                          delay:0.25f
+         usingSpringWithDamping:0.7f
+          initialSpringVelocity:0.7f
+                        options:UIViewAnimationOptionCurveEaseIn animations:^{
+                            
+                            _testConst.constant += 100;
+                            [self.view layoutIfNeeded];
+                        }
+                     completion:^(BOOL finished) {
+                         //Completion Block
+                     }];
+}
+
+
+#pragma mark - NOtification
+- (void)addNotification{
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(checkCreditCard)
+                                                 name:@"didFinishAddCredit" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(getAddress)
+                                                 name:@"didFinishEditAddress" object:nil];
+    
+    
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(finishedPickUpDate:)
+                                                 name:@"didFinishPickUpDate"
+                                               object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(finishedDropOffDate:)
+                                                 name:@"didFinishDropOffDate"
+                                               object:nil];
+}
+
+- (void)removeNotification{
+    [[NSNotificationCenter defaultCenter] removeObserver:self
+                                                 name:@"didFinishAddCredit" object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self
+                                                 name:@"didFinishEditAddress" object:nil];
+    
+    
+    
+    [[NSNotificationCenter defaultCenter] removeObserver:self
+                                                 name:@"didFinishPickUpDate"
+                                               object:nil];
+    
+    [[NSNotificationCenter defaultCenter] removeObserver:self
+                                                 name:@"didFinishDropOffDate"
+                                               object:nil];
+}
+
+
+#pragma mark - ETC
 - (UIStatusBarStyle)preferredStatusBarStyle {
     return UIStatusBarStyleLightContent;
 }

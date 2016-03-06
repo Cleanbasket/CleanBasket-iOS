@@ -29,7 +29,10 @@
 		1F6120741C83243200E04BFC /* CouponTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F6120731C83243200E04BFC /* CouponTableViewController.m */; };
 		1F6120771C83292600E04BFC /* Notification.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F6120761C83292600E04BFC /* Notification.m */; };
 		1F61207C1C8329ED00E04BFC /* AlarmTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F61207B1C8329ED00E04BFC /* AlarmTableViewController.m */; };
+		1F6BCA281C858F5000052536 /* AddedItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F6BCA271C858F5000052536 /* AddedItem.m */; };
 		1FA092ED1C322F0500477A7F /* AddCreditViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FA092EC1C322F0500477A7F /* AddCreditViewController.m */; };
+		1FBEEF9F1C8BD40B0097D841 /* ItemListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FBEEF9E1C8BD40B0097D841 /* ItemListViewController.m */; };
+		1FBEEFA21C8BD53B0097D841 /* ItemListTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FBEEFA11C8BD53B0097D841 /* ItemListTableViewCell.m */; };
 		1FE23AF11C157C0600B37752 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FE23AF01C157C0600B37752 /* main.m */; };
 		1FE23AF41C157C0600B37752 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FE23AF31C157C0600B37752 /* AppDelegate.m */; };
 		1FE23AFD1C157C0600B37752 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1FE23AFB1C157C0600B37752 /* Main.storyboard */; };
@@ -103,8 +106,14 @@
 		1F6120761C83292600E04BFC /* Notification.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Notification.m; path = Model/Notification.m; sourceTree = "<group>"; };
 		1F61207A1C8329ED00E04BFC /* AlarmTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AlarmTableViewController.h; path = Controller/AlarmTableViewController.h; sourceTree = "<group>"; };
 		1F61207B1C8329ED00E04BFC /* AlarmTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AlarmTableViewController.m; path = Controller/AlarmTableViewController.m; sourceTree = "<group>"; };
+		1F6BCA261C858F4F00052536 /* AddedItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AddedItem.h; path = Model/AddedItem.h; sourceTree = "<group>"; };
+		1F6BCA271C858F5000052536 /* AddedItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AddedItem.m; path = Model/AddedItem.m; sourceTree = "<group>"; };
 		1FA092EB1C322F0500477A7F /* AddCreditViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AddCreditViewController.h; path = Controller/AddCreditViewController.h; sourceTree = "<group>"; };
 		1FA092EC1C322F0500477A7F /* AddCreditViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; name = AddCreditViewController.m; path = Controller/AddCreditViewController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
+		1FBEEF9D1C8BD40B0097D841 /* ItemListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ItemListViewController.h; path = Controller/ItemListViewController.h; sourceTree = "<group>"; };
+		1FBEEF9E1C8BD40B0097D841 /* ItemListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ItemListViewController.m; path = Controller/ItemListViewController.m; sourceTree = "<group>"; };
+		1FBEEFA01C8BD53B0097D841 /* ItemListTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ItemListTableViewCell.h; sourceTree = "<group>"; };
+		1FBEEFA11C8BD53B0097D841 /* ItemListTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ItemListTableViewCell.m; sourceTree = "<group>"; };
 		1FE23AEC1C157C0600B37752 /* CleanBasket.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CleanBasket.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1FE23AF01C157C0600B37752 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		1FE23AF21C157C0600B37752 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -248,6 +257,8 @@
 				1F0D3AC81C6017F100CA9999 /* OrderHistoryViewController.m */,
 				1F0D3ACA1C60189200CA9999 /* OrderStatusViewController.h */,
 				1F0D3ACB1C60189200CA9999 /* OrderStatusViewController.m */,
+				1FBEEF9D1C8BD40B0097D841 /* ItemListViewController.h */,
+				1FBEEF9E1C8BD40B0097D841 /* ItemListViewController.m */,
 			);
 			name = OrderList;
 			sourceTree = "<group>";
@@ -335,6 +346,8 @@
 				ED0890A88338423ED595A4BD /* User.m */,
 				1F6120751C83292600E04BFC /* Notification.h */,
 				1F6120761C83292600E04BFC /* Notification.m */,
+				1F6BCA261C858F4F00052536 /* AddedItem.h */,
+				1F6BCA271C858F5000052536 /* AddedItem.m */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -408,6 +421,8 @@
 				1F0D3ACF1C60376F00CA9999 /* RoundedLabel.m */,
 				1F0D3AD11C60399F00CA9999 /* OrderHistoryCell.h */,
 				1F0D3AD21C60399F00CA9999 /* OrderHistoryCell.m */,
+				1FBEEFA01C8BD53B0097D841 /* ItemListTableViewCell.h */,
+				1FBEEFA11C8BD53B0097D841 /* ItemListTableViewCell.m */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -559,6 +574,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				1F6120771C83292600E04BFC /* Notification.m in Sources */,
+				1FBEEF9F1C8BD40B0097D841 /* ItemListViewController.m in Sources */,
 				1FE23AF41C157C0600B37752 /* AppDelegate.m in Sources */,
 				1FE23B1E1C17127D00B37752 /* WebViewController.m in Sources */,
 				1F317AF71C296D8400F0168C /* ModalViewController.m in Sources */,
@@ -571,6 +587,7 @@
 				1FA092ED1C322F0500477A7F /* AddCreditViewController.m in Sources */,
 				1FE23AF11C157C0600B37752 /* main.m in Sources */,
 				1F317B041C2AE52000F0168C /* SettingTableViewController.m in Sources */,
+				1F6BCA281C858F5000052536 /* AddedItem.m in Sources */,
 				1FFB85861C3DF4AA0045C751 /* ItemTableViewCell.m in Sources */,
 				1FFB85501C39D1030045C751 /* OrderViewController.m in Sources */,
 				1FE6134A1C1E25B2009B4EA5 /* SignInViewController.m in Sources */,
@@ -591,6 +608,7 @@
 				ED0895839E26FE3B3930F1FA /* SignTextField.m in Sources */,
 				1F0D3AD01C60376F00CA9999 /* RoundedLabel.m in Sources */,
 				1F6120741C83243200E04BFC /* CouponTableViewController.m in Sources */,
+				1FBEEFA21C8BD53B0097D841 /* ItemListTableViewCell.m in Sources */,
 				1F00408E1C5BF47F00A436CC /* NSString+sha1.m in Sources */,
 				ED0895EE927CF23DFB2E06D2 /* RoundedButton.m in Sources */,
 				1F317B071C2D932A00F0168C /* NoticeViewController.m in Sources */,

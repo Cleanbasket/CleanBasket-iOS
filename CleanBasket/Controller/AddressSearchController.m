@@ -334,7 +334,7 @@ NSMutableArray *searchResult, *allAddress, *supportAddress, *supportAllDongsAddr
 //    manager.responseSerializer = [AFJSONResponseSerializer serializer];
     manager.responseSerializer.acceptableContentTypes = [manager.responseSerializer.acceptableContentTypes setByAddingObject:@"text/html"];
 
-    [manager GET:@"http://52.79.39.100:8080/district"
+    [manager GET:@"http://www.cleanbasket.co.kr/district"
       parameters:nil
          success:^(AFHTTPRequestOperation *operation, id responseObject) {
 
@@ -384,7 +384,7 @@ NSMutableArray *searchResult, *allAddress, *supportAddress, *supportAllDongsAddr
     NSLog(@"remainder : %@",remainder);
 
 
-    [manager POST:@"http://52.79.39.100:8080/member/address/update"
+    [manager POST:@"http://www.cleanbasket.co.kr/member/address/update"
        parameters:parameters
 
           success:^(AFHTTPRequestOperation *operation, id responseObject) {

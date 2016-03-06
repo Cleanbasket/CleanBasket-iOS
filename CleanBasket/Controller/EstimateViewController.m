@@ -11,21 +11,26 @@
 #import "CBConstants.h"
 #import "ItemCategoryCollectionViewCell.h"
 #import <AFNetworking/AFNetworking.h>
+#import "AddedItem.h"
+#import <Realm/Realm.h>
 
 @interface EstimateViewController () {
-    NSInteger categoryIndex, totalPrice;
+    NSInteger categoryIndex;
+    NSArray *_receivedItems;
 }
 
 @property NSArray *categories;
 @property NSMutableArray *items;
-@property NSMutableArray *selectedItems;
-@property NSMutableDictionary *selectedItemsCounts;
+//@property NSMutableArray *selectedItems;
+//@property NSMutableDictionary *selectedItemsCounts;
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
 @property NSNumberFormatter *numberFormatter;
 @property (weak, nonatomic) IBOutlet UILabel *totalCountLabel;
 @property (weak, nonatomic) IBOutlet UILabel *totalPriceLabel;
 
+@property (strong, nonatomic) RLMRealm *realm;
+@property (strong, nonatomic) RLMResults *itemsFromRealm;
 
 
 @end
@@ -34,24 +39,31 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-
+    
+    [self getItems];
+    
     _categories = [NSArray new];
     _items = [NSMutableArray new];
-    _selectedItems = [NSMutableArray new];
-    _selectedItemsCounts = [NSMutableDictionary new];
+//    _selectedItems = [NSMutableArray new];
+//    _selectedItemsCounts = [NSMutableDictionary new];
 
     _numberFormatter = [NSNumberFormatter new];
     [_numberFormatter setNumberStyle:NSNumberFormatterDecimalStyle];
 
     categoryIndex = 0;
-    totalPrice = 0;
+//    totalPrice = 0;
 //    [_tableView setScrollsToTop:YES];
 
 
+    _realm = [RLMRealm defaultRealm];
 
-    [self getItems];
-
+//    if (_receivedItems == nil) {
+        _itemsFromRealm = [AddedItem allObjects];
+//    }
+    [self calculateTotal];
+    
 }
+
 
 
 
@@ -61,7 +73,7 @@
     manager.responseSerializer = [AFJSONResponseSerializer serializer];
     manager.responseSerializer.acceptableContentTypes = [manager.responseSerializer.acceptableContentTypes setByAddingObject:@"text/html"];
 
-    [manager GET:@"http://52.79.39.100:8080/item"
+    [manager GET:@"http://www.cleanbasket.co.kr/item"
       parameters:nil
          success:^(AFHTTPRequestOperation *operation, id responseObject) {
 
@@ -93,10 +105,16 @@
              [_collectionView reloadData];
              [_tableView reloadData];
 
+             [self settingReceivedItems];
 
          } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
                 NSLog(@"Error: %@", error);
             }];
+}
+
+
+- (void)settingReceivedItems{
+    
 }
 
 
@@ -111,7 +129,7 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
 
-    return [_items[section] count];
+    return [(NSArray*)_items[section] count];
 }
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
@@ -148,11 +166,12 @@
     [cell.increaseButton addTarget:self action:@selector(addItem:) forControlEvents:UIControlEventTouchUpInside];
     [cell.decreaseButton addTarget:self action:@selector(removeItem:) forControlEvents:UIControlEventTouchUpInside];
 
-    NSString *indexString = [NSString stringWithFormat:@"%li,%li",indexPath.section,indexPath.row];
+//    NSString *indexString = [NSString stringWithFormat:@"%zd,%zd",indexPath.section,indexPath.row];
    
-
-    if (_selectedItemsCounts[indexString]){
-        [cell.itemCountLabel setText:[_selectedItemsCounts[indexString] stringValue]];
+    AddedItem *addedItem = [[_itemsFromRealm objectsWhere:@"itemCode == %@", item[@"item_code"]] firstObject];
+    
+    if (addedItem != nil){
+        [cell.itemCountLabel setText:[addedItem.addedCount stringValue]];
 
     } else{
         [cell.itemCountLabel setText:@"0"];
@@ -231,27 +250,45 @@
     NSIndexPath *clickedButtonIndexPath = [_tableView indexPathForRowAtPoint:touchPoint];
 
     
-    NSString *indexString = [NSString stringWithFormat:@"%li,%li",(long)clickedButtonIndexPath.section,(long)clickedButtonIndexPath.row];
+//    NSString *indexString = [NSString stringWithFormat:@"%li,%li",(long)clickedButtonIndexPath.section,(long)clickedButtonIndexPath.row];
+//
+//    if ([[_selectedItemsCounts objectForKey:indexString] integerValue]){
+//        NSInteger number = [[_selectedItemsCounts objectForKey:indexString] integerValue];
+//        number+=1;
+//        _selectedItemsCounts[indexString] = @(number);
+//    } else {
+//        _selectedItemsCounts[indexString] = @1;
+//    }
 
-    if ([[_selectedItemsCounts objectForKey:indexString] integerValue]){
-        NSInteger number = [[_selectedItemsCounts objectForKey:indexString] integerValue];
-        number+=1;
-        _selectedItemsCounts[indexString] = @(number);
-    } else {
-        _selectedItemsCounts[indexString] = @1;
+    AddedItem *item = [[AddedItem objectsWhere:@"itemCode == %@", _items[clickedButtonIndexPath.section][clickedButtonIndexPath.row][@"item_code"]] firstObject];
+    
+    if (item == nil) {
+        [_realm transactionWithBlock:^{
+            AddedItem *item = [AddedItem new];
+            item.itemCode = _items[clickedButtonIndexPath.section][clickedButtonIndexPath.row][@"item_code"];
+            item.itemPrice = _items[clickedButtonIndexPath.section][clickedButtonIndexPath.row][@"price"];
+            item.addedCount = @1;
+            [_realm addObject:item];
+        }];
     }
-
+    else {
+        [_realm transactionWithBlock:^{
+            item.addedCount = [NSNumber numberWithInteger:item.addedCount.integerValue+1];
+        }];
+    
+    }
+    
+//    _itemsFromRealm = []
     
     
-    [_selectedItems addObject:_items[clickedButtonIndexPath.section][clickedButtonIndexPath.row]];
+    
+//    [_selectedItems addObject:_items[clickedButtonIndexPath.section][clickedButtonIndexPath.row]];
 
 
     [_tableView reloadRowsAtIndexPaths:@[clickedButtonIndexPath] withRowAnimation:UITableViewRowAnimationNone];
     [self calculateTotal];
-    
-    
-
 }
+
 -(void)removeItem:(UIButton*) sender
 {
 
@@ -259,30 +296,42 @@
     NSIndexPath *clickedButtonIndexPath = [_tableView indexPathForRowAtPoint:touchPoint];
 
     
-    NSString *indexString = [NSString stringWithFormat:@"%li,%li",clickedButtonIndexPath.section,clickedButtonIndexPath.row];
-    
-    if ([[_selectedItemsCounts objectForKey:indexString] integerValue]){
-        NSInteger number = [[_selectedItemsCounts objectForKey:indexString] integerValue];
-        number-=1;
-        _selectedItemsCounts[indexString] = @(number);
-        
-        
-    } else {
-        _selectedItemsCounts[indexString] = @0;
-    }
-    
-    
-    NSDictionary *item = _items[clickedButtonIndexPath.section][clickedButtonIndexPath.row];
-    
+//    NSString *indexString = [NSString stringWithFormat:@"%zd,%zd",clickedButtonIndexPath.section,clickedButtonIndexPath.row];
+//    
+//    if ([[_selectedItemsCounts objectForKey:indexString] integerValue]){
+//        NSInteger number = [[_selectedItemsCounts objectForKey:indexString] integerValue];
+//        number-=1;
+//        _selectedItemsCounts[indexString] = @(number);
+//        
+//        
+//    } else {
+//        _selectedItemsCounts[indexString] = @0;
+//    }
+//    
+//    
+//    NSDictionary *item = _items[clickedButtonIndexPath.section][clickedButtonIndexPath.row];
+//    
+////
+//    NSInteger indexOfname = [_selectedItems indexOfObject:item];
+//    
+//    if(indexOfname != NSNotFound){
+//        
 //
-    NSInteger indexOfname = [_selectedItems indexOfObject:item];
+//        [_selectedItems removeObjectAtIndex:[_selectedItems indexOfObject:item]];
+//    }
+    AddedItem *item = [[AddedItem objectsWhere:@"itemCode == %@", _items[clickedButtonIndexPath.section][clickedButtonIndexPath.row][@"item_code"]] firstObject];
     
-    if(indexOfname != NSNotFound){
-        
-
-        [_selectedItems removeObjectAtIndex:[_selectedItems indexOfObject:item]];
+    if ([item.addedCount isEqualToNumber:@1]) {
+        [_realm beginWriteTransaction];
+        [_realm deleteObject:item];
+        [_realm commitWriteTransaction];
     }
-
+    else {
+        
+        [_realm beginWriteTransaction];
+        item.addedCount = [NSNumber numberWithInteger:item.addedCount.integerValue-1];
+        [_realm commitWriteTransaction];
+    }
 
 
     [_tableView reloadRowsAtIndexPaths:@[clickedButtonIndexPath] withRowAnimation:UITableViewRowAnimationNone];
@@ -292,17 +341,28 @@
 
 - (void)calculateTotal{
 
-    NSString *totalCountString = [NSString stringWithFormat:@"%@%@", [_numberFormatter stringFromNumber:@(_selectedItems.count)], NSLocalizedString(@"item_unit",@"개")];
-    [_totalCountLabel setText:totalCountString];
-
-    totalPrice = 0;
-    for(NSDictionary *item in _selectedItems){
-        totalPrice += [item[@"price"] integerValue];
+//    NSString *totalCountString = [NSString stringWithFormat:@"%@%@", [_numberFormatter stringFromNumber:@(_selectedItems.count)], NSLocalizedString(@"item_unit",@"개")];
+//    [_totalCountLabel setText:totalCountString];
+//
+//    totalPrice = 0;
+//    for(NSDictionary *item in _selectedItems){
+//        totalPrice += [item[@"price"] integerValue];
+//    }
+//
+//    NSString *totalPriceString = [NSString stringWithFormat:@"%@%@",[_numberFormatter stringFromNumber:@(totalPrice)],NSLocalizedString(@"monetary_unit",@"원")];
+//    [_totalPriceLabel setText:totalPriceString];
+    
+    
+    if (_itemsFromRealm != nil) {
+        NSInteger totalPrice = 0;
+        NSInteger totalItemCount = 0;
+        for (AddedItem *item in _itemsFromRealm) {
+            totalPrice += item.itemPrice.integerValue*item.addedCount.integerValue;
+            totalItemCount += item.addedCount.integerValue;
+        }
+        _totalPriceLabel.text = [@(totalPrice) stringValue];
+        _totalCountLabel.text = [NSString stringWithFormat:@"%@%@", [_numberFormatter stringFromNumber:@(totalItemCount)], NSLocalizedString(@"item_unit",@"개")];
     }
-
-    NSString *totalPriceString = [NSString stringWithFormat:@"%@%@",[_numberFormatter stringFromNumber:@(totalPrice)],NSLocalizedString(@"monetary_unit",@"원")];
-    [_totalPriceLabel setText:totalPriceString];
-
 
 
 }
@@ -345,35 +405,40 @@
 #pragma mark IBActions
 
 - (IBAction)close:(id)sender {
+    
+    [_realm transactionWithBlock:^{
+        [_realm deleteObjects:[AddedItem allObjects]];
+    }];
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 - (IBAction)confirm:(id)sender {
 
     
-    NSMutableDictionary *items = [NSMutableDictionary new];
-    //{"item_code":@Count}
-
-    for (NSDictionary *item in self.selectedItems) {
-        
-        //아이템코드 스트링
-        NSString *itemCode = [item[@"item_code"] stringValue];
-        
-        
-        if (items[itemCode] != nil) {
-            items[itemCode] = @([items[itemCode] integerValue] +1);
-        }
-        else
-            [items setValue:@1 forKey:[item[@"item_code"] stringValue]];
-    }
+//    NSMutableDictionary *items = [NSMutableDictionary new];
+//    //{"item_code":@Count}
+//
+//    for (NSDictionary *item in self.selectedItems) {
+//        
+//        //아이템코드 스트링
+//        NSString *itemCode = [item[@"item_code"] stringValue];
+//        
+//        
+//        if (items[itemCode] != nil) {
+//            items[itemCode] = @([items[itemCode] integerValue] +1);
+//        }
+//        else
+//            [items setValue:@1 forKey:[item[@"item_code"] stringValue]];
+//    }
+//    
+//    
+//    
+//    [[NSNotificationCenter defaultCenter] postNotificationName:@"didFinishEstimate"
+//                                                        object:nil
+//                                                      userInfo:@{@"totalPrice":@(totalPrice),
+//                                                                 @"items":items}];
     
-    
-    
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"didFinishEstimate"
-                                                        object:nil
-                                                      userInfo:@{@"totalPrice":@(totalPrice),
-                                                                 @"items":items}];
-
     [self dismissViewControllerAnimated:YES completion:nil];
+//    [self close:nil];
 }
 
 @end

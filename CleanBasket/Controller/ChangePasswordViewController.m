@@ -62,7 +62,7 @@
         manager.responseSerializer.acceptableContentTypes = [manager.responseSerializer.acceptableContentTypes setByAddingObject:@"text/html"];
 
 
-        [manager POST:@"http://52.79.39.100:8080/member/password/update/new"
+        [manager POST:@"http://www.cleanbasket.co.kr/member/password/update/new"
             parameters:@{@"current_password":_currentPwTF.text,@"password": _changePwTF.text}
                success:^(AFHTTPRequestOperation *operation, id responseObject) {
 

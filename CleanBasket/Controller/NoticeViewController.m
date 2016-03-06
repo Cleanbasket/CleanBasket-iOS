@@ -58,7 +58,7 @@
     manager.responseSerializer = [AFJSONResponseSerializer serializer];
     manager.responseSerializer.acceptableContentTypes = [manager.responseSerializer.acceptableContentTypes setByAddingObject:@"text/html"];
 
-    [manager GET:@"http://52.79.39.100:8080/notice"
+    [manager GET:@"http://www.cleanbasket.co.kr/notice"
       parameters:nil
          success:^(AFHTTPRequestOperation *operation, id responseObject) {
 

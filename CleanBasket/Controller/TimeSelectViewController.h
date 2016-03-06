@@ -8,6 +8,8 @@
 
 #import <GUITabPagerViewController/GUITabPagerViewController.h>
 
+@class OrderStatusViewController;
+
 typedef NS_ENUM(NSUInteger, CBTimeSelectType) {
     CBTimeSelectTypePickUp = 1,
     CBTimeSelectTypeDropOff
@@ -21,5 +23,6 @@ typedef NS_ENUM(NSUInteger, CBTimeSelectType) {
 @property (nonatomic) NSDate *startDate;
 @property NSInteger defaultInterval;
 
+@property (nonatomic) OrderStatusViewController *orderStatusVC;
 
 @end

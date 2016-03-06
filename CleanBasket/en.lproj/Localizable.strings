@@ -37,7 +37,7 @@
 "range_monetary_unit"="KRW ~";
 "item_unit"="Unit";
 "point_unit"="Won";
-"label_item"="Item";
+"label_item"="AddedItem";
 "label_pre_total"="Sub total";
 "label_total"="Total";
 "button_next"="Next";

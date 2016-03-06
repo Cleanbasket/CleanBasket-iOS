@@ -29,6 +29,7 @@ return shared##classname;                               \
 
 - (void)addPickUpNoti:(NSDate*)pickUpDate oid:(NSString*)oid;
 - (void)addDropOffNoti:(NSDate*)dropOffDate oid:(NSString*)oid;
-- (void)removeNoti:(NSString*)oid;
+- (void)removeNotiByOid:(NSString*)oid;
+- (void)editNotiToPickUpDate:(NSDate*)pickUpDate dropOffDate:(NSDate*)dropOffDate oid:(NSString*)oid;
 
 @end

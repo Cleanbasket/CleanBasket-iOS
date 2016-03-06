@@ -7,12 +7,14 @@
 //
 
 #import <UIKit/UIKit.h>
+@class RoundedButton;
 
 @interface NotiTableViewCell : UITableViewCell
 
 @property (weak, nonatomic) IBOutlet UIImageView *notiImageView;
 @property (weak, nonatomic) IBOutlet UILabel *notiTitleLabel;
 @property (weak, nonatomic) IBOutlet UILabel *notiDateLabel;
+@property (weak, nonatomic) IBOutlet UIButton *confirmButton;
 
 
 

@@ -29,6 +29,10 @@ SHARED_SINGLETON(CBNotificationManager);
 
 - (void)addPickUpNoti:(NSDate*)pickUpDate oid:(NSString*)oid{
     
+    if ([[NSUserDefaults standardUserDefaults] boolForKey:@"isGetOrderNoti"] == NO) {
+        return;
+    }
+    
     NSDateFormatter *dateFormatter = [NSDateFormatter new];
     [dateFormatter setDateFormat:NSLocalizedString(@"time_parse", @"HH:mm")];
     
@@ -43,30 +47,25 @@ SHARED_SINGLETON(CBNotificationManager);
     NSString *messageString =[NSString stringWithFormat:@"%@ %@%@",NSLocalizedString(@"today", @"오늘"),[dateFormatter stringFromDate:pickUpDate],NSLocalizedString(@"pick_up_notification", @"에 수거가 있습니다.")];
     localNoti.alertBody = messageString;
     
-    localNoti.userInfo = @{@"oid":oid};
+    localNoti.userInfo = @{@"oid":oid,@"pickUpDate":pickUpDate};
+    localNoti.alertAction = @"PICKUP_NOTI";
     
     [[UIApplication sharedApplication] scheduleLocalNotification:localNoti];
     
-    //local db에 저장.
-    Notification *noti = [Notification new];
-    noti.message = messageString;
-    noti.oid = oid;
-    noti.imageName = @"ic_alarm_pickup";
-    noti.date = pickUpDate;
-    
-    RLMRealm *realm = [RLMRealm defaultRealm];
-    [realm beginWriteTransaction];
-    [realm addObject:noti];
-    [realm commitWriteTransaction];
 }
 
 - (void)addDropOffNoti:(NSDate*)dropOffDate  oid:(NSString*)oid{
+    
+    if ([[NSUserDefaults standardUserDefaults] boolForKey:@"isGetOrderNoti"] == NO) {
+        return;
+    }
+    
     NSDateFormatter *dateFormatter = [NSDateFormatter new];
     [dateFormatter setDateFormat:NSLocalizedString(@"time_parse", @"HH:mm")];
     
     UILocalNotification *localNoti = [UILocalNotification new];
     
-    //dropOffDate 1시간 전
+    //dropOffDate 2시간 전
     localNoti.fireDate = [dropOffDate dateByAddingTimeInterval:-(60*60*2)];
     localNoti.timeZone = [NSTimeZone systemTimeZone];
     
@@ -74,25 +73,15 @@ SHARED_SINGLETON(CBNotificationManager);
     NSString *messageString =[NSString stringWithFormat:@"%@ %@%@",NSLocalizedString(@"today", @"오늘"),[dateFormatter stringFromDate:dropOffDate],NSLocalizedString(@"drop_off_notification", @"에 배달이 있습니다.")];
     localNoti.alertBody = messageString;
     
-    localNoti.userInfo = @{@"oid":oid};
+    localNoti.userInfo = @{@"oid":oid,@"dropOffDate":dropOffDate};
+    localNoti.alertAction = @"DROPOFF_NOTI";
     
     [[UIApplication sharedApplication] scheduleLocalNotification:localNoti];
     
-    //local db에 저장.
-    Notification *noti = [Notification new];
-    noti.message = messageString;
-    noti.oid = oid;
-    noti.imageName = @"ic_alarm_delivery";
-    noti.date = dropOffDate;
-    
-    RLMRealm *realm = [RLMRealm defaultRealm];
-    [realm beginWriteTransaction];
-    [realm addObject:noti];
-    [realm commitWriteTransaction];
 }
 
 
-- (void)removeNoti:(NSString*)oid{
+- (void)removeNotiByOid:(NSString*)oid{
     
     NSArray *notifications = [[UIApplication sharedApplication] scheduledLocalNotifications];
     
@@ -105,7 +94,12 @@ SHARED_SINGLETON(CBNotificationManager);
     
 }
 
-
+- (void)editNotiToPickUpDate:(NSDate*)pickUpDate dropOffDate:(NSDate*)dropOffDate oid:(NSString*)oid{
+    
+    [self removeNotiByOid:oid];
+    [self addDropOffNoti:dropOffDate oid:oid];
+    [self addPickUpNoti:pickUpDate oid:oid];
+}
 
 
 - (void)dealloc {

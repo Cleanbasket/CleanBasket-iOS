@@ -31,7 +31,7 @@
         manager.responseSerializer = [AFJSONResponseSerializer serializer];
         manager.responseSerializer.acceptableContentTypes = [manager.responseSerializer.acceptableContentTypes setByAddingObject:@"text/html"];
     
-    [manager GET:@"http://52.79.39.100:8080/member/order/all"
+    [manager GET:@"http://www.cleanbasket.co.kr/member/order/all"
       parameters:nil
          success:^(AFHTTPRequestOperation *operation, id responseObject){
              
@@ -68,6 +68,29 @@
     cell.pickUpTimeLabel.text = self.orders[indexPath.row][@"pickup_date"];
     cell.dropOffTimeLabel.text = self.orders[indexPath.row][@"dropoff_date"];
     cell.priceLabel.text = [NSString stringWithFormat:@"총계 %@원",[self.orders[indexPath.row][@"price"] stringValue]];
+    cell.orderNumberLabel.text = [NSString stringWithFormat:@"%@ %@",NSLocalizedString(@"order_number", @"주문번호"),self.orders[indexPath.row][@"order_number"]];
+    
+    switch ([self.orders[indexPath.row][@"state"] integerValue]) {
+        case 0:
+            cell.orderStatusLabel.text = NSLocalizedString(@"pick_up_wait", @"수거대기");
+            break;
+        case 1:
+            cell.orderStatusLabel.text = NSLocalizedString(@"pick_up_man_selected", @"수거예정");
+            break;
+        case 2:
+            cell.orderStatusLabel.text = NSLocalizedString(@"pick_up_finish", @"세탁중");
+            break;
+        case 3:
+            cell.orderStatusLabel.text = NSLocalizedString(@"deliverer_selected", @"배달예정");
+            break;
+        case 4:
+            cell.orderStatusLabel.text = NSLocalizedString(@"deliverer_finish", @"배달완료");
+            break;
+            
+        default:
+            break;
+    }
+    
     
     NSInteger itemCount = 0;
     

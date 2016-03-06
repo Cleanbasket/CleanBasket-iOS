@@ -99,8 +99,23 @@
     Notification *noti = [_alarms objectAtIndex:indexPath.row];
     cell.notiTitleLabel.text = noti.message;
     cell.notiImageView.image = [UIImage imageNamed:noti.imageName];
+    cell.confirmButton.tag = indexPath.row;
+    [cell.confirmButton addTarget:self action:@selector(tapConfirmBtn:) forControlEvents:UIControlEventTouchUpInside];
+    
     
     return cell;
+}
+
+- (void)tapConfirmBtn:(UIButton*)sender{
+    
+//    [self.tableView deleteRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:sender.tag inSection:0]] withRowAnimation:UITableViewRowAnimationAutomatic];
+    
+    RLMRealm *realm = [RLMRealm defaultRealm];
+    [realm transactionWithBlock:^{
+        [realm deleteObject:_alarms[sender.tag]];
+        [self.tableView reloadData];
+    }];
+    
 }
 
 

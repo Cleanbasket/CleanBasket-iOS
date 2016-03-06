@@ -44,6 +44,8 @@
         TimeSelectCollectionViewController *timeSelectCollectionViewController = [sb instantiateViewControllerWithIdentifier:@"TimeSelectCVC"];
 
         [timeSelectCollectionViewController initWithDayInterval:i+_defaultInterval andType:_timeSelectType];
+        timeSelectCollectionViewController.orderStatusViewController = _orderStatusVC;
+        
         [_timeSelectCVCs addObject:timeSelectCollectionViewController];
         
     }

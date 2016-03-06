@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9531" systemVersion="15D21" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9532" systemVersion="15D21" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9530"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
@@ -47,28 +47,25 @@
                         </constraints>
                     </view>
                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dMA-sa-w1T" customClass="RoundedButton">
-                        <rect key="frame" x="262" y="25" width="50" height="30"/>
+                        <rect key="frame" x="262" y="20" width="50" height="38"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="50" id="oC2-Q7-kkb"/>
-                            <constraint firstAttribute="height" constant="30" id="yML-xp-z49"/>
                         </constraints>
                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                         <state key="normal" title="확인">
                             <color key="titleColor" red="0.43921568630000002" green="0.43921568630000002" blue="0.43921568630000002" alpha="1" colorSpace="calibratedRGB"/>
                         </state>
-                        <connections>
-                            <action selector="confirm:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="n1h-eB-RmX"/>
-                        </connections>
                     </button>
                 </subviews>
                 <constraints>
                     <constraint firstItem="8td-dG-ejA" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="8kf-Zl-Q5x"/>
-                    <constraint firstItem="dMA-sa-w1T" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="25" id="HyP-8T-tb4"/>
+                    <constraint firstItem="dMA-sa-w1T" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="20" id="HyP-8T-tb4"/>
                     <constraint firstItem="evn-Gy-XTZ" firstAttribute="leading" secondItem="TbZ-WV-T1K" secondAttribute="trailing" constant="16" id="IW2-xz-z4Z"/>
                     <constraint firstItem="TbZ-WV-T1K" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="SCy-hp-gpN"/>
                     <constraint firstAttribute="trailing" secondItem="dMA-sa-w1T" secondAttribute="trailing" constant="8" id="Xm9-po-TrX"/>
                     <constraint firstItem="dMA-sa-w1T" firstAttribute="leading" secondItem="evn-Gy-XTZ" secondAttribute="trailing" constant="9" id="YWo-K8-AAy"/>
                     <constraint firstItem="dMA-sa-w1T" firstAttribute="leading" secondItem="MV3-i4-stv" secondAttribute="trailing" constant="9" id="coR-e9-rKu"/>
+                    <constraint firstItem="8td-dG-ejA" firstAttribute="top" secondItem="dMA-sa-w1T" secondAttribute="bottom" constant="20" id="lPk-AO-KnN"/>
                     <constraint firstItem="8td-dG-ejA" firstAttribute="top" secondItem="evn-Gy-XTZ" secondAttribute="bottom" constant="21" id="oEg-xZ-8QR"/>
                     <constraint firstItem="MV3-i4-stv" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="21" id="qM4-9k-YyQ"/>
                     <constraint firstItem="MV3-i4-stv" firstAttribute="leading" secondItem="TbZ-WV-T1K" secondAttribute="trailing" constant="16" id="rTY-2O-abJ"/>
@@ -78,6 +75,7 @@
                 </constraints>
             </tableViewCellContentView>
             <connections>
+                <outlet property="confirmButton" destination="dMA-sa-w1T" id="3b8-Xo-FyE"/>
                 <outlet property="notiDateLabel" destination="evn-Gy-XTZ" id="F5h-ME-4iQ"/>
                 <outlet property="notiImageView" destination="TbZ-WV-T1K" id="wtp-2i-wjS"/>
                 <outlet property="notiTitleLabel" destination="MV3-i4-stv" id="xr8-B7-bey"/>

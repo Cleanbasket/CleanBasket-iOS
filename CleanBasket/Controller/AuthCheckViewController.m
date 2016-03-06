@@ -60,7 +60,7 @@
                                      @"password": user.password };
         
 
-        [manager POST:@"http://52.79.39.100:8080/auth" parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        [manager POST:@"http://www.cleanbasket.co.kr/auth" parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
 
 
             NSLog(@"%@",responseObject);
