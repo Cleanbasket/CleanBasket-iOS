@@ -47,6 +47,7 @@
     [self.deliverNameLabel setText:NSLocalizedString(@"pd_name_default", @"pd기본이름")];
     [self.callButton setHidden:YES];
     [self.callButton setTitle:NSLocalizedString(@"pd_call", @"pd에게 전화하기") forState:UIControlStateNormal];
+    [self.callButton addTarget:self action:@selector(tapCallBtn:) forControlEvents:UIControlEventTouchUpInside];
     [self.editOrderButton setTitle:NSLocalizedString(@"order_modify", @"주문 변경/취소") forState:UIControlStateNormal];
     [self.editOrderButton addTarget:self action:@selector(editOrder) forControlEvents:UIControlEventTouchUpInside];
     [self requestDropOffInterval];
@@ -80,6 +81,11 @@
 - (IBAction)refresh:(id)sender{
     
     [self loadOrderStatus];
+}
+
+- (void)tapCallBtn:(id)sender{
+    NSString *phoneString = [NSString stringWithFormat:@"%@%zd",@"telprompt://",[_deliverPhoneNumber integerValue]];
+    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:phoneString]];
 }
 
 
@@ -697,6 +703,7 @@
                if ([responseObject[@"constant"] isEqualToNumber:@1]) {
                    [SVProgressHUD showSuccessWithStatus:NSLocalizedString(@"order_modify_success", @"주문수정성공")];
                }
+               _isItemChange = NO;
                
            } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
                NSLog(@"Error: %@", error);
