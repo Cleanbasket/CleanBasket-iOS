@@ -29,7 +29,7 @@ typedef enum : NSUInteger {
 @interface OrderViewController () <UIActionSheetDelegate> {
 
     NSDate *_pickUpDate, *_dropOffDate, *_startPickupDate;
-    NSInteger _dropOffInterval;
+    NSNumber *_dropOffInterval;
     AFHTTPRequestOperationManager *_manager;
 }
 
@@ -170,10 +170,15 @@ typedef enum : NSUInteger {
     
     
     _pickUpDate = [calendar dateFromComponents:dateComponents];
+    [_pickUpTimeLabel setText:[self getStringFromDate:_pickUpDate]];
+    
+    //배달시간 48시간 이후로 설정.
+    _dropOffDate = [_pickUpDate dateByAddingTimeInterval:60*60*24*2];
+    NSString *dropOffTimeString = [self getStringFromDate:_dropOffDate];
+    NSString *dropOffTimeLabelString = [NSString stringWithFormat:@"%@%@",dropOffTimeString,NSLocalizedString(@"dropoff_datetime_c",nil)];
+    [_dropOffTimeLabel setText:dropOffTimeLabelString];
     _startPickupDate = _pickUpDate;
 
-    [_pickUpTimeLabel setText:[self getStringFromDate:_pickUpDate]];
-    [_dropOffTimeLabel setText:NSLocalizedString(@"time_dropoff_inform_after",nil)];
 
 
     //결제수단 초기화
@@ -196,8 +201,8 @@ typedef enum : NSUInteger {
     [_pickUpTimeLabel setText:pickUpTimeString];
 
     
-    //배달시간 3일 이후로 설정.
-    _dropOffDate = [_pickUpDate dateByAddingTimeInterval:60*60*24*3];
+    //배달시간 48시간 이후로 설정.
+    _dropOffDate = [_pickUpDate dateByAddingTimeInterval:60*60*24*2];
     NSString *dropOffTimeString = [self getStringFromDate:_dropOffDate];
     NSString *dropOffTimeLabelString = [NSString stringWithFormat:@"%@%@",dropOffTimeString,NSLocalizedString(@"dropoff_datetime_c",nil)];
     [_dropOffTimeLabel setText:dropOffTimeLabelString];
@@ -344,6 +349,7 @@ typedef enum : NSUInteger {
         TimeSelectViewController *timeSelectViewController = [timeSelectNVC.viewControllers firstObject];
         [timeSelectViewController setTimeSelectType:CBTimeSelectTypeDropOff];
         [timeSelectViewController setDefaultInterval:_dropOffInterval];
+        [timeSelectViewController setStartDate:_pickUpDate];
     }
 
 
@@ -377,8 +383,9 @@ typedef enum : NSUInteger {
 
 
 - (void)getAddress{
-
-    [_manager GET:@"http://www.cleanbasket.co.kr/member/address"
+    
+    NSString *urlString = [NSString stringWithFormat:@"%@%@",CB_SERVER_URL,@"member/address"];
+    [_manager GET:urlString
       parameters:nil
          success:^(AFHTTPRequestOperation *operation, id responseObject) {
 
@@ -404,9 +411,7 @@ typedef enum : NSUInteger {
                      self.addr_building = data.firstObject[@"addr_building"];
                  }
                  
-//                 _addr_building = data.firstObject[@"addr_ramainder"];
                  _addressString = [NSString stringWithFormat:@"%@ %@",_address,_addr_building];
-                 NSLog(@"주소 : %@",self.addr_building);
                  [_addressLabel setText:_addressString];
                  [self getDropOffInterval];
              }
@@ -419,11 +424,12 @@ typedef enum : NSUInteger {
 
 
 - (void)getDropOffInterval{
-    [_manager GET:@"http://www.cleanbasket.co.kr/member/dropoff/dropoff_datetime"
+    NSString *urlString = [NSString stringWithFormat:@"%@%@",CB_SERVER_URL,@"member/dropoff/dropoff_datetime"];
+    [_manager GET:urlString
        parameters:nil
           success:^(AFHTTPRequestOperation *operation, id responseObject) {
 
-              _dropOffInterval = [responseObject[@"data"] integerValue];
+              _dropOffInterval = responseObject[@"data"];
 
           } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
                 NSLog(@"Error: %@", error);
@@ -489,8 +495,9 @@ typedef enum : NSUInteger {
     manager.responseSerializer = [AFJSONResponseSerializer serializer];
     manager.responseSerializer.acceptableContentTypes = [manager.responseSerializer.acceptableContentTypes setByAddingObject:@"text/html"];
 
-
-    [manager GET:@"http://www.cleanbasket.co.kr/member/payment"
+    
+    NSString *urlString = [NSString stringWithFormat:@"%@%@",CB_SERVER_URL,@"member/payment"];
+    [manager GET:urlString
       parameters:nil
          success:^(AFHTTPRequestOperation *operation, id responseObject) {
 
@@ -502,7 +509,7 @@ typedef enum : NSUInteger {
                                                              options:NSJSONReadingMutableContainers
                                                                error:&jsonError];
 
-
+#warning Need LocalizedString
              if ([data[@"cardName"] isEqualToString:@""]){
                  [SVProgressHUD showWithStatus:@"등록된 카드가 없습니다."];
 
@@ -583,9 +590,11 @@ typedef enum : NSUInteger {
 
 - (void)addNewOrder{
     
+    //수거-배달 최소 48시간
     NSDate *twoDaysAfterDate = [_pickUpDate dateByAddingTimeInterval:60*60*24*2];
     if ([_dropOffDate compare:twoDaysAfterDate] == NSOrderedAscending) {
         [UIAlertView showWithTitle:NSLocalizedString(@"toast_error", @"에러")
+#warning Need LocalizedString
                            message:@"배달일은 수거일 2일 이후에 가능합니다."
                  cancelButtonTitle:NSLocalizedString(@"label_confirm", @"확인")
                  otherButtonTitles:nil
@@ -593,6 +602,7 @@ typedef enum : NSUInteger {
 
         return;
     }
+    
     
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     
@@ -637,6 +647,10 @@ typedef enum : NSUInteger {
                            }];
     }
     
+    //품목 없을경우 처리
+    if (items.count) {
+        [items addObject:@{@"item_code":@999,@"category":@6,@"name":@"현장확인",@"descr":@"onthespot",@"price":@0,@"scope":@0,@"count":@1}];
+    }
     
     
     NSDictionary *parameters = @{@"address":self.address,
@@ -658,7 +672,8 @@ typedef enum : NSUInteger {
     
     NSString *jsonString = [[NSString alloc] initWithData:[NSJSONSerialization dataWithJSONObject:parameters options:NSJSONWritingPrettyPrinted error:nil] encoding:NSUTF8StringEncoding];
     
-    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:@"http://www.cleanbasket.co.kr/member/order/add/new"]
+    NSString *urlString = [NSString stringWithFormat:@"%@%@",CB_SERVER_URL,@"member/order/add/new"];
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:urlString]
                                                            cachePolicy:NSURLRequestReloadIgnoringCacheData  timeoutInterval:10];
     
     [request setHTTPMethod:@"POST"];
@@ -795,7 +810,7 @@ typedef enum : NSUInteger {
 }
 
 
-#pragma mark - NOtification
+#pragma mark - Notification
 - (void)addNotification{
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(checkCreditCard)

@@ -21,7 +21,7 @@ typedef NS_ENUM(NSUInteger, CBTimeSelectType) {
 
 @property CBTimeSelectType timeSelectType;
 @property (nonatomic) NSDate *startDate;
-@property NSInteger defaultInterval;
+@property (strong, nonatomic) NSNumber *defaultInterval;
 
 @property (nonatomic) OrderStatusViewController *orderStatusVC;
 

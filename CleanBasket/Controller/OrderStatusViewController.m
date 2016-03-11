@@ -20,7 +20,7 @@
 #import "UIImageView+AFNetworking.h"
 
 @interface OrderStatusViewController (){
-    NSInteger _dropOffInterval;
+    NSNumber *_dropOffInterval;
     RLMRealm *_realm;
     BOOL _isItemChange;
     NSNumber *_deliverPhoneNumber;
@@ -126,22 +126,29 @@
         switch (index) {
             case 0:{
                 if ([_currentOrder[@"state"] isEqualToNumber:@2]) {
+#warning Need LocalizedString
                     [SVProgressHUD showErrorWithStatus:@"수거 시간 변경 불가능!"];
+                    break;
                 }
                 [timeSelectViewController setTimeSelectType:CBTimeSelectTypePickUp];
+#warning 최소 수거시간 처리 필요
                 [timeSelectViewController setStartDate:[NSDate new]];
             }
                 break;
             case 1:{
                 [timeSelectViewController setTimeSelectType:CBTimeSelectTypeDropOff];
                 [timeSelectViewController setDefaultInterval:_dropOffInterval];
+#warning 최소 수거시간 처리 필요
+                [timeSelectViewController setStartDate:[NSDate new]];
 
             }
                 break;
                 
             default:
+                return;
                 break;
         }
+        
         
         [SVProgressHUD show];
         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
@@ -204,11 +211,13 @@
                     break;
                 case 1:{
                     NSLog(@"시간변경");
+#warning Need LocalizedString
                     NSArray *items = @[MMItemMake(NSLocalizedString(@"수거 시간 변경", nil), MMItemTypeHighlight, timeChangeBlock),
                                        MMItemMake(NSLocalizedString(@"배달 시간 변경", nil), MMItemTypeHighlight, timeChangeBlock),
                                        MMItemMake(NSLocalizedString(@"label_cancel", nil), MMItemTypeNormal, timeChangeBlock)];
                     NSString *timeChangeMessage = [NSString stringWithFormat:@"%@ : %@\n%@ : %@",NSLocalizedString(@"pick_up_time_label", @"수거 시간"),self.pickUpDateLabel.text,NSLocalizedString(@"drop_off_time_label", @"배달 시간"),self.dropOffDateLabel.text];
                     
+#warning Need LocalizedString
                     [[[MMAlertView alloc]initWithTitle:NSLocalizedString(@"시간 변경", nil) detail:timeChangeMessage items:items]show];
                     
                     
@@ -236,11 +245,13 @@
         block = ^(NSInteger index){
             switch (index) {
                 case 0:{
+#warning Need LocalizedString
                     NSArray *items = @[MMItemMake(NSLocalizedString(@"수거 시간 변경", nil), MMItemTypeHighlight, timeChangeBlock),
                                        MMItemMake(NSLocalizedString(@"배달 시간 변경", nil), MMItemTypeHighlight, timeChangeBlock),
                                        MMItemMake(NSLocalizedString(@"label_cancel", nil), MMItemTypeNormal, timeChangeBlock)];
                     NSString *timeChangeMessage = [NSString stringWithFormat:@"%@ : %@\n%@ : %@",NSLocalizedString(@"pick_up_time_label", @"수거 시간"),self.pickUpDateLabel.text,NSLocalizedString(@"drop_off_time_label", @"배달 시간"),self.dropOffDateLabel.text];
                     
+#warning Need LocalizedString
                     [[[MMAlertView alloc]initWithTitle:NSLocalizedString(@"시간 변경", nil) detail:timeChangeMessage items:items]show];
                     
                 }
@@ -260,11 +271,13 @@
             switch (index) {
                 case 0:{
                     
+#warning Need LocalizedString
                     NSArray *items = @[MMItemMake(NSLocalizedString(@"수거 시간 변경", nil), MMItemTypeHighlight, timeChangeBlock),
                                        MMItemMake(NSLocalizedString(@"배달 시간 변경", nil), MMItemTypeHighlight, timeChangeBlock),
                                        MMItemMake(NSLocalizedString(@"label_cancel", nil), MMItemTypeNormal, timeChangeBlock)];
                     NSString *timeChangeMessage = [NSString stringWithFormat:@"%@ : %@\n%@ : %@",NSLocalizedString(@"pick_up_time_label", @"수거 시간"),self.pickUpDateLabel.text,NSLocalizedString(@"drop_off_time_label", @"배달 시간"),self.dropOffDateLabel.text];
                     
+#warning Need LocalizedString
                     [[[MMAlertView alloc]initWithTitle:NSLocalizedString(@"시간 변경", nil) detail:timeChangeMessage items:items]show];
                     
                 }
@@ -322,7 +335,8 @@
     //                manager.responseSerializer = responseSerializer;
     manager.responseSerializer.acceptableContentTypes = [manager.responseSerializer.acceptableContentTypes setByAddingObject:@"text/html"];
     
-    [manager POST:@"http://www.cleanbasket.co.kr/member/order/del/new"
+    NSString *urlString = [NSString stringWithFormat:@"%@%@",CB_SERVER_URL,@"member/order/del/new"];
+    [manager POST:urlString
        parameters:@{@"oid":oid}
           success:^(AFHTTPRequestOperation *operation, id responseObject){
               
@@ -358,7 +372,8 @@
     manager.responseSerializer = responseSerializer;
     manager.responseSerializer.acceptableContentTypes = [manager.responseSerializer.acceptableContentTypes setByAddingObject:@"text/html"];
     
-    [manager GET:@"http://www.cleanbasket.co.kr/member/order/recent"
+    NSString *urlString = [NSString stringWithFormat:@"%@%@",CB_SERVER_URL,@"member/order/recent"];
+    [manager GET:urlString
       parameters:nil
          success:^(AFHTTPRequestOperation *operation, id responseObject){
          
@@ -489,11 +504,17 @@
     [_pickUpDateLabel setText:pickUpTimeString];
     
     
-    //배달시간 3일 이후로 설정.
-    _dropOffDate = [_pickUpDate dateByAddingTimeInterval:60*60*24*3];
-    NSString *dropOffTimeString = [self getStringFromDate:_dropOffDate];
-    NSString *dropOffTimeLabelString = [NSString stringWithFormat:@"%@%@",dropOffTimeString,NSLocalizedString(@"dropoff_datetime_c",nil)];
-    [_dropOffDateLabel setText:dropOffTimeLabelString];
+    
+    //최소 배달시간 = 수거시간+48 설정.
+    NSDate *minDate = [_pickUpDate dateByAddingTimeInterval:60*60*24*2];
+    
+    if ([minDate compare:_dropOffDate] == NSOrderedDescending) {
+        _dropOffDate = [_pickUpDate dateByAddingTimeInterval:60*60*24*3];
+        NSString *dropOffTimeString = [self getStringFromDate:_dropOffDate];
+        NSString *dropOffTimeLabelString = [NSString stringWithFormat:@"%@%@",dropOffTimeString,NSLocalizedString(@"dropoff_datetime_c",nil)];
+        [_dropOffDateLabel setText:dropOffTimeLabelString];
+    }
+    
     
     [self requestTimeChange];
 }
@@ -597,12 +618,13 @@
     
     _manager.responseSerializer = [AFJSONResponseSerializer serializer];
     _manager.responseSerializer.acceptableContentTypes = [_manager.responseSerializer.acceptableContentTypes setByAddingObject:@"text/html"];
-
-    [_manager GET:@"http://www.cleanbasket.co.kr/member/dropoff/dropoff_datetime"
+    
+    NSString *urlString = [NSString stringWithFormat:@"%@%@",CB_SERVER_URL,@"member/dropoff/dropoff_datetime"];
+    [_manager GET:urlString
        parameters:nil
           success:^(AFHTTPRequestOperation *operation, id responseObject) {
               
-              _dropOffInterval = [responseObject[@"data"] integerValue];
+              _dropOffInterval = responseObject[@"data"];
               
           } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
               NSLog(@"Error: %@", error);
@@ -627,8 +649,9 @@
     
     NSDictionary *parameters = @{@"oid":_currentOrder[@"oid"],@"pickup_date":[stringFromDateFormatter stringFromDate:_pickUpDate],@"dropoff_date":[stringFromDateFormatter stringFromDate:_dropOffDate]};
     
-    [_manager POST:@"http://www.cleanbasket.co.kr/member/order/date"
-       parameters:parameters
+    NSString *urlString = [NSString stringWithFormat:@"%@%@",CB_SERVER_URL,@"member/order/date"];
+    [_manager POST:urlString
+        parameters:parameters
           success:^(AFHTTPRequestOperation *operation, id responseObject) {
               
               if ([responseObject[@"constant"] isEqualToNumber:@1]) {
@@ -693,7 +716,8 @@
                                  @"item":items
                                  };
     
-    [_manager POST:@"http://www.cleanbasket.co.kr/member/order/modify"
+    NSString *urlString = [NSString stringWithFormat:@"%@%@",CB_SERVER_URL,@"member/order/modify"];
+    [_manager POST:urlString
         parameters:parameters
            success:^(AFHTTPRequestOperation *operation, id responseObject) {
                

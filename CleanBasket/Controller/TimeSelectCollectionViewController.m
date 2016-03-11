@@ -9,6 +9,7 @@
 #import "TimeSelectCollectionViewController.h"
 #import "TimeCollectionViewCell.h"
 #import <AFNetworking/AFNetworking.h>
+#import "CBConstants.h"
 
 @interface TimeSelectCollectionViewController () {
     CBTimeSelectType _type;
@@ -40,19 +41,16 @@
 }
 
 
-- (void)initWithDayInterval:(NSInteger)interval andType:(CBTimeSelectType)type{
+- (void)initWithStartDate:(NSDate*)startDay andType:(CBTimeSelectType)type{
 
-    
-    NSDate *today = [NSDate date];
 
     NSCalendar *calendar = [NSCalendar currentCalendar];
 
     unsigned unitFlags = NSCalendarUnitYear | NSCalendarUnitMonth |  NSCalendarUnitDay;
-    NSDateComponents *dateComponents = [calendar components:unitFlags fromDate:today];
+    NSDateComponents *dateComponents = [calendar components:unitFlags fromDate:startDay];
 
     [dateComponents setHour:10];
     [dateComponents setMinute:0];
-    [dateComponents setDay:dateComponents.day+interval];
 
 
     _date = [calendar dateFromComponents:dateComponents];
@@ -79,7 +77,8 @@
     
     manager.responseSerializer = [AFJSONResponseSerializer serializer];
     manager.responseSerializer.acceptableContentTypes = [manager.responseSerializer.acceptableContentTypes setByAddingObject:@"text/html"];
-    [manager GET:@"http://www.cleanbasket.co.kr/member/pickup"
+    NSString *urlString = [NSString stringWithFormat:@"%@%@",CB_SERVER_URL,@"member/pickup"];
+    [manager GET:urlString
       parameters:nil
          success:^(AFHTTPRequestOperation *operation, id responseObject) {
              
@@ -182,7 +181,6 @@
 
 
     if (_orderStatusViewController == nil) {
-        NSLog(@"오리지날");
         if (_type == CBTimeSelectTypePickUp)
             [[NSNotificationCenter defaultCenter] postNotificationName:@"didFinishPickUpDate" object:nil userInfo:@{@"date":firstNewDate}];
         else if (_type == CBTimeSelectTypeDropOff)
@@ -226,7 +224,6 @@
     }
     
     if (self.startDate != nil) {
-        
         if ([cellDate compare:_startDate] == NSOrderedAscending) {
             cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"CloseCell" forIndexPath:indexPath];
         }

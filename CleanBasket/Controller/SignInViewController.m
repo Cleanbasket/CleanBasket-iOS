@@ -88,8 +88,9 @@
 
     NSDictionary *parameters = @{@"email": _emailTextField.text,
                                  @"password": _pwTextField.text};
-
-    [manager POST:@"http://www.cleanbasket.co.kr/auth" parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    
+    NSString *urlString = [NSString stringWithFormat:@"%@%@",CB_SERVER_URL,@"auth"];
+    [manager POST:urlString parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
 
         [self.view endEditing:YES];
 
@@ -180,8 +181,9 @@
 
 
     NSDictionary *parameters = @{@"email":_signUpEmailTF.text,@"password":_signUpPwTF.text};
-
-    [manager POST:@"http://www.cleanbasket.co.kr/member/register" parameters:parameters
+    
+    NSString *urlString = [NSString stringWithFormat:@"%@%@",CB_SERVER_URL,@"member/register"];
+    [manager POST:urlString parameters:parameters
           success:^(AFHTTPRequestOperation *operation, id responseObject) {
 
               NSNumber *value = responseObject[@"constant"];

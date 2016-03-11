@@ -13,6 +13,7 @@
 #import "ChangePasswordViewController.h"
 #import <AFNetworking/AFNetworking.h>
 #import "UIAlertView+Blocks.h"
+#import "CBConstants.h"
 
 @interface SettingTableViewController ()
 @property (weak, nonatomic) IBOutlet UILabel *latestVersion;
@@ -44,7 +45,8 @@
 
     manager.responseSerializer = [AFJSONResponseSerializer serializer];
     manager.responseSerializer.acceptableContentTypes = [manager.responseSerializer.acceptableContentTypes setByAddingObject:@"text/html"];
-    [manager GET:@"http://www.cleanbasket.co.kr/appinfo"
+    NSString *urlString = [NSString stringWithFormat:@"%@%@",CB_SERVER_URL,@"appinfo"];
+    [manager GET:urlString
       parameters:nil
             success:^(AFHTTPRequestOperation *operation, id responseObject) {
 
@@ -146,7 +148,8 @@
     
     manager.responseSerializer = [AFJSONResponseSerializer serializer];
     manager.responseSerializer.acceptableContentTypes = [manager.responseSerializer.acceptableContentTypes setByAddingObject:@"text/html"];
-    [manager GET:@"http://www.cleanbasket.co.kr/logout/success"
+    NSString *urlString = [NSString stringWithFormat:@"%@%@",CB_SERVER_URL,@"logout/success"];
+    [manager GET:urlString
       parameters:nil
          success:^(AFHTTPRequestOperation *operation, id responseObject) {
              

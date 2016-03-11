@@ -10,6 +10,7 @@
 #import <AFNetworking/AFNetworking.h>
 #import "CouponTableViewCell.h"
 #import <SVProgressHUD/SVProgressHUD.h>
+#import "CBConstants.h"
 
 @interface CouponTableViewController ()
 
@@ -42,7 +43,8 @@
     manager.responseSerializer = [AFJSONResponseSerializer serializer];
     manager.responseSerializer.acceptableContentTypes = [manager.responseSerializer.acceptableContentTypes setByAddingObject:@"text/html"];
     
-    [manager GET:@"http://www.cleanbasket.co.kr/member/coupon"
+    NSString *urlString = [NSString stringWithFormat:@"%@%@",CB_SERVER_URL,@"member/coupon"];
+    [manager GET:urlString
         parameters:nil
            success:^(AFHTTPRequestOperation *operation, id responseObject) {
                
@@ -106,7 +108,7 @@
         
         // Display a message when the table is empty
         UILabel *messageLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, self.view.bounds.size.height)];
-        
+#warning Need LocalizedString 
         messageLabel.text = NSLocalizedString(@"쿠폰이 없습니다.", @"쿠폰이 없습니다.");
         messageLabel.textColor = [UIColor blackColor];
         messageLabel.numberOfLines = 0;

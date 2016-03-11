@@ -10,6 +10,7 @@
 #import "ChangePasswordViewController.h"
 #import "SignTextField.h"
 #import "User.h"
+#import "CBConstants.h"
 
 #import <AFNetworking/AFNetworking.h>
 #import <Realm/Realm.h>
@@ -37,7 +38,7 @@
 }
 
 - (IBAction)changePassword:(id)sender {
-
+#warning Need LocalizedString
     if (!_currentPwTF.text.length) {
         [SVProgressHUD showErrorWithStatus:@"현재 비밀번호를 입력해주세요."];
         [_currentPwTF becomeFirstResponder];
@@ -61,8 +62,9 @@
         manager.responseSerializer = [AFJSONResponseSerializer serializer];
         manager.responseSerializer.acceptableContentTypes = [manager.responseSerializer.acceptableContentTypes setByAddingObject:@"text/html"];
 
-
-        [manager POST:@"http://www.cleanbasket.co.kr/member/password/update/new"
+        
+        NSString *urlString = [NSString stringWithFormat:@"%@%@",CB_SERVER_URL,@"member/password/update/new"];
+        [manager POST:urlString
             parameters:@{@"current_password":_currentPwTF.text,@"password": _changePwTF.text}
                success:^(AFHTTPRequestOperation *operation, id responseObject) {
 

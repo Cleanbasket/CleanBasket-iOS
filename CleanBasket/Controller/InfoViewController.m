@@ -13,6 +13,7 @@
 #import "BottomBorderButton.h"
 #import <AFNetworking/AFNetworking.h>
 #import <SVProgressHUD/SVProgressHUD.h>
+#import "CBConstants.h"
 
 @interface InfoViewController () {
     AFHTTPRequestOperationManager *_manager;
@@ -42,9 +43,6 @@
 
     _manager = [AFHTTPRequestOperationManager manager];
 
-//    _manager.requestSerializer = [AFJSONRequestSerializer serializer];
-//    _manager.responseSerializer = [AFJSONResponseSerializer serializer];
-//    _manager.responseSerializer.acceptableContentTypes = [_manager.responseSerializer.acceptableContentTypes setByAddingObject:@"text/html"];
     
     [_phoneAuthView setHidden:YES];
     [_memberInfoView setHidden:YES];
@@ -59,7 +57,8 @@
     _manager.responseSerializer = [AFJSONResponseSerializer serializer];
     _manager.responseSerializer.acceptableContentTypes = [_manager.responseSerializer.acceptableContentTypes setByAddingObject:@"text/html"];
     
-    [_manager GET:@"http://www.cleanbasket.co.kr/member/user"
+    NSString *urlString = [NSString stringWithFormat:@"%@%@",CB_SERVER_URL,@"member/user"];
+    [_manager GET:urlString
       parameters:nil
          success:^(AFHTTPRequestOperation *operation, id responseObject) {
 
@@ -137,6 +136,10 @@
 
     [self.view endEditing:YES];
 
+    _manager.requestSerializer = [AFJSONRequestSerializer serializer];
+    _manager.responseSerializer = [AFJSONResponseSerializer serializer];
+    _manager.responseSerializer.acceptableContentTypes = [_manager.responseSerializer.acceptableContentTypes setByAddingObject:@"text/html"];
+
 
     if (!_phoneTextField.text.length){
         [SVProgressHUD showErrorWithStatus:NSLocalizedString(@"phone_empty",nil)];
@@ -144,8 +147,9 @@
         return;
     }
 
-
-    [_manager POST:@"http://www.cleanbasket.co.kr/code"
+    
+    NSString *urlString = [NSString stringWithFormat:@"%@%@",CB_SERVER_URL,@"code"];
+    [_manager POST:urlString
        parameters:@{@"phone":_phoneTextField.text}
           success:^(AFHTTPRequestOperation *operation, id responseObject) {
 
@@ -161,7 +165,7 @@
 
 - (IBAction)registAuthUser:(id)sender {
     if (!_emailTextField.text.length){
-        
+#warning Need LocalizedString
         [SVProgressHUD showErrorWithStatus:@"이메일을 입력해주세요"];
         [_emailTextField becomeFirstResponder];
         return;
@@ -180,8 +184,9 @@
             @"agent":@"iOS"
     };
 
-
-    [_manager POST:@"http://www.cleanbasket.co.kr/member/user"
+    
+    NSString *urlString = [NSString stringWithFormat:@"%@%@",CB_SERVER_URL,@"member/user"];
+    [_manager POST:urlString
         parameters:parameters
            success:^(AFHTTPRequestOperation *operation, id responseObject) {
 
@@ -190,9 +195,10 @@
                    [SVProgressHUD showSuccessWithStatus:NSLocalizedString(@"sign_up_success",nil)];
                    [self setTopView];
                }
-               else
+               else{
+#warning 인증 실패시 메시지
                    [SVProgressHUD showErrorWithStatus:responseObject[@"message"]];
-
+               }
 
 
            } failure:^(AFHTTPRequestOperation *operation, NSError *error) {

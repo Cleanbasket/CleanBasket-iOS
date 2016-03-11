@@ -32,6 +32,13 @@
     //이용약관 링크 라벨
     _privacyLinkLabel.delegate = self;
 
+    _privacyLinkLabel.text = [NSString stringWithFormat:@"%@ %@ %@ %@ %@",
+                              NSLocalizedString(@"login_agreement_a", nil),
+                              NSLocalizedString(@"Login_agreement_b", nil),
+                              NSLocalizedString(@"Login_agreement_c", nil),
+                              NSLocalizedString(@"Login_agreement_d", nil),
+                              NSLocalizedString(@"Login_agreement_e", nil)];
+    
     NSMutableDictionary *mutableActiveLinkAttributes = [NSMutableDictionary dictionary];
     mutableActiveLinkAttributes[(NSString *) kCTUnderlineStyleAttributeName] = @YES;
     mutableActiveLinkAttributes[(NSString *) kCTForegroundColorAttributeName] = CleanBasketMint;
@@ -39,16 +46,18 @@
     _privacyLinkLabel.activeLinkAttributes = [NSDictionary dictionaryWithDictionary:mutableActiveLinkAttributes];
     _privacyLinkLabel.inactiveLinkAttributes = [NSDictionary dictionaryWithDictionary:mutableActiveLinkAttributes];
 
-
-    NSURL *privacyUrl = [NSURL URLWithString:@"http://www.cleanbasket.co.kr/privacy"];
+    
+    NSString *privacyUrlString = [NSString stringWithFormat:@"%@%@",CB_SERVER_URL,@"privacy"];
+    NSURL *privacyUrl = [NSURL URLWithString:privacyUrlString];
     NSString *privacyString = _privacyLinkLabel.text;
-    NSRange privacyRange = [privacyString rangeOfString:@"개인정보 수집 및 이용에 대한 안내"];
+    NSRange privacyRange = [privacyString rangeOfString:NSLocalizedString(@"Login_agreement_b", @"개인정보 수집 및 이용에 대한 안내")];
     [_privacyLinkLabel addLinkToURL:privacyUrl withRange:privacyRange];
 
-
-    NSURL *termUrl = [NSURL URLWithString:@"http://www.cleanbasket.co.kr/term-of-use"];
+    
+    NSString *touUrlString = [NSString stringWithFormat:@"%@%@",CB_SERVER_URL,@"term-of-use"];
+    NSURL *termUrl = [NSURL URLWithString:touUrlString];
     NSString *termString = _privacyLinkLabel.text;
-    NSRange termRange = [termString rangeOfString:@"이용약관"];
+    NSRange termRange = [termString rangeOfString:NSLocalizedString(@"Login_agreement_d", @"이용약관")];
     [_privacyLinkLabel addLinkToURL:termUrl withRange:termRange];
     
     
@@ -100,6 +109,7 @@
         session.presentingViewController = nil;
         
         if (!session.isOpen) {
+#warning Need LocalizedString
             [[[UIAlertView alloc] initWithTitle:@"에러" message:error.description delegate:nil cancelButtonTitle:@"확인" otherButtonTitles:nil, nil] show];
         }
         else {
@@ -155,7 +165,8 @@
     NSDictionary *parameters = @{@"email": userId,
                                  @"password": pw};
     
-    [manager POST:@"http://www.cleanbasket.co.kr/auth"
+    NSString *urlString = [NSString stringWithFormat:@"%@%@",CB_SERVER_URL,@"auth"];
+    [manager POST:urlString
        parameters:parameters
           success:^(AFHTTPRequestOperation *operation, id responseObject) {
         
@@ -213,7 +224,7 @@
             case CBServerConstantAccountDisabled :
             {
                 dispatch_async(dispatch_get_main_queue(), ^{
-                    
+                    #warning Need Localized
                     [SVProgressHUD showErrorWithStatus:@"해당 계정은 사용하실 수 없습니다."];
                 });
                 break;
@@ -242,7 +253,9 @@
     
     NSDictionary *parameters = @{@"email":userId ,@"password":pw};
     
-    [manager POST:@"http://www.cleanbasket.co.kr/member/register" parameters:parameters
+    NSString *urlString = [NSString stringWithFormat:@"%@%@",CB_SERVER_URL,@"member/register"];
+    [manager POST:urlString
+       parameters:parameters
           success:^(AFHTTPRequestOperation *operation, id responseObject) {
               
               

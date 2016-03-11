@@ -57,8 +57,9 @@
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     manager.responseSerializer = [AFJSONResponseSerializer serializer];
     manager.responseSerializer.acceptableContentTypes = [manager.responseSerializer.acceptableContentTypes setByAddingObject:@"text/html"];
-
-    [manager GET:@"http://www.cleanbasket.co.kr/notice"
+    
+    NSString *urlString = [NSString stringWithFormat:@"%@%@",CB_SERVER_URL,@"notice"];
+    [manager GET:urlString
       parameters:nil
          success:^(AFHTTPRequestOperation *operation, id responseObject) {
 

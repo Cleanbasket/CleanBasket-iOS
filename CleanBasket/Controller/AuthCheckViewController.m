@@ -12,7 +12,7 @@
 #import <AFNetworking/AFNetworking.h>
 #import <Realm/Realm.h>
 #import "User.h"
-
+#import "CBConstants.h"
 
 @interface AuthCheckViewController ()
 @property (weak, nonatomic) IBOutlet UIImageView *logoImageView;
@@ -59,11 +59,12 @@
         NSDictionary *parameters = @{@"email": user.email,
                                      @"password": user.password };
         
+        
+        NSString *urlString = [NSString stringWithFormat:@"%@%@",CB_SERVER_URL,@"auth"];
 
-        [manager POST:@"http://www.cleanbasket.co.kr/auth" parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        [manager POST:urlString parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
 
 
-            NSLog(@"%@",responseObject);
             if ([responseObject[@"constant"] integerValue] != 1){
 
                 AppDelegate *appDelegate = [[UIApplication sharedApplication] delegate];

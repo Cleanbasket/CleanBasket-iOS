@@ -35,7 +35,6 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     
-    
     //이전 버전에 쓰이던 유저 정보 마이그레이션
     [self realmMigration];
     
@@ -132,7 +131,6 @@
 
 - (void)application:(UIApplication *)application didReceiveLocalNotification:(UILocalNotification *)notification{
     
-    NSLog(@"받아부러!");
     
     //local db에 저장.
     Notification *noti = [Notification new];
@@ -164,7 +162,8 @@
     manager.responseSerializer = [AFJSONResponseSerializer serializer];
     manager.responseSerializer.acceptableContentTypes = [manager.responseSerializer.acceptableContentTypes setByAddingObject:@"text/html"];
     
-    [manager GET:@"http://www.cleanbasket.co.kr/auth/check"
+    NSString *urlString = [NSString stringWithFormat:@"%@%@",CB_SERVER_URL,@"auth/check"];
+    [manager GET:urlString
       parameters:nil
          success:^(AFHTTPRequestOperation *operation, id responseObject) {
              

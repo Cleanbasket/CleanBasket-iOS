@@ -8,7 +8,7 @@
 
 #import "OrderHistoryViewController.h"
 #import "OrderHistoryCell.h"
-
+#import "CBConstants.h"
 #import <AFNetworking/AFNetworking.h>
 
 @interface OrderHistoryViewController()
@@ -20,7 +20,7 @@
 @implementation OrderHistoryViewController
 
 - (void)viewDidLoad{
-    [self setTitle:@"주문 내역"];
+    [self setTitle:NSLocalizedString(@"label_order_history", nil)];
     [self.tableView setTableFooterView:[UIView new]];
     
     
@@ -31,7 +31,8 @@
         manager.responseSerializer = [AFJSONResponseSerializer serializer];
         manager.responseSerializer.acceptableContentTypes = [manager.responseSerializer.acceptableContentTypes setByAddingObject:@"text/html"];
     
-    [manager GET:@"http://www.cleanbasket.co.kr/member/order/all"
+    NSString *urlString = [NSString stringWithFormat:@"%@%@",CB_SERVER_URL,@"member/order/all"];
+    [manager GET:urlString
       parameters:nil
          success:^(AFHTTPRequestOperation *operation, id responseObject){
              
@@ -98,9 +99,9 @@
         itemCount += [item[@"count"] integerValue];
     }
     
-    cell.itemLabel.text = [NSString stringWithFormat:@"품목 %zd개",itemCount];
+    cell.itemLabel.text = [NSString stringWithFormat:@"%@ %zd%@",NSLocalizedString(@"label_item",nil),itemCount,NSLocalizedString(@"item_unit", nil)];
     
-    cell.paymentMethodLabel.text = [NSString stringWithFormat:@"%@",self.orders[indexPath.row][@"payment_method"] ? @"카드결제":@"등록카드"];
+    cell.paymentMethodLabel.text = [NSString stringWithFormat:@"%@",self.orders[indexPath.row][@"payment_method"] ? NSLocalizedString(@"payment_card", nil):NSLocalizedString(@"payment_in_app_finish", nil)];
     
     return cell;
     

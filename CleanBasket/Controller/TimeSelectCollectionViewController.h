@@ -17,6 +17,6 @@
 @property (nonatomic) NSDate *startDate;
 @property (nonatomic) OrderStatusViewController *orderStatusViewController;
 
-- (void)initWithDayInterval:(NSInteger)interval andType:(CBTimeSelectType)type;
+- (void)initWithStartDate:(NSDate*)startDay andType:(CBTimeSelectType)type;
 
 @end

@@ -246,7 +246,7 @@ NSMutableArray *searchResult, *allAddress, *supportAddress, *supportAllDongsAddr
     if (isSupportAddress) {
         
         NSString *alertMessgae = [NSString stringWithFormat:@"%@",cellString];
-        
+#warning Need LocalizedString
         UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"나머지 상세 주소를 입력해주세요" message:alertMessgae delegate:self cancelButtonTitle:@"취소" otherButtonTitles:@"확인", nil];
         [alert setAlertViewStyle:UIAlertViewStylePlainTextInput];
         [[alert textFieldAtIndex:0] setPlaceholder:@"상세 주소 입력"];
@@ -334,7 +334,8 @@ NSMutableArray *searchResult, *allAddress, *supportAddress, *supportAllDongsAddr
 //    manager.responseSerializer = [AFJSONResponseSerializer serializer];
     manager.responseSerializer.acceptableContentTypes = [manager.responseSerializer.acceptableContentTypes setByAddingObject:@"text/html"];
 
-    [manager GET:@"http://www.cleanbasket.co.kr/district"
+    NSString *urlString = [NSString stringWithFormat:@"%@%@",CB_SERVER_URL,@"district"];
+    [manager GET:urlString
       parameters:nil
          success:^(AFHTTPRequestOperation *operation, id responseObject) {
 
@@ -381,16 +382,12 @@ NSMutableArray *searchResult, *allAddress, *supportAddress, *supportAllDongsAddr
     NSDictionary *parameters = @{@"address":address,
                                  @"addr_building":remainder
     };
-    NSLog(@"remainder : %@",remainder);
 
-
-    [manager POST:@"http://www.cleanbasket.co.kr/member/address/update"
+    NSString *urlString = [NSString stringWithFormat:@"%@%@",CB_SERVER_URL,@"member/address/update"];
+    [manager POST:urlString
        parameters:parameters
 
           success:^(AFHTTPRequestOperation *operation, id responseObject) {
-
-
-              NSLog(@"결과: %@", [NSString stringWithUTF8String:[responseObject[@"message"] UTF8String]]);
 
               if ([responseObject[@"constant"] integerValue] == CBServerConstantSuccess) {
                   [[NSNotificationCenter defaultCenter] postNotificationName:@"didFinishEditAddress" object:nil];

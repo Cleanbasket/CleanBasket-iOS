@@ -23,7 +23,7 @@
 
 - (void)awakeFromNib {
 
-    [self.navigationItem setTitle:@"크린바스켓"];
+    [self.navigationItem setTitle:NSLocalizedString(@"app_name", nil)];
 
 }
 

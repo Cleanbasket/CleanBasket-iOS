@@ -76,7 +76,7 @@
 
 - (IBAction)addCredit:(id)sender {
 
-
+#warning Need LocalizedString
     if ( (_cardNumberTF1.text.length+_cardNumberTF1.text.length+_cardNumberTF1.text.length+_cardNumberTF1.text.length) < 16){
         [SVProgressHUD showErrorWithStatus:@"카드번호를 모두 입력해주세요."];
         return;
@@ -113,13 +113,13 @@
 
     
     
-    
-    [manager POST:@"http://www.cleanbasket.co.kr/member/payment"
+    NSString *urlString = [NSString stringWithFormat:@"%@%@",CB_SERVER_URL,@"member/payment"];
+    [manager POST:urlString
       parameters:parameters
          success:^(AFHTTPRequestOperation *operation, id responseObject) {
 
              if ([responseObject[@"constant"] isEqualToNumber:@1]){
-
+#warning Need LocalizedString
                  [SVProgressHUD showSuccessWithStatus:@"카드등록 성공"];
 
                  [[NSNotificationCenter defaultCenter] postNotificationName:@"didFinishAddCredit" object:nil];
