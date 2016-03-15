@@ -108,8 +108,7 @@
         
         // Display a message when the table is empty
         UILabel *messageLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, self.view.bounds.size.height)];
-#warning Need LocalizedString 
-        messageLabel.text = NSLocalizedString(@"쿠폰이 없습니다.", @"쿠폰이 없습니다.");
+        messageLabel.text = NSLocalizedString(@"no_coupon", nil);
         messageLabel.textColor = [UIColor blackColor];
         messageLabel.numberOfLines = 0;
         messageLabel.textAlignment = NSTextAlignmentCenter;

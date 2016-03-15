@@ -136,8 +136,7 @@
         switch (index) {
             case 0:{
                 if ([_currentOrder[@"state"] isEqualToNumber:@2]) {
-#warning Need LocalizedString
-                    [SVProgressHUD showErrorWithStatus:@"수거 시간 변경 불가능!"];
+                    [SVProgressHUD showErrorWithStatus:NSLocalizedString(@"unable_pickup_date", nil)];
                     break;
                 }
                 [timeSelectViewController setTimeSelectType:CBTimeSelectTypePickUp];
@@ -221,14 +220,12 @@
                     break;
                 case 1:{
                     NSLog(@"시간변경");
-#warning Need LocalizedString
-                    NSArray *items = @[MMItemMake(NSLocalizedString(@"수거 시간 변경", nil), MMItemTypeHighlight, timeChangeBlock),
-                                       MMItemMake(NSLocalizedString(@"배달 시간 변경", nil), MMItemTypeHighlight, timeChangeBlock),
+                    NSArray *items = @[MMItemMake(NSLocalizedString(@"change_pickup_date", nil), MMItemTypeHighlight, timeChangeBlock),
+                                       MMItemMake(NSLocalizedString(@"change_dropoff_date", nil), MMItemTypeHighlight, timeChangeBlock),
                                        MMItemMake(NSLocalizedString(@"label_cancel", nil), MMItemTypeNormal, timeChangeBlock)];
-                    NSString *timeChangeMessage = [NSString stringWithFormat:@"%@ : %@\n%@ : %@",NSLocalizedString(@"pick_up_time_label", @"수거 시간"),self.pickUpDateLabel.text,NSLocalizedString(@"drop_off_time_label", @"배달 시간"),self.dropOffDateLabel.text];
+                    NSString *timeChangeMessage = [NSString stringWithFormat:@"%@ : %@\n%@ : %@",NSLocalizedString(@"pick_up_time_label", nil),self.pickUpDateLabel.text,NSLocalizedString(@"drop_off_time_label", nil),self.dropOffDateLabel.text];
                     
-#warning Need LocalizedString
-                    [[[MMAlertView alloc]initWithTitle:NSLocalizedString(@"시간 변경", nil) detail:timeChangeMessage items:items]show];
+                    [[[MMAlertView alloc]initWithTitle:NSLocalizedString(@"change_date", nil) detail:timeChangeMessage items:items]show];
                     
                     
                 }
@@ -255,14 +252,12 @@
         block = ^(NSInteger index){
             switch (index) {
                 case 0:{
-#warning Need LocalizedString
-                    NSArray *items = @[MMItemMake(NSLocalizedString(@"수거 시간 변경", nil), MMItemTypeHighlight, timeChangeBlock),
-                                       MMItemMake(NSLocalizedString(@"배달 시간 변경", nil), MMItemTypeHighlight, timeChangeBlock),
+                    NSArray *items = @[MMItemMake(NSLocalizedString(@"change_pickup_date", nil), MMItemTypeHighlight, timeChangeBlock),
+                                       MMItemMake(NSLocalizedString(@"change_dropoff_date", nil), MMItemTypeHighlight, timeChangeBlock),
                                        MMItemMake(NSLocalizedString(@"label_cancel", nil), MMItemTypeNormal, timeChangeBlock)];
-                    NSString *timeChangeMessage = [NSString stringWithFormat:@"%@ : %@\n%@ : %@",NSLocalizedString(@"pick_up_time_label", @"수거 시간"),self.pickUpDateLabel.text,NSLocalizedString(@"drop_off_time_label", @"배달 시간"),self.dropOffDateLabel.text];
+                    NSString *timeChangeMessage = [NSString stringWithFormat:@"%@ : %@\n%@ : %@",NSLocalizedString(@"pick_up_time_label", nil),self.pickUpDateLabel.text,NSLocalizedString(@"drop_off_time_label", nil),self.dropOffDateLabel.text];
                     
-#warning Need LocalizedString
-                    [[[MMAlertView alloc]initWithTitle:NSLocalizedString(@"시간 변경", nil) detail:timeChangeMessage items:items]show];
+                    [[[MMAlertView alloc]initWithTitle:NSLocalizedString(@"change_date", nil) detail:timeChangeMessage items:items]show];
                     
                 }
                     break;
@@ -281,14 +276,12 @@
             switch (index) {
                 case 0:{
                     
-#warning Need LocalizedString
-                    NSArray *items = @[MMItemMake(NSLocalizedString(@"수거 시간 변경", nil), MMItemTypeHighlight, timeChangeBlock),
-                                       MMItemMake(NSLocalizedString(@"배달 시간 변경", nil), MMItemTypeHighlight, timeChangeBlock),
+                    NSArray *items = @[MMItemMake(NSLocalizedString(@"change_pickup_date", nil), MMItemTypeHighlight, timeChangeBlock),
+                                       MMItemMake(NSLocalizedString(@"change_dropoff_date", nil), MMItemTypeHighlight, timeChangeBlock),
                                        MMItemMake(NSLocalizedString(@"label_cancel", nil), MMItemTypeNormal, timeChangeBlock)];
-                    NSString *timeChangeMessage = [NSString stringWithFormat:@"%@ : %@\n%@ : %@",NSLocalizedString(@"pick_up_time_label", @"수거 시간"),self.pickUpDateLabel.text,NSLocalizedString(@"drop_off_time_label", @"배달 시간"),self.dropOffDateLabel.text];
+                    NSString *timeChangeMessage = [NSString stringWithFormat:@"%@ : %@\n%@ : %@",NSLocalizedString(@"pick_up_time_label", nil),self.pickUpDateLabel.text,NSLocalizedString(@"drop_off_time_label", nil),self.dropOffDateLabel.text];
                     
-#warning Need LocalizedString
-                    [[[MMAlertView alloc]initWithTitle:NSLocalizedString(@"시간 변경", nil) detail:timeChangeMessage items:items]show];
+                    [[[MMAlertView alloc]initWithTitle:NSLocalizedString(@"change_date", nil) detail:timeChangeMessage items:items]show];
                     
                 }
                     break;
@@ -394,8 +387,6 @@
                  NSArray *data = [NSJSONSerialization JSONObjectWithData:objectData
                                                                          options:NSJSONReadingMutableContainers
                                                                            error:&jsonError];
-                 NSString *newStr = [NSString stringWithUTF8String:[objectData bytes]];
-                 
                  
                  
                  if (data.count) {

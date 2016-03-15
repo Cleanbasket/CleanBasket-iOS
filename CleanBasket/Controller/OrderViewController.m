@@ -510,9 +510,8 @@ typedef enum : NSUInteger {
                                                              options:NSJSONReadingMutableContainers
                                                                error:&jsonError];
 
-#warning Need LocalizedString
              if ([data[@"cardName"] isEqualToString:@""]){
-                 [SVProgressHUD showWithStatus:@"등록된 카드가 없습니다."];
+                 [SVProgressHUD showWithStatus:NSLocalizedString(@"null_card", nil)];
 
                  UIStoryboard *sb = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
                  UINavigationController *creditViewController = [sb instantiateViewControllerWithIdentifier:@"AddCreditVC"];
@@ -594,10 +593,9 @@ typedef enum : NSUInteger {
     //수거-배달 최소 48시간
     NSDate *twoDaysAfterDate = [_pickUpDate dateByAddingTimeInterval:60*60*24*2];
     if ([_dropOffDate compare:twoDaysAfterDate] == NSOrderedAscending) {
-        [UIAlertView showWithTitle:NSLocalizedString(@"toast_error", @"에러")
-#warning Need LocalizedString
-                           message:@"배달일은 수거일 2일 이후에 가능합니다."
-                 cancelButtonTitle:NSLocalizedString(@"label_confirm", @"확인")
+        [UIAlertView showWithTitle:NSLocalizedString(@"toast_error", nil)
+                           message:NSLocalizedString(@"deliver_pos", nil)
+                 cancelButtonTitle:NSLocalizedString(@"label_confirm", nil)
                  otherButtonTitles:nil
                           tapBlock:nil];
 

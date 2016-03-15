@@ -246,10 +246,9 @@ NSMutableArray *searchResult, *allAddress, *supportAddress, *supportAllDongsAddr
     if (isSupportAddress) {
         
         NSString *alertMessgae = [NSString stringWithFormat:@"%@",cellString];
-#warning Need LocalizedString
-        UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"나머지 상세 주소를 입력해주세요" message:alertMessgae delegate:self cancelButtonTitle:@"취소" otherButtonTitles:@"확인", nil];
+        UIAlertView *alert = [[UIAlertView alloc]initWithTitle:NSLocalizedString(@"input_detail_address_title", nil) message:alertMessgae delegate:self cancelButtonTitle:NSLocalizedString(@"label_cancel", nil) otherButtonTitles:NSLocalizedString(@"label_confirm", nil), nil];
         [alert setAlertViewStyle:UIAlertViewStylePlainTextInput];
-        [[alert textFieldAtIndex:0] setPlaceholder:@"상세 주소 입력"];
+        [[alert textFieldAtIndex:0] setPlaceholder:NSLocalizedString(@"input_detail_address", nil)];
         
         [alert show];
     } else {

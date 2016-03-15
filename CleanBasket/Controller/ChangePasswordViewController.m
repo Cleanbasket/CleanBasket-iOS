@@ -38,18 +38,17 @@
 }
 
 - (IBAction)changePassword:(id)sender {
-#warning Need LocalizedString
     if (!_currentPwTF.text.length) {
-        [SVProgressHUD showErrorWithStatus:@"현재 비밀번호를 입력해주세요."];
+        [SVProgressHUD showErrorWithStatus:NSLocalizedString(@"input_current_password", nil)];
         [_currentPwTF becomeFirstResponder];
     }
     else if (!_changePwTF.text.length) {
-        [SVProgressHUD showErrorWithStatus:@"새 비밀번호를 입력해주세요."];
+        [SVProgressHUD showErrorWithStatus:NSLocalizedString(@"input_new_password", nil)];
         [_changePwTF becomeFirstResponder];
         
     }
     else if (!_repeatTF.text.length) {
-        [SVProgressHUD showErrorWithStatus:@"새 비밀번호를 한번 더 입력해주세요."];
+        [SVProgressHUD showErrorWithStatus:NSLocalizedString(@"input_repeat_password", nil)];
         [_repeatTF becomeFirstResponder];
         
     } else if (![_changePwTF.text isEqualToString:_repeatTF.text]){

@@ -170,8 +170,7 @@
 - (IBAction)registAuthUser:(id)sender {
     
     if (!_emailTextField.text.length){
-#warning Need LocalizedString
-        [SVProgressHUD showErrorWithStatus:@"이메일을 입력해주세요"];
+        [SVProgressHUD showErrorWithStatus:NSLocalizedString(@"input_email", nil)];
         [_emailTextField becomeFirstResponder];
         return;
     }

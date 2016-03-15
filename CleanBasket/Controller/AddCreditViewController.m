@@ -76,21 +76,20 @@
 
 - (IBAction)addCredit:(id)sender {
 
-#warning Need LocalizedString
     if ( (_cardNumberTF1.text.length+_cardNumberTF1.text.length+_cardNumberTF1.text.length+_cardNumberTF1.text.length) < 16){
-        [SVProgressHUD showErrorWithStatus:@"카드번호를 모두 입력해주세요."];
+        [SVProgressHUD showErrorWithStatus:NSLocalizedString(@"input_card_number", nil)];
         return;
     }
     else if (_expiryMonthTF.text.length+_expiryYearTF.text.length < 4){
-        [SVProgressHUD showErrorWithStatus:@"유효기간을 모두 입력해주세요."];
+        [SVProgressHUD showErrorWithStatus:NSLocalizedString(@"input_expiration_day", nil)];
         return;
     }
     else if ( _birthDateTF.text.length < 6){
-        [SVProgressHUD showErrorWithStatus:@"생년월일을 모두 입력해주세요."];
+        [SVProgressHUD showErrorWithStatus:NSLocalizedString(@"input_birthday", nil)];
         return;
     }
     else if (_passwordTF.text.length < 2){
-        [SVProgressHUD showErrorWithStatus:@"비밀번호를 입력해주세요."];
+        [SVProgressHUD showErrorWithStatus:NSLocalizedString(@"input_card_password", nil)];
         return;
     }
 
@@ -119,8 +118,7 @@
          success:^(AFHTTPRequestOperation *operation, id responseObject) {
 
              if ([responseObject[@"constant"] isEqualToNumber:@1]){
-#warning Need LocalizedString
-                 [SVProgressHUD showSuccessWithStatus:@"카드등록 성공"];
+                 [SVProgressHUD showSuccessWithStatus:NSLocalizedString(@"success_card", nil)];
 
                  [[NSNotificationCenter defaultCenter] postNotificationName:@"didFinishAddCredit" object:nil];
 
@@ -128,12 +126,12 @@
              }
 
              else {
-                 [SVProgressHUD showErrorWithStatus:@"카드등록 실패\n입력하신 정보를 확인해보세요"];
+                 [SVProgressHUD showErrorWithStatus:NSLocalizedString(@"fail_card", nil)];
              }
 
 
          } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                [SVProgressHUD showErrorWithStatus:@"카드등록 실패\n입력하신 정보를 확인해보세요"];
+                [SVProgressHUD showErrorWithStatus:NSLocalizedString(@"fail_card", nil)];
             }];;
 }
 

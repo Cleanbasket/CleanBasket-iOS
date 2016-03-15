@@ -110,8 +110,7 @@
         session.presentingViewController = nil;
         
         if (!session.isOpen) {
-#warning Need LocalizedString
-            [[[UIAlertView alloc] initWithTitle:@"에러" message:error.description delegate:nil cancelButtonTitle:@"확인" otherButtonTitles:nil, nil] show];
+            [[[UIAlertView alloc] initWithTitle:NSLocalizedString(@"toast_error", nill) message:error.description delegate:nil cancelButtonTitle:NSLocalizedString(@"label_confirm", nil) otherButtonTitles:nil, nil] show];
         }
         else {
             NSLog(@"login succeeded.%@",[KOSession sharedSession]);
@@ -225,8 +224,7 @@
             case CBServerConstantAccountDisabled :
             {
                 dispatch_async(dispatch_get_main_queue(), ^{
-                    #warning Need Localized
-                    [SVProgressHUD showErrorWithStatus:@"해당 계정은 사용하실 수 없습니다."];
+                    [SVProgressHUD showErrorWithStatus:NSLocalizedString(@"unusable_account", nil)];
                 });
                 break;
             }

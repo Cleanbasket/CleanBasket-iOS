@@ -361,3 +361,27 @@
 "change_item"="품목 변경";
 "change_time"="수거배달 시간 변경";
 "order_cancel"="주문 취소";
+"input_current_password"="현재 비밀번호를 입력해주세요.";
+"input_new_password"="새 비밀번호를 입력해주세요.";
+"input_repeat_password"="새 비밀번호를 한번 더 입력해주세요.";
+"input_detail_address_title"="나머지 상세 주소를 입력해주세요";
+"input_detail_address"="상세 주소 입력";
+"input_card_number"="카드번호를 모두 입력해주세요.";
+"input_expiration_day"="유효기간을 모두 입력해주세요.";
+"input_birthday"="생년월일을 모두 입력해주세요.";
+"input_card_password"="비밀번호를 입력해주세요.";
+"success_card"="카드등록 성공";
+"fail_card"="카드등록 실패\n입력하신 정보를 확인해보세요";
+"null_card"="등록된 카드가 없습니다.";
+"deliver_pos"="배달일은 수거일 2일 이후에 가능합니다.";
+"unusable_account"="해당 계정은 사용하실 수 없습니다.";
+"unable_pickup_date"="수거 시간은 변경이 불가능 합니다.";
+"change_pickup_date"="수거 시간 변경";
+"change_dropoff_date"="배달 시간 변경";
+"change_date"="시간 변경";
+"no_coupon"="쿠폰이 없습니다.";
+"input_email"="이메일을 입력해주세요.";
+
+
+
+
