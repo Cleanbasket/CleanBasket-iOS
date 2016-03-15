@@ -17,6 +17,6 @@ pod 'GUITabPagerViewController', '~> 0.0.8'
 
 pod 'TTTAttributedLabel'
 
-pod 'MMPopupView', :head
+pod 'MMPopupView'
 
 pod 'UIAlertView+Blocks'
