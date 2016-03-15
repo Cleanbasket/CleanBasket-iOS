@@ -68,6 +68,8 @@ typedef enum : NSUInteger {
     
     [self addNotification];
     
+    [self setTitle:NSLocalizedString(@"menu_label_order", nil)];
+    
     _numberFormatter = [NSNumberFormatter new];
     [_numberFormatter setNumberStyle:NSNumberFormatterDecimalStyle];
     

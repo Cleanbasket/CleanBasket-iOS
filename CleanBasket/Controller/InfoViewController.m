@@ -37,7 +37,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
 
-    [self setTitle:NSLocalizedString(@"menu_label_information", @"내 정보")];
+    [self setTitle:NSLocalizedString(@"menu_label_information", nil)];
     
     [self setNeedsStatusBarAppearanceUpdate];
 
@@ -51,6 +51,10 @@
     
 }
 
+- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
+{
+    [self.view endEditing:YES];
+}
 
 - (void)setTopView{
     
@@ -164,6 +168,7 @@
 
 
 - (IBAction)registAuthUser:(id)sender {
+    
     if (!_emailTextField.text.length){
 #warning Need LocalizedString
         [SVProgressHUD showErrorWithStatus:@"이메일을 입력해주세요"];
@@ -205,6 +210,8 @@
                 NSLog(@"Error: %@", error);
                 [SVProgressHUD showErrorWithStatus:NSLocalizedString(@"network_error",nil)];
             }];
+    
+    [self.view endEditing:YES];
 
 
 }

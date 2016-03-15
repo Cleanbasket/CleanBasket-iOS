@@ -1,4 +1,4 @@
-//
+ //
 // Created by 이상진 on 2015. 12. 8..
 // Copyright (c) 2015 WashappKorea. All rights reserved.
 //
@@ -34,10 +34,10 @@
 
     _privacyLinkLabel.text = [NSString stringWithFormat:@"%@ %@ %@ %@ %@",
                               NSLocalizedString(@"login_agreement_a", nil),
-                              NSLocalizedString(@"Login_agreement_b", nil),
-                              NSLocalizedString(@"Login_agreement_c", nil),
-                              NSLocalizedString(@"Login_agreement_d", nil),
-                              NSLocalizedString(@"Login_agreement_e", nil)];
+                              NSLocalizedString(@"login_agreement_b", nil),
+                              NSLocalizedString(@"login_agreement_c", nil),
+                              NSLocalizedString(@"login_agreement_d", nil),
+                              NSLocalizedString(@"login_agreement_e", nil)];
     
     NSMutableDictionary *mutableActiveLinkAttributes = [NSMutableDictionary dictionary];
     mutableActiveLinkAttributes[(NSString *) kCTUnderlineStyleAttributeName] = @YES;
@@ -50,14 +50,15 @@
     NSString *privacyUrlString = [NSString stringWithFormat:@"%@%@",CB_SERVER_URL,@"privacy"];
     NSURL *privacyUrl = [NSURL URLWithString:privacyUrlString];
     NSString *privacyString = _privacyLinkLabel.text;
-    NSRange privacyRange = [privacyString rangeOfString:NSLocalizedString(@"Login_agreement_b", @"개인정보 수집 및 이용에 대한 안내")];
+//    NSRange privacyRange = [privacyString rangeOfString:NSLocalizedString(@"Login_agreement_b", @"개인정보 수집 및 이용에 대한 안내")];
+    NSRange privacyRange = [privacyString rangeOfString:NSLocalizedString(@"login_agreement_b", nil)];
     [_privacyLinkLabel addLinkToURL:privacyUrl withRange:privacyRange];
 
     
     NSString *touUrlString = [NSString stringWithFormat:@"%@%@",CB_SERVER_URL,@"term-of-use"];
     NSURL *termUrl = [NSURL URLWithString:touUrlString];
     NSString *termString = _privacyLinkLabel.text;
-    NSRange termRange = [termString rangeOfString:NSLocalizedString(@"Login_agreement_d", @"이용약관")];
+    NSRange termRange = [termString rangeOfString:NSLocalizedString(@"login_agreement_d", nil)];
     [_privacyLinkLabel addLinkToURL:termUrl withRange:termRange];
     
     

@@ -20,7 +20,7 @@
 
 - (void)labelTap{
     
-    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"telprompt://07075521385"]];
+    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"telprompt://18338543"]];
 }
 
 - (void)viewDidLoad {
