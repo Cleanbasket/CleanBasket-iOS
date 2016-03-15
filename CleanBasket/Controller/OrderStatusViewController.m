@@ -394,6 +394,8 @@
                  NSArray *data = [NSJSONSerialization JSONObjectWithData:objectData
                                                                          options:NSJSONReadingMutableContainers
                                                                            error:&jsonError];
+                 NSString *newStr = [NSString stringWithUTF8String:[objectData bytes]];
+                 
                  
                  
                  if (data.count) {
@@ -403,15 +405,18 @@
                      UIImage *statusImage = nil;
                      switch ([self.currentOrder[@"state"] integerValue]) {
                          case 0:
-                             statusImage = [UIImage imageNamed:@"ic_order_status_timeline1"];
+                             statusImage = [UIImage imageNamed:@"ic_order_status_timeline1"]; // 수정하기
                              break;
                          case 1:
-                             statusImage = [UIImage imageNamed:@"ic_order_status_timeline2"];
+                             statusImage = [UIImage imageNamed:@"ic_order_status_timeline1"];
                              break;
                          case 2:
-                             statusImage = [UIImage imageNamed:@"ic_order_status_timeline3"];
+                             statusImage = [UIImage imageNamed:@"ic_order_status_timeline2"];
                              break;
                          case 3:
+                             statusImage = [UIImage imageNamed:@"ic_order_status_timeline3"];
+                             break;
+                         case 4:
                              statusImage = [UIImage imageNamed:@"ic_order_status_timeline4"];
                              break;
                              
@@ -427,24 +432,43 @@
                      _callButton.hidden = YES;
                      [_deliverImageView setImage:[UIImage imageNamed:@"ic_launcher"]];
                      
-                     if (_currentOrder[@"dropOffInfo"]) {
-                         NSNumberFormatter *numberFormatter = [NSNumberFormatter new];
-                         numberFormatter.numberStyle = NSNumberFormatterDecimalStyle;
-                         
-                         _callButton.hidden = NO;
-                         _deliverNameLabel.text = _currentOrder[@"dropOffInfo"][@"name"];
-                         [_deliverImageView setImageWithURL:[NSURL URLWithString:_currentOrder[@"dropOffInfo"][@"img"]]];
-                         _deliverPhoneNumber = [numberFormatter numberFromString:_currentOrder[@"dropOffInfo"][@"phone"]];
-                         
-                     } else if (_currentOrder[@"pickUpInfo"]){
-                         NSNumberFormatter *numberFormatter = [NSNumberFormatter new];
-                         numberFormatter.numberStyle = NSNumberFormatterDecimalStyle;
-                         
-                         _callButton.hidden = NO;
-                         _deliverNameLabel.text = _currentOrder[@"pickUpInfo"][@"name"];
-                         [_deliverImageView setImageWithURL:[NSURL URLWithString:_currentOrder[@"pickUpInfo"][@"img"]]];
-                         _deliverPhoneNumber = [numberFormatter numberFromString:_currentOrder[@"pickUpInfo"][@"phone"]];
-                         
+                     NSNumberFormatter *numberFormatter = [NSNumberFormatter new];
+                     numberFormatter.numberStyle = NSNumberFormatterDecimalStyle;
+                     NSString *imageUrlString = @"";
+                     
+                     switch ([self.currentOrder[@"state"] integerValue]) {
+                         case 0:
+                             [_deliverImageView setImage:[UIImage imageNamed:@"ic_launcher"]];
+                             _deliverNameLabel.text = @"";
+                             break;
+                         case 1:
+                             imageUrlString = [NSString stringWithFormat:@"%@%@",CB_SERVER_URL,_currentOrder[@"pickupInfo"][@"img"]];
+                             
+                             _callButton.hidden = NO;
+                             _deliverNameLabel.text = _currentOrder[@"pickupInfo"][@"name"];
+                             [_deliverImageView setImageWithURL:[NSURL URLWithString:imageUrlString]];
+                             _deliverPhoneNumber = [numberFormatter numberFromString:_currentOrder[@"pickupInfo"][@"phone"]];
+                             break;
+                         case 2:
+                             [_deliverImageView setImage:[UIImage imageNamed:@"ic_launcher"]];
+                             _deliverNameLabel.text = @"";
+                             break;
+                         case 3:
+                             imageUrlString = [NSString stringWithFormat:@"%@%@",CB_SERVER_URL,_currentOrder[@"dropoffInfo"][@"img"]];
+                             
+                             
+                             _callButton.hidden = NO;
+                             _deliverNameLabel.text = _currentOrder[@"dropoffInfo"][@"name"];
+                             [_deliverImageView setImageWithURL:[NSURL URLWithString:imageUrlString]];
+                             _deliverPhoneNumber = [numberFormatter numberFromString:_currentOrder[@"dropOffInfo"][@"phone"]];
+                             break;
+                         case 4:
+                             [_deliverImageView setImage:[UIImage imageNamed:@"ic_launcher"]];
+                             _deliverNameLabel.text = @"";
+                             break;
+                             
+                         default:
+                             break;
                      }
                      
                      self.pickUpDateLabel.text = [self formatedStringFromDate:_pickUpDate];
