@@ -1,0 +1,482 @@
+
+/* Class = "UILabel"; text = "배달"; ObjectID = "02X-8J-Mop"; */
+"02X-8J-Mop.text" = "Drop Off";
+
+/* Class = "UIButton"; normalTitle = "확인"; ObjectID = "03r-rd-M0i"; */
+"03r-rd-M0i.normalTitle" = "Confirm";
+
+/* Class = "UITextField"; placeholder = "MM"; ObjectID = "0MP-8w-Eaz"; */
+"0MP-8w-Eaz.placeholder" = "MM";
+
+/* Class = "UILabel"; text = "아이디(이메일)을 입력해주세요"; ObjectID = "0VZ-Y2-PaO"; */
+"0VZ-Y2-PaO.text" = "Enter ID (email)";
+
+/* Class = "UILabel"; text = "로그인에 있어 개인정보 수집 및 이용에 대한 안내 및 서비스 이용약관에 동의합니다."; ObjectID = "0XM-vc-bJT"; */
+//"0XM-vc-bJT.text" = "로그인에 있어 개인정보 수집 및 이용에 대한 안내 및 서비스 이용약관에 동의합니다.";
+
+/* Class = "UIButton"; normalTitle = "<"; ObjectID = "0Xd-2q-ozu"; */
+"0Xd-2q-ozu.normalTitle" = "<";
+
+/* Class = "UITextField"; placeholder = "Email"; ObjectID = "0ep-M0-xKj"; */
+"0ep-M0-xKj.placeholder" = "Email";
+
+/* Class = "UIButton"; normalTitle = "공지사항"; ObjectID = "1Qe-mO-Ur6"; */
+"1Qe-mO-Ur6.normalTitle" = "Notice";
+
+/* Class = "UILabel"; text = "5,000원"; ObjectID = "1bo-f9-vRj"; */
+//"1bo-f9-vRj.text" = "5,000원";
+
+/* Class = "UIButton"; normalTitle = "주문 변경/취소"; ObjectID = "3ZQ-K9-g3I"; */
+"3ZQ-K9-g3I.normalTitle" = "Change/Cancel Order";
+
+/* Class = "UIBarButtonItem"; title = "Item"; ObjectID = "3il-c7-Eek"; */
+"3il-c7-Eek.title" = "Item";
+
+/* Class = "UILabel"; text = "999,999원"; ObjectID = "3vI-Yr-RwQ"; */
+//"3vI-Yr-RwQ.text" = "999,999원";
+
+/* Class = "UIButton"; normalTitle = "카드 등록"; ObjectID = "4DO-sf-rHC"; */
+"4DO-sf-rHC.normalTitle" = "Card Add";
+
+/* Class = "UIButton"; normalTitle = "실시간 상담"; ObjectID = "4Ig-Z9-EQL"; */
+"4Ig-Z9-EQL.normalTitle" = "Chat with us!";
+
+/* Class = "UITabBarItem"; title = "1:1 문의"; ObjectID = "56X-8A-Qxz"; */
+"56X-8A-Qxz.title" = "QnA";
+
+/* Class = "UILabel"; text = "6개월(180일) 내 사용 금액 기준"; ObjectID = "5i4-94-Sin"; */
+"5i4-94-Sin.text" = "Based on the used amount within 6 months(180 days)";
+
+/* Class = "UILabel"; text = "마감"; ObjectID = "5ph-qe-vX5"; */
+"5ph-qe-vX5.text" = "Close";
+
+/* Class = "UIButton"; normalTitle = ">"; ObjectID = "5u8-Ee-KWg"; */
+"5u8-Ee-KWg.normalTitle" = ">";
+
+/* Class = "UILabel"; text = "지금 바로 사용해보세요"; ObjectID = "63K-dJ-fgd"; */
+"63K-dJ-fgd.text" = "Let\'s try now";
+
+/* Class = "UILabel"; text = "0개"; ObjectID = "6HK-BQ-Bxt"; */
+//"6HK-BQ-Bxt.text" = "0개";
+
+/* Class = "UITextField"; placeholder = "Phone"; ObjectID = "6O6-w6-u2l"; */
+"6O6-w6-u2l.placeholder" = "Phone";
+
+/* Class = "UILabel"; text = "3%"; ObjectID = "6V1-6X-D3L"; */
+"6V1-6X-D3L.text" = "3%";
+
+/* Class = "UILabel"; text = "쿠폰명"; ObjectID = "6nk-dn-rKl"; */
+//"6nk-dn-rKl.text" = "쿠폰명";
+
+/* Class = "UILabel"; text = "수거시간"; ObjectID = "8W3-pI-DnF"; */
+"8W3-pI-DnF.text" = "Pick Up";
+
+/* Class = "UIButton"; normalTitle = "가입"; ObjectID = "8eP-bF-nb4"; */
+"8eP-bF-nb4.normalTitle" = "Sign Up";
+
+/* Class = "UIButton"; normalTitle = "주문 내역"; ObjectID = "8h3-qf-AkQ"; */
+"8h3-qf-AkQ.normalTitle" = "Order history";
+
+/* Class = "UITabBarItem"; title = "주문현황"; ObjectID = "95D-Pn-zRq"; */
+"95D-Pn-zRq.title" = "Order Status";
+
+/* Class = "UILabel"; text = "수거 시간"; ObjectID = "9Az-5t-mff"; */
+"9Az-5t-mff.text" = "Pick Up";
+
+/* Class = "UITableViewSection"; headerTitle = "버전 정보"; ObjectID = "9P2-yo-W7w"; */
+"9P2-yo-W7w.headerTitle" = "Version Info";
+
+/* Class = "UILabel"; text = "500,000원"; ObjectID = "9e6-kx-vuc"; */
+//"9e6-kx-vuc.text" = "500,000원";
+
+/* Class = "UILabel"; text = "결제수단"; ObjectID = "AC2-km-O6k"; */
+"AC2-km-O6k.text" = "Payment Method";
+
+/* Class = "UILabel"; text = "배달 시간"; ObjectID = "AGB-gQ-v7S"; */
+"AGB-gQ-v7S.text" = "Drop Off";
+
+/* Class = "UILabel"; text = "적립률 3%"; ObjectID = "AJd-3Y-isl"; */
+"AJd-3Y-isl.text" = "Mileage 3%";
+
+/* Class = "UITextField"; placeholder = "새 비밀번호"; ObjectID = "AxD-2e-t03"; */
+"AxD-2e-t03.placeholder" = "New Password";
+
+/* Class = "UITabBarItem"; title = "내 정보"; ObjectID = "B6y-jc-KOc"; */
+"B6y-jc-KOc.title" = "My Infomation";
+
+/* Class = "UILabel"; text = "오전 10:00~11:00"; ObjectID = "BFu-RW-chV"; */
+//"BFu-RW-chV.text" = "오전 10:00~11:00";
+
+/* Class = "UIButton"; normalTitle = "주문하기"; ObjectID = "BHZ-wH-AXK"; */
+"BHZ-wH-AXK.normalTitle" = "Place Order";
+
+/* Class = "UITextField"; placeholder = "선택 사항"; ObjectID = "BQt-Vk-wa9"; */
+"BQt-Vk-wa9.placeholder" = "Option";
+
+/* Class = "UILabel"; text = "러브바스켓"; ObjectID = "Bi2-qa-vaB"; */
+"Bi2-qa-vaB.text" = "Love Basket";
+
+/* Class = "UILabel"; text = "이용 금액"; ObjectID = "Buj-lW-qtf"; */
+"Buj-lW-qtf.text" = "Used Total";
+
+/* Class = "UIButton"; normalTitle = "알람"; ObjectID = "C73-g7-vb7"; */
+"C73-g7-vb7.normalTitle" = "Alarm";
+
+/* Class = "UILabel"; text = "03월 14일(월) 오전 11:30~12:30에 배달됩니다."; ObjectID = "CoJ-Wq-QJE"; */
+//"CoJ-Wq-QJE.text" = "03월 14일(월) 오전 11:30~12:30에 배달됩니다.";
+
+/* Class = "UITextField"; placeholder = "YY"; ObjectID = "Cqg-do-XQa"; */
+"Cqg-do-XQa.placeholder" = "YY";
+
+/* Class = "UILabel"; text = "적립률 1%"; ObjectID = "D6P-0R-aHy"; */
+"D6P-0R-aHy.text" = "Mileage 1%";
+
+/* Class = "UIButton"; normalTitle = "닫기"; ObjectID = "DF0-Hb-sCv"; */
+"DF0-Hb-sCv.normalTitle" = "Close";
+
+/* Class = "UILabel"; text = "주문번호"; ObjectID = "DGP-Ba-YR0"; */
+"DGP-Ba-YR0.text" = "Order No.";
+
+/* Class = "UILabel"; text = "크린바스켓 서비스를
+소개합니다"; ObjectID = "DXC-Cv-PQp"; */
+"DXC-Cv-PQp.text" = "Introduction to \n Clean Basket";
+
+/* Class = "UIButton"; normalTitle = "쿠폰"; ObjectID = "DlN-VJ-Ypa"; */
+"DlN-VJ-Ypa.normalTitle" = "Coupon";
+
+/* Class = "UILabel"; text = "크린바스켓"; ObjectID = "E1k-3W-UxW"; */
+"E1k-3W-UxW.text" = "Clean Basket";
+
+/* Class = "UILabel"; text = "비즈니스"; ObjectID = "EIT-cV-4G0"; */
+"EIT-cV-4G0.text" = "Business";
+
+/* Class = "UILabel"; text = "합리적인 가격"; ObjectID = "EYC-M5-v8H"; */
+"EYC-M5-v8H.text" = "Competitive Price";
+
+/* Class = "UILabel"; text = "수거 시간"; ObjectID = "Edd-8v-5U1"; */
+"Edd-8v-5U1.text" = "Pick Up";
+
+/* Class = "UILabel"; text = "선택사항"; ObjectID = "FDC-7P-crP"; */
+"FDC-7P-crP.text" = "Option";
+
+/* Class = "UILabel"; text = "등급"; ObjectID = "FE2-tF-06s"; */
+"FE2-tF-06s.text" = "Class";
+
+/* Class = "UILabel"; text = "품목"; ObjectID = "FKO-kI-Qgj"; */
+"FKO-kI-Qgj.text" = "Item";
+
+/* Class = "UILabel"; text = "주소"; ObjectID = "FYS-sj-V3m"; */
+"FYS-sj-V3m.text" = "Address";
+
+/* Class = "UILabel"; text = "기한"; ObjectID = "Fg2-mg-TOu"; */
+"Fg2-mg-TOu.text" = "Infinite";
+
+/* Class = "UIButton"; normalTitle = "가입"; ObjectID = "FhG-cp-NcV"; */
+"FhG-cp-NcV.normalTitle" = "Sign Up";
+
+/* Class = "UITextField"; placeholder = "Repeat Password"; ObjectID = "G0h-OQ-5VJ"; */
+"G0h-OQ-5VJ.placeholder" = "Repeat Password";
+
+/* Class = "UIButton"; normalTitle = "품목"; ObjectID = "GSu-t9-bjZ"; */
+"GSu-t9-bjZ.normalTitle" = "Item";
+
+/* Class = "UIButton"; normalTitle = "이메일 로그인"; ObjectID = "GeB-RW-G7z"; */
+"GeB-RW-G7z.normalTitle" = "Login via Email";
+
+/* Class = "UIButton"; normalTitle = "비밀번호 찾기"; ObjectID = "Gh1-CT-Bxh"; */
+"Gh1-CT-Bxh.normalTitle" = "Search password";
+
+/* Class = "UITextField"; placeholder = "Password"; ObjectID = "HjG-tp-d1n"; */
+"HjG-tp-d1n.placeholder" = "Password";
+
+/* Class = "UILabel"; text = "가입"; ObjectID = "Igs-fg-nTC"; */
+"Igs-fg-nTC.text" = "Sign Up";
+
+/* Class = "UILabel"; text = "0원"; ObjectID = "JOI-Qb-PDI"; */
+//"JOI-Qb-PDI.text" = "0원";
+
+/* Class = "UILabel"; text = "수량"; ObjectID = "JUc-kZ-czp"; */
+"JUc-kZ-czp.text" = "Unit";
+
+/* Class = "UILabel"; text = "적립률 2%"; ObjectID = "Jhj-hC-1d1"; */
+"Jhj-hC-1d1.text" = "Mileage 2%";
+
+/* Class = "UILabel"; text = "총계"; ObjectID = "KNG-FV-GYr"; */
+"KNG-FV-GYr.text" = "Total";
+
+/* Class = "UIButton"; normalTitle = "뒤로"; ObjectID = "KUn-Ri-NCo"; */
+"KUn-Ri-NCo.normalTitle" = "Back";
+
+/* Class = "UITextField"; placeholder = "Email"; ObjectID = "KUx-i6-whG"; */
+"KUx-i6-whG.placeholder" = "Email";
+
+/* Class = "UILabel"; text = "아이템 이름"; ObjectID = "LBA-lh-4Ze"; */
+//"LBA-lh-4Ze.text" = "아이템 이름";
+
+/* Class = "UITextField"; placeholder = "인증 번호"; ObjectID = "LFJ-A9-rRJ"; */
+"LFJ-A9-rRJ.placeholder" = "Authorization Code";
+
+/* Class = "UILabel"; text = "수거"; ObjectID = "NJO-0k-dyX"; */
+"NJO-0k-dyX.text" = "Pick Up";
+
+/* Class = "UILabel"; text = "주문 알람"; ObjectID = "Nix-TA-utc"; */
+"Nix-TA-utc.text" = "Order Notification";
+
+/* Class = "UILabel"; text = "무엇이든 물어보세요"; ObjectID = "OXG-c6-g8c"; */
+"OXG-c6-g8c.text" = "Ask us anything";
+
+/* Class = "UILabel"; text = "이메일 로그인"; ObjectID = "Ory-Ai-m9c"; */
+"Ory-Ai-m9c.text" = "Login via Email";
+
+/* Class = "UILabel"; text = "0원"; ObjectID = "POd-F8-BbE"; */
+//"POd-F8-BbE.text" = "0원";
+
+/* Class = "UILabel"; text = "등급 보기"; ObjectID = "PcZ-dY-ixK"; */
+"PcZ-dY-ixK.text" = "Class Info";
+
+/* Class = "UILabel"; text = "총계"; ObjectID = "Pvk-bD-UH7"; */
+"Pvk-bD-UH7.text" = "Total";
+
+/* Class = "UINavigationItem"; title = "주소"; ObjectID = "Pxb-qU-MNv"; */
+"Pxb-qU-MNv.title" = "Address";
+
+/* Class = "UIButton"; normalTitle = "등급보기"; ObjectID = "QIM-AJ-8Jo"; */
+"QIM-AJ-8Jo.normalTitle" = "Class Info";
+
+/* Class = "UILabel"; text = "최신 버전 2.00"; ObjectID = "QU6-f5-uNo"; */
+//"QU6-f5-uNo.text" = "최신 버전 2.00";
+
+/* Class = "UILabel"; text = "결제"; ObjectID = "QZt-q6-pgP"; */
+"QZt-q6-pgP.text" = "Payment";
+
+/* Class = "UILabel"; text = "크린바스켓 서비스 지역을
+알려드립니다"; ObjectID = "RdM-Zc-ncV"; */
+"RdM-Zc-ncV.text" = "Service Available Area";
+
+/* Class = "UILabel"; text = "수거 시간"; ObjectID = "T6b-0F-ox1"; */
+"T6b-0F-ox1.text" = "Pick Up";
+
+/* Class = "UITextField"; placeholder = "현재 비밀번호"; ObjectID = "WKP-d4-0xH"; */
+"WKP-d4-0xH.placeholder" = "Existing Password;
+
+/* Class = "UILabel"; text = "주문상태"; ObjectID = "Wg4-oA-Zzt"; */
+//"Wg4-oA-Zzt.text" = "주문상태";
+
+/* Class = "UILabel"; text = "비밀번호 변경"; ObjectID = "WiX-LB-dNr"; */
+"WiX-LB-dNr.text" = "Change Password";
+
+/* Class = "UILabel"; text = "사용 가능 마일리지 5,240"; ObjectID = "Wvc-Ld-8ni"; */
+//"Wvc-Ld-8ni.text" = "사용 가능 마일리지 5,240";
+
+/* Class = "UILabel"; text = "로그아웃"; ObjectID = "YKi-RP-t9F"; */
+"YKi-RP-t9F.text" = "Log Out";
+
+/* Class = "UILabel"; text = "적립률 4%"; ObjectID = "Yj7-aZ-3cY"; */
+"Yj7-aZ-3cY.text" = "Mileage 4%";
+
+/* Class = "UITextField"; placeholder = "Password"; ObjectID = "Ywq-Fy-az1"; */
+"Ywq-Fy-az1.placeholder" = "Password";
+
+/* Class = "UILabel"; text = "수거 시간"; ObjectID = "Zcb-To-whD"; */
+"Zcb-To-whD.text" = "Pick Up";
+
+/* Class = "UILabel"; text = "혜택"; ObjectID = "ZxG-hh-ZEY"; */
+"ZxG-hh-ZEY.text" = "Benefit";
+
+/* Class = "UITextField"; placeholder = "800101"; ObjectID = "Zyh-Gb-j9M"; */
+"Zyh-Gb-j9M.placeholder" = "800101";
+
+/* Class = "UITabBarItem"; title = "내 정보"; ObjectID = "a4H-w5-7AM"; */
+"a4H-w5-7AM.title" = "My Infomation";
+
+/* Class = "UILabel"; text = "오전 10:00~11:00"; ObjectID = "a9K-V8-OmQ"; */
+//"a9K-V8-OmQ.text" = "오전 10:00~11:00";
+
+/* Class = "UILabel"; text = "금액"; ObjectID = "b3V-vc-GSS"; */
+"b3V-vc-GSS.text" = "Price";
+
+/* Class = "UILabel"; text = "NICEPAY 정기과금 이용약관 내용에 모두 동의합니다."; ObjectID = "bFK-Nq-rJv"; */
+"bFK-Nq-rJv.text" = "NICEPAY Terms of Use Agree with";
+
+/* Class = "UINavigationItem"; title = "견적내기"; ObjectID = "bIF-j2-mJG"; */
+"bIF-j2-mJG.title" = "Price Estimation";
+
+/* Class = "UILabel"; text = "현재 진행 중인 주문이 없습니다."; ObjectID = "bId-ZW-b17"; */
+"bId-ZW-b17.text" = "No order in progress";
+
+/* Class = "UILabel"; text = "아이템명"; ObjectID = "bgF-b4-8U0"; */
+//"bgF-b4-8U0.text" = "아이템명";
+
+/* Class = "UILabel"; text = "오전 10:00~11:00"; ObjectID = "blI-M1-L6i"; */
+//"blI-M1-L6i.text" = "오전 10:00~11:00";
+
+/* Class = "UIButton"; normalTitle = "비밀번호 변경"; ObjectID = "byf-fA-S5s"; */
+"byf-fA-S5s.normalTitle" = "Change password";
+
+/* Class = "UILabel"; text = "유효기간"; ObjectID = "cDt-LM-ufh"; */
+"cDt-LM-ufh.text" = "Exp Date";
+
+/* Class = "UILabel"; text = "업데이트"; ObjectID = "cYL-aV-HXN"; */
+"cYL-aV-HXN.text" = "Update";
+
+/* Class = "UILabel"; text = "적립률 2%"; ObjectID = "ca9-X4-VQC"; */
+"ca9-X4-VQC.text" = "Mileage 2%";
+
+/* Class = "UIButton"; normalTitle = "로그인"; ObjectID = "dLg-g7-EKe"; */
+"dLg-g7-EKe.normalTitle" = "Login";
+
+/* Class = "UIBarButtonItem"; title = "확인"; ObjectID = "ddp-CR-eda"; */
+"ddp-CR-eda.title" = "Confirm";
+
+/* Class = "UIButton"; normalTitle = "뒤로"; ObjectID = "e8u-Si-69O"; */
+"e8u-Si-69O.normalTitle" = "Back";
+
+/* Class = "UILabel"; text = "띵띵카드
+00.00.00"; ObjectID = "eh4-JD-iuJ"; */
+//"eh4-JD-iuJ.text" = "띵띵카드
+//00.00.00";
+
+/* Class = "UILabel"; text = "0"; ObjectID = "ezO-Vv-RAq"; */
+"ezO-Vv-RAq.text" = "0";
+
+/* Class = "UILabel"; text = "카드번호"; ObjectID = "f56-Hw-cva"; */
+"f56-Hw-cva.text" = "C Number";
+
+/* Class = "UILabel"; text = "완료"; ObjectID = "fgl-Xt-LTj"; */
+"fgl-Xt-LTj.text" = "Done";
+
+/* Class = "UILabel"; text = "세탁 수거배달 서비스"; ObjectID = "fi1-Am-18o"; */
+"fi1-Am-18o.text" = "Premium Dry Cleaning & Laundry Delivery";
+
+/* Class = "UITextField"; placeholder = "다시입력"; ObjectID = "gkJ-e3-vvs"; */
+"gkJ-e3-vvs.placeholder" = "Re-enter";
+
+/* Class = "UILabel"; text = "이벤트 알람"; ObjectID = "h3c-nt-7AY"; */
+"h3c-nt-7AY.text" = "Event Notification";
+
+/* Class = "UINavigationItem"; title = "결제 카드 등록"; ObjectID = "hCO-T4-r8W"; */
+"hCO-T4-r8W.title" = "Add Payment";
+
+/* Class = "UILabel"; text = "현재 버전"; ObjectID = "hJx-L2-Ubi"; */
+"hJx-L2-Ubi.text" = "Current Version";
+
+/* Class = "UIButton"; normalTitle = "총계"; ObjectID = "i3n-De-AeB"; */
+"i3n-De-AeB.normalTitle" = "Total";
+
+/* Class = "UILabel"; text = "150,000원"; ObjectID = "iM3-AR-lnB"; */
+//"iM3-AR-lnB.text" = "150,000원";
+
+/* Class = "UILabel"; text = "견적내기/가격보기"; ObjectID = "iTA-Ya-WQy"; */
+"iTA-Ya-WQy.text" = "Price Estimation";
+
+/* Class = "UILabel"; text = "크린바스켓 PD"; ObjectID = "iog-kn-miz"; */
+"iog-kn-miz.text" = "CleanBasket PD";
+
+/* Class = "UITableViewSection"; headerTitle = "공지사항"; ObjectID = "iwe-5R-bc9"; */
+"iwe-5R-bc9.headerTitle" = "Notice";
+
+/* Class = "UILabel"; text = "test@example.com"; ObjectID = "jDx-io-Dg8"; */
+//"jDx-io-Dg8.text" = "test@example.com";
+
+/* Class = "UILabel"; text = "현재 버전 2.00"; ObjectID = "jUG-zl-kQc"; */
+//"jUG-zl-kQc.text" = "현재 버전 2.00";
+
+/* Class = "UITextField"; placeholder = "Email"; ObjectID = "jeS-Lb-jZE"; */
+"jeS-Lb-jZE.placeholder" = "Email";
+
+/* Class = "UILabel"; text = "카드별명"; ObjectID = "kqq-l0-wPm"; */
+"kqq-l0-wPm.text" = "Card Nick";
+
+/* Class = "UIButton"; normalTitle = "뒤로"; ObjectID = "ky9-CM-YYq"; */
+"ky9-CM-YYq.normalTitle" = "Back";
+
+/* Class = "UILabel"; text = "수거 시간"; ObjectID = "lRx-lR-aGC"; */
+"lRx-lR-aGC.text" = "Pick Up";
+
+/* Class = "UITabBarItem"; title = "주문하기"; ObjectID = "lqQ-AT-b7n"; */
+"lqQ-AT-b7n.title" = "Place Order";
+
+/* Class = "UILabel"; text = "300,000원"; ObjectID = "m9k-bi-WkA"; */
+//"m9k-bi-WkA.text" = "300,000원";
+
+/* Class = "UIButton"; normalTitle = "설정"; ObjectID = "oWD-w2-WQt"; */
+"oWD-w2-WQt.normalTitle" = "Setting";
+
+/* Class = "UILabel"; text = "NICEPAY에서 제공하는 결제 서비스입니다."; ObjectID = "owc-CI-KRM"; */
+"owc-CI-KRM.text" = "The payment service provided by NICEPAY";
+
+/* Class = "UILabel"; text = "세탁"; ObjectID = "oxQ-GN-G7U"; */
+"oxQ-GN-G7U.text" = "Dry Clean\n Laundry";
+
+/* Class = "UILabel"; text = "최신 버전"; ObjectID = "qML-b5-smj"; */
+"qML-b5-smj.text" = "Latest Version";
+
+/* Class = "UIButton"; normalTitle = "확인"; ObjectID = "qxX-dX-GWd"; */
+"qxX-dX-GWd.normalTitle" = "Confirm";
+
+/* Class = "UIButton"; normalTitle = "PD에게 전화하기"; ObjectID = "qy4-sA-JNG"; */
+"qy4-sA-JNG.normalTitle" = "Call to the PD";
+
+/* Class = "UITextField"; placeholder = "Email"; ObjectID = "rFO-P1-84f"; */
+"rFO-P1-84f.placeholder" = "Email";
+
+/* Class = "UILabel"; text = "지금 추가 정보를 입력하시면 마일리지 적립과
+쿠폰 사용 혜택을 누리실 수 있습니다!"; ObjectID = "sE7-Xn-lPB"; */
+"sE7-Xn-lPB.text" = "Input additional Information\n and Receive Mileage & Coupon";
+
+/* Class = "UIButton"; normalTitle = "카카오톡 로그인"; ObjectID = "sbP-xO-Oai"; */
+"sbP-xO-Oai.normalTitle" = "Login via Kakao Talk";
+
+/* Class = "UILabel"; text = "골드바스켓"; ObjectID = "seu-M0-0tt"; */
+"seu-M0-0tt.text" = "Gold Basket";
+
+/* Class = "UILabel"; text = "?원"; ObjectID = "sw8-8w-D1D"; */
+//"sw8-8w-D1D.text" = "?원";
+
+/* Class = "UITabBarItem"; title = "주문현황"; ObjectID = "tEZ-2S-c6b"; */
+"tEZ-2S-c6b.title" = "Order Status";
+
+/* Class = "UILabel"; text = "품목"; ObjectID = "te7-bt-qPx"; */
+"te7-bt-qPx.text" = "Item";
+
+/* Class = "UILabel"; text = "고객센터와 실시간 채팅이 가능합니다(운영시간 : 오전 10시 ~ 오후 6시)"; ObjectID = "tom-P3-tZw"; */
+"tom-P3-tZw.text" = "We are ready for you\n(hours of operation : 10 am ~ 6 pm)";
+
+/* Class = "UIButton"; normalTitle = "요청"; ObjectID = "ug8-K7-Bze"; */
+"ug8-K7-Bze.normalTitle" = "Request";
+
+/* Class = "UILabel"; text = "오늘 오전 10시~11시"; ObjectID = "uul-a5-jNW"; */
+//"uul-a5-jNW.text" = "오늘 오전 10시~11시";
+
+/* Class = "UILabel"; text = "비밀번호"; ObjectID = "vht-TR-3sZ"; */
+"vht-TR-3sZ.text" = "Password";
+
+/* Class = "UILabel"; text = "고급 세탁 서비스"; ObjectID = "xLZ-bV-CR1"; */
+"xLZ-bV-CR1.text" = "Premium Laundry Service";
+
+/* Class = "UILabel"; text = "비밀번호 변경"; ObjectID = "xZW-Jp-eah"; */
+"xZW-Jp-eah.text" = "Change Password";
+
+/* Class = "UILabel"; text = "**"; ObjectID = "xbD-uB-Ozv"; */
+"xbD-uB-Ozv.text" = "**";
+
+/* Class = "UILabel"; text = "생년월일"; ObjectID = "xll-nN-BTh"; */
+"xll-nN-BTh.text" = "Birthday";
+
+/* Class = "UILabel"; text = "크린바스켓"; ObjectID = "yK7-jj-zRd"; */
+"yK7-jj-zRd.text" = "Clean Basket";
+
+/* Class = "UIButton"; normalTitle = "가입"; ObjectID = "ySi-xx-b1l"; */
+"ySi-xx-b1l.normalTitle" = "Sign Up";
+
+/* Class = "UILabel"; text = "수거배달시간 : 10:00~24:00"; ObjectID = "yev-kM-fvP"; */
+"yev-kM-fvP.text" = "Work Hours : 10:00~24:00";
+
+/* Class = "UILabel"; text = "스마트폰 App을 통한 편리한 주문"; ObjectID = "z4S-Ls-qO8"; */
+"z4S-Ls-qO8.text" = "Convenient App";
+
+/* Class = "UILabel"; text = "크린바스켓"; ObjectID = "zOK-d9-xEB"; */
+"zOK-d9-xEB.text" = "Clean Basket";
+
+/* Class = "UILabel"; text = "실버바스켓"; ObjectID = "zhX-jb-EyN"; */
+"zhX-jb-EyN.text" = "Silver Basket";
