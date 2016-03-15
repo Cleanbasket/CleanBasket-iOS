@@ -217,12 +217,6 @@
 }
 
 
-
-
-
-
-
-
 - (IBAction)showNoticeVC:(id)sender {
     
     NoticeViewController *noticeViewController = [NoticeViewController new];

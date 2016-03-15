@@ -137,8 +137,10 @@
 /* Class = "UILabel"; text = "주문번호"; ObjectID = "DGP-Ba-YR0"; */
 "DGP-Ba-YR0.text" = "주문번호";
 
-/* Class = "UILabel"; text = "크린바스켓 서비스를 소개합니다"; ObjectID = "DXC-Cv-PQp"; */
-"DXC-Cv-PQp.text" = "크린바스켓 서비스를 소개합니다";
+/* Class = "UILabel"; text = "크린바스켓 서비스를
+소개합니다"; ObjectID = "DXC-Cv-PQp"; */
+"DXC-Cv-PQp.text" = "크린바스켓 서비스를
+소개합니다";
 
 /* Class = "UIButton"; normalTitle = "쿠폰"; ObjectID = "DlN-VJ-Ypa"; */
 "DlN-VJ-Ypa.normalTitle" = "쿠폰";
@@ -248,8 +250,9 @@
 /* Class = "UILabel"; text = "결제"; ObjectID = "QZt-q6-pgP"; */
 "QZt-q6-pgP.text" = "결제";
 
-/* Class = "UILabel"; text = "크린바스켓 서비스 지역을 알려드립니다"; ObjectID = "RdM-Zc-ncV"; */
-"RdM-Zc-ncV.text" = "크린바스켓 서비스 지역을 알려드립니다";
+/* Class = "UILabel"; text = "크린바스켓 서비스 지역을
+알려드립니다"; ObjectID = "RdM-Zc-ncV"; */
+"RdM-Zc-ncV.text" = "서비스 지역을 알려드립니다";
 
 /* Class = "UILabel"; text = "수거 시간"; ObjectID = "T6b-0F-ox1"; */
 "T6b-0F-ox1.text" = "수거 시간";
@@ -329,8 +332,10 @@
 /* Class = "UIButton"; normalTitle = "뒤로"; ObjectID = "e8u-Si-69O"; */
 "e8u-Si-69O.normalTitle" = "뒤로";
 
-/* Class = "UILabel"; text = "띵띵카드 00.00.00"; ObjectID = "eh4-JD-iuJ"; */
-"eh4-JD-iuJ.text" = "띵띵카드 00.00.00";
+/* Class = "UILabel"; text = "띵띵카드
+00.00.00"; ObjectID = "eh4-JD-iuJ"; */
+"eh4-JD-iuJ.text" = "띵띵카드
+00.00.00";
 
 /* Class = "UILabel"; text = "0"; ObjectID = "ezO-Vv-RAq"; */
 "ezO-Vv-RAq.text" = "0";
@@ -416,8 +421,10 @@
 /* Class = "UITextField"; placeholder = "Email"; ObjectID = "rFO-P1-84f"; */
 "rFO-P1-84f.placeholder" = "Email";
 
-/* Class = "UILabel"; text = "지금 추가 정보를 입력하시면 마일리지 적립과 쿠폰 사용 혜택을 누리실 수 있습니다!"; ObjectID = "sE7-Xn-lPB"; */
-"sE7-Xn-lPB.text" = "지금 추가 정보를 입력하시면 마일리지 적립과 쿠폰 사용 혜택을 누리실 수 있습니다!";
+/* Class = "UILabel"; text = "지금 추가 정보를 입력하시면 마일리지 적립과
+쿠폰 사용 혜택을 누리실 수 있습니다!"; ObjectID = "sE7-Xn-lPB"; */
+"sE7-Xn-lPB.text" = "지금 추가 정보를 입력하시면 마일리지 적립과
+쿠폰 사용 혜택을 누리실 수 있습니다!";
 
 /* Class = "UIButton"; normalTitle = "카카오톡 로그인"; ObjectID = "sbP-xO-Oai"; */
 "sbP-xO-Oai.normalTitle" = "카카오톡 로그인";
