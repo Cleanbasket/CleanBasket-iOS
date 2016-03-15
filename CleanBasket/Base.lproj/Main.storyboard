@@ -874,7 +874,7 @@
             </objects>
             <point key="canvasLocation" x="5286" y="-156"/>
         </scene>
-        <!--주문하기-->
+        <!--Order View Controller-->
         <scene sceneID="JTn-TO-UVB">
             <objects>
                 <viewController id="103-zA-C0X" customClass="OrderViewController" sceneMemberID="viewController">
@@ -1233,7 +1233,7 @@
                             <constraint firstItem="dKA-ed-Fcg" firstAttribute="top" secondItem="eaZ-Rv-9RG" secondAttribute="bottom" constant="8" id="vC3-8e-jgA"/>
                         </constraints>
                     </view>
-                    <tabBarItem key="tabBarItem" title="주문하기" image="ic_menu_1order" id="lqQ-AT-b7n"/>
+                    <tabBarItem key="tabBarItem" title="" image="ic_menu_1order" id="lqQ-AT-b7n"/>
                     <connections>
                         <outlet property="addressLabel" destination="FYS-sj-V3m" id="Wf3-Ct-Ko6"/>
                         <outlet property="addressView" destination="mKP-uZ-0fN" id="MzA-6i-zRS"/>
@@ -4612,11 +4612,11 @@
             </objects>
             <point key="canvasLocation" x="1065" y="183"/>
         </scene>
-        <!--주문현황-->
+        <!--Navigation Controller-->
         <scene sceneID="ZRb-3f-18A">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="VVW-zD-GJi" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="주문현황" image="ic_menu_2delivery" id="95D-Pn-zRq"/>
+                    <tabBarItem key="tabBarItem" title="" image="ic_menu_2delivery" id="95D-Pn-zRq"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="XpO-V5-PDH">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
@@ -4637,6 +4637,7 @@
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" navigationBarHidden="YES" id="o3b-QP-eJd" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="1:1 문의" image="ic_menu_4alarm" id="56X-8A-Qxz"/>
                     <toolbarItems/>
+                    <keyCommands/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="Os7-7e-roS">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>

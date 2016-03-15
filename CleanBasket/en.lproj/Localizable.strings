@@ -19,6 +19,7 @@
 "menu_label_delivery"="Order Status";
 "menu_label_information"="My Information";
 "menu_label_notification"="Notice";
+"menu_label_help"="1:1 Help";
 "error_invalid_email"="Invalid Email";
 "error_invalid_password"="Incorrect password";
 "error_incorrect_password"="Incorrect password";

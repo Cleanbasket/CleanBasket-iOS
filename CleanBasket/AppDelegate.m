@@ -68,6 +68,7 @@
     [[UITabBar appearance] setTintColor:[UIColor blackColor]];
 
     [[UITextField appearance] setTintColor:CleanBasketMint];
+    
 
     [[UILabel appearanceWhenContainedIn:[UITableViewHeaderFooterView class], nil] setFont:[UIFont boldSystemFontOfSize:14]];
 

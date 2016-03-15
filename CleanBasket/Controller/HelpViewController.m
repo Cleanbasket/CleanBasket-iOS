@@ -26,6 +26,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
 
+    [self setTitle:NSLocalizedString(@"menu_label_help", nil)];
     
     _callLabel.userInteractionEnabled = YES;
     UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(labelTap)];

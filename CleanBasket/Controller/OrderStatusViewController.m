@@ -64,6 +64,16 @@
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(refresh:) name:@"SVProgressHUDDidDisappearNotification" object:nil];
     
 }
+
+- (id)initWithCoder:(NSCoder *)decoder
+{
+    self = [super initWithCoder:decoder];
+    if (self) {
+        self.tabBarItem.title = NSLocalizedString(@"menu_label_delivery", nil);
+    }
+    return self;
+}
+
 - (void)viewWillAppear:(BOOL)animated{
     [self loadOrderStatus];
 }
