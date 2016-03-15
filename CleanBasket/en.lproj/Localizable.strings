@@ -354,8 +354,9 @@
 "card_info_title"="Card Registration Info";
 "card_info"="- If you add credit card once, you can enjoy Clean Basket more comfortable.<br/><br/>- <b>It is optional.</b> You can also pay with cash or credit card in person.<br/><br/>- Payment will be triggered after delivery finished.<br/><br/>- We do not save credit card information. Enjoy Clean Basket comfortable.";
 "show_price"="Price Estimation";
-"dropoff_datetime"="Laundry will be arrived after ";
-"dropoff_datetime"="days";
+"dropoff_datetime_a"="Laundry will be arrived after ";
+"dropoff_datetime_b"="days";
+"dropoff_datetime_c"="";
 "order_close"="Close";
 "change_item"="Modify item";
 "change_time"="Modify datetime";
