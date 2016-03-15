@@ -280,7 +280,7 @@ typedef enum : NSUInteger {
     if (_estimatePrice.integerValue){
         [_estimatePriceLabel setHidden:NO];
         NSLog(@"[estimate] %@",_estimatePrice);
-        NSString *totalPriceString = [NSString stringWithFormat:@"%@%@",[_numberFormatter stringFromNumber:_estimatePrice],NSLocalizedString(@"monetary_unit",@"원")];
+        NSString *totalPriceString = [NSString stringWithFormat:@"%@%@",[_numberFormatter stringFromNumber:_estimatePrice],NSLocalizedString(@"monetary_unit",nil)];
         _estimatePriceLabel.text = totalPriceString;
     }
     else {
@@ -440,9 +440,9 @@ typedef enum : NSUInteger {
 
 
 - (void)paymentMethodTap{
-    UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:NSLocalizedString(@"payment_method",@"결제수단")
+    UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:NSLocalizedString(@"payment_method",nil)
                                                              delegate:self
-                                                    cancelButtonTitle:NSLocalizedString(@"label_cancel",@"취소")
+                                                    cancelButtonTitle:NSLocalizedString(@"label_cancel",nil)
                                                destructiveButtonTitle:nil
                                                     otherButtonTitles:NSLocalizedString(@"payment_card",nil),NSLocalizedString(@"payment_cash",nil),NSLocalizedString(@"payment_in_app_finish",nil),nil];
 
@@ -567,20 +567,20 @@ typedef enum : NSUInteger {
     
     
     NSString *messageString = [NSString stringWithFormat:@"%@ : %@ %@\n%@ : %@\n%@ : %@",
-                               NSLocalizedString(@"address", @"주소"), _address, _addr_building,
-                               NSLocalizedString(@"pick_up_time_label", @"수거 시간"), [self getStringFromDate:_pickUpDate],
-                               NSLocalizedString(@"drop_off_time_label", @"배달 시간"), [self getStringFromDate:_dropOffDate]
+                               NSLocalizedString(@"address", nil), _address, _addr_building,
+                               NSLocalizedString(@"pick_up_time_label", nil), [self getStringFromDate:_pickUpDate],
+                               NSLocalizedString(@"drop_off_time_label", nil), [self getStringFromDate:_dropOffDate]
                                ];
     
-    [UIAlertView showWithTitle:NSLocalizedString(@"주문 확인", @"주문 정보 확인")
+    [UIAlertView showWithTitle:NSLocalizedString(@"주문 확인", nil)
                        message:messageString
-             cancelButtonTitle:NSLocalizedString(@"label_cancel", @"취소")
-             otherButtonTitles:@[NSLocalizedString(@"button_order", @"주문하기")]
+             cancelButtonTitle:NSLocalizedString(@"label_cancel", nil)
+             otherButtonTitles:@[NSLocalizedString(@"button_order", nil)]
                       tapBlock:^(UIAlertView *alertView, NSInteger buttonIndex){
                           if (buttonIndex == alertView.cancelButtonIndex) {
                               return;
                           }
-                          else if (buttonIndex == [[alertView buttonTitleAtIndex:buttonIndex] isEqualToString:NSLocalizedString(@"button_order", @"주문하기")]){
+                          else if (buttonIndex == [[alertView buttonTitleAtIndex:buttonIndex] isEqualToString:NSLocalizedString(@"button_order", nil)]){
                               [self addNewOrder];
                           }
                           
@@ -638,7 +638,6 @@ typedef enum : NSUInteger {
     
     //아이템
     NSMutableArray *items = [NSMutableArray new];
-
     
     for (AddedItem *item in _items) {
         [items addObject:@{@"item_code":item.itemCode,
@@ -647,8 +646,8 @@ typedef enum : NSUInteger {
     }
     
     //품목 없을경우 처리
-    if (items.count) {
-        [items addObject:@{@"item_code":@999,@"category":@6,@"name":@"현장확인",@"descr":@"onthespot",@"price":@0,@"scope":@0,@"count":@1}];
+    if (items.count == 0) {
+        [items addObject:@{@"item_code":@10, @"count":@1}];
     }
     
     
