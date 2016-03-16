@@ -396,7 +396,7 @@
                      UIImage *statusImage = nil;
                      switch ([self.currentOrder[@"state"] integerValue]) {
                          case 0:
-                             statusImage = [UIImage imageNamed:@"ic_order_status_timeline1"]; // 수정하기
+                             statusImage = [UIImage imageNamed:@"ic_order_status_timeline0"];
                              break;
                          case 1:
                              statusImage = [UIImage imageNamed:@"ic_order_status_timeline1"];
