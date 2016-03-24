@@ -39,6 +39,7 @@
 - (void)viewDidLoad{
     [self setTitle:NSLocalizedString(@"menu_label_delivery", nil)];
     
+    
     self.dateformatter = [NSDateFormatter new];
     self.dateformatter.dateFormat = @"yyyy-MM-dd HH:mm:ss.s";
     
