@@ -4769,10 +4769,10 @@
         <image name="ic_login_seoul" width="191" height="27"/>
         <image name="ic_login_seoul_map" width="500" height="387"/>
         <image name="ic_map_address_select" width="15" height="30"/>
-        <image name="ic_menu_1order" width="50" height="50"/>
-        <image name="ic_menu_2delivery" width="50" height="50"/>
-        <image name="ic_menu_3information" width="50" height="50"/>
-        <image name="ic_menu_4alarm" width="50" height="50"/>
+        <image name="ic_menu_1order" width="44" height="44"/>
+        <image name="ic_menu_2delivery" width="44" height="44"/>
+        <image name="ic_menu_3information" width="44" height="44"/>
+        <image name="ic_menu_4alarm" width="44" height="44"/>
         <image name="ic_menu_itembox" width="57" height="33"/>
         <image name="ic_nice" width="583" height="583"/>
         <image name="ic_order_drop_off_time_label" width="57" height="43"/>

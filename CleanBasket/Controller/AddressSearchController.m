@@ -315,6 +315,7 @@ NSMutableArray *searchResult, *allAddress, *supportAddress, *supportAllDongsAddr
     
     if (buttonIndex == 1) {
         
+        // 나머지 주소 입력
         NSString *remainder = [alertView textFieldAtIndex:0].text;
         [self updateAddress:alertView.message remainder:remainder];
         [SVProgressHUD show];
@@ -325,14 +326,18 @@ NSMutableArray *searchResult, *allAddress, *supportAddress, *supportAllDongsAddr
 
 #pragma mark -
 #pragma mark API
+// 사용자 정보 가지고 오는 로직
+// GET
 - (void)getAddress{
 
+    // AFHTTP 관련
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
 
     manager.requestSerializer = [AFHTTPRequestSerializer serializer];
-//    manager.responseSerializer = [AFJSONResponseSerializer serializer];
     manager.responseSerializer.acceptableContentTypes = [manager.responseSerializer.acceptableContentTypes setByAddingObject:@"text/html"];
 
+    
+    // 주소 업데이트 URL
     NSString *urlString = [NSString stringWithFormat:@"%@%@",CB_SERVER_URL,@"district"];
     [manager GET:urlString
       parameters:nil
@@ -368,23 +373,23 @@ NSMutableArray *searchResult, *allAddress, *supportAddress, *supportAllDongsAddr
 
 
 // 사용자 주소 정보 업데이트 하는 로직
+// POST
 - (void)updateAddress:(NSString*)address remainder:(NSString*)remainder{
 
 
+    // AFHTTP 관련
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-
 
     manager.requestSerializer = [AFJSONRequestSerializer serializer];
     manager.responseSerializer = [AFJSONResponseSerializer serializerWithReadingOptions:NSJSONReadingAllowFragments];
-
     manager.responseSerializer.acceptableContentTypes = [manager.responseSerializer.acceptableContentTypes setByAddingObject:@"text/html"];
 
 
-
+    // 주소 업데이트 Dictionary
     NSDictionary *parameters = @{@"address":address,
-                                 @"addr_building":remainder
-    };
+                                 @"addr_building":remainder};
 
+    // 주소 업데이트 URL
     NSString *urlString = [NSString stringWithFormat:@"%@%@",CB_SERVER_URL,@"member/address/update"];
     [manager POST:urlString
        parameters:parameters
