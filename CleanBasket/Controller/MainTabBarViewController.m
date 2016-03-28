@@ -21,7 +21,7 @@
     for (UITabBarItem *tbi in self.tabBar.items) {
         tbi.image = [tbi.image imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
     }
-    
+//
 }
 
 - (void)didReceiveMemoryWarning {

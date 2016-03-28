@@ -365,6 +365,9 @@ NSMutableArray *searchResult, *allAddress, *supportAddress, *supportAllDongsAddr
             }];
 }
 
+
+
+// 사용자 주소 정보 업데이트 하는 로직
 - (void)updateAddress:(NSString*)address remainder:(NSString*)remainder{
 
 

@@ -68,13 +68,13 @@ typedef enum : NSUInteger {
     
     [self addNotification];
     
-//    [self setTitle:NSLocalizedString(@"menu_label_order", nil)];
+    [self setTitle:NSLocalizedString(@"menu_label_order", nil)];
     
     [[self.tabBarController.tabBar.items objectAtIndex:0] setTitle:NSLocalizedString(@"menu_label_order", nil)];
     [[self.tabBarController.tabBar.items objectAtIndex:1] setTitle:NSLocalizedString(@"menu_label_delivery", nil)];
     [[self.tabBarController.tabBar.items objectAtIndex:2] setTitle:NSLocalizedString(@"menu_label_information", nil)];
     [[self.tabBarController.tabBar.items objectAtIndex:3] setTitle:NSLocalizedString(@"menu_label_help", nil)];
-    
+//
     _numberFormatter = [NSNumberFormatter new];
     [_numberFormatter setNumberStyle:NSNumberFormatterDecimalStyle];
     

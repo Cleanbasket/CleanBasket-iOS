@@ -61,11 +61,11 @@
 
     [AFNetworkActivityIndicatorManager sharedManager].enabled = YES;
 
-    [[UITabBarItem appearance] setTitleTextAttributes:@{ NSForegroundColorAttributeName : [UIColor whiteColor] }
+    [[UITabBarItem appearance] setTitleTextAttributes:@{ NSForegroundColorAttributeName : [UIColor grayColor] }
                                              forState:UIControlStateNormal];
-    [[UITabBarItem appearance] setTitleTextAttributes:@{ NSForegroundColorAttributeName : [UIColor blackColor] }
+    [[UITabBarItem appearance] setTitleTextAttributes:@{ NSForegroundColorAttributeName : CleanBasketMint }
                                              forState:UIControlStateSelected];
-    [[UITabBar appearance] setTintColor:[UIColor blackColor]];
+    [[UITabBar appearance] setTintColor:CleanBasketMint];
 
     [[UITextField appearance] setTintColor:CleanBasketMint];
     
