@@ -556,8 +556,9 @@ typedef enum : NSUInteger {
                                                          bundle:nil];
     OrderCheckViewController *sfvc = [storyboard instantiateViewControllerWithIdentifier:@"OrderCheckViewController"];
     
-//    OrderCheckViewController *sfvc = [[OrderCheckViewController alloc] initWithNibName:@"OrderCheckViewController" bundle:nil];
-    [self presentViewController:sfvc animated:NO completion:nil];
+    [sfvc setModalPresentationStyle:UIModalPresentationCustom];
+    [sfvc setModalTransitionStyle:UIModalTransitionStyleCrossDissolve];
+    [self presentViewController:sfvc animated:YES completion:nil];
     
 //    OrderCheckViewController *orderCheckVC = [[OrderCheckViewController alloc] init];
 //    
