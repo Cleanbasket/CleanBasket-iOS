@@ -17,6 +17,7 @@
 #import "CBConstants.h"
 #import "UIAlertView+Blocks.h"
 #import "CBNotificationManager.h"
+#import "OrderCheckViewController.h"
 #import "EstimateViewController.h"
 
 typedef enum : NSUInteger {
@@ -68,19 +69,18 @@ typedef enum : NSUInteger {
     
     [self addNotification];
     
+    // Tab bar 언어 설정 부분
     [self setTitle:NSLocalizedString(@"menu_label_order", nil)];
-    
     [[self.tabBarController.tabBar.items objectAtIndex:0] setTitle:NSLocalizedString(@"menu_label_order", nil)];
     [[self.tabBarController.tabBar.items objectAtIndex:1] setTitle:NSLocalizedString(@"menu_label_delivery", nil)];
     [[self.tabBarController.tabBar.items objectAtIndex:2] setTitle:NSLocalizedString(@"menu_label_information", nil)];
     [[self.tabBarController.tabBar.items objectAtIndex:3] setTitle:NSLocalizedString(@"menu_label_help", nil)];
-//
+
     _numberFormatter = [NSNumberFormatter new];
     [_numberFormatter setNumberStyle:NSNumberFormatterDecimalStyle];
     
     _realm = [RLMRealm defaultRealm];
 
-    
     [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeGradient];
 
     _manager = [AFHTTPRequestOperationManager manager];
@@ -90,9 +90,9 @@ typedef enum : NSUInteger {
 
 
 
+    // UI Component 탭 Gesture 객체 생성
     UITapGestureRecognizer *addressTGR = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(editAddress)];
     [_addressView addGestureRecognizer:addressTGR];
-    
     UITapGestureRecognizer *timeSelectTGR = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(showTimeSelectVC:)];
     [_timeSelectView addGestureRecognizer:timeSelectTGR];
     UITapGestureRecognizer *dropoffTimeSelectTGR = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(showTimeSelectVC:)];
@@ -119,16 +119,19 @@ typedef enum : NSUInteger {
     [_addressLabel setText:_addressString];
 
 
+    // 주소 가지고 오기
     [self getAddress];
-
+    
     [self setNeedsStatusBarAppearanceUpdate];
 
     [self initOrder];
     
+    // 시간 관련 Format
     self.stringFromDateFormatter = [NSDateFormatter new];
     self.stringFromDateFormatter.dateFormat = @"yyyy-MM-dd HH:mm:ss.s";
 }
 
+// 주문 초기화
 - (void)initOrder{
     
     //시간들 초기화
@@ -196,6 +199,7 @@ typedef enum : NSUInteger {
 
 
 
+//수거시간
 - (void)finishedPickUpDate:(NSNotification *)noti{
     _pickUpDate = [noti userInfo][@"date"];
     NSString *pickUpTimeString = [self getStringFromDate:_pickUpDate];
@@ -210,8 +214,8 @@ typedef enum : NSUInteger {
 }
 
 
+// 배달시간
 - (void)finishedDropOffDate:(NSNotification *)noti{
-
 
     _dropOffDate = [noti userInfo][@"date"];
     NSString *dropOffTimeString = [self getStringFromDate:_dropOffDate];
@@ -271,10 +275,6 @@ typedef enum : NSUInteger {
     return dateString;
 }
 
-
-
-
-
 - (void)configureEstimateLabel {
     
     if (_estimatePrice.integerValue){
@@ -321,6 +321,7 @@ typedef enum : NSUInteger {
 }
 
 
+// 시간 선택 부분
 - (void)showTimeSelectVC:(UITapGestureRecognizer *)sender{
     if (!_addressString.length){
 
@@ -355,26 +356,19 @@ typedef enum : NSUInteger {
 
 
     [self presentViewController:timeSelectNVC animated:YES completion:nil];
-
-    
 }
 
 
 
+// 주소 선택 부분
 - (void)editAddress{
-
-
     UIStoryboard *sb = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
     UINavigationController *addAddressNC = [sb instantiateViewControllerWithIdentifier:@"AddAddressNC"];
 
     [self presentViewController:addAddressNC animated:YES completion:nil];
-
-
-
-
 }
 
-
+// 중복 처리(?)
 - (void)presentAddAddressVC{
     UIStoryboard *sb = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
     UINavigationController *addAddressNC = [sb instantiateViewControllerWithIdentifier:@"AddAddressNC"];
@@ -383,6 +377,7 @@ typedef enum : NSUInteger {
 }
 
 
+// 주소 가져오기
 - (void)getAddress{
     
     NSString *urlString = [NSString stringWithFormat:@"%@%@",CB_SERVER_URL,@"member/address"];
@@ -397,7 +392,6 @@ typedef enum : NSUInteger {
              NSArray *data = [NSJSONSerialization JSONObjectWithData:objectData
                                                              options:NSJSONReadingMutableContainers
                                                                error:&jsonError];
-
 
              if (!data.count){
                  //주소없을때처리
@@ -546,19 +540,30 @@ typedef enum : NSUInteger {
 
 -(IBAction)addOrder:(id)sender{
     
-    if (_pickUpDate == nil) {
-        [SVProgressHUD showErrorWithStatus:NSLocalizedString(@"time_dropoff_inform", nil)];
-        return;
-    } else if (_dropOffDate == nil) {
-        [SVProgressHUD showErrorWithStatus:NSLocalizedString(@"time_dropoff_inform_after", nil)];
-        return;
-    } else if ( (_address == nil) || ([_addr_building isEqualToString:@""]) ){
-        [SVProgressHUD showErrorWithStatus:NSLocalizedString(@"address_empty", nil)];
-        [self editAddress];
-        return;
-    }
+//    if (_pickUpDate == nil) {
+//        [SVProgressHUD showErrorWithStatus:NSLocalizedString(@"time_dropoff_inform", nil)];
+//        return;
+//    } else if (_dropOffDate == nil) {
+//        [SVProgressHUD showErrorWithStatus:NSLocalizedString(@"time_dropoff_inform_after", nil)];
+//        return;
+//    } else if ( (_address == nil) || ([_addr_building isEqualToString:@""]) ){
+//        [SVProgressHUD showErrorWithStatus:NSLocalizedString(@"address_empty", nil)];
+//        [self editAddress];
+//        return;
+//    }
     
-    [self showCheckAlert];
+    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main"
+                                                         bundle:nil];
+    OrderCheckViewController *sfvc = [storyboard instantiateViewControllerWithIdentifier:@"OrderCheckViewController"];
+    
+//    OrderCheckViewController *sfvc = [[OrderCheckViewController alloc] initWithNibName:@"OrderCheckViewController" bundle:nil];
+    [self presentViewController:sfvc animated:NO completion:nil];
+    
+//    OrderCheckViewController *orderCheckVC = [[OrderCheckViewController alloc] init];
+//    
+//    [self presentViewController:orderCheckVC animated:NO completion:nil];
+    
+    // [self showCheckAlert];
     
 }
 

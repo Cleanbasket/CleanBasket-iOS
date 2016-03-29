@@ -22,4 +22,3 @@
 //@property (strong, nonatomic) EstimateViewController *estimateVC;
 
 @end
-
