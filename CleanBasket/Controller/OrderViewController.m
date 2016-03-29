@@ -536,36 +536,44 @@ typedef enum : NSUInteger {
 
 }
 
-
-
 -(IBAction)addOrder:(id)sender{
     
-//    if (_pickUpDate == nil) {
-//        [SVProgressHUD showErrorWithStatus:NSLocalizedString(@"time_dropoff_inform", nil)];
-//        return;
-//    } else if (_dropOffDate == nil) {
-//        [SVProgressHUD showErrorWithStatus:NSLocalizedString(@"time_dropoff_inform_after", nil)];
-//        return;
-//    } else if ( (_address == nil) || ([_addr_building isEqualToString:@""]) ){
-//        [SVProgressHUD showErrorWithStatus:NSLocalizedString(@"address_empty", nil)];
-//        [self editAddress];
-//        return;
-//    }
+    if (_pickUpDate == nil) {
+        [SVProgressHUD showErrorWithStatus:NSLocalizedString(@"time_dropoff_inform", nil)];
+        return;
+    } else if (_dropOffDate == nil) {
+        [SVProgressHUD showErrorWithStatus:NSLocalizedString(@"time_dropoff_inform_after", nil)];
+        return;
+    } else if ( (_address == nil) || ([_addr_building isEqualToString:@""]) ){
+        [SVProgressHUD showErrorWithStatus:NSLocalizedString(@"address_empty", nil)];
+        [self editAddress];
+        return;
+    }
     
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main"
                                                          bundle:nil];
-    OrderCheckViewController *sfvc = [storyboard instantiateViewControllerWithIdentifier:@"OrderCheckViewController"];
+    OrderCheckViewController *orderCheckVC = [storyboard instantiateViewControllerWithIdentifier:@"OrderCheckViewController"];
     
-    [sfvc setModalPresentationStyle:UIModalPresentationCustom];
-    [sfvc setModalTransitionStyle:UIModalTransitionStyleCrossDissolve];
-    [self presentViewController:sfvc animated:YES completion:nil];
+    [orderCheckVC setUserAddress: _addressString];
+    [orderCheckVC setUserPickupTime:[self getStringFromDate:_pickUpDate]];
+    [orderCheckVC setUserDropoffTime:[self getStringFromDate:_dropOffDate]];
+//    orderCheckVC = [sender sender];
+    [orderCheckVC setModalPresentationStyle:UIModalPresentationCustom];
+    [orderCheckVC setModalTransitionStyle:UIModalTransitionStyleCrossDissolve];
+    [self presentViewController:orderCheckVC animated:YES completion:nil];
+
+//     [self showCheckAlert];
     
-//    OrderCheckViewController *orderCheckVC = [[OrderCheckViewController alloc] init];
-//    
-//    [self presentViewController:orderCheckVC animated:NO completion:nil];
-    
-    // [self showCheckAlert];
-    
+}
+
+-(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
+    if ([[segue identifier] isEqualToString:@"OrderCheckViewController"])
+    {
+        OrderCheckViewController *orderCheckVC = [segue destinationViewController];
+        [orderCheckVC setUserAddress:_address];
+        [orderCheckVC setUserPickupTime:[self getStringFromDate:_pickUpDate]];
+        [orderCheckVC setUserDropoffTime:[self getStringFromDate:_dropOffDate]];
+    }
 }
 
 
@@ -657,11 +665,13 @@ typedef enum : NSUInteger {
     }
     
     
-    NSDictionary *parameters = @{@"address":self.address,
+    NSDictionary *parameters = @{
+                                 @"phone":@"01000000000",
+                                 @"address":self.address,
                                  @"addr_building": self.addr_building,
                                  @"pickup_date":[self.stringFromDateFormatter stringFromDate:_pickUpDate],
                                  @"dropoff_date":[self.stringFromDateFormatter stringFromDate:_dropOffDate],
-//                                 @"memo":@"테스트",
+                                 @"memo":@"테스트",
                                  @"price":price,
                                  @"dropoff_price":dropoffPrice,
                                  @"payment_method":paymentMethod,

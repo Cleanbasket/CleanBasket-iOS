@@ -424,6 +424,7 @@
                      _callButton.hidden = YES;
                      [_deliverImageView setImage:[UIImage imageNamed:@"ic_launcher"]];
                      
+                    
                      NSNumberFormatter *numberFormatter = [NSNumberFormatter new];
                      numberFormatter.numberStyle = NSNumberFormatterDecimalStyle;
                      NSString *imageUrlString = @"";

@@ -7,16 +7,44 @@
 //
 
 #import "OrderCheckViewController.h"
+#import "OrderViewController.h"
 
 @interface OrderCheckViewController ()
+
+@property (weak, nonatomic) IBOutlet UIButton *cancleButton;
+@property (weak, nonatomic) IBOutlet UIButton *orderButton;
+@property (weak, nonatomic) IBOutlet UILabel *addressLabel;
+@property (weak, nonatomic) IBOutlet UILabel *pickupLabel;
+@property (weak, nonatomic) IBOutlet UILabel *dropoffLabel;
+@property (weak, nonatomic) IBOutlet UITextField *phoneLabel;
+@property (weak, nonatomic) IBOutlet UITextField *memoLabel;
 
 @end
 
 @implementation OrderCheckViewController
 
+@synthesize userAddress;
+@synthesize userPickupTime;
+@synthesize userDropoffTime;
+
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
+    
+    
+    
+    // UI 변경 요소
+    
+    _cancleButton.layer.borderWidth = 2.0;
+    _cancleButton.layer.borderColor = [UIColor whiteColor].CGColor;
+    _cancleButton.layer.cornerRadius = 3;
+    
+    _orderButton.layer.borderWidth = 2.0;
+    _orderButton.layer.borderColor = [UIColor whiteColor].CGColor;
+    _orderButton.layer.cornerRadius = 3;
+    
+    _addressLabel.text = userAddress;
+    _pickupLabel.text = userPickupTime;
+    _dropoffLabel.text = userDropoffTime;
 }
 
 - (void)didReceiveMemoryWarning {
@@ -29,19 +57,6 @@
     [self setModalPresentationStyle:UIModalPresentationCustom];
     [self setNeedsStatusBarAppearanceUpdate];
 }
-
-/*
- #pragma mark - Navigation
- 
- // In a storyboard-based application, you will often want to do a little preparation before navigation
- - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
- // Get the new view controller using [segue destinationViewController].
- // Pass the selected object to the new view controller.
- }
- */
-
-
-
 
 - (UIStatusBarStyle)preferredStatusBarStyle{
     return UIStatusBarStyleLightContent;
