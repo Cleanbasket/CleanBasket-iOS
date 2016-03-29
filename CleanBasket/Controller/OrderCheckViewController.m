@@ -30,8 +30,6 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    
-    
     // UI 변경 요소
     
     _cancleButton.layer.borderWidth = 2.0;
@@ -66,7 +64,19 @@
     [self dismissViewControllerAnimated:NO completion:nil];
 }
 
+- (IBAction)phoneBegin:(id)sender {
+    _phoneLabel.text = @"";
+    [_phoneLabel setTextColor:[UIColor whiteColor]];
+    
+}
 
+- (IBAction)memoBegin:(id)sender {
+    
+    
+    
+    _memoLabel.text = @"";
+    [_memoLabel setTextColor:[UIColor whiteColor]];
+}
 
 // 배경 터치하면 취소
 - (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
@@ -75,9 +85,6 @@
     if ([touch view] == self.view){
         [self dismissViewControllerAnimated:YES completion:nil];
     }
-    
-    
 }
-
 
 @end

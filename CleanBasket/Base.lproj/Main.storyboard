@@ -948,9 +948,12 @@
                                     </label>
                                     <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="연락처를 입력하세요." borderStyle="line" placeholder="qwew" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="JVk-aL-TDo">
                                         <rect key="frame" x="81" y="171" width="185" height="35"/>
-                                        <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                                        <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="13"/>
                                         <textInputTraits key="textInputTraits"/>
+                                        <connections>
+                                            <action selector="phoneBegin:" destination="sYT-lG-fLf" eventType="editingDidBegin" id="jiE-4b-C1b"/>
+                                        </connections>
                                     </textField>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="꼭 기억해주세요" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8Co-er-5Lf">
                                         <rect key="frame" x="13" y="261" width="177" height="16"/>
@@ -960,9 +963,12 @@
                                     </label>
                                     <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="추가 요청 사항을 입력하세요." borderStyle="line" placeholder="qwew" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="5vp-d0-wRL">
                                         <rect key="frame" x="81" y="209" width="185" height="35"/>
-                                        <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                                        <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="13"/>
                                         <textInputTraits key="textInputTraits"/>
+                                        <connections>
+                                            <action selector="memoBegin:" destination="sYT-lG-fLf" eventType="editingDidBegin" id="i0b-SJ-Gyw"/>
+                                        </connections>
                                     </textField>
                                     <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QTA-Tx-Ffe">
                                         <rect key="frame" x="17" y="339" width="115" height="47"/>
@@ -1021,6 +1027,7 @@
                                 </constraints>
                             </view>
                         </subviews>
+                        <color key="backgroundColor" white="0.0" alpha="0.33189655172413796" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="35V-Bv-wNh" firstAttribute="centerY" secondItem="I0s-Ot-WMs" secondAttribute="centerY" id="uRc-Mp-ulW"/>
                             <constraint firstItem="35V-Bv-wNh" firstAttribute="centerX" secondItem="I0s-Ot-WMs" secondAttribute="centerX" id="uX0-aO-yKG"/>
