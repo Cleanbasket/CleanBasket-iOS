@@ -1,5 +1,5 @@
 "app_name"="크린바스켓";
-"app_description"="세탁 수거배달앱";
+"app_description"="내 손안의 세탁소";
 "prompt_email"="Email";
 "prompt_password"="Password";
 "prompt_password_repeat"="Repeat Password";
@@ -161,6 +161,7 @@
 "skirt"="스커트";
 "blouse"="블라우스";
 "one_piece"="원피스";
+"onthespot"="현장수거";
 "coat"="코트";
 "long_coat"="롱코트";
 "jumper"="점퍼";
@@ -337,15 +338,15 @@
 "delete_card_title"="카드 삭제";
 "delete_card"="카드를 삭제하시겠습니까?";
 "card_register"="잠시만 기다려주세요";
-"qna"="실시간 상담";
+"qna"="1:1 문의";
 "qna_header"="무엇이든 물어보세요";
-"qna_detail"="고객센터와 실시간 채팅이 가능합니다\n(운영시간 : 오전 10시 ~ 오후 6시)";
+"qna_detail"="메시지를 남겨주세요\n고객행복센터에서 연락을 드립니다.";
 "login_agreement_a"="로그인에 있어";
 "login_agreement_b"="개인정보 수집 및 이용에 대한 안내";
 "login_agreement_c"="및";
 "login_agreement_d"="서비스 이용약관";
 "login_agreement_e"="에 동의합니다.";
-"call_customer_center"="\n070-7552-1385";
+"call_customer_center"="\n1833-8543";
 "number_customer_center"="7.08E+09";
 "payment_result_etc"="인앱 카드 결제가 아닌 경우의 전표 확인은 고객센터로 문의해주시기 바랍니다";
 "payment_payment_unpaid"="곧 결제가 이뤄질 예정입니다";

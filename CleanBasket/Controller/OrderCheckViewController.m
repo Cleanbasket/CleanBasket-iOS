@@ -151,6 +151,10 @@
     userPhoneNumber = _phoneLabel.text;
     memo = _memoLabel.text;
     
+    if ([memo isEqualToString:@"추가 요청 사항을 입력하세요."]){
+        memo = @"";
+    }
+    
     [[NSUserDefaults standardUserDefaults] setValue :userPhoneNumber forKey:@"phone"];
     [[NSUserDefaults standardUserDefaults] synchronize];
     

@@ -39,7 +39,7 @@
 "4DO-sf-rHC.normalTitle" = "카드 등록";
 
 /* Class = "UIButton"; normalTitle = "실시간 상담"; ObjectID = "4Ig-Z9-EQL"; */
-"4Ig-Z9-EQL.normalTitle" = "실시간 상담";
+"4Ig-Z9-EQL.normalTitle" = "1:1 문의";
 
 /* Class = "UITabBarItem"; title = "1:1 문의"; ObjectID = "56X-8A-Qxz"; */
 "56X-8A-Qxz.title" = "1:1 문의";

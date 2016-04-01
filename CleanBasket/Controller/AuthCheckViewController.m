@@ -26,6 +26,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    _descLabel.text = @"내 손안의 세탁소";
 }
 
 

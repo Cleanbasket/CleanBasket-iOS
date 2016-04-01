@@ -956,7 +956,7 @@
                                         <rect key="frame" x="81" y="171" width="185" height="35"/>
                                         <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                         <fontDescription key="fontDescription" type="boldSystem" pointSize="13"/>
-                                        <textInputTraits key="textInputTraits"/>
+                                        <textInputTraits key="textInputTraits" keyboardType="numberPad"/>
                                         <connections>
                                             <action selector="phoneBegin:" destination="sYT-lG-fLf" eventType="editingDidBegin" id="jiE-4b-C1b"/>
                                         </connections>
@@ -1669,7 +1669,7 @@
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" minimumFontSize="5" translatesAutoresizingMaskIntoConstraints="NO" id="bH6-bZ-tTB">
                                         <rect key="frame" x="2" y="330" width="262" height="50"/>
                                         <attributedString key="attributedText">
-                                            <fragment content="고객행복센터 연결하기 1833-8548">
+                                            <fragment content="고객행복센터 연결하기 1833-8543">
                                                 <attributes>
                                                     <color key="NSColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <font key="NSFont" size="17" name="AppleSDGothicNeo-Regular"/>
@@ -1682,6 +1682,7 @@
                                     </label>
                                     <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4Ig-Z9-EQL" customClass="RoundedButton">
                                         <rect key="frame" x="80" y="170" width="103" height="40"/>
+                                        <accessibility key="accessibilityConfiguration" label="1:1 문의"/>
                                         <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="16"/>
                                         <state key="normal" title="1:1 문의">
                                             <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
@@ -1699,19 +1700,12 @@
                                     <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="ic_qna" translatesAutoresizingMaskIntoConstraints="NO" id="rud-rc-0fo">
                                         <rect key="frame" x="61" y="19" width="150" height="150"/>
                                     </imageView>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="고객행복센터에서 연락을 드립니다." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" minimumFontSize="5" preferredMaxLayoutWidth="260" translatesAutoresizingMaskIntoConstraints="NO" id="gLo-1Y-bmN">
-                                        <rect key="frame" x="5" y="294" width="262" height="22"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
                                 </subviews>
                                 <constraints>
                                     <constraint firstItem="tom-P3-tZw" firstAttribute="leading" secondItem="cOx-Qk-xXK" secondAttribute="leading" constant="5" id="6tM-ut-6zJ"/>
                                     <constraint firstAttribute="width" constant="272" id="7l8-dE-dex"/>
                                     <constraint firstAttribute="height" constant="380" id="K3X-Lw-YDU"/>
                                     <constraint firstAttribute="trailing" secondItem="tom-P3-tZw" secondAttribute="trailing" constant="5" id="uHP-Qx-DA4"/>
-                                    <constraint firstItem="gLo-1Y-bmN" firstAttribute="top" secondItem="tom-P3-tZw" secondAttribute="bottom" id="wdc-XD-zSS"/>
                                 </constraints>
                             </view>
                         </subviews>
@@ -1724,6 +1718,8 @@
                     <navigationItem key="navigationItem" id="hts-Kv-6za"/>
                     <connections>
                         <outlet property="callLabel" destination="bH6-bZ-tTB" id="kFt-hG-I62"/>
+                        <outlet property="subLabel" destination="tom-P3-tZw" id="1Bh-f4-LDI"/>
+                        <outlet property="titleLabel" destination="4Ig-Z9-EQL" id="tA6-2v-e3W"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="fyQ-Tb-Hzw" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -4892,7 +4888,7 @@
         <image name="ic_menu_4alarm" width="44" height="44"/>
         <image name="ic_menu_itembox" width="115" height="79"/>
         <image name="ic_nice" width="583" height="583"/>
-        <image name="ic_order_drop_off_time" width="57" height="43"/>
+        <image name="ic_order_drop_off_time" width="75" height="55"/>
         <image name="ic_order_drop_off_time_label" width="75" height="55"/>
         <image name="ic_order_multiply" width="16" height="16"/>
         <image name="ic_order_payment_card" width="103" height="67"/>
