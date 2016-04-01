@@ -1,7 +1,7 @@
 # CLEANBASKET
 
 ```
-담당자 : Cha Yongbin
+Lead Developer : Cha Yongbin
 ```
 
 ### Code Style Guide
