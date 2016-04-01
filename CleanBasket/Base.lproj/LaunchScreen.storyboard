@@ -20,9 +20,6 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="reW-7h-qkl">
                                 <rect key="frame" x="150" y="115" width="300" height="370"/>
                                 <subviews>
-                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="img_main_logo" translatesAutoresizingMaskIntoConstraints="NO" id="XsK-Fe-Q4q">
-                                        <rect key="frame" x="0.0" y="0.0" width="300" height="300"/>
-                                    </imageView>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="내 손안의 세탁소" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vDu-Mo-UAP">
                                         <rect key="frame" x="94" y="308" width="112" height="21"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
@@ -35,6 +32,9 @@
                                         <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <nil key="highlightedColor"/>
                                     </label>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="img_main_logo" translatesAutoresizingMaskIntoConstraints="NO" id="XsK-Fe-Q4q">
+                                        <rect key="frame" x="0.0" y="0.0" width="300" height="300"/>
+                                    </imageView>
                                 </subviews>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="300" id="BjA-dv-DpJ"/>
@@ -55,6 +55,6 @@
         </scene>
     </scenes>
     <resources>
-        <image name="img_main_logo" width="391" height="390"/>
+        <image name="img_main_logo" width="391" height="391"/>
     </resources>
 </document>

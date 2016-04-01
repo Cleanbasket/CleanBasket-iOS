@@ -4903,7 +4903,7 @@
         <image name="ic_service_introduce_03price" width="74" height="71"/>
         <image name="ic_service_introduce_04time" width="69" height="69"/>
         <image name="icon_arrow_right" width="30" height="30"/>
-        <image name="img_main_logo" width="391" height="390"/>
+        <image name="img_main_logo" width="391" height="391"/>
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="LF8-uO-kh9"/>
