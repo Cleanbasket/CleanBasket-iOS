@@ -21,6 +21,8 @@
 #import "User.h"
 #import "Notification.h"
 #import <ZDCChat/ZDCChat.h>
+#import <Fabric/Fabric.h>
+#import <Crashlytics/Crashlytics.h>
 
 
 @interface AppDelegate ()
@@ -37,6 +39,8 @@
     
     //이전 버전에 쓰이던 유저 정보 마이그레이션
     [self realmMigration];
+    
+    [Fabric with:@[[Crashlytics class]]];
     
     //기존 세팅 있을때
     if ([[NSUserDefaults standardUserDefaults] objectForKey:@"isGetEventNoti"]){

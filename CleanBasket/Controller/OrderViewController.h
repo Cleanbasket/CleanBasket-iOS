@@ -7,7 +7,15 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "OrderCheckViewController.h"
 
-@interface OrderViewController : UIViewController
+@interface OrderViewController : UIViewController<OrderViewDelegate> {
+    NSString *phone;
+    NSString *memo;
+
+}
+@property NSString *phone;
+@property NSString *memo;
+
 
 @end

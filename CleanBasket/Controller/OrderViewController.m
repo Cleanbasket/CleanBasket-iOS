@@ -64,6 +64,9 @@ typedef enum : NSUInteger {
 
 @implementation OrderViewController
 
+@synthesize phone;
+@synthesize memo;
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     
@@ -550,32 +553,38 @@ typedef enum : NSUInteger {
         return;
     }
     
+    
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main"
                                                          bundle:nil];
     OrderCheckViewController *orderCheckVC = [storyboard instantiateViewControllerWithIdentifier:@"OrderCheckViewController"];
+    orderCheckVC.delegate = self;
     
     [orderCheckVC setUserAddress: _addressString];
     [orderCheckVC setUserPickupTime:[self getStringFromDate:_pickUpDate]];
     [orderCheckVC setUserDropoffTime:[self getStringFromDate:_dropOffDate]];
-//    orderCheckVC = [sender sender];
+    
     [orderCheckVC setModalPresentationStyle:UIModalPresentationCustom];
     [orderCheckVC setModalTransitionStyle:UIModalTransitionStyleCrossDissolve];
     [self presentViewController:orderCheckVC animated:YES completion:nil];
 
-//     [self showCheckAlert];
     
 }
 
--(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
-    if ([[segue identifier] isEqualToString:@"OrderCheckViewController"])
-    {
-        OrderCheckViewController *orderCheckVC = [segue destinationViewController];
-        [orderCheckVC setUserAddress:_address];
-        [orderCheckVC setUserPickupTime:[self getStringFromDate:_pickUpDate]];
-        [orderCheckVC setUserDropoffTime:[self getStringFromDate:_dropOffDate]];
-    }
+#pragma mark - delegate
+- (void) getPhoneData:(NSString*) phoneData
+{
+    phone = phoneData;
 }
 
+#pragma mark - delegate
+- (void) getMemoData:(NSString*) memoData
+{
+    memo = memoData;
+}
+
+-(void) addOrderEvent{
+    [self addNewOrder];
+}
 
 - (void)showCheckAlert{
     
@@ -664,14 +673,13 @@ typedef enum : NSUInteger {
         [items addObject:@{@"item_code":@10, @"count":@1}];
     }
     
-    
     NSDictionary *parameters = @{
-                                 @"phone":@"01000000000",
+                                 @"phone":phone,
                                  @"address":self.address,
                                  @"addr_building": self.addr_building,
                                  @"pickup_date":[self.stringFromDateFormatter stringFromDate:_pickUpDate],
                                  @"dropoff_date":[self.stringFromDateFormatter stringFromDate:_dropOffDate],
-                                 @"memo":@"테스트",
+                                 @"memo":memo,
                                  @"price":price,
                                  @"dropoff_price":dropoffPrice,
                                  @"payment_method":paymentMethod,
@@ -706,7 +714,7 @@ typedef enum : NSUInteger {
         
         switch (constant) {
             case CBServerConstantSuccess: {
-                [SVProgressHUD showSuccessWithStatus:NSLocalizedString(@"order_success", nil)];
+                [SVProgressHUD showSuccessWithStatus:@"주문완료"];
                 [[CBNotificationManager sharedManager] addDropOffNoti:_dropOffDate oid:responseObject[@"data"]];
                 [[CBNotificationManager sharedManager] addPickUpNoti:_pickUpDate oid:responseObject[@"data"]];
                 [self initOrder];

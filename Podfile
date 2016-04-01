@@ -20,3 +20,6 @@ pod 'TTTAttributedLabel'
 pod 'MMPopupView'
 
 pod 'UIAlertView+Blocks'
+
+pod 'Fabric'
+pod 'Crashlytics'

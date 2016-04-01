@@ -31,8 +31,8 @@
                                         <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="세탁 수거배달 서비스" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fi1-Am-18o">
-                                        <rect key="frame" x="80" y="313" width="142" height="21"/>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="내 손안의 세탁소" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fi1-Am-18o">
+                                        <rect key="frame" x="95" y="313" width="112" height="21"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <nil key="highlightedColor"/>
@@ -887,7 +887,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="35V-Bv-wNh" userLabel="주문 확인">
-                                <rect key="frame" x="160" y="100" width="280" height="400"/>
+                                <rect key="frame" x="155" y="90" width="290" height="420"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="주문 확인" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wtg-lv-xPe">
                                         <rect key="frame" x="0.0" y="0.0" width="280" height="54"/>
@@ -896,11 +896,17 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="서울특별시 강남구 역삼동" textAlignment="justified" lineBreakMode="headTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KuC-bx-wLh">
-                                        <rect key="frame" x="81" y="57" width="185" height="35"/>
+                                        <rect key="frame" x="81" y="57" width="199" height="35"/>
                                         <constraints>
-                                            <constraint firstAttribute="width" constant="185" id="Wc5-Q7-dHO"/>
+                                            <constraint firstAttribute="width" constant="199" id="8LX-Mg-QbC"/>
                                         </constraints>
                                         <fontDescription key="fontDescription" type="system" weight="medium" pointSize="13"/>
+                                        <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="10,000원 이상의 주문 시에만 방문 드릴 수 있어요!" textAlignment="justified" lineBreakMode="headTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0al-L8-zKj">
+                                        <rect key="frame" x="12" y="261" width="263" height="35"/>
+                                        <fontDescription key="fontDescription" type="system" weight="medium" pointSize="12"/>
                                         <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
@@ -923,7 +929,7 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="오늘 PM 01:30-02:30" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Bj4-DI-ZNo">
-                                        <rect key="frame" x="81" y="95" width="185" height="35"/>
+                                        <rect key="frame" x="81" y="95" width="199" height="35"/>
                                         <fontDescription key="fontDescription" type="system" weight="medium" pointSize="13"/>
                                         <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
@@ -946,7 +952,7 @@
                                         <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="연락처를 입력하세요." borderStyle="line" placeholder="qwew" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="JVk-aL-TDo">
+                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="연락처를 입력해주세요." borderStyle="line" placeholder="연락처를 입력하세요." textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="JVk-aL-TDo">
                                         <rect key="frame" x="81" y="171" width="185" height="35"/>
                                         <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                         <fontDescription key="fontDescription" type="boldSystem" pointSize="13"/>
@@ -955,23 +961,14 @@
                                             <action selector="phoneBegin:" destination="sYT-lG-fLf" eventType="editingDidBegin" id="jiE-4b-C1b"/>
                                         </connections>
                                     </textField>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="꼭 기억해주세요" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8Co-er-5Lf">
-                                        <rect key="frame" x="13" y="261" width="177" height="16"/>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="기억해주세요!" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8Co-er-5Lf">
+                                        <rect key="frame" x="13" y="249" width="177" height="17"/>
                                         <fontDescription key="fontDescription" type="boldSystem" pointSize="14"/>
                                         <color key="textColor" red="0.50980392156862742" green="0.85490196078431369" blue="0.81568627450980391" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="추가 요청 사항을 입력하세요." borderStyle="line" placeholder="qwew" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="5vp-d0-wRL">
-                                        <rect key="frame" x="81" y="209" width="185" height="35"/>
-                                        <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
-                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="13"/>
-                                        <textInputTraits key="textInputTraits"/>
-                                        <connections>
-                                            <action selector="memoBegin:" destination="sYT-lG-fLf" eventType="editingDidBegin" id="i0b-SJ-Gyw"/>
-                                        </connections>
-                                    </textField>
                                     <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QTA-Tx-Ffe">
-                                        <rect key="frame" x="17" y="339" width="115" height="47"/>
+                                        <rect key="frame" x="23" y="357" width="115" height="47"/>
                                         <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
                                         <state key="normal" title="취소">
                                             <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -981,18 +978,56 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="or9-73-FhE">
-                                        <rect key="frame" x="147" y="339" width="115" height="47"/>
+                                        <rect key="frame" x="151" y="357" width="115" height="47"/>
                                         <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
                                         <state key="normal" title="주문하기">
                                             <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
+                                        <connections>
+                                            <action selector="orderSuccessTouch:" destination="sYT-lG-fLf" eventType="touchUpInside" id="dKp-Y1-6Qm"/>
+                                        </connections>
                                     </button>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="세탁물 속에 남겨진 소지품은 없는지 확인해주세요." textAlignment="justified" lineBreakMode="headTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QY2-vo-I0b">
+                                        <rect key="frame" x="12" y="298" width="283" height="35"/>
+                                        <fontDescription key="fontDescription" type="system" weight="medium" pointSize="12"/>
+                                        <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="20,000원 미만 주문 시, 배달비 2,000원이 추가됩니다." textAlignment="justified" lineBreakMode="headTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Zp7-sL-qDs">
+                                        <rect key="frame" x="12" y="279" width="278" height="35"/>
+                                        <fontDescription key="fontDescription" type="system" weight="medium" pointSize="12"/>
+                                        <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="현대카드 M포인트 사용가능 (결제금액의 10%, 현장결제)" textAlignment="justified" lineBreakMode="headTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xIO-Zs-wwj">
+                                        <rect key="frame" x="12" y="316" width="281" height="35"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="272" id="rjb-ao-hmV"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" type="system" weight="medium" pointSize="12"/>
+                                        <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="추가 요청 사항을 입력하세요." borderStyle="line" placeholder="qwew" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="5vp-d0-wRL">
+                                        <rect key="frame" x="81" y="209" width="199" height="35"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="199" id="HLq-7x-oHF"/>
+                                        </constraints>
+                                        <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="13"/>
+                                        <textInputTraits key="textInputTraits"/>
+                                        <connections>
+                                            <action selector="memoBegin:" destination="sYT-lG-fLf" eventType="editingDidBegin" id="i0b-SJ-Gyw"/>
+                                            <action selector="memoEnd:" destination="sYT-lG-fLf" eventType="editingDidEnd" id="JSD-5h-zNH"/>
+                                        </connections>
+                                    </textField>
                                 </subviews>
                                 <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstAttribute="trailing" secondItem="Bj4-DI-ZNo" secondAttribute="trailing" constant="14" id="3fb-gn-Fl9"/>
                                     <constraint firstItem="XMo-Yh-gEH" firstAttribute="top" secondItem="YZc-45-cWX" secondAttribute="bottom" constant="3" id="45A-Eh-vlI"/>
                                     <constraint firstItem="Dg7-xS-x6c" firstAttribute="leading" secondItem="35V-Bv-wNh" secondAttribute="leading" constant="13" id="5EE-M3-R8r"/>
+                                    <constraint firstItem="5vp-d0-wRL" firstAttribute="leading" secondItem="L25-5b-MDi" secondAttribute="trailing" constant="13" id="65b-3K-9cO"/>
                                     <constraint firstAttribute="trailing" secondItem="or9-73-FhE" secondAttribute="trailing" constant="18" id="6gI-Xm-1wQ"/>
                                     <constraint firstAttribute="trailing" secondItem="wtg-lv-xPe" secondAttribute="trailing" id="Bir-xa-4WB"/>
                                     <constraint firstItem="YZc-45-cWX" firstAttribute="top" secondItem="wtg-lv-xPe" secondAttribute="bottom" constant="3" id="Esf-mx-mNC"/>
@@ -1006,10 +1041,8 @@
                                     <constraint firstItem="KuC-bx-wLh" firstAttribute="top" secondItem="wtg-lv-xPe" secondAttribute="bottom" constant="3" id="V08-bH-Rr0"/>
                                     <constraint firstItem="L25-5b-MDi" firstAttribute="leading" secondItem="35V-Bv-wNh" secondAttribute="leading" constant="13" id="VKD-99-gsI"/>
                                     <constraint firstItem="JVk-aL-TDo" firstAttribute="leading" secondItem="PbC-mN-rpn" secondAttribute="trailing" constant="13" id="Xul-lN-BWS"/>
-                                    <constraint firstAttribute="trailing" secondItem="5vp-d0-wRL" secondAttribute="trailing" constant="14" id="YnB-dO-hTH"/>
                                     <constraint firstItem="YZc-45-cWX" firstAttribute="leading" secondItem="35V-Bv-wNh" secondAttribute="leading" constant="13" id="YnI-Ck-eTY"/>
                                     <constraint firstItem="4Ma-Sx-XF1" firstAttribute="leading" secondItem="Dg7-xS-x6c" secondAttribute="trailing" constant="13" id="ZGO-wK-B1g"/>
-                                    <constraint firstItem="8Co-er-5Lf" firstAttribute="top" secondItem="L25-5b-MDi" secondAttribute="bottom" constant="17" id="cNW-dT-vMG"/>
                                     <constraint firstItem="Bj4-DI-ZNo" firstAttribute="top" secondItem="KuC-bx-wLh" secondAttribute="bottom" constant="3" id="db6-La-3YT"/>
                                     <constraint firstAttribute="trailing" secondItem="8Co-er-5Lf" secondAttribute="trailing" constant="90" id="dfe-lD-UHd"/>
                                     <constraint firstAttribute="bottom" secondItem="QTA-Tx-Ffe" secondAttribute="bottom" constant="14" id="dtH-fC-wJu"/>
@@ -1019,11 +1052,12 @@
                                     <constraint firstItem="QTA-Tx-Ffe" firstAttribute="leading" secondItem="35V-Bv-wNh" secondAttribute="leading" constant="17" id="lSy-4y-haR"/>
                                     <constraint firstItem="Dg7-xS-x6c" firstAttribute="top" secondItem="XMo-Yh-gEH" secondAttribute="bottom" constant="3" id="mJH-ka-z6f"/>
                                     <constraint firstAttribute="trailing" secondItem="KuC-bx-wLh" secondAttribute="trailing" constant="14" id="o0a-rg-8gZ"/>
-                                    <constraint firstAttribute="width" constant="280" id="u07-6I-J31"/>
+                                    <constraint firstAttribute="trailing" secondItem="5vp-d0-wRL" secondAttribute="trailing" constant="10" id="ptp-eM-cyD"/>
+                                    <constraint firstAttribute="width" constant="290" id="u07-6I-J31"/>
                                     <constraint firstItem="KuC-bx-wLh" firstAttribute="leading" secondItem="YZc-45-cWX" secondAttribute="trailing" constant="13" id="x6J-kj-gNP"/>
                                     <constraint firstAttribute="bottom" secondItem="or9-73-FhE" secondAttribute="bottom" constant="14" id="xqi-TJ-TG8"/>
                                     <constraint firstItem="8Co-er-5Lf" firstAttribute="leading" secondItem="35V-Bv-wNh" secondAttribute="leading" constant="13" id="z3B-dy-cqj"/>
-                                    <constraint firstAttribute="height" constant="400" id="zam-hA-m8g"/>
+                                    <constraint firstAttribute="height" constant="420" id="zam-hA-m8g"/>
                                 </constraints>
                             </view>
                         </subviews>
@@ -1042,6 +1076,7 @@
                         <outlet property="orderButton" destination="or9-73-FhE" id="2qu-gi-OBg"/>
                         <outlet property="phoneLabel" destination="JVk-aL-TDo" id="hOd-u8-yut"/>
                         <outlet property="pickupLabel" destination="Bj4-DI-ZNo" id="y74-by-n9z"/>
+                        <outlet property="scrollView" destination="I0s-Ot-WMs" id="2sm-Bn-sFg"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="gwG-5Y-sus" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1281,7 +1316,7 @@
                                         <rect key="frame" x="0.0" y="136" width="600" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="T1T-HV-ybj" id="j2o-eY-xcL">
-                                            <rect key="frame" x="0.0" y="0.0" width="600" height="43.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="600" height="44"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                         </tableViewCellContentView>
                                     </tableViewCell>
@@ -1557,7 +1592,7 @@
                                 <rect key="frame" x="0.0" y="92" width="600" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="FL6-HD-RKp" id="1wj-MU-reN">
-                                    <rect key="frame" x="0.0" y="0.0" width="600" height="43.5"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="600" height="44"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                 </tableViewCellContentView>
                             </tableViewCell>
@@ -1634,7 +1669,7 @@
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" minimumFontSize="5" translatesAutoresizingMaskIntoConstraints="NO" id="bH6-bZ-tTB">
                                         <rect key="frame" x="2" y="330" width="262" height="50"/>
                                         <attributedString key="attributedText">
-                                            <fragment content="고객센터 연결하기 1833-8548">
+                                            <fragment content="고객행복센터 연결하기 1833-8548">
                                                 <attributes>
                                                     <color key="NSColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <font key="NSFont" size="17" name="AppleSDGothicNeo-Regular"/>
@@ -1648,15 +1683,15 @@
                                     <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4Ig-Z9-EQL" customClass="RoundedButton">
                                         <rect key="frame" x="80" y="170" width="103" height="40"/>
                                         <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="16"/>
-                                        <state key="normal" title="실시간 상담">
+                                        <state key="normal" title="1:1 문의">
                                             <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                         </state>
                                         <connections>
                                             <action selector="tapLiveChat:" destination="iWH-oX-Ujy" eventType="touchUpInside" id="yEJ-da-UHx"/>
                                         </connections>
                                     </button>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="고객센터와 실시간 채팅이 가능합니다(운영시간 : 오전 10시 ~ 오후 6시)" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" minimumFontSize="5" preferredMaxLayoutWidth="260" translatesAutoresizingMaskIntoConstraints="NO" id="tom-P3-tZw">
-                                        <rect key="frame" x="5" y="270" width="262" height="50"/>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="메시지를 남겨주세요." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" minimumFontSize="5" preferredMaxLayoutWidth="260" translatesAutoresizingMaskIntoConstraints="NO" id="tom-P3-tZw">
+                                        <rect key="frame" x="5" y="272" width="262" height="22"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
@@ -1664,10 +1699,19 @@
                                     <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="ic_qna" translatesAutoresizingMaskIntoConstraints="NO" id="rud-rc-0fo">
                                         <rect key="frame" x="61" y="19" width="150" height="150"/>
                                     </imageView>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="고객행복센터에서 연락을 드립니다." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" minimumFontSize="5" preferredMaxLayoutWidth="260" translatesAutoresizingMaskIntoConstraints="NO" id="gLo-1Y-bmN">
+                                        <rect key="frame" x="5" y="294" width="262" height="22"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
                                 </subviews>
                                 <constraints>
+                                    <constraint firstItem="tom-P3-tZw" firstAttribute="leading" secondItem="cOx-Qk-xXK" secondAttribute="leading" constant="5" id="6tM-ut-6zJ"/>
                                     <constraint firstAttribute="width" constant="272" id="7l8-dE-dex"/>
                                     <constraint firstAttribute="height" constant="380" id="K3X-Lw-YDU"/>
+                                    <constraint firstAttribute="trailing" secondItem="tom-P3-tZw" secondAttribute="trailing" constant="5" id="uHP-Qx-DA4"/>
+                                    <constraint firstItem="gLo-1Y-bmN" firstAttribute="top" secondItem="tom-P3-tZw" secondAttribute="bottom" id="wdc-XD-zSS"/>
                                 </constraints>
                             </view>
                         </subviews>
@@ -1684,7 +1728,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="fyQ-Tb-Hzw" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4090.5" y="926"/>
+            <point key="canvasLocation" x="4090" y="926"/>
         </scene>
         <!--Info View Controller-->
         <scene sceneID="zq2-Sf-MCv">
@@ -2263,7 +2307,7 @@
                                 <rect key="frame" x="0.0" y="28" width="600" height="60"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="ldw-Vn-PvC" id="XC9-V9-ZkL">
-                                    <rect key="frame" x="0.0" y="0.0" width="600" height="59.5"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="600" height="60"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ic_information_coupon_info" translatesAutoresizingMaskIntoConstraints="NO" id="g7o-Jo-Qcn">
@@ -2431,7 +2475,7 @@
                                 <rect key="frame" x="0.0" y="28" width="600" height="80"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="kEq-Ot-JvR" id="raQ-6F-pZG">
-                                    <rect key="frame" x="0.0" y="0.0" width="600" height="79.5"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="600" height="80"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                 </tableViewCellContentView>
                             </tableViewCell>
@@ -2499,7 +2543,7 @@
                                         <rect key="frame" x="0.0" y="160" width="600" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="GD4-86-S3o" id="uvp-Yb-QaF">
-                                            <rect key="frame" x="0.0" y="0.0" width="600" height="43.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="600" height="44"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <switch opaque="NO" tag="1" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="3PG-3j-ShD">
@@ -2530,7 +2574,7 @@
                                         <rect key="frame" x="0.0" y="204" width="600" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="osJ-Ze-W6p" id="zSa-hF-qU2">
-                                            <rect key="frame" x="0.0" y="0.0" width="600" height="43.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="600" height="44"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <switch opaque="NO" tag="2" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="oSY-hb-49w">
@@ -4086,7 +4130,7 @@
                                         <rect key="frame" x="0.0" y="28" width="600" height="45"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Yab-lH-jE1" id="Pff-Kr-UIq">
-                                            <rect key="frame" x="0.0" y="0.0" width="600" height="44.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="600" height="45"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="0" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="ezO-Vv-RAq">
@@ -4834,14 +4878,14 @@
         <image name="ic_information_coupon_info" width="64" height="34"/>
         <image name="ic_information_notification" width="63" height="49"/>
         <image name="ic_information_setting" width="52" height="53"/>
-        <image name="ic_launcher" width="72" height="72"/>
+        <image name="ic_launcher" width="180" height="180"/>
         <image name="ic_login_email" width="45" height="27"/>
         <image name="ic_login_kakaotalk" width="37" height="34"/>
         <image name="ic_login_seongnam" width="281" height="27"/>
         <image name="ic_login_seongnam_map" width="365" height="322"/>
         <image name="ic_login_seoul" width="191" height="27"/>
         <image name="ic_login_seoul_map" width="500" height="387"/>
-        <image name="ic_map_address_select" width="15" height="30"/>
+        <image name="ic_map_address_select" width="27" height="41"/>
         <image name="ic_menu_1order" width="44" height="44"/>
         <image name="ic_menu_2delivery" width="44" height="44"/>
         <image name="ic_menu_3information" width="44" height="44"/>

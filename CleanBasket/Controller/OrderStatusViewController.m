@@ -431,8 +431,8 @@
                      
                      switch ([self.currentOrder[@"state"] integerValue]) {
                          case 0:
-                             [_deliverImageView setImage:[UIImage imageNamed:@"ic_launcher"]];
-                             _deliverNameLabel.text = @"";
+                             [_deliverImageView setImage:[UIImage imageNamed:@"ic_profile"]];
+                             _deliverNameLabel.text = @"곧 방문드리겠습니다!";
                              break;
                          case 1:
                              imageUrlString = [NSString stringWithFormat:@"%@%@",CB_SERVER_URL,_currentOrder[@"pickupInfo"][@"img"]];
@@ -443,8 +443,8 @@
                              _deliverPhoneNumber = [numberFormatter numberFromString:_currentOrder[@"pickupInfo"][@"phone"]];
                              break;
                          case 2:
-                             [_deliverImageView setImage:[UIImage imageNamed:@"ic_launcher"]];
-                             _deliverNameLabel.text = @"";
+                             [_deliverImageView setImage:[UIImage imageNamed:@"ic_profile"]];
+                             _deliverNameLabel.text = @"곧 방문드리겠습니다!";
                              break;
                          case 3:
                              imageUrlString = [NSString stringWithFormat:@"%@%@",CB_SERVER_URL,_currentOrder[@"dropoffInfo"][@"img"]];
