@@ -413,6 +413,8 @@
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 - (IBAction)confirm:(id)sender {
+    
+    
 
     
 //    NSMutableDictionary *items = [NSMutableDictionary new];
@@ -437,6 +439,18 @@
 //                                                        object:nil
 //                                                      userInfo:@{@"totalPrice":@(totalPrice),
 //                                                                 @"items":items}];
+    
+    NSString * price = _totalPriceLabel.text;
+    
+    int total = [price intValue];
+    
+    if (total < 10000){
+        [[[UIAlertView alloc]
+          initWithTitle:@"확인해주세요"
+          message:@" 10,000원 이상의 주문 시에만 방문 드릴 수 있어요! \n (크린파트너가 빈 손으로 돌아오지 않게 꼭 지켜주세요!)" delegate:self
+          cancelButtonTitle:@"확인" otherButtonTitles:nil] show];
+        return;
+    }
     
     [self dismissViewControllerAnimated:YES completion:nil];
 //    [self close:nil];
