@@ -382,6 +382,7 @@
 "change_date"="시간 변경";
 "no_coupon"="쿠폰이 없습니다.";
 "input_email"="이메일을 입력해주세요.";
+"remainder_error"="나머지 주소를 입력해주세요.";
 
 
 

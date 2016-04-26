@@ -16,7 +16,6 @@
 #import "CBConstants.h"
 
 @interface SettingTableViewController ()
-@property (weak, nonatomic) IBOutlet UILabel *latestVersion;
 @property (weak, nonatomic) IBOutlet UISwitch *eventNotiSwitch;
 @property (weak, nonatomic) IBOutlet UISwitch *orderNotiSwitch;
 
@@ -30,42 +29,10 @@
     [self setTitle:NSLocalizedString(@"setting", @"설정")];
     self.tableView.tableFooterView = [UIView new];
     
-    [self getVersion];
-    
     [_eventNotiSwitch setOn:[[NSUserDefaults standardUserDefaults] boolForKey:@"isGetEventNoti"]];
     [_orderNotiSwitch setOn:[[NSUserDefaults standardUserDefaults] boolForKey:@"isGetOrderNoti"]];
 
     [self setNeedsStatusBarAppearanceUpdate];
-    
-}
-
-- (void)getVersion{
-
-    AFHTTPRequestOperationManager *manager =[AFHTTPRequestOperationManager manager];
-
-    manager.responseSerializer = [AFJSONResponseSerializer serializer];
-    manager.responseSerializer.acceptableContentTypes = [manager.responseSerializer.acceptableContentTypes setByAddingObject:@"text/html"];
-    NSString *urlString = [NSString stringWithFormat:@"%@%@",CB_SERVER_URL,@"appinfo"];
-    [manager GET:urlString
-      parameters:nil
-            success:^(AFHTTPRequestOperation *operation, id responseObject) {
-
-
-
-                NSError *jsonError;
-                NSData *objectData = [responseObject[@"data"] dataUsingEncoding:NSUTF8StringEncoding];
-
-                NSDictionary *data = [NSJSONSerialization JSONObjectWithData:objectData
-                                                                     options:NSJSONReadingMutableContainers
-                                                                       error:&jsonError];
-
-                [_latestVersion setText:[NSString stringWithFormat:@"%@ %@",NSLocalizedString(@"latest_version",nil),data[@"ios_app_ver"]]];
-
-
-
-            } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                NSLog(@"Error: %@", error);
-            }];
     
 }
 
@@ -89,7 +56,7 @@
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return 3;
+    return 2;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
@@ -99,9 +66,6 @@
         case 1:
             return 2;
             break;
-            
-        case 2:
-            return 3;
         default:
             return 0;
             break;
@@ -131,9 +95,6 @@
         UIStoryboard *sb = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
         ChangePasswordViewController *changePasswordViewController = [sb instantiateViewControllerWithIdentifier:@"ChangePwVC"];
         [self presentViewController:changePasswordViewController animated:YES completion:nil];
-    } else if (indexPath.section == 2 && indexPath.row == 2) {
-        NSURL *url = [NSURL URLWithString:@"itms-apps://itunes.apple.com/app/id933165319"];
-        [[UIApplication sharedApplication] openURL:url];
     }
 
 

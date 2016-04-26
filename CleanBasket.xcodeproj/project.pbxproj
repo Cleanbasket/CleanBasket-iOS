@@ -104,6 +104,7 @@
 		1FFB85861C3DF4AA0045C751 /* ItemTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FFB85841C3DF4AA0045C751 /* ItemTableViewCell.m */; };
 		1FFB858D1C3E0BEB0045C751 /* ItemCategoryCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FFB858C1C3E0BEB0045C751 /* ItemCategoryCollectionViewCell.m */; };
 		5F265984CB2C70090214CCC8 /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6968616A63B1C2881CB1DF77 /* Pods.framework */; };
+		AC3FD6A61CCF7E930064713F /* PopupNoticeController.m in Sources */ = {isa = PBXBuildFile; fileRef = AC3FD6A51CCF7E930064713F /* PopupNoticeController.m */; };
 		ACB7391E1CA3D23500AA310E /* OrderCheckViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = ACB7391D1CA3D23500AA310E /* OrderCheckViewController.m */; };
 		ED0893FD2E0CD70AC2D96D6E /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = ED0890A88338423ED595A4BD /* User.m */; };
 		ED0895839E26FE3B3930F1FA /* SignTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = ED089AFD2B10155B7A19070D /* SignTextField.m */; };
@@ -207,6 +208,8 @@
 		29418028C1BC3BD76BF7F80C /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 		6968616A63B1C2881CB1DF77 /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		958C75E790AEAEE35D0D3A34 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
+		AC3FD6A41CCF7E930064713F /* PopupNoticeController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PopupNoticeController.h; path = Controller/PopupNoticeController.h; sourceTree = "<group>"; };
+		AC3FD6A51CCF7E930064713F /* PopupNoticeController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PopupNoticeController.m; path = Controller/PopupNoticeController.m; sourceTree = "<group>"; };
 		ACB7391C1CA3D23500AA310E /* OrderCheckViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OrderCheckViewController.h; path = Controller/OrderCheckViewController.h; sourceTree = "<group>"; };
 		ACB7391D1CA3D23500AA310E /* OrderCheckViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = OrderCheckViewController.m; path = Controller/OrderCheckViewController.m; sourceTree = "<group>"; };
 		ED08904F74DFC3B77570FEC2 /* InfoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = InfoViewController.h; path = Controller/InfoViewController.h; sourceTree = "<group>"; };
@@ -436,6 +439,8 @@
 				1F317AED1C294EAD00F0168C /* MainTabBarViewController.m */,
 				1F0D3AC51C60140000CA9999 /* Info */,
 				1F0D3ACD1C6018A300CA9999 /* OrderList */,
+				AC3FD6A41CCF7E930064713F /* PopupNoticeController.h */,
+				AC3FD6A51CCF7E930064713F /* PopupNoticeController.m */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -758,6 +763,7 @@
 				1F610AE61C44F39800B4585C /* TimeSelectViewController.m in Sources */,
 				1F317B0B1C2DB22A00F0168C /* CouponTableViewCell.m in Sources */,
 				1FFB85821C3B51270045C751 /* EstimateViewController.m in Sources */,
+				AC3FD6A61CCF7E930064713F /* PopupNoticeController.m in Sources */,
 				1FFB85561C3B0A6C0045C751 /* AddressSearchController.m in Sources */,
 				1F19052B1C8338D600CE07CE /* CBNotificationManager.m in Sources */,
 				1FA092ED1C322F0500477A7F /* AddCreditViewController.m in Sources */,

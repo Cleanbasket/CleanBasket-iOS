@@ -254,8 +254,12 @@ NSMutableArray *searchResult, *allAddress, *supportAddress, *supportAllDongsAddr
         
         // 나머지 주소 입력
         NSString *remainder = [alertView textFieldAtIndex:0].text;
-        [self updateAddress:alertView.message remainder:remainder];
-        [SVProgressHUD show];
+        if([remainder isEqualToString:@""]){
+            [SVProgressHUD showErrorWithStatus:NSLocalizedString(@"remainder_error",nil)];
+        }else {
+            [self updateAddress:alertView.message remainder:remainder];
+            [SVProgressHUD show];
+        }
         
     }
     

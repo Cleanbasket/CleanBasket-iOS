@@ -19,6 +19,8 @@
 #import "CBNotificationManager.h"
 #import "OrderCheckViewController.h"
 #import "EstimateViewController.h"
+#import "OrderStatusViewController.h"
+#import "PopupNoticeController.h"
 
 typedef enum : NSUInteger {
     CBPaymentMethodCard=1,
@@ -85,6 +87,7 @@ typedef enum : NSUInteger {
     _realm = [RLMRealm defaultRealm];
 
     [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeGradient];
+    [SVProgressHUD setAnimationDelay:1.0];
 
     _manager = [AFHTTPRequestOperationManager manager];
 
@@ -132,6 +135,16 @@ typedef enum : NSUInteger {
     // 시간 관련 Format
     self.stringFromDateFormatter = [NSDateFormatter new];
     self.stringFromDateFormatter.dateFormat = @"yyyy-MM-dd HH:mm:ss.s";
+
+
+}
+
+- (void) popupNoticeView{
+    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main"
+                                                         bundle:nil];
+    
+    PopupNoticeController *notice = [storyboard instantiateViewControllerWithIdentifier:@"PopupNoticeController"];
+    [self presentViewController:notice animated:YES completion:nil];
 }
 
 // 주문 초기화
@@ -179,8 +192,17 @@ typedef enum : NSUInteger {
     _pickUpDate = [calendar dateFromComponents:dateComponents];
     [_pickUpTimeLabel setText:[self getStringFromDate:_pickUpDate]];
     
-    //배달시간 48시간 이후로 설정.
-    _dropOffDate = [_pickUpDate dateByAddingTimeInterval:60*60*24*2];
+    
+    NSString *dayOfWeek = [self _getDayOfWeek:_pickUpDate];
+    
+    if ([dayOfWeek  isEqual: @"6"]){
+        _dropOffDate = [_pickUpDate dateByAddingTimeInterval:60*60*24*3];
+    } else if ([dayOfWeek  isEqual: @"7"]){
+        _dropOffDate = [_pickUpDate dateByAddingTimeInterval:60*60*24*3];
+    } else {
+        _dropOffDate = [_pickUpDate dateByAddingTimeInterval:60*60*24*2];
+    }
+
     NSString *dropOffTimeString = [self getStringFromDate:_dropOffDate];
     NSString *dropOffTimeLabelString = [NSString stringWithFormat:@"%@%@",dropOffTimeString,NSLocalizedString(@"dropoff_datetime_c",nil)];
     [_dropOffTimeLabel setText:dropOffTimeLabelString];
@@ -201,6 +223,18 @@ typedef enum : NSUInteger {
 }
 
 
+// 오늘에 대한 요일을 리턴한다.
+- (NSString *)_getDayOfWeek:(NSDate *)day
+{
+    NSDateFormatter *myFormatter = [[NSDateFormatter alloc] init];
+//    [myFormatter setDateFormat:@"EEEE"]; // day, like "Saturday"
+    [myFormatter setDateFormat:@"c"]; // day number, like 7 for saturday
+    
+    NSString *dayOfWeek = [myFormatter stringFromDate:day];
+    
+    return dayOfWeek;
+}
+
 
 //수거시간
 - (void)finishedPickUpDate:(NSNotification *)noti{
@@ -209,8 +243,19 @@ typedef enum : NSUInteger {
     [_pickUpTimeLabel setText:pickUpTimeString];
 
     
-    //배달시간 48시간 이후로 설정.
-    _dropOffDate = [_pickUpDate dateByAddingTimeInterval:60*60*24*2];
+//    //배달시간 48시간 이후로 설정.
+//    _dropOffDate = [_pickUpDate dateByAddingTimeInterval:60*60*24*2];
+
+    NSString *dayOfWeek = [self _getDayOfWeek:_pickUpDate];
+    
+    if ([dayOfWeek  isEqual: @"6"]){
+        _dropOffDate = [_pickUpDate dateByAddingTimeInterval:60*60*24*3];
+    } else if ([dayOfWeek  isEqual: @"7"]){
+        _dropOffDate = [_pickUpDate dateByAddingTimeInterval:60*60*24*3];
+    } else {
+        _dropOffDate = [_pickUpDate dateByAddingTimeInterval:60*60*24*2];
+    }
+    
     NSString *dropOffTimeString = [self getStringFromDate:_dropOffDate];
     NSString *dropOffTimeLabelString = [NSString stringWithFormat:@"%@%@",dropOffTimeString,NSLocalizedString(@"dropoff_datetime_c",nil)];
     [_dropOffTimeLabel setText:dropOffTimeLabelString];
@@ -307,6 +352,18 @@ typedef enum : NSUInteger {
     }
     _estimatePrice = @(estimatePrice);
     [self configureEstimateLabel];
+    
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        
+        [NSTimer scheduledTimerWithTimeInterval:5.0f target:self selector:nil userInfo:nil repeats:NO];
+        
+        [self popupNoticeView];
+        
+        // time-consuming task
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [SVProgressHUD dismiss];
+        });
+    });
  
 }
 
@@ -322,6 +379,8 @@ typedef enum : NSUInteger {
     _topConst.constant -= 30.0f;
     
 }
+
+
 
 
 // 시간 선택 부분
@@ -481,9 +540,6 @@ typedef enum : NSUInteger {
 - (void)actionSheetCancel:(UIActionSheet *)actionSheet {
 }
 
-
-
-
 - (void)checkCreditCard{
 
     [SVProgressHUD show];
@@ -613,8 +669,20 @@ typedef enum : NSUInteger {
 
 - (void)addNewOrder{
     
-    //수거-배달 최소 48시간
-    NSDate *twoDaysAfterDate = [_pickUpDate dateByAddingTimeInterval:60*60*24*2];
+    NSString *dayOfWeek = [self _getDayOfWeek:_pickUpDate];
+    NSLog(@"testing: %@", dayOfWeek);
+    
+    NSDate *twoDaysAfterDate;
+    
+    if ([dayOfWeek  isEqual: @"6"]){
+        twoDaysAfterDate = [_pickUpDate dateByAddingTimeInterval:60*60*24*3];
+    } else if ([dayOfWeek  isEqual: @"7"]){
+        twoDaysAfterDate = [_pickUpDate dateByAddingTimeInterval:60*60*24*3];
+    } else {
+        twoDaysAfterDate = [_pickUpDate dateByAddingTimeInterval:60*60*24*2];
+    }
+    
+    // 배달 시간 규칙에 어긋나는 경우 경고문
     if ([_dropOffDate compare:twoDaysAfterDate] == NSOrderedAscending) {
         [UIAlertView showWithTitle:NSLocalizedString(@"toast_error", nil)
                            message:NSLocalizedString(@"deliver_pos", nil)
@@ -718,7 +786,7 @@ typedef enum : NSUInteger {
                 [[CBNotificationManager sharedManager] addDropOffNoti:_dropOffDate oid:responseObject[@"data"]];
                 [[CBNotificationManager sharedManager] addPickUpNoti:_pickUpDate oid:responseObject[@"data"]];
                 [self initOrder];
-                
+                [self.tabBarController setSelectedIndex:1];
             }
                 break;
             case CBServerConstantError: {
@@ -756,6 +824,17 @@ typedef enum : NSUInteger {
     [op start];
 }
 
+
+-(void)presentStatusViewController
+{
+    OrderStatusViewController *dvc = [[OrderStatusViewController alloc] init];
+//    [dvc setModalTransitionStyle:UIModalTransitionStyleFlipHorizontal];
+//    [self presentViewController:dvc animated:YES completion:^{
+//        [SVProgressHUD dismiss];
+//    }];
+    
+    [self presentViewController:dvc animated:YES completion:nil];
+}
 
 
 - (void)dismissHUD{
