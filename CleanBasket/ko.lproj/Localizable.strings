@@ -374,7 +374,6 @@
 "success_card"="카드등록 성공";
 "fail_card"="카드등록 실패\n입력하신 정보를 확인해보세요";
 "null_card"="등록된 카드가 없습니다.";
-"deliver_pos"="배달일은 수거일 2일 이후에 가능합니다.";
 "unusable_account"="해당 계정은 사용하실 수 없습니다.";
 "unable_pickup_date"="수거 시간은 변경이 불가능 합니다.";
 "change_pickup_date"="수거 시간 변경";
@@ -383,6 +382,9 @@
 "no_coupon"="쿠폰이 없습니다.";
 "input_email"="이메일을 입력해주세요.";
 "remainder_error"="나머지 주소를 입력해주세요.";
+"deliver_title"="죄송합니다.";
+"deliver_pos"="일요일은 세탁소 휴무일로 하루의 시간이 더 소요되는 점 양해 부탁 드립니다.";
+
 
 
 

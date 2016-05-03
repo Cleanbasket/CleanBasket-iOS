@@ -1377,7 +1377,7 @@
                                     </imageView>
                                     <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5DV-hm-qlQ">
                                         <rect key="frame" x="0.0" y="303" width="304" height="33"/>
-                                        <color key="backgroundColor" red="0.51372549020000002" green="0.85882352939999995" blue="0.81960784310000001" alpha="1" colorSpace="calibratedRGB"/>
+                                        <color key="backgroundColor" red="0.50980392156862742" green="0.85490196078431369" blue="0.81568627450980391" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="304" id="vFc-Cx-XLL"/>
                                             <constraint firstAttribute="height" constant="33" id="w5g-v2-GsN"/>
@@ -1411,6 +1411,7 @@
                     </view>
                     <connections>
                         <outlet property="cancle" destination="5DV-hm-qlQ" id="N5z-8f-bOo"/>
+                        <outlet property="image" destination="cFH-WO-sfD" id="uZ2-WZ-4xM"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="7Ay-SA-A2u" userLabel="First Responder" sceneMemberID="firstResponder"/>

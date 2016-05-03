@@ -33,6 +33,7 @@ typedef enum : NSUInteger {
 
     NSDate *_pickUpDate, *_dropOffDate, *_startPickupDate;
     NSNumber *_dropOffInterval;
+    BOOL _isPopup;
     AFHTTPRequestOperationManager *_manager;
 }
 
@@ -94,8 +95,6 @@ typedef enum : NSUInteger {
     _manager.responseSerializer = [AFJSONResponseSerializer serializer];
     _manager.responseSerializer.acceptableContentTypes = [_manager.responseSerializer.acceptableContentTypes setByAddingObject:@"text/html"];
 
-
-
     // UI Component 탭 Gesture 객체 생성
     UITapGestureRecognizer *addressTGR = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(editAddress)];
     [_addressView addGestureRecognizer:addressTGR];
@@ -136,15 +135,16 @@ typedef enum : NSUInteger {
     self.stringFromDateFormatter = [NSDateFormatter new];
     self.stringFromDateFormatter.dateFormat = @"yyyy-MM-dd HH:mm:ss.s";
 
-
-}
-
-- (void) popupNoticeView{
-    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main"
-                                                         bundle:nil];
+    NSURL *url = [NSURL URLWithString:@"http://1.255.56.182/images/popup.png"];
     
-    PopupNoticeController *notice = [storyboard instantiateViewControllerWithIdentifier:@"PopupNoticeController"];
-    [self presentViewController:notice animated:YES completion:nil];
+    NSData *data = [[NSData alloc] initWithContentsOfURL:url];
+    
+    if (data){
+        _isPopup = YES;
+    }else {
+        _isPopup = NO;
+    }
+
 }
 
 // 주문 초기화
@@ -193,15 +193,7 @@ typedef enum : NSUInteger {
     [_pickUpTimeLabel setText:[self getStringFromDate:_pickUpDate]];
     
     
-    NSString *dayOfWeek = [self _getDayOfWeek:_pickUpDate];
-    
-    if ([dayOfWeek  isEqual: @"6"]){
-        _dropOffDate = [_pickUpDate dateByAddingTimeInterval:60*60*24*3];
-    } else if ([dayOfWeek  isEqual: @"7"]){
-        _dropOffDate = [_pickUpDate dateByAddingTimeInterval:60*60*24*3];
-    } else {
-        _dropOffDate = [_pickUpDate dateByAddingTimeInterval:60*60*24*2];
-    }
+    _dropOffDate = [self getDropOffDate:_pickUpDate];
 
     NSString *dropOffTimeString = [self getStringFromDate:_dropOffDate];
     NSString *dropOffTimeLabelString = [NSString stringWithFormat:@"%@%@",dropOffTimeString,NSLocalizedString(@"dropoff_datetime_c",nil)];
@@ -246,15 +238,7 @@ typedef enum : NSUInteger {
 //    //배달시간 48시간 이후로 설정.
 //    _dropOffDate = [_pickUpDate dateByAddingTimeInterval:60*60*24*2];
 
-    NSString *dayOfWeek = [self _getDayOfWeek:_pickUpDate];
-    
-    if ([dayOfWeek  isEqual: @"6"]){
-        _dropOffDate = [_pickUpDate dateByAddingTimeInterval:60*60*24*3];
-    } else if ([dayOfWeek  isEqual: @"7"]){
-        _dropOffDate = [_pickUpDate dateByAddingTimeInterval:60*60*24*3];
-    } else {
-        _dropOffDate = [_pickUpDate dateByAddingTimeInterval:60*60*24*2];
-    }
+    _dropOffDate = [self getDropOffDate:_pickUpDate];
     
     NSString *dropOffTimeString = [self getStringFromDate:_dropOffDate];
     NSString *dropOffTimeLabelString = [NSString stringWithFormat:@"%@%@",dropOffTimeString,NSLocalizedString(@"dropoff_datetime_c",nil)];
@@ -273,6 +257,22 @@ typedef enum : NSUInteger {
     [_dropOffTimeLabel setText:dropOffTimeLabelString];
 }
 
+
+- (NSDate *)getDropOffDate:(NSDate *)date {
+    
+    NSString *dayOfWeek = [self _getDayOfWeek:date];
+    NSDate *dropDate;
+    
+    if ([dayOfWeek  isEqual: @"6"]){
+        dropDate = [date dateByAddingTimeInterval:60*60*24*3];
+    } else if ([dayOfWeek  isEqual: @"7"]){
+        dropDate = [date dateByAddingTimeInterval:60*60*24*3];
+    } else {
+        dropDate = [date dateByAddingTimeInterval:60*60*24*2];
+    }
+
+    return dropDate;
+}
 
 
 - (NSString *)getStringFromDate:(NSDate*)date {
@@ -353,18 +353,19 @@ typedef enum : NSUInteger {
     _estimatePrice = @(estimatePrice);
     [self configureEstimateLabel];
     
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        
-        [NSTimer scheduledTimerWithTimeInterval:5.0f target:self selector:nil userInfo:nil repeats:NO];
-        
-        [self popupNoticeView];
-        
-        // time-consuming task
-        dispatch_async(dispatch_get_main_queue(), ^{
-            [SVProgressHUD dismiss];
+    if (_isPopup){
+    
+        [SVProgressHUD show];
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+            // time-consuming task
+            [NSThread sleepForTimeInterval:1.0f];
+            _isPopup = NO;
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [self popupNoticeView];
+            });
         });
-    });
- 
+    }
+    
 }
 
 
@@ -669,22 +670,13 @@ typedef enum : NSUInteger {
 
 - (void)addNewOrder{
     
-    NSString *dayOfWeek = [self _getDayOfWeek:_pickUpDate];
-    NSLog(@"testing: %@", dayOfWeek);
-    
     NSDate *twoDaysAfterDate;
     
-    if ([dayOfWeek  isEqual: @"6"]){
-        twoDaysAfterDate = [_pickUpDate dateByAddingTimeInterval:60*60*24*3];
-    } else if ([dayOfWeek  isEqual: @"7"]){
-        twoDaysAfterDate = [_pickUpDate dateByAddingTimeInterval:60*60*24*3];
-    } else {
-        twoDaysAfterDate = [_pickUpDate dateByAddingTimeInterval:60*60*24*2];
-    }
+    twoDaysAfterDate = [self getDropOffDate:_pickUpDate];
     
     // 배달 시간 규칙에 어긋나는 경우 경고문
     if ([_dropOffDate compare:twoDaysAfterDate] == NSOrderedAscending) {
-        [UIAlertView showWithTitle:NSLocalizedString(@"toast_error", nil)
+        [UIAlertView showWithTitle:NSLocalizedString(@"deliver_title", nil)
                            message:NSLocalizedString(@"deliver_pos", nil)
                  cancelButtonTitle:NSLocalizedString(@"label_confirm", nil)
                  otherButtonTitles:nil
@@ -787,6 +779,7 @@ typedef enum : NSUInteger {
                 [[CBNotificationManager sharedManager] addPickUpNoti:_pickUpDate oid:responseObject[@"data"]];
                 [self initOrder];
                 [self.tabBarController setSelectedIndex:1];
+                [SVProgressHUD dismiss];
             }
                 break;
             case CBServerConstantError: {
@@ -824,14 +817,21 @@ typedef enum : NSUInteger {
     [op start];
 }
 
+- (void) popupNoticeView{
+    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main"
+                                                         bundle:nil];
+    
+    PopupNoticeController *notice = [storyboard instantiateViewControllerWithIdentifier:@"PopupNoticeController"];
+    [SVProgressHUD dismiss];
+    
+    [notice setModalPresentationStyle:UIModalPresentationCustom];
+    [notice setModalTransitionStyle:UIModalTransitionStyleCrossDissolve];
+    [self presentViewController:notice animated:YES completion:nil];
+}
 
 -(void)presentStatusViewController
 {
     OrderStatusViewController *dvc = [[OrderStatusViewController alloc] init];
-//    [dvc setModalTransitionStyle:UIModalTransitionStyleFlipHorizontal];
-//    [self presentViewController:dvc animated:YES completion:^{
-//        [SVProgressHUD dismiss];
-//    }];
     
     [self presentViewController:dvc animated:YES completion:nil];
 }

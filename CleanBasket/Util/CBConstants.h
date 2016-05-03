@@ -62,7 +62,7 @@ typedef enum serverConstant : NSUInteger {
 
 
 #if defined(CBTEST)
-#define CB_SERVER_URL @"http://52.79.39.100:8080/"
+#define CB_SERVER_URL @"http://cleanbasket.co.kr/"
 #else
-#define CB_SERVER_URL @"http://52.79.39.100:8080/"
+#define CB_SERVER_URL @"http://cleanbasket.co.kr/"
 #endif

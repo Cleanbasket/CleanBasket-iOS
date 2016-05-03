@@ -50,7 +50,7 @@ SHARED_SINGLETON(CBNotificationManager);
     localNoti.userInfo = @{@"oid":oid,@"pickUpDate":pickUpDate};
     localNoti.alertAction = @"PICKUP_NOTI";
     
-    [[UIApplication sharedApplication] scheduleLocalNotification:localNoti];
+//    [[UIApplication sharedApplication] scheduleLocalNotification:localNoti];
     
 }
 
@@ -76,7 +76,7 @@ SHARED_SINGLETON(CBNotificationManager);
     localNoti.userInfo = @{@"oid":oid,@"dropOffDate":dropOffDate};
     localNoti.alertAction = @"DROPOFF_NOTI";
     
-    [[UIApplication sharedApplication] scheduleLocalNotification:localNoti];
+//    [[UIApplication sharedApplication] scheduleLocalNotification:localNoti];
     
 }
 
@@ -88,7 +88,7 @@ SHARED_SINGLETON(CBNotificationManager);
     for (UILocalNotification *noti in notifications) {
         
         if([noti.userInfo[@"oid"] isEqualToString:oid]){
-            [[UIApplication sharedApplication] cancelLocalNotification:noti];
+//            [[UIApplication sharedApplication] cancelLocalNotification:noti];
         }
     }
     

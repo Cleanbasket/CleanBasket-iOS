@@ -373,7 +373,6 @@
 "success_card"="Card verified";
 "fail_card"="Verification failed \n please try again";
 "null_card"="Please add your payment card.";
-"deliver_pos"="Delivery date is two days after the collection date.";
 "unusable_account"="This account is currently not available.";
 "unable_pickup_date"="You cannot change the collection time.";
 "change_pickup_date"="Change collection time";
@@ -382,6 +381,8 @@
 "no_coupon"="You do not have any coupon (available)";
 "input_email"="Enter e-mail address.";
 "remainder_error"="Enter the rest of your address.";
+"deliver_title"="Sorry..";
+"deliver_pos"="We apologize for taking an additional day to bring your laundry home on Sunday orders since all our laundries are closed.";
 
 
 

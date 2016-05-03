@@ -11,4 +11,5 @@
 @interface PopupNoticeController : UIViewController
 
 @property (weak, nonatomic) IBOutlet UIButton *cancle;
+@property (weak, nonatomic) IBOutlet UIImageView *image;
 @end
