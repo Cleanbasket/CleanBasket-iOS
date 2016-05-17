@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10116" systemVersion="15D21" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="R34-HR-G1o">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10117" systemVersion="15D21" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="R34-HR-G1o">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
@@ -1722,74 +1722,46 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="551"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="cOx-Qk-xXK">
-                                <rect key="frame" x="164" y="109" width="272" height="380"/>
-                                <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="무엇이든 물어보세요" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OXG-c6-g8c">
-                                        <rect key="frame" x="19" y="227" width="224" height="33"/>
-                                        <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="20"/>
-                                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" minimumFontSize="5" translatesAutoresizingMaskIntoConstraints="NO" id="bH6-bZ-tTB">
-                                        <rect key="frame" x="2" y="330" width="262" height="50"/>
-                                        <attributedString key="attributedText">
-                                            <fragment content="고객행복센터 연결하기 1833-8543">
-                                                <attributes>
-                                                    <color key="NSColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                                    <font key="NSFont" size="17" name="AppleSDGothicNeo-Regular"/>
-                                                    <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="truncatingTail" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
-                                                    <integer key="NSUnderline" value="1"/>
-                                                </attributes>
-                                            </fragment>
-                                        </attributedString>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4Ig-Z9-EQL" customClass="RoundedButton">
-                                        <rect key="frame" x="80" y="170" width="103" height="40"/>
-                                        <accessibility key="accessibilityConfiguration" label="1:1 문의"/>
-                                        <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="16"/>
-                                        <state key="normal" title="1:1 문의">
-                                            <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                        </state>
-                                        <connections>
-                                            <action selector="tapLiveChat:" destination="iWH-oX-Ujy" eventType="touchUpInside" id="yEJ-da-UHx"/>
-                                        </connections>
-                                    </button>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="메시지를 남겨주세요." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" minimumFontSize="5" preferredMaxLayoutWidth="260" translatesAutoresizingMaskIntoConstraints="NO" id="tom-P3-tZw">
-                                        <rect key="frame" x="5" y="272" width="262" height="22"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="ic_qna" translatesAutoresizingMaskIntoConstraints="NO" id="rud-rc-0fo">
-                                        <rect key="frame" x="61" y="19" width="150" height="150"/>
-                                    </imageView>
-                                </subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4Ig-Z9-EQL" customClass="RoundMint">
+                                <rect key="frame" x="20" y="486" width="565" height="45"/>
+                                <color key="backgroundColor" red="0.50980395079999996" green="0.85490196939999996" blue="0.8156862855" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <accessibility key="accessibilityConfiguration" label="1:1 문의"/>
                                 <constraints>
-                                    <constraint firstItem="tom-P3-tZw" firstAttribute="leading" secondItem="cOx-Qk-xXK" secondAttribute="leading" constant="5" id="6tM-ut-6zJ"/>
-                                    <constraint firstAttribute="width" constant="272" id="7l8-dE-dex"/>
-                                    <constraint firstAttribute="height" constant="380" id="K3X-Lw-YDU"/>
-                                    <constraint firstAttribute="trailing" secondItem="tom-P3-tZw" secondAttribute="trailing" constant="5" id="uHP-Qx-DA4"/>
+                                    <constraint firstAttribute="height" constant="45" id="6If-la-Ohf"/>
                                 </constraints>
-                            </view>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="16"/>
+                                <state key="normal" title="문의하기">
+                                    <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                </state>
+                                <connections>
+                                    <action selector="tapLiveChat:" destination="iWH-oX-Ujy" eventType="touchUpInside" id="yEJ-da-UHx"/>
+                                </connections>
+                            </button>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="askus_image" translatesAutoresizingMaskIntoConstraints="NO" id="rW1-XX-7KE">
+                                <rect key="frame" x="20" y="13" width="565" height="471"/>
+                            </imageView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="cOx-Qk-xXK" firstAttribute="centerX" secondItem="s33-Zs-A6t" secondAttribute="centerX" id="LFU-oi-96L"/>
-                            <constraint firstItem="cOx-Qk-xXK" firstAttribute="centerY" secondItem="s33-Zs-A6t" secondAttribute="centerY" id="gaO-FQ-sCW"/>
+                            <constraint firstAttribute="leadingMargin" secondItem="4Ig-Z9-EQL" secondAttribute="leading" id="5W6-Yd-fOg"/>
+                            <constraint firstAttribute="leadingMargin" secondItem="rW1-XX-7KE" secondAttribute="leading" id="6yu-OA-gGX"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="rW1-XX-7KE" secondAttribute="trailing" constant="-5" id="Kyl-Qx-Hwh"/>
+                            <constraint firstItem="rW1-XX-7KE" firstAttribute="top" secondItem="tPc-dH-nos" secondAttribute="bottom" constant="-7" id="Lra-rY-gDD"/>
+                            <constraint firstItem="wID-d1-aLa" firstAttribute="top" secondItem="4Ig-Z9-EQL" secondAttribute="bottom" constant="20" id="ZU1-zy-jIm"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="4Ig-Z9-EQL" secondAttribute="trailing" constant="-5" id="h27-7Z-0xq"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="4Ig-Z9-EQL" secondAttribute="trailing" constant="-5" id="l2i-hV-eVl"/>
+                            <constraint firstItem="4Ig-Z9-EQL" firstAttribute="top" secondItem="rW1-XX-7KE" secondAttribute="bottom" constant="2" id="tN4-wJ-Df6"/>
+                            <constraint firstAttribute="leadingMargin" secondItem="4Ig-Z9-EQL" secondAttribute="leading" id="uFt-WF-tMd"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="hts-Kv-6za"/>
                     <connections>
-                        <outlet property="callLabel" destination="bH6-bZ-tTB" id="kFt-hG-I62"/>
-                        <outlet property="subLabel" destination="tom-P3-tZw" id="1Bh-f4-LDI"/>
                         <outlet property="titleLabel" destination="4Ig-Z9-EQL" id="tA6-2v-e3W"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="fyQ-Tb-Hzw" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4090" y="926"/>
+            <point key="canvasLocation" x="4090" y="935"/>
         </scene>
         <!--Info View Controller-->
         <scene sceneID="zq2-Sf-MCv">
@@ -4861,6 +4833,7 @@
         </scene>
     </scenes>
     <resources>
+        <image name="askus_image" width="750" height="985"/>
         <image name="ic_class_clean" width="160" height="160"/>
         <image name="ic_class_gold" width="160" height="160"/>
         <image name="ic_class_love" width="160" height="160"/>
@@ -4888,7 +4861,6 @@
         <image name="ic_order_multiply" width="16" height="16"/>
         <image name="ic_order_payment_card" width="103" height="67"/>
         <image name="ic_order_pick_up_time_label" width="53" height="53"/>
-        <image name="ic_qna" width="220" height="195"/>
         <image name="ic_service_introduce_01mobile" width="42" height="74"/>
         <image name="ic_service_introduce_02cleaning" width="78" height="46"/>
         <image name="ic_service_introduce_03price" width="74" height="71"/>

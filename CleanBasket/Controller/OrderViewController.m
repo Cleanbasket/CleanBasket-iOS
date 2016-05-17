@@ -267,7 +267,9 @@ typedef enum : NSUInteger {
         dropDate = [date dateByAddingTimeInterval:60*60*24*3];
     } else if ([dayOfWeek  isEqual: @"7"]){
         dropDate = [date dateByAddingTimeInterval:60*60*24*3];
-    } else {
+    } else if ([dayOfWeek  isEqual: @"1"]){
+        dropDate = [date dateByAddingTimeInterval:60*60*24*3];
+    }  else {
         dropDate = [date dateByAddingTimeInterval:60*60*24*2];
     }
 

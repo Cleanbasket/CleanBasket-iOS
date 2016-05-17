@@ -9,12 +9,11 @@
 #import "HelpViewController.h"
 #import <ZDCChat/ZDCChat.h>
 #import "RoundedButton.h"
+#import "RoundMint.h"
 
 @interface HelpViewController ()
 
-@property (weak, nonatomic) IBOutlet UILabel *callLabel;
-@property (weak, nonatomic) IBOutlet UILabel *subLabel;
-@property (weak, nonatomic) IBOutlet RoundedButton *titleLabel;
+@property (weak, nonatomic) IBOutlet RoundMint *titleLabel;
 
 @end
 
@@ -31,11 +30,8 @@
 
     [self setTitle:NSLocalizedString(@"menu_label_help", nil)];
     
-    _subLabel.text = @"메시지를 남겨주세요. \n 고객행복센터에서 연락을 드립니다.";
-    _titleLabel.titleLabel.text = @"1:1 문의";
-    _callLabel.userInteractionEnabled = YES;
-    UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(labelTap)];
-    [_callLabel addGestureRecognizer:tapGesture];
+    _titleLabel.titleLabel.text = NSLocalizedString(@"menu_label_help", nil);
+
 }
 
 - (IBAction)tapLiveChat:(id)sender {

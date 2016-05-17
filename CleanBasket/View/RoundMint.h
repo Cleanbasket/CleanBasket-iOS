@@ -6,8 +6,8 @@
 //  Copyright © 2016년 WashappKorea. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
+#import <UIKit/UIKit.h>
 
-@interface RoundMint : NSObject
+@interface RoundMint : UIButton
 
 @end

@@ -104,6 +104,7 @@
 		1FFB85861C3DF4AA0045C751 /* ItemTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FFB85841C3DF4AA0045C751 /* ItemTableViewCell.m */; };
 		1FFB858D1C3E0BEB0045C751 /* ItemCategoryCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FFB858C1C3E0BEB0045C751 /* ItemCategoryCollectionViewCell.m */; };
 		5F265984CB2C70090214CCC8 /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6968616A63B1C2881CB1DF77 /* Pods.framework */; };
+		AC009FB11CE471210044734A /* RoundMint.m in Sources */ = {isa = PBXBuildFile; fileRef = AC009FB01CE471210044734A /* RoundMint.m */; };
 		AC3FD6A61CCF7E930064713F /* PopupNoticeController.m in Sources */ = {isa = PBXBuildFile; fileRef = AC3FD6A51CCF7E930064713F /* PopupNoticeController.m */; };
 		ACB7391E1CA3D23500AA310E /* OrderCheckViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = ACB7391D1CA3D23500AA310E /* OrderCheckViewController.m */; };
 		ED0893FD2E0CD70AC2D96D6E /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = ED0890A88338423ED595A4BD /* User.m */; };
@@ -208,6 +209,8 @@
 		29418028C1BC3BD76BF7F80C /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 		6968616A63B1C2881CB1DF77 /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		958C75E790AEAEE35D0D3A34 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
+		AC009FAF1CE471210044734A /* RoundMint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RoundMint.h; path = View/RoundMint.h; sourceTree = "<group>"; };
+		AC009FB01CE471210044734A /* RoundMint.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RoundMint.m; path = View/RoundMint.m; sourceTree = "<group>"; };
 		AC3FD6A41CCF7E930064713F /* PopupNoticeController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PopupNoticeController.h; path = Controller/PopupNoticeController.h; sourceTree = "<group>"; };
 		AC3FD6A51CCF7E930064713F /* PopupNoticeController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PopupNoticeController.m; path = Controller/PopupNoticeController.m; sourceTree = "<group>"; };
 		ACB7391C1CA3D23500AA310E /* OrderCheckViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OrderCheckViewController.h; path = Controller/OrderCheckViewController.h; sourceTree = "<group>"; };
@@ -501,6 +504,8 @@
 				1F0D3AD21C60399F00CA9999 /* OrderHistoryCell.m */,
 				1FBEEFA01C8BD53B0097D841 /* ItemListTableViewCell.h */,
 				1FBEEFA11C8BD53B0097D841 /* ItemListTableViewCell.m */,
+				AC009FAF1CE471210044734A /* RoundMint.h */,
+				AC009FB01CE471210044734A /* RoundMint.m */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -774,6 +779,7 @@
 				1FFB85501C39D1030045C751 /* OrderViewController.m in Sources */,
 				1FE6134A1C1E25B2009B4EA5 /* SignInViewController.m in Sources */,
 				1F317AF41C295D6500F0168C /* BottomBorderButton.m in Sources */,
+				AC009FB11CE471210044734A /* RoundMint.m in Sources */,
 				ED0893FD2E0CD70AC2D96D6E /* User.m in Sources */,
 				1FFB858D1C3E0BEB0045C751 /* ItemCategoryCollectionViewCell.m in Sources */,
 				1F610AE31C4395A800B4585C /* TimeCollectionViewCell.m in Sources */,

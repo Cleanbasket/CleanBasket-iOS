@@ -19,7 +19,7 @@
 "menu_label_delivery"="주문현황";
 "menu_label_information"="내 정보";
 "menu_label_notification"="알림";
-"menu_label_help"="1:1 문의";
+"menu_label_help"="문의 하기";
 "error_invalid_email"="이메일이 올바르지 않습니다";
 "error_invalid_password"="비밀번호가 너무 짧습니다";
 "error_incorrect_password"="비밀번호가 틀립니다";
